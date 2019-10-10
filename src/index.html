@@ -1,14 +1,40 @@
 <!doctype html>
-<html lang="en">
+<html lang="sv" class="e-html">
+
 <head>
   <meta charset="utf-8">
   <title>FarmenGui</title>
   <base href="/">
 
+  <meta title="description" content="" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="stylesheet"
+    href="https://cdn.jordbruksverket.se/designsystem/5.2.0/package/dist/release/sjv-komponentbibliotek.css"
+    integrity="sha256-NfeBb9jr+c0VIK+gaFzrco5QmWRrYHoeailuEI4u7mo=" crossorigin="anonymous">
+  <meta name="theme-color" content="#fafafa">
 </head>
-<body>
-  <app-root></app-root>
+
+<body class="e-body">
+  <!--[if IE]>
+    <p class="browserupgrade">You are using an outdated browser. Please upgrade your browser to improve your experience and security.</p>
+    <![ endif]-->
+
+  <!-- Add a header - see options here [https://styleguide.jordbruksverket.se/komponenter/header.html] -->
+
+  <main role="main">
+    <app-root>
+
+    </app-root>
+  </main>
+  <footer class="c-footer" role="content-info">...</footer>
+
+  <script src="https://cdn.jordbruksverket.se/designsystem/5.2.0/package/dist/release/sjv-komponentbibliotek.js"
+    integrity="sha256-9rq6oBr23lSfGEB/t3HGFfM0ZZs3oqZH9YYUttcs5L8=" crossorigin="anonymous"></script>
+  <script>
+    komponentbibliotek.init();
+  </script>
 </body>
+
 </html>
