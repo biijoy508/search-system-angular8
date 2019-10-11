@@ -1,0 +1,8 @@
+{
+  "name": "Farmen",
+  "short_name": "farmen",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#f2f2f2",
+  "description": "Jordbruksverkets farmen app."
+}
