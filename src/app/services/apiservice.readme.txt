@@ -1,0 +1,32 @@
+------------- Kom igång med ApiService ---------------
+
+1. Importera api service
+   import { ApiService } from '../api.service
+
+2. Inject ApiService i komponent constructor:
+
+   constructor(private apiService: ApiService) { }
+
+3. Exempel kod för komponent
+
+  let articles;
+  ngOnInit() {
+    this.apiService.getNews().subscribe((data) => {
+      console.log(data);
+      this.articles = data['articles'];
+    });
+  }
+
+-------------------------------------------------------------------------
+
+*** The HttpClient get() method is designed to send HTTP GET requests.
+The syntax is as follows:
+
+  get(url: string, options: {
+      headers?: HttpHeaders;
+      observe: 'response';
+      params?: HttpParams;
+      reportProgress?: boolean;
+      responseType?: 'json';
+      withCredentials?: boolean;
+}): Observable<HttpResponse<Object>>;

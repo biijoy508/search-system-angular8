@@ -1,0 +1,15 @@
+<app-header activeView="exempel"></app-header>
+<div role="main" class="container">
+  <div class="row">
+    <div class="col">
+      <div *ngFor="let article of articles">
+        <h2>{{article.title}}</h2>
+
+        <p>
+          {{article.description}}
+        </p>
+        <a href="{{article.url}}">Read full article</a>
+      </div>
+    </div>
+  </div>
+</div>
