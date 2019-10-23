@@ -14,13 +14,13 @@ export class ExempelviewComponent implements AfterViewInit {
   constructor(private apiService: ApiService) { }
   ngAfterViewInit() {
     // exempel externa tjanst GET
-    this.apiService.getData(this.demourl).subscribe((data) => {
-      this.articles = data['articles'];
-    });
-    // exempel interna tjanst farmen backend GET konfigurerat i proxy.conf.json
-    this.apiService.getData(this.farmenurl).subscribe((data) => {
-      console.log(data);
-    });
+    // this.apiService.getData(this.demourl).subscribe((data) => {
+    //   this.articles = data['articles'];
+    // });
+    // // exempel interna tjanst farmen backend GET konfigurerat i proxy.conf.json
+    // this.apiService.getData(this.farmenurl).subscribe((data) => {
+    //   console.log(data);
+    // });
   }
 
 }

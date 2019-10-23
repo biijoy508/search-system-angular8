@@ -1,0 +1,25 @@
+.underline
+{
+  width: 100%;
+  border-bottom: 1px black solid;
+  margin: 1rem 0;
+}
+
+.filtercontainer{
+  .c-select{
+    display: inline-block;
+    margin-right: 1rem;
+    max-width: 12rem;
+  }
+}
+
+
+fieldset {
+  color: #AB362B;
+  border-color: #AB362B;
+  max-width: 25rem;
+}
+
+.banner-width{
+  max-width: 60rem;
+}

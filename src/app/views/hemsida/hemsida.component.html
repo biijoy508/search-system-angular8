@@ -2,8 +2,8 @@
 <div role="main" class="container">
   <div class="row">
     <div class="col-lg-3">
-      <h3 class="sokheading">Sökfilter</h3>
-      <div class="c-select">
+      <h3 class="hemsida-h3">Sökfilter</h3>
+      <div class="c-select c-select--tiny">
         <label for="stodar">Stödår</label>
         <div class="c-select__wrapper">
           <select id="stodar" [(ngModel)]="stodar">
@@ -15,14 +15,14 @@
           </div>
         </div>
       </div>
-      <div class="c-input">
+      <div class="c-input c-input--tiny">
         <label for="input-text-1" id="label-1" tabindex="-1">Kundnr</label>
         <div class="input__wrapper " tabindex="-1">
           <input autocomplete="given-name" id="kundnummer-1" type="text" tabindex="0" name="text1">
           <input autocomplete="given-name" id="kundnummer-2" type="text" tabindex="0" name="text2">
         </div>
       </div>
-      <div class="c-select">
+      <div class="c-select c-select--tiny">
         <label for="arendetyp">Ärendetyp</label>
         <div class="c-select__wrapper">
           <select id="arendetyp" [(ngModel)]="arendetyp">
@@ -34,7 +34,7 @@
           </div>
         </div>
       </div>
-      <div class="c-select">
+      <div class="c-select c-select--tiny">
         <label for="field-1">Ans.typ</label>
         <div class="c-select__wrapper">
           <select id="anstyp" [(ngModel)]="anstyp">
@@ -46,10 +46,145 @@
           </div>
         </div>
       </div>
-      
+      <div class="confirm-btn" (click)="confirmbtnClick()" >
+        <button class="c-btn--primary c-btn--compact">Sök</button>
+        <button class="c-btn c-btn--compact">Rensa sökfilter</button>
+      </div>
     </div>
     <div class="col-lg-9">
-      <p>Hemsida</p>
+      <h3 class="hemsida-h3" *ngIf="!noresult"> Välj sökfilter och klicka på sök för att visa resultat </h3>
+      <table class="c-table top-table" aria-label="" *ngIf="noresult">
+        <colgroup>
+          <col>
+          <col>
+          <col>
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Kundnr</th>
+            <th>Namn</th>
+            <th>Kundens adress</th>
+            <th>Stödår</th>
+            <th>Ärendetyp</th>
+            <th>Ansökanstyp</th>
+            <th>Status</th>
+            <th>Åtgärdskoder</th>
+            <th>Ärendenr</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="#" class="c-link__light">O20855</a></td>
+            <td>Kalle Volymson171722</td>
+            <td>Volymgatan 12 555 55 Volymstad</td>
+            <td>2019</td>
+            <td>FARERS</td>
+            <td>UTBET</td>
+            <td>REG</td>
+            <td>1191, 1453</td>
+            <td>8228274</td>
+          </tr>
+          <tr>
+            <td><a href="#" class="c-link__light">X20855</a></td>
+            <td>Nalle Testson171722</td>
+            <td>Prodgatan 12 555 55 Volymstad</td>
+            <td>2019</td>
+            <td>FARERS</td>
+            <td>UTBET</td>
+            <td>REG</td>
+            <td>1191, 1453</td>
+            <td>8228278</td>
+          </tr>
+          <tr>
+            <td><a href="#" class="c-link__light">O20855</a></td>
+            <td>Kalle Volymson171722</td>
+            <td>Volymgatan 12 555 55 Volymstad</td>
+            <td>2019</td>
+            <td>FARERS</td>
+            <td>UTBET</td>
+            <td>REG</td>
+            <td>1191, 1453</td>
+            <td>8228274</td>
+          </tr>
+          <tr>
+            <td><a href="#" class="c-link__light">X20855</a></td>
+            <td>Nalle Testson171722</td>
+            <td>Prodgatan 12 555 55 Volymstad</td>
+            <td>2019</td>
+            <td>FARERS</td>
+            <td>UTBET</td>
+            <td>REG</td>
+            <td>1191, 1453</td>
+            <td>8228278</td>
+          </tr>
+          <tr>
+            <td><a href="#" class="c-link__light">O20855</a></td>
+            <td>Kalle Volymson171722</td>
+            <td>Volymgatan 12 555 55 Volymstad</td>
+            <td>2019</td>
+            <td>FARERS</td>
+            <td>UTBET</td>
+            <td>REG</td>
+            <td>1191, 1453</td>
+            <td>8228274</td>
+          </tr>
+          <tr>
+            <td><a href="#" class="c-link__light">X20855</a></td>
+            <td>Nalle Testson171722</td>
+            <td>Prodgatan 12 555 55 Volymstad</td>
+            <td>2019</td>
+            <td>FARERS</td>
+            <td>UTBET</td>
+            <td>REG</td>
+            <td>1191, 1453</td>
+            <td>8228278</td>
+          </tr>
+          <tr>
+            <td><a href="#" class="c-link__light">O20855</a></td>
+            <td>Kalle Volymson171722</td>
+            <td>Volymgatan 12 555 55 Volymstad</td>
+            <td>2019</td>
+            <td>FARERS</td>
+            <td>UTBET</td>
+            <td>REG</td>
+            <td>1191, 1453</td>
+            <td>8228274</td>
+          </tr>
+          <tr>
+            <td><a href="#" class="c-link__light">X20855</a></td>
+            <td>Nalle Testson171722</td>
+            <td>Prodgatan 12 555 55 Volymstad</td>
+            <td>2019</td>
+            <td>FARERS</td>
+            <td>UTBET</td>
+            <td>REG</td>
+            <td>1191, 1453</td>
+            <td>8228278</td>
+          </tr>
+          <tr>
+            <td><a href="#" class="c-link__light">O20855</a></td>
+            <td>Kalle Volymson171722</td>
+            <td>Volymgatan 12 555 55 Volymstad</td>
+            <td>2019</td>
+            <td>FARERS</td>
+            <td>UTBET</td>
+            <td>REG</td>
+            <td>1191, 1453</td>
+            <td>8228274</td>
+          </tr>
+          <tr>
+            <td><a href="#" class="c-link__light">X20855</a></td>
+            <td>Nalle Testson171722</td>
+            <td>Prodgatan 12 555 55 Volymstad</td>
+            <td>2019</td>
+            <td>FARERS</td>
+            <td>UTBET</td>
+            <td>REG</td>
+            <td>1191, 1453</td>
+            <td>8228278</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

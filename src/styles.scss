@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import url('https://cdnutv.jordbruksverket.se/designsystem/6.0.27-SNAPSHOT/package/dist/release/sjv-komponentbibliotek.css');
+@import url('https://cdnutv.jordbruksverket.se/designsystem/7.0.1-SNAPSHOT/package/dist/release/sjv-komponentbibliotek.css');
 
 @media (min-width: 1200px) {
     .container{
@@ -17,3 +17,16 @@
   background-color: #f2f2f2;
 }
 
+.c-select .c-select__wrapper .select__arrow{
+ bottom: 8px;
+ right: 8px;
+ border-width: 6px 4px 0;
+}
+
+.c-accordion-wrapper{
+  max-width: 50rem;
+  outline: none;
+  *{
+    outline: none;
+  }
+}

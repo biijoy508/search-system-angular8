@@ -3,7 +3,7 @@
   "version": "1.0.2-SNAPSHOT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --proxy-config proxy.conf.json --open",
+    "start": "ng serve --open",
     "start:prod": "ng serve --prod --open",
     "build": "ng build --aot",
     "build:prod": "ng build --prod --base-href=./",
@@ -27,6 +27,7 @@
     "core-js": "3.2.1",
     "rxjs": "6.5.3",
     "rxjs-tslint": "0.1.7",
+    "sockjs": "^0.3.19",
     "zone.js": "0.10.2"
   },
   "devDependencies": {

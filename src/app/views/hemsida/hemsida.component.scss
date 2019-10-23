@@ -5,15 +5,28 @@
 }
 
 #kundnummer-1 {
-  margin-right: 0.8rem;
+  margin-right: 0.2rem;
   width: 40%;
-  max-width: 5rem;
+  max-width: 3rem;
 }
 
 #kundnummer-2 {
-  max-width: 12rem;
+  max-width: 10rem;
 }
 
-.sokheading {
-   margin: 1.5rem 0 0.5rem 0;
+.hemsida-h3 {
+   margin-bottom: 0.5rem;
+}
+
+.top-table {
+  margin-top: 2.5rem;
+}
+
+.confirm-btn {
+  button{
+    max-width: 12rem;
+  }
+ :first-child{
+   margin-right: 1rem;
+ }
 }
