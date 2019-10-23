@@ -9,4 +9,7 @@ export class ApiService {
   public getData(url) {
     return this.httpClient.get(url);
   }
+  public postData(url, data) {
+    return this.httpClient.post<any>(url, data);
+  }
 }

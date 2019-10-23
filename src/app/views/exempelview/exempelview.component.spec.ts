@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ExempelviewComponent } from './exempelview.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ApiService } from 'src/app/services/api.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ExempelviewComponent', () => {
   let component: ExempelviewComponent;
@@ -8,7 +11,10 @@ describe('ExempelviewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ExempelviewComponent ]
+      imports: [HttpClientTestingModule],
+      providers: [ApiService],
+      declarations: [ExempelviewComponent],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
     .compileComponents();
   }));

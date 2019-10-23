@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MassHanteringComponent } from './mass-hantering.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('MassHanteringComponent', () => {
   let component: MassHanteringComponent;
@@ -8,7 +9,8 @@ describe('MassHanteringComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MassHanteringComponent ]
+      declarations: [MassHanteringComponent],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
     .compileComponents();
   }));
