@@ -1,15 +1,16 @@
 {
   "name": "farmen-gui",
-  "version": "1.0.0-SNAPSHOT",
+  "version": "1.0.2-SNAPSHOT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --open",
+    "start": "ng serve --proxy-config proxy.conf.json --open",
     "start:prod": "ng serve --prod --open",
     "build": "ng build --aot",
-    "build:prod": "ng build --prod",
-    "test": "ng test",
+    "build:prod": "ng build --prod --base-href=./",
+    "test": "ng test --browsers=ChromeHeadlessNoSandbox",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "clean": "rm -rf node_modules"
   },
   "private": true,
   "dependencies": {
@@ -23,17 +24,7 @@
     "@angular/pwa": "0.803.8",
     "@angular/router": "8.2.10",
     "@angular/service-worker": "8.2.10",
-    "@gorniv/ngx-universal": "2.0.1",
-    "@nguniversal/common": "8.1.1",
-    "@nguniversal/express-engine": "8.1.1",
-    "@nguniversal/module-map-ngfactory-loader": "8.1.1",
-    "@ngx-meta/core": "7.0.0",
-    "@ngx-translate/core": "11.0.1",
-    "@ngx-translate/http-loader": "4.0.0",
-    "cookie-parser": "1.4.4",
     "core-js": "3.2.1",
-    "node": "^12.11.1",
-    "reflect-metadata": "0.1.13",
     "rxjs": "6.5.3",
     "rxjs-tslint": "0.1.7",
     "zone.js": "0.10.2"

@@ -11,7 +11,8 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     const selectedMenuItem = document.querySelector('a[href=\'\/' + this.activeView + '\']');
-    selectedMenuItem.classList.add('active');
+    if (selectedMenuItem) {
+      selectedMenuItem.classList.add('active');
+    }
   }
-
 }
