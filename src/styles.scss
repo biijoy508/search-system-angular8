@@ -1,1 +1,39 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://cdnutv.jordbruksverket.se/designsystem/7.0.1-SNAPSHOT/package/dist/release/sjv-komponentbibliotek.css');
+@import "_settings.colors.scss";
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1600px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .c-header .container {
+    max-width: 1600px;
+  }
+}
+
+.c-input .input__wrapper {
+  background-color: #f2f2f2;
+}
+
+
+.c-select .c-select__wrapper .select__arrow {
+  bottom: 8px;
+  right: 8px;
+  border-width: 6px 4px 0;
+}
+
+.c-select {
+  margin-bottom: 1rem;
+}
+
+
+.c-accordion-wrapper {
+  max-width: 50rem;
+  margin-bottom: 3px;
+  * {
+    margin-bottom: 3px;
+  }
+}

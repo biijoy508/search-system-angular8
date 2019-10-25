@@ -6,12 +6,12 @@ import { KundsidaComponent } from './views/kundsida/kundsida.component';
 import { MassHanteringComponent} from './views/mass-hantering/mass-hantering.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/exempel', pathMatch: 'full' },
+  { path: '', redirectTo: '/hemsida', pathMatch: 'full' },
   { path: 'exempel', component: ExempelviewComponent },
   { path: 'hemsida', component: HemsidaComponent },
   { path: 'kundsida', component: KundsidaComponent },
   { path: 'masshantering', component: MassHanteringComponent },
-  { path: '**', redirectTo: '/exempel'}
+  { path: '**', redirectTo: '/hemsida'}
 ];
 
 @NgModule({
