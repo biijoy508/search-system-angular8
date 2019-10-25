@@ -56,6 +56,7 @@
           <p class="content"> Volymgatan 12, 555 55 Volymstad </p>
         </span>
       </fieldset>
+      <button class="c-btn--compact">Visa/Dölj alla</button>
       <form>
         <div class="c-accordion-wrapper">
           <ul aria-label="accordion Control Group links" class="c-accordion">
@@ -66,6 +67,41 @@
               </button>
               <div role="region" aria-labelledby="accordion-control-1" aria-hidden="false" id="content-1"
                 class="c-accordion-item__content">
+                <div class="inline2">
+                  <span>
+                    <div class="c-input c-input--tiny c-input--disabled">
+                      <label for="input-compact-text-6" tabindex="-1" id="label-6">PPN</label>
+                      <div class="input__wrapper input__wrapper--text">
+                        <input autocomplete="given-name" id="input-compact-text-6" aria-describedby="description-6"
+                          type="text" tabindex="0" name="text6" value="69043">
+                        <span class="sjv-i-skrap" style="vertical-align: middle; line-height: 1.5; padding-left: 4px;"></span>
+                      </div>
+                    </div>
+                  </span>
+
+                  <span>
+                    <div class="c-input c-input--tiny">
+                      <label for="input-compact-text-6" tabindex="-1" id="label-6">Antal styck</label>
+                      <div class="input__wrapper input__wrapper--text">
+                        <input autocomplete="given-name" id="input-compact-text-6" aria-describedby="description-6"
+                          type="text" tabindex="0" name="text6">
+                      </div>
+                    </div>
+                  </span>
+                  <span>
+                    <div class="c-input c-input--tiny">
+                      <label for="input-compact-text-6" tabindex="-1" id="label-6">Antal djurenheter</label>
+                      <div class="input__wrapper input__wrapper--text">
+                        <input autocomplete="given-name" id="input-compact-text-6" aria-describedby="description-6"
+                          type="text" tabindex="0" name="text6">
+                      </div>
+                    </div>
+                  </span>
+                </div>
+                <div class="inline2">
+                  <button class="c-btn--compact">Lägg till PPN</button>
+                  <button class="c-btn--compact">Spara</button>
+                </div>
               </div>
             </li>
           </ul>
@@ -85,12 +121,38 @@
                     <li aria-controls="content-1" aria-expanded="true" rel="c-accordion-js">
                       <button tabindex="0" name="item-one" id="accordion-control-1" class="c-accordion-item__title">
                         <span class="accordion__icon toggle-down"></span>
+                        <span>MAÅ</span>
+                      </button>
+                      <div role="region" aria-labelledby="accordion-control-1" aria-hidden="false" id="content-1"
+                        class="c-accordion-item__content">
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                 <div class="c-accordion-wrapper">
+                  <ul aria-label="accordion Control Group links" class="c-accordion">
+                    <li aria-controls="content-1" aria-expanded="true" rel="c-accordion-js">
+                      <button tabindex="0" name="item-one" id="accordion-control-1" class="c-accordion-item__title">
+                        <span class="accordion__icon toggle-down"></span>
+                        <span>LUÅ</span>
+                      </button>
+                      <div role="region" aria-labelledby="accordion-control-1" aria-hidden="false" id="content-1"
+                        class="c-accordion-item__content">
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="c-accordion-wrapper">
+                  <ul aria-label="accordion Control Group links" class="c-accordion">
+                    <li aria-controls="content-1" aria-expanded="true" rel="c-accordion-js">
+                      <button tabindex="0" name="item-one" id="accordion-control-1" class="c-accordion-item__title">
+                        <span class="accordion__icon toggle-down"></span>
                         <span>ÖPP</span>
                       </button>
                       <div role="region" aria-labelledby="accordion-control-1" aria-hidden="false" id="content-1"
                         class="c-accordion-item__content">
                         <p class="mb-0"><b>1191 - Konto saknas</b></p>
-                        <div class="inline2">
+                        <div class="inline3">
                           <span>
                             <div class="c-select c-select--tiny">
                               <label for="field-1">Status</label>
@@ -110,12 +172,31 @@
                               <div class="input__wrapper input__wrapper--text">
                                 <input autocomplete="given-name" id="input-compact-text-6"
                                   aria-describedby="description-6" type="text" tabindex="0" name="text6">
-                                <div class="icon">
-                                  <i class="sjv-i-check"></i>
+                              </div>
+                            </div>
+                          </span>
+                        </div>
+                         <p class="mb-0"><b>1453 - Brukaren är inte djurhållare på minst ett PPN i ansökan</b></p>
+                        <div class="inline3">
+                          <span>
+                            <div class="c-select c-select--tiny">
+                              <label for="field-1">Status</label>
+                              <div class="c-select__wrapper">
+                                <select id="field-1">
+                                  <option>ÖPP</option>
+                                  <option>LUÅ</option>
+                                </select>
+                                <div class="select__arrow">
                                 </div>
                               </div>
-                              <div class="c-input__description__wrapper">
-                                <p id="description-6" tabindex="-1"></p>
+                            </div>
+                          </span>
+                          <span>
+                            <div class="c-input c-input--tiny">
+                              <label for="input-compact-text-6" tabindex="-1" id="label-6">Kommentar</label>
+                              <div class="input__wrapper input__wrapper--text">
+                                <input autocomplete="given-name" id="input-compact-text-6"
+                                  aria-describedby="description-6" type="text" tabindex="0" name="text6">
                               </div>
                             </div>
                           </span>

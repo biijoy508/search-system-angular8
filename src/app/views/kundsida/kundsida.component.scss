@@ -1,59 +1,77 @@
-.kundsidaHeading{
-  display: flex;
+@import "../../../settings.colors";
+
+.kundsidaHeading {
+  display: inline-flex;
   font-size: 1rem;
   width: 100%;
-  border-bottom: black 1px solid;
+  border-bottom: darkgrey 1px solid;
   margin: 1rem 0;
 }
 
-.kundsidaHeading2{
- @extend .kundsidaHeading;
- justify-content: space-between;
+.kundsidaHeading2 {
+  @extend .kundsidaHeading;
+  justify-content: space-between;
 
- .reverse{
-   line-height: 1.9;
-   display: inline-flex;
-   vertical-align: middle;
-   *{
-     margin-right: 0.5rem;
-   }
- }
+  .reverse {
+    display: inline-flex;
+    line-height: 1.9;
+    vertical-align: middle;
+
+    * {
+      margin-right: 0.5rem;
+    }
+  }
+
+  .c-btn--compact {
+    max-width: 12rem;
+    margin-right: 3rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .kundsidaHeading2 {
+    display: block;
+  }
 }
 
 
-.c-select
-{
+.c-select {
   margin-right: 2rem;
   max-width: 10rem;
 }
 
-.heading{
+.heading {
   font-size: 1rem;
   margin: 0;
 }
 
-.content{
+.content {
   font-size: 1.2rem;
   font-weight: 700;
 }
 
-p{
-     margin: 0;
- }
+p {
+  margin: 0;
+}
 
-.inline{
-  span{
-  margin-right: 3rem;
-  display: inline-block;
+.inline {
+  span {
+    margin-right: 3rem;
+    display: inline-block;
   }
+
   margin-bottom: 2rem;
 }
-.inline2{
-  span{
-  margin-right: 1rem;
-  display: inline-block;
+
+.inline2 {
+  span,
+  p, button {
+    margin-right: 1rem;
+    display: inline-block;
   }
-  margin-bottom: -1.5rem;
 }
 
-
+.inline3 {
+  @extend .inline2;
+  border-bottom: solid 1px darkgrey;
+}
