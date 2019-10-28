@@ -6,7 +6,7 @@
     "start": "ng serve --open",
     "start:prod": "ng serve --prod --open",
     "build": "ng build --aot",
-    "build:prod": "ng build --prod --base-href=./",
+    "build:prod": "ng build",
     "test": "ng test --browsers=ChromeHeadlessNoSandbox",
     "lint": "ng lint",
     "e2e": "ng e2e",
