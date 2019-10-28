@@ -2,7 +2,7 @@
 <div role="main" class="container">
   <div class="row">
     <div class="col-lg-3">
-      <h3 class="hemsida-h3">Sökfilter</h3>
+      <h3 class="farmen-h3">Sökfilter</h3>
       <div class="c-select c-select--tiny">
         <label for="stodar">Stödår</label>
         <div class="c-select__wrapper">
@@ -18,7 +18,7 @@
       <div class="c-input c-input--tiny">
         <label for="input-text-1" id="label-1" tabindex="-1">Kundnr</label>
         <div class="input__wrapper " tabindex="-1">
-          <input autocomplete="given-name" id="kundnummer-1" type="text" tabindex="0" name="text1">
+          <input autocomplete="given-name" class="tinyInput" type="text" tabindex="0" name="text1">
           <input autocomplete="given-name" id="kundnummer-2" type="text" tabindex="0" name="text2">
         </div>
       </div>
@@ -52,8 +52,8 @@
       </div>
     </div>
     <div class="col-lg-9">
-      <h3 class="hemsida-h3" *ngIf="!noresult"> Välj sökfilter och klicka på sök för att visa resultat </h3>
-      <table class="c-table top-table" aria-label="" *ngIf="noresult">
+      <h3 class="farmen-h3" *ngIf="!noresult"> Välj sökfilter och klicka på sök för att visa resultat </h3>
+      <table class="c-table" aria-label="" *ngIf="noresult">
         <colgroup>
           <col>
           <col>
