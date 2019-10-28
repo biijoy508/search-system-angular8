@@ -2,16 +2,16 @@
 <div role="main" class="container">
   <div class="row">
     <div class="col">
-      <div class="kundsidaHeading">
-        Ärende | <b>O20855 - 2019 | KALLE VOLYMSON171722</b>
+      <div class="arendeKortInfo">
+        Ärende <b> | O20855 - 2019 | KALLE VOLYMSON171722</b>
       </div>
-      <div class="kundsidaHeading2">
+      <div class="btnFieldWrapper">
         <button class="c-btn--compact"><span class="sjv-i-pil-vanster"></span>Tillbaka till sökresultat</button>
-        <div class="reverse">
-          <p class="version">Version :</p>
+        <div class="versionPosition">
+          <p> Version :</p>
           <div class="c-select c-select--tiny">
             <div class="c-select__wrapper">
-              <select id="field-1">
+              <select id="version">
                 <option>Aktuell version</option>
                 <option>Version 1 - 2019-02-13</option>
               </select>
@@ -22,37 +22,37 @@
         </div>
       </div>
       <p><b>Ärendeinformation</b></p>
-      <fieldset class="inline">
+      <fieldset class="arendeInfo">
         <span>
-          <p class="heading"> Ärendetyp </p>
+          <p class="header"> Ärendetyp </p>
           <p class="content"> Farers </p>
         </span>
         <span>
-          <p class="heading"> Ans.typ </p>
+          <p class="header"> Ans.typ </p>
           <p class="content"> UTBET </p>
         </span>
         <span>
-          <p class="heading"> Nuvarande status </p>
+          <p class="header"> Nuvarande status </p>
           <p class="content"> REG </p>
         </span>
         <span>
-          <p class="heading"> Ärendenr </p>
+          <p class="header"> Ärendenr </p>
           <p class="content"> 8228274 </p>
         </span>
         <span>
-          <p class="heading"> Myndighet </p>
+          <p class="header"> Myndighet </p>
           <p class="content"> Borås </p>
         </span>
         <span>
-          <p class="heading"> Kundens org.nr </p>
+          <p class="header"> Kundens org.nr </p>
           <p class="content"> 670703-3319 </p>
         </span>
         <span>
-          <p class="heading"> Ankomstdatum </p>
+          <p class="header"> Ankomstdatum </p>
           <p class="content"> 2019-10-01 </p>
         </span>
         <span>
-          <p class="heading"> Adress </p>
+          <p class="header"> Adress </p>
           <p class="content"> Volymgatan 12, 555 55 Volymstad </p>
         </span>
       </fieldset>
@@ -60,21 +60,21 @@
       <form>
         <div class="c-accordion-wrapper">
           <ul aria-label="accordion Control Group links" class="c-accordion">
-            <li aria-controls="content-1" aria-expanded="true" rel="c-accordion-js">
-              <button tabindex="0" name="item-one" id="accordion-control-1" class="c-accordion-item__title">
+            <li aria-controls="ansokanDjurvalfard-content" aria-expanded="true" rel="c-accordion-js">
+              <button tabindex="0" name="item-one" id="ansokanDjurvalfard" class="c-accordion-item__title">
                 <span class="accordion__icon toggle-down"></span>
                 <span>Ansökan Djurvälfärd</span>
               </button>
-              <div role="region" aria-labelledby="accordion-control-1" aria-hidden="false" id="content-1"
+              <div role="region" aria-labelledby="ansokanDjurvalfard" aria-hidden="false" id="ansokanDjurvalfard-content"
                 class="c-accordion-item__content">
-                <div class="inline2">
+                <div class="inlineWrapper">
                   <span>
                     <div class="c-input c-input--tiny c-input--disabled">
-                      <label for="input-compact-text-6" tabindex="-1" id="label-6">PPN</label>
+                      <label for="ppn" tabindex="-1">PPN</label>
                       <div class="input__wrapper input__wrapper--text">
-                        <input autocomplete="given-name" id="input-compact-text-6" aria-describedby="description-6"
+                        <input autocomplete="given-name" id="ppn" aria-describedby="description-6"
                           type="text" tabindex="0" name="text6" value="69043">
-                        <span class="sjv-i-skrap" style="vertical-align: middle; line-height: 1.5; padding-left: 4px;"></span>
+                        <span class="sjv-i-skrap deleteIcon"></span>
                       </div>
                     </div>
                   </span>
@@ -98,7 +98,7 @@
                     </div>
                   </span>
                 </div>
-                <div class="inline2">
+                <div class="inlineWrapper">
                   <button class="c-btn--compact">Lägg till PPN</button>
                   <button class="c-btn--compact">Spara</button>
                 </div>
@@ -152,12 +152,12 @@
                       <div role="region" aria-labelledby="accordion-control-1" aria-hidden="false" id="content-1"
                         class="c-accordion-item__content">
                         <p class="mb-0"><b>1191 - Konto saknas</b></p>
-                        <div class="inline3">
+                        <div class="inlineContentWrapper">
                           <span>
                             <div class="c-select c-select--tiny">
-                              <label for="field-1">Status</label>
+                              <label for="status">Status</label>
                               <div class="c-select__wrapper">
-                                <select id="field-1">
+                                <select id="status">
                                   <option>ÖPP</option>
                                   <option>LUÅ</option>
                                 </select>
@@ -168,21 +168,21 @@
                           </span>
                           <span>
                             <div class="c-input c-input--tiny">
-                              <label for="input-compact-text-6" tabindex="-1" id="label-6">Kommentar</label>
+                              <label for="kommentar" tabindex="-1">Kommentar</label>
                               <div class="input__wrapper input__wrapper--text">
-                                <input autocomplete="given-name" id="input-compact-text-6"
+                                <input autocomplete="given-name" id="kommentar"
                                   aria-describedby="description-6" type="text" tabindex="0" name="text6">
                               </div>
                             </div>
                           </span>
                         </div>
                          <p class="mb-0"><b>1453 - Brukaren är inte djurhållare på minst ett PPN i ansökan</b></p>
-                        <div class="inline3">
+                        <div class="inlineContentWrapper">
                           <span>
                             <div class="c-select c-select--tiny">
-                              <label for="field-1">Status</label>
+                              <label for="status2">Status</label>
                               <div class="c-select__wrapper">
-                                <select id="field-1">
+                                <select id="status2">
                                   <option>ÖPP</option>
                                   <option>LUÅ</option>
                                 </select>
@@ -193,9 +193,9 @@
                           </span>
                           <span>
                             <div class="c-input c-input--tiny">
-                              <label for="input-compact-text-6" tabindex="-1" id="label-6">Kommentar</label>
+                              <label for="kommentar2" tabindex="-1">Kommentar</label>
                               <div class="input__wrapper input__wrapper--text">
-                                <input autocomplete="given-name" id="input-compact-text-6"
+                                <input autocomplete="given-name" id="kommentar2"
                                   aria-describedby="description-6" type="text" tabindex="0" name="text6">
                               </div>
                             </div>
@@ -212,12 +212,12 @@
 
         <div class="c-accordion-wrapper">
           <ul aria-label="accordion Control Group links" class="c-accordion">
-            <li aria-controls="content-1" aria-expanded="true" rel="c-accordion-js">
-              <button tabindex="0" name="item-one" id="accordion-control-1" class="c-accordion-item__title">
+            <li aria-controls="arendeattribute-content" aria-expanded="true" rel="c-accordion-js">
+              <button tabindex="0" name="item-one" id="arendeattribute" class="c-accordion-item__title">
                 <span class="accordion__icon toggle-down"></span>
                 <span>Attribut</span>
               </button>
-              <div role="region" aria-labelledby="accordion-control-1" aria-hidden="false" id="content-1"
+              <div role="region" aria-labelledby="arendeattribute" aria-hidden="false" id="arendeattribute-content"
                 class="c-accordion-item__content">
               </div>
             </li>
@@ -226,12 +226,12 @@
 
         <div class="c-accordion-wrapper">
           <ul aria-label="accordion Control Group links" class="c-accordion">
-            <li aria-controls="content-1" aria-expanded="true" rel="c-accordion-js">
-              <button tabindex="0" name="item-one" id="accordion-control-1" class="c-accordion-item__title">
+            <li aria-controls="arendebeslut-content" aria-expanded="true" rel="c-accordion-js">
+              <button tabindex="0" name="item-one" id="arendebeslut" class="c-accordion-item__title">
                 <span class="accordion__icon toggle-down"></span>
                 <span>Beslut</span>
               </button>
-              <div role="region" aria-labelledby="accordion-control-1" aria-hidden="false" id="content-1"
+              <div role="region" aria-labelledby="arendebeslut" aria-hidden="false" id="arendebeslut-content"
                 class="c-accordion-item__content">
               </div>
             </li>

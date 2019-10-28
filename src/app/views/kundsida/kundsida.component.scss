@@ -1,18 +1,21 @@
 @import "../../../settings.colors";
 
-.kundsidaHeading {
+.arendeKortInfo {
   display: inline-flex;
   font-size: 1rem;
   width: 100%;
   border-bottom: darkgrey 1px solid;
   margin: 1rem 0;
+  b{
+    padding-left: 0.4rem;
+  }
 }
 
-.kundsidaHeading2 {
-  @extend .kundsidaHeading;
+.btnFieldWrapper {
+  @extend .arendeKortInfo;
   justify-content: space-between;
 
-  .reverse {
+  .versionPosition {
     display: inline-flex;
     line-height: 1.9;
     vertical-align: middle;
@@ -29,18 +32,17 @@
 }
 
 @media (max-width: 576px) {
-  .kundsidaHeading2 {
+  .btnFieldWrapper {
     display: block;
   }
 }
-
 
 .c-select {
   margin-right: 2rem;
   max-width: 10rem;
 }
 
-.heading {
+.header {
   font-size: 1rem;
   margin: 0;
 }
@@ -54,7 +56,7 @@ p {
   margin: 0;
 }
 
-.inline {
+.arendeInfo {
   span {
     margin-right: 3rem;
     display: inline-block;
@@ -63,15 +65,23 @@ p {
   margin-bottom: 2rem;
 }
 
-.inline2 {
+.inlineWrapper {
+
   span,
-  p, button {
+  p,
+  button {
     margin-right: 1rem;
     display: inline-block;
   }
+
+  .deleteIcon {
+    vertical-align: middle;
+    line-height: 1.5;
+    padding-left: 4px;
+  }
 }
 
-.inline3 {
-  @extend .inline2;
+.inlineContentWrapper {
+  @extend .inlineWrapper;
   border-bottom: solid 1px darkgrey;
 }
