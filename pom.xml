@@ -22,7 +22,7 @@
                 <version>2.6</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
-                    <warSourceDirectory>${basedir}/src/main/webapp</warSourceDirectory>
+                    <warSourceDirectory>${basedir}/dist</warSourceDirectory>
                 </configuration>
             </plugin>
             <plugin>
