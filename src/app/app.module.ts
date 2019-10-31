@@ -6,8 +6,7 @@ import { ViewsModule } from './views/views.module';
 import { HttpClientModule  } from '@angular/common/http';
 import { ViewComponentsModule } from './view-components/view-components.module';
 import { RouterModule } from '@angular/router';
-import { RouteReuseStrategy } from '@angular/router';
-import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
