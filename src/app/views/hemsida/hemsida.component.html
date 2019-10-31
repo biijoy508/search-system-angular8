@@ -6,8 +6,8 @@
       <div class="c-select c-select--tiny">
         <label for="stodar">Stödår</label>
         <div class="c-select__wrapper">
-          <select id="stodar" [(ngModel)]="stodar">
-            <option *ngFor="let stodar_item of stodarValues" [value]="stodar_item">
+          <select id="stodar" [(ngModel)]="sokFilter.stodAr">
+            <option *ngFor="let stodar_item of sokFaltValuesHolder.stodAr" [value]="stodar_item">
               {{stodar_item}}
             </option>
           </select>
@@ -18,15 +18,15 @@
       <div class="c-input c-input--tiny">
         <label for="input-text-1" id="label-1" tabindex="-1">Kundnr</label>
         <div class="input__wrapper " tabindex="-1">
-          <input autocomplete="given-name" class="tinyInput" type="text" tabindex="0" name="text1">
-          <input autocomplete="given-name" id="kundnummer-2" type="text" tabindex="0" name="text2">
+          <input autocomplete="given-name" class="tinyInput" type="text" tabindex="0" name="text1" [(ngModel)]="sokFilter.kundNummerBokstav">
+          <input autocomplete="given-name" id="kundnummer-2" type="text" tabindex="0" name="text2" [(ngModel)]="sokFilter.kundNummer">
         </div>
       </div>
       <div class="c-select c-select--tiny">
         <label for="arendetyp">Ärendetyp</label>
         <div class="c-select__wrapper">
-          <select id="arendetyp" [(ngModel)]="arendetyp">
-            <option *ngFor="let arendetyp_item of arendetypValues" [value]="arendetyp_item">
+          <select id="arendetyp" [(ngModel)]="sokFilter.arendeTyp">
+            <option *ngFor="let arendetyp_item of sokFaltValuesHolder.arendeTyp" [value]="arendetyp_item">
               {{arendetyp_item}}
             </option>
           </select>
@@ -37,8 +37,8 @@
       <div class="c-select c-select--tiny">
         <label for="field-1">Ans.typ</label>
         <div class="c-select__wrapper">
-          <select id="anstyp" [(ngModel)]="anstyp">
-            <option *ngFor="let anstyp_item of anstypValues" [value]="anstyp_item">
+          <select id="anstyp" [(ngModel)]="sokFilter.ansokansTyp">
+            <option *ngFor="let anstyp_item of sokFaltValuesHolder.ansokansTyp" [value]="anstyp_item">
               {{anstyp_item}}
             </option>
           </select>
@@ -46,8 +46,8 @@
           </div>
         </div>
       </div>
-      <div class="confirm-btn" (click)="confirmbtnClick()">
-        <button class="c-btn--primary c-btn--compact">Sök</button>
+      <div class="confirm-btn">
+        <button class="c-btn--primary c-btn--compact" (click)="confirmbtnClick()">Sök</button>
         <button class="c-btn c-btn--compact">Rensa sökfilter</button>
       </div>
     </div>
@@ -72,13 +72,13 @@
         </thead>
         <tbody *ngFor="let arende of arendeLista">
           <tr>
-            <td><a href="#" class="c-link__light">{{arende.kundnr}}</a></td>
-            <td>{{arende.namn}}</td>
-            <td>{{arende.stodar}}</td>
+            <td><a href="#" class="c-link__light">{{arende.kundNummerBokstav}}-{{arende.kundNummer}}</a></td>
+            <td>{{arende.kundNamn}}</td>
+            <td>{{arende.stodAr}}</td>
             <td>{{arende.arendeTyp}}</td>
             <td>{{arende.ansokansTyp}}</td>
             <td>{{arende.status}}</td>
-            <td>{{arende.arendenr}}</td>
+            <td>{{arende.arendeNummer}}</td>
           </tr>
 
         </tbody>
