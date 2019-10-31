@@ -2,7 +2,7 @@
   <div class="container">
     <div class="c-header__content">
       <img class="c-header__content--logo"
-        src="/assets/logo.png"
+        src="./assets/logo.png"
         alt="Jordbruksverket logo">
       <span class="divider"></span>
       <a class="c-header__content--title"> Farmen </a>
@@ -16,17 +16,17 @@
   <div class="container">
     <ul class="horizontalmenu" role="menubar" aria-label="Main menu">
       <li role="none">
-        <a role="menuitem" class="active" routerLink="/hemsida" routerLinkActive="active" tabindex="0">
+        <a role="menuitem" class="active" [routerLink] = "'/hemsida'" routerLinkActive="active" tabindex="0">
           Sök ärende
         </a>
       </li>
       <li role="none">
-        <a role="menuitem" routerLink="/kundsida" routerLinkActive="active" tabindex="0">
+        <a role="menuitem" [routerLink] = "'/kundsida'" tabindex="0">
           Kundsida
         </a>
       </li>
       <li role="none">
-        <a role="menuitem" routerLink="/masshantering" routerLinkActive="active" tabindex="0">
+        <a role="menuitem" [routerLink] = "'/masshantering'" tabindex="0">
           Masshantering
         </a>
       </li>
