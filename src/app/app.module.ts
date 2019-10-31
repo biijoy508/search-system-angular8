@@ -6,6 +6,8 @@ import { ViewsModule } from './views/views.module';
 import { HttpClientModule  } from '@angular/common/http';
 import { ViewComponentsModule } from './view-components/view-components.module';
 import { RouterModule } from '@angular/router';
+import { RouteReuseStrategy } from '@angular/router';
+import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -13,13 +15,13 @@ import { RouterModule } from '@angular/router';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     HttpClientModule,
     ViewsModule,
     RouterModule,
-    ViewComponentsModule
+    ViewComponentsModule,
+    AppRoutingModule
   ],
-  providers: [],
+  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   bootstrap: [AppComponent]
 })
