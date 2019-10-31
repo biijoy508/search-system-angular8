@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  aredatArendenUrl: '/farmen/aredat/aredatarenden',
+  arendeTyperUrl: '/farmen/arende/arendetyper',
+  ansokanTyperUrl: '/farmen/arende/ansokanstyper',
+  stodarUrl: '/farmen/intr/stodar/?nuvarandear=2019'
 };
 
 /*
