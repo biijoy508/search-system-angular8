@@ -6,7 +6,7 @@ import { ViewsModule } from './views/views.module';
 import { HttpClientModule  } from '@angular/common/http';
 import { ViewComponentsModule } from './view-components/view-components.module';
 import { RouterModule } from '@angular/router';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { PathLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -20,7 +20,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     ViewComponentsModule,
     AppRoutingModule
   ],
-  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
+  providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   bootstrap: [AppComponent]
 })
