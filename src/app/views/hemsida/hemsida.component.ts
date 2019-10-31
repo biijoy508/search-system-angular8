@@ -53,9 +53,9 @@ export class HemsidaComponent implements AfterViewInit {
   constructor(private apiService: ApiService) { }
 
   ngAfterViewInit() {
-    this.hamtaArendetyperFranArendeModule();
-    this.hamtaAnsokanstyperFranArendeModule();
-    this.hamtaStodarFranIntrModule();
+    // this.hamtaArendetyperFranArendeModule();
+    // this.hamtaAnsokanstyperFranArendeModule();
+    // this.hamtaStodarFranIntrModule();
   }
 
   hamtaArendetyperFranArendeModule() {
@@ -84,7 +84,7 @@ export class HemsidaComponent implements AfterViewInit {
 
   hamtaSokResultatFranArendemodule() {
     const urlParameter = {
-      kundnummerbokstav: this.sokFilter.kundNummerBokstav, 
+      kundnummerbokstav: this.sokFilter.kundNummerBokstav,
       kundnummer: this.sokFilter.kundNummer,
       stodar: this.sokFilter.stodAr,
       arendetyp: this.sokFilter.arendeTyp,

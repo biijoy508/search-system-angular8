@@ -6,13 +6,14 @@ import { MassHanteringComponent } from './mass-hantering/mass-hantering.componen
 import { ExempelviewComponent } from './exempelview/exempelview.component';
 import { ViewComponentsModule } from '../view-components/view-components.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 
 
 @NgModule({
   declarations: [HemsidaComponent, KundsidaComponent, MassHanteringComponent, ExempelviewComponent],
   imports: [
-    CommonModule, ViewComponentsModule, FormsModule, ReactiveFormsModule
+    CommonModule, ViewComponentsModule, FormsModule, ReactiveFormsModule, RouterModule
   ],
   exports: [HemsidaComponent, KundsidaComponent, MassHanteringComponent, ExempelviewComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]

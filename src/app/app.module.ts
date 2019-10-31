@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { ViewsModule } from './views/views.module';
 import { HttpClientModule  } from '@angular/common/http';
 import { ViewComponentsModule } from './view-components/view-components.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { ViewComponentsModule } from './view-components/view-components.module';
     AppRoutingModule,
     HttpClientModule,
     ViewsModule,
+    RouterModule,
     ViewComponentsModule
   ],
   providers: [],
