@@ -9,15 +9,15 @@ import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
   { path: '', redirectTo: '/hemsida', pathMatch: 'full' },
-  { path: 'exempel', pathMatch: 'full', component: ExempelviewComponent },
-  { path: 'hemsida', pathMatch: 'full', component: HemsidaComponent },
-  { path: 'kundsida', pathMatch: 'full', component: KundsidaComponent },
-  { path: 'masshantering', pathMatch: 'full', component: MassHanteringComponent },
+  { path: 'exempel', component: ExempelviewComponent },
+  { path: 'hemsida',  component: HemsidaComponent },
+  { path: 'kundsida',  component: KundsidaComponent },
+  { path: 'masshantering', component: MassHanteringComponent },
   { path: '**', pathMatch: 'full', redirectTo: '/hemsida'}
 ];
 
 @NgModule({
-  imports: [BrowserModule, FormsModule, RouterModule.forRoot(routes, { useHash: false, enableTracing: true})],
+  imports: [BrowserModule, FormsModule, RouterModule.forRoot(routes, { useHash: true, enableTracing: true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
