@@ -53,9 +53,9 @@ export class HemsidaComponent implements AfterViewInit {
   constructor(private apiService: ApiService) { }
 
   ngAfterViewInit() {
-    // this.hamtaArendetyperFranArendeModule();
-    // this.hamtaAnsokanstyperFranArendeModule();
-    // this.hamtaStodarFranIntrModule();
+     this.hamtaArendetyperFranArendeModule();
+     this.hamtaAnsokanstyperFranArendeModule();
+     this.hamtaStodarFranIntrModule();
   }
 
   hamtaArendetyperFranArendeModule() {
