@@ -43,19 +43,19 @@ export class HemsidaComponent implements AfterViewInit {
   };
 
   sokFilter: SokFilter = {
-    kundNummerBokstav: null,
-    kundNummer: null,
-    stodAr: null,
-    arendeTyp: null,
-    ansokansTyp: null
+    kundNummerBokstav: '',
+    kundNummer: '',
+    stodAr: '',
+    arendeTyp: '',
+    ansokansTyp: ''
   };
 
   constructor(private apiService: ApiService) { }
 
   ngAfterViewInit() {
-     this.hamtaArendetyperFranArendeModule();
-     this.hamtaAnsokanstyperFranArendeModule();
-     this.hamtaStodarFranIntrModule();
+    this.hamtaStodarFranIntrModule();
+    this.hamtaArendetyperFranArendeModule();
+    this.hamtaAnsokanstyperFranArendeModule();
   }
 
   hamtaArendetyperFranArendeModule() {
@@ -82,7 +82,7 @@ export class HemsidaComponent implements AfterViewInit {
     });
   }
 
-  hamtaSokResultatFranArendemodule() {
+  hamtaSokResultatFranArendeModule() {
     const urlParameter = {
       kundnummerbokstav: this.sokFilter.kundNummerBokstav,
       kundnummer: this.sokFilter.kundNummer,
@@ -101,7 +101,7 @@ export class HemsidaComponent implements AfterViewInit {
     this.noresult = true;
     console.log(this.sokFilter);
     return new Promise(() => {
-      this.hamtaSokResultatFranArendemodule();
+      this.hamtaSokResultatFranArendeModule();
     });
   }
 }
