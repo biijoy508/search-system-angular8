@@ -16,7 +16,7 @@
         </div>
       </div>
       <div class="c-input c-input--tiny">
-        <label for="input-text-1" id="label-1" tabindex="-1">Kundnr</label>
+        <label for="input-text-1" id="label-1" tabindex="-1">Kundnummer</label>
         <div class="input__wrapper " tabindex="-1">
           <input autocomplete="given-name" class="tinyInput" type="text" tabindex="0" name="text1" [(ngModel)]="sokFilter.kundNummerBokstav">
           <input autocomplete="given-name" id="kundnummer-2" type="text" tabindex="0" name="text2" [(ngModel)]="sokFilter.kundNummer">
@@ -35,7 +35,7 @@
         </div>
       </div>
       <div class="c-select c-select--tiny">
-        <label for="field-1">Ans.typ</label>
+        <label for="field-1">Ansökanstyp</label>
         <div class="c-select__wrapper">
           <select id="anstyp" [(ngModel)]="sokFilter.ansokansTyp">
             <option *ngFor="let anstyp_item of sokFaltValuesHolder.ansokansTyp" [value]="anstyp_item">
