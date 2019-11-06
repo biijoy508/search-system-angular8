@@ -60,6 +60,7 @@ export class HemsidaComponent implements AfterViewInit {
 
   hamtaArendetyperFranArendeModule() {
     this.apiService.getData(environment.arendeTyperUrl).subscribe((data: any) => {
+      this.sokFaltValuesHolder.arendeTyp.length = 0;
       for (let i = 0; i < data.length; i++) {
         this.sokFaltValuesHolder.arendeTyp.push(data[i].kod);
       }
@@ -68,6 +69,7 @@ export class HemsidaComponent implements AfterViewInit {
 
   hamtaAnsokanstyperFranArendeModule() {
     this.apiService.getData(environment.ansokanTyperUrl).subscribe((data: any) => {
+      this.sokFaltValuesHolder.ansokansTyp.length = 0;
       for (let i = 0; i < data.length; i++) {
         this.sokFaltValuesHolder.ansokansTyp.push(data[i].kod);
       }
@@ -76,6 +78,7 @@ export class HemsidaComponent implements AfterViewInit {
 
   hamtaStodarFranIntrModule() {
     this.apiService.getData(environment.stodarUrl).subscribe((data: any) => {
+      this.sokFaltValuesHolder.stodAr.length = 0;
       for (let i = 0; i < data.length; i++) {
         this.sokFaltValuesHolder.stodAr.push(data[i]);
       }
@@ -92,6 +95,7 @@ export class HemsidaComponent implements AfterViewInit {
     };
 
     this.apiService.getDataMedParametrar(environment.aredatArendenUrl, urlParameter).subscribe((data: Arende[]) => {
+      this.arendeLista.length = 0;
       for (let i = 0; i < data.length; i++) {
         this.arendeLista.push(data[i]);
       }
