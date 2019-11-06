@@ -35,6 +35,9 @@ interface SokFilter {
 
 export class HemsidaComponent implements AfterViewInit {
   noresult = false;
+  showSpinner = false;
+  resultatStatusText = 'Välj sökfilter och klicka på sök för att visa resultat';
+  spinnerText = 'Sidan laddas';
   arendeLista: Arende[] = [];
   sokFaltValuesHolder: SokFaltValues = {
     stodAr: [''],
@@ -96,14 +99,21 @@ export class HemsidaComponent implements AfterViewInit {
 
     this.apiService.getDataMedParametrar(environment.aredatArendenUrl, urlParameter).subscribe((data: Arende[]) => {
       this.arendeLista.length = 0;
+      if (data.length === 0) {
+        this.noresult = false;
+        this.resultatStatusText = 'Sökningen gav inga resultat';
+      } else {
+        this.noresult = true;
+      }
       for (let i = 0; i < data.length; i++) {
         this.arendeLista.push(data[i]);
       }
+      this.showSpinner = false;
     });
   }
   confirmbtnClick() {
-    this.noresult = true;
-    console.log(this.sokFilter);
+    this.showSpinner = true;
+    this.spinnerText = 'Ärenden hämtas';
     return new Promise(() => {
       this.hamtaSokResultatFranArendeModule();
     });

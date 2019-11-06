@@ -52,7 +52,7 @@
       </div>
     </div>
     <div class="col-lg-9">
-      <h3 class="farmen-h3" *ngIf="!noresult"> Välj sökfilter och klicka på sök för att visa resultat </h3>
+      <h3 class="farmen-h3" *ngIf="!noresult"> {{resultatStatusText}} </h3>
       <table class="c-table" aria-label="" *ngIf="noresult">
         <colgroup>
           <col>
@@ -84,5 +84,23 @@
         </tbody>
       </table>
     </div>
+    <div *ngIf="showSpinner" class="c-spinner">
+        <div class="c-spinner__container">
+          <div class="c-spinner__animation">
+            <div class="c-spinner__animation__item">
+              <div class="c-spinner__circle circle--3"></div>
+            </div>
+            <div class="c-spinner__animation__item">
+              <div class="c-spinner__circle circle--2"></div>
+            </div>
+            <div class="c-spinner__animation__item">
+              <div class="c-spinner__circle circle--1"></div>
+            </div>
+          </div>
+          <div class="c-spinner__message"> {{spinnerText}} <span class="cursor">
+              <span class="sjv-i-cursor"></span></span>
+          </div>
+        </div>
+      </div>
   </div>
 </div>
