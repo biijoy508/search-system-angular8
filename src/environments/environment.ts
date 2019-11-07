@@ -7,7 +7,8 @@ export const environment = {
   aredatArendenUrl: '/farmen/arende/arenden',
   arendeTyperUrl: '/farmen/arende/arendetyper',
   ansokanTyperUrl: '/farmen/arende/ansokanstyper',
-  stodarUrl: '/farmen/intr/stodar/?nuvarandear=2019'
+  stodarUrl: '/farmen/intr/stodar/?nuvarandear=2019',
+  myndighetUrl: '/farmen/intr/myndigheter'
 };
 
 /*

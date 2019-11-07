@@ -12,11 +12,11 @@
         <div class="c-select c-select--tiny">
           <label for="myndighet">Myndighet</label>
           <div class="c-select__wrapper">
-            <select id="myndighet" (change)="changearendeSomKommerAttPaverkas()">
-              <option selected="" value="Välj myndighet">Välj myndighet</option>
-              <option value="Gävle">Gävle</option>
-              <option value="Göteborg">Göteborg</option>
-              <option value="Jönköping">Jönköping</option>
+            <select id="myndighet" [(ngModel)]="urval.myndighet">
+              <option *ngFor = "let myndighet_item of urvalValuesHolder.myndighet"
+                      [value]="myndighet_item">
+                      {{myndighet_item}}
+              </option>
             </select>
             <div class="select__arrow">
             </div>
