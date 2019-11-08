@@ -53,6 +53,7 @@
     </div>
     <div class="col-lg-9">
       <h3 class="farmen-h3" *ngIf="!noresult"> {{resultatStatusText}} </h3>
+      <p *ngIf="noresult">Visar 100 ärenden av {{antalArenden}}</p>
       <table class="c-table" aria-label="" *ngIf="noresult">
         <colgroup>
           <col>

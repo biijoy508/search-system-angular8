@@ -38,6 +38,7 @@ export class HemsidaComponent implements AfterViewInit {
   showSpinner = false;
   resultatStatusText = 'Välj sökfilter och klicka på sök för att visa resultat';
   spinnerText = 'Sidan laddas';
+  antalArenden = '';
   arendeLista: Arende[] = [];
   sokFaltValuesHolder: SokFaltValues = {
     stodAr: [''],
@@ -97,16 +98,15 @@ export class HemsidaComponent implements AfterViewInit {
       ansokanstyp: this.sokFilter.ansokansTyp
     };
 
-    this.apiService.getDataMedParametrar(environment.aredatArendenUrl, urlParameter).subscribe((data: Arende[]) => {
+    this.apiService.getDataMedParametrar(environment.aredatArendenUrl, urlParameter).subscribe((data: any[]) => {
       this.arendeLista.length = 0;
-      if (data.length === 0) {
+      if (Object.values(data)[0].length === 0) {
         this.noresult = false;
         this.resultatStatusText = 'Sökningen gav inga resultat';
       } else {
         this.noresult = true;
-      }
-      for (let i = 0; i < data.length; i++) {
-        this.arendeLista.push(data[i]);
+        this.antalArenden = Object.keys(data)[0];
+        this.arendeLista = Object.values(data)[0];
       }
       this.showSpinner = false;
     });
