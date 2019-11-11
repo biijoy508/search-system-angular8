@@ -18,7 +18,6 @@
       <div class="c-input c-input--tiny">
         <label for="input-text-1" id="label-1" tabindex="-1">Kundnummer</label>
         <div class="input__wrapper " tabindex="-1">
-          <input autocomplete="given-name" class="tinyInput" type="text" tabindex="0" name="text1" [(ngModel)]="sokFilter.kundNummerBokstav">
           <input autocomplete="given-name" id="kundnummer-2" type="text" tabindex="0" name="text2" [(ngModel)]="sokFilter.kundNummer">
         </div>
       </div>
@@ -52,9 +51,9 @@
       </div>
     </div>
     <div class="col-lg-9">
-      <h3 class="farmen-h3" *ngIf="!noresult"> {{resultatStatusText}} </h3>
-      <p *ngIf="noresult">Visar 100 ärenden av {{antalArenden}}</p>
-      <table class="c-table" aria-label="" *ngIf="noresult">
+      <h3 class="farmen-h3" *ngIf="noResults"> {{resultatStatusText}} </h3>
+      <p *ngIf="!noResults">Visar 100 ärenden av {{antalArenden}}</p>
+      <table class="c-table" aria-label="" *ngIf="!noResults">
         <colgroup>
           <col>
           <col>
@@ -73,7 +72,7 @@
         </thead>
         <tbody *ngFor="let arende of arendeLista">
           <tr>
-            <td><a href="#" class="c-link__light">{{arende.kundNummerBokstav}}-{{arende.kundNummer}}</a></td>
+            <td><a href="#" class="c-link__light">{{arende.kundNummerAlfaNumerisk}}</a></td>
             <td>{{arende.kundNamn}}</td>
             <td>{{arende.stodAr}}</td>
             <td>{{arende.arendeTyp}}</td>

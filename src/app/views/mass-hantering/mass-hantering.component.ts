@@ -3,7 +3,6 @@ import { ApiService } from 'src/app/services/api.service';
 import { environment } from 'src/environments/environment';
 
 
-
 interface UrvalValues {
   myndighet: string[];
 }
@@ -21,12 +20,13 @@ export class MassHanteringComponent implements AfterViewInit {
   arendeSomKommerAttPaverkas = 2200;
   showSpinner = false;
   successStatus = false;
+
   urvalValuesHolder: UrvalValues = {
     myndighet: ['']
   };
 
   urval: Urval = {
-    myndighet:''
+    myndighet: ''
   };
 
   constructor(private apiService: ApiService) { }
@@ -35,30 +35,31 @@ export class MassHanteringComponent implements AfterViewInit {
     this.hamtaMyndighetFranIntr();
   }
 
-
   hamtaMyndighetFranIntr() {
-    this.apiService.getData(environment.myndighetUrl).subscribe((data: any) => {
-      for (let i=0; i < data.length; i++) {
+    this.apiService.getData(environment.myndigheterUrl).subscribe((data: any) => {
+      for (let i = 0; i < data.length; i++) {
         this.urvalValuesHolder.myndighet.push(data[i].namn);
       }
     });
   }
 
-  changearendeSomKommerAttPaverkas() {
+  changeArendeSomKommerAttPaverkas() {
     this.arendeSomKommerAttPaverkas = this.arendeSomKommerAttPaverkas - 145;
   }
 
   andraStatus() {
-    this.toogleSpinner();
+    this.toggleSpinner();
     setTimeout(() => {
-      this.toogleSpinner();
-      this.tooglesuccessBanner();
+      this.toggleSpinner();
+      this.togglesuccessBanner();
     }, 3500);
   }
-  toogleSpinner() {
+
+  toggleSpinner() {
     this.showSpinner = !this.showSpinner;
   }
-  tooglesuccessBanner() {
+
+  togglesuccessBanner() {
     this.successStatus = !this.successStatus;
   }
 

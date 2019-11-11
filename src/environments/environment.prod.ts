@@ -1,7 +1,8 @@
 export const environment = {
   production: true,
-  aredatArendenUrl: '/farmen/arende/arenden',
+  ansokansTyperUrl: '/farmen/arende/ansokanstyper',
+  arendenUrl: '/farmen/arende/arenden',
   arendeTyperUrl: '/farmen/arende/arendetyper',
-  ansokanTyperUrl: '/farmen/arende/ansokanstyper',
-  stodarUrl: '/farmen/intr/stodar/?nuvarandear=2019'
+  myndigheterUrl: '/farmen/intr/myndigheter',
+  stodArUrl: '/farmen/intr/stodar',
 };

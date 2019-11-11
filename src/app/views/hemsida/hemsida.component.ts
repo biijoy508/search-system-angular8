@@ -3,8 +3,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { environment } from 'src/environments/environment';
 
 interface Arende {
-  kundNummerBokstav: string;
-  kundNummer: string;
+  kundNummerAlfaNumerisk: string;
   kundNamn: string;
   stodAr: string;
   arendeTyp: string;
@@ -20,7 +19,6 @@ interface SokFaltValues {
 }
 
 interface SokFilter {
-  kundNummerBokstav: string;
   kundNummer: string;
   stodAr: string;
   arendeTyp: string;
@@ -34,12 +32,13 @@ interface SokFilter {
 })
 
 export class HemsidaComponent implements AfterViewInit {
-  noresult = false;
-  showSpinner = false;
-  resultatStatusText = 'Välj sökfilter och klicka på sök för att visa resultat';
-  spinnerText = 'Sidan laddas';
   antalArenden = '';
   arendeLista: Arende[] = [];
+  noResults = true;
+  resultatStatusText = 'Välj sökfilter och klicka på sök för att visa resultat';
+  showSpinner = true;
+  spinnerText = 'Sidan laddas';
+
   sokFaltValuesHolder: SokFaltValues = {
     stodAr: [''],
     arendeTyp: [''],
@@ -47,7 +46,6 @@ export class HemsidaComponent implements AfterViewInit {
   };
 
   sokFilter: SokFilter = {
-    kundNummerBokstav: '',
     kundNummer: '',
     stodAr: '',
     arendeTyp: '',
@@ -57,65 +55,62 @@ export class HemsidaComponent implements AfterViewInit {
   constructor(private apiService: ApiService) { }
 
   ngAfterViewInit() {
-    this.hamtaStodarFranIntrModule();
-    this.hamtaArendetyperFranArendeModule();
-    this.hamtaAnsokanstyperFranArendeModule();
+    this.hamtaSokFaltValues();
   }
 
-  hamtaArendetyperFranArendeModule() {
-    this.apiService.getData(environment.arendeTyperUrl).subscribe((data: any) => {
-      this.sokFaltValuesHolder.arendeTyp = [''];
-      for (let i = 0; i < data.length; i++) {
-        this.sokFaltValuesHolder.arendeTyp.push(data[i].kod);
-      }
-    });
-  }
+  hamtaSokFaltValues() {
 
-  hamtaAnsokanstyperFranArendeModule() {
-    this.apiService.getData(environment.ansokanTyperUrl).subscribe((data: any) => {
-      this.sokFaltValuesHolder.ansokansTyp = [''];
-      for (let i = 0; i < data.length; i++) {
-        this.sokFaltValuesHolder.ansokansTyp.push(data[i].kod);
-      }
-    });
-  }
+    this.apiService.getChainedData()
+      .subscribe(res => {
+        this.sokFaltValuesHolder.stodAr = [''];
+        for (let i = 0; i < res[0].length; i++) {
+          this.sokFaltValuesHolder.stodAr.push(res[0][i]);
+        }
+        this.sokFaltValuesHolder.arendeTyp = [''];
+        for (let i = 0; i < res[1].length; i++) {
+          this.sokFaltValuesHolder.arendeTyp.push(res[1][i].kod);
+        }
+        this.sokFaltValuesHolder.ansokansTyp = [''];
+        for (let i = 0; i < res[2].length; i++) {
+          this.sokFaltValuesHolder.ansokansTyp.push(res[2][i].kod);
+        }
+        this.showSpinner = false;
+      });
 
-  hamtaStodarFranIntrModule() {
-    this.apiService.getData(environment.stodarUrl).subscribe((data: any) => {
-      this.sokFaltValuesHolder.stodAr = [''];
-      for (let i = 0; i < data.length; i++) {
-        this.sokFaltValuesHolder.stodAr.push(data[i]);
-      }
-    });
   }
 
   hamtaSokResultatFranArendeModule() {
+
     const urlParameter = {
-      kundnummerbokstav: this.sokFilter.kundNummerBokstav,
       kundnummer: this.sokFilter.kundNummer,
       stodar: this.sokFilter.stodAr,
       arendetyp: this.sokFilter.arendeTyp,
       ansokanstyp: this.sokFilter.ansokansTyp
     };
 
-    this.apiService.getDataMedParametrar(environment.aredatArendenUrl, urlParameter).subscribe((data: any[]) => {
+    this.apiService.getDataMedParametrar(environment.arendenUrl, urlParameter).subscribe((data: any[]) => {
       this.arendeLista.length = 0;
       if (Object.values(data)[0].length === 0) {
-        this.noresult = false;
+        this.noResults = true;
         this.resultatStatusText = 'Sökningen gav inga resultat';
       } else {
-        this.noresult = true;
+        this.noResults = false;
         this.antalArenden = Object.keys(data)[0];
         this.arendeLista = Object.values(data)[0];
       }
       this.showSpinner = false;
     });
+
   }
+
   confirmbtnClick() {
     this.showSpinner = true;
     this.spinnerText = 'Ärenden hämtas';
+
     return new Promise(() => {
       this.hamtaSokResultatFranArendeModule();
     });
+
   }
+
 }
