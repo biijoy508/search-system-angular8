@@ -126,14 +126,23 @@ p {
 }
 
 
-  @media (max-width: 770px) {
-    .xyz .abc .standga {
-      margin-left: 0;
-    }
+@media (max-width: 768px) {
+  .xyz .abc .standga {
+    margin-left: 0;
   }
+
+  .c-btn,
+  .c-btn--compact,
+  .c-btn--primary,
+  .c-btn--tiny {
+    width: auto;
+    margin-right: 1rem;
+  }
+}
 
   @media (max-width: 576px) {
     .btnFieldWrapper {
       display: block;
     }
   }
+
