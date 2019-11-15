@@ -10,8 +10,9 @@
 
 .tableContainer {
   margin-top: 2.5rem;
+
   p {
-     margin-bottom: 0rem;
+    margin-bottom: 0rem;
   }
 }
 
@@ -21,6 +22,16 @@
   }
 
   :first-child {
+    margin-right: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .c-btn,
+  .c-btn--compact,
+  .c-btn--primary,
+  .c-btn--tiny {
+    width: auto;
     margin-right: 1rem;
   }
 }
