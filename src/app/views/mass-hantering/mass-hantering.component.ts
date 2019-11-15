@@ -26,11 +26,12 @@ interface Urval {
   templateUrl: './mass-hantering.component.html',
   styleUrls: ['./mass-hantering.component.scss']
 })
-export class MassHanteringComponent implements OnInit {
+export class MassHanteringComponent implements OnInit, AfterViewInit {
   antalPaverkadeArenden = '';
   arendeSomKommerAttPaverkas = 2200;
   showSpinner = false;
   successStatus = false;
+  windowRef: any;
 
   urvalValuesHolder: UrvalValues = {
     myndighet: ['Gävle', 'Göteborg', 'Jönköping'],
@@ -50,12 +51,17 @@ export class MassHanteringComponent implements OnInit {
     tillStatus: ''
   };
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService) {
+    this.windowRef = window;
+   }
 
   ngOnInit() {
     //this.hamtaUrvalValues();
   }
 
+  ngAfterViewInit() {
+    this.windowRef.komponentbibliotek.init();
+  }
 
   hamtaUrvalValues() {
 
@@ -137,6 +143,15 @@ export class MassHanteringComponent implements OnInit {
   toggleSpinnerAndSuccessBanner() {
     this.toggleSpinner();
     this.successStatus = !this.successStatus;
+  }
+
+  onOptionsSelected(sokFilterparameter: string, value: any[]) {
+    if (sokFilterparameter === "arendeTyp") {
+      this.urval.arendeTyp.length = 0;
+      for (let i = 0; i < value.length; i++) {
+        this.urval.arendeTyp.push((value[i] as HTMLOptionElement).text);
+      }
+    }
   }
 
 }

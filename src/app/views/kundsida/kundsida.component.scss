@@ -107,6 +107,7 @@ p {
 .c-tabs {
   margin-top: 1.75rem;
 }
+
 .xyz {
   display: flex;
   justify-content: space-between;
@@ -120,15 +121,19 @@ p {
   font-size: 1rem;
 }
 
-
-@media (max-width: 770px) {
-  .xyz .abc .standga {
-    margin-left: 0;
-  }
+.c-tagsinput--tiny {
+  max-width: 20rem;
 }
 
-@media (max-width: 576px) {
-  .btnFieldWrapper {
-    display: block;
+
+  @media (max-width: 770px) {
+    .xyz .abc .standga {
+      margin-left: 0;
+    }
   }
-}
+
+  @media (max-width: 576px) {
+    .btnFieldWrapper {
+      display: block;
+    }
+  }

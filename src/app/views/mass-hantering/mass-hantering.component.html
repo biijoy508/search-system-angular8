@@ -34,10 +34,10 @@
                 </span>
               </div>
             </div>
-            <div class="c-select c-select--tiny">
-              <label for="arendetyp">Ärendetyp</label>
-              <div class="c-select__wrapper">
-                <select id="arendetyp" [(ngModel)]="urval.arendeTyp">
+        <div class="c-select c-select--tiny">
+          <label for="arendetyp">Ärendetyp</label>
+          <div class="c-select__wrapper">
+            <select id="arendetyp" [(ngModel)]="urval.arendeTyp">
                   <option *ngFor="let arendetyp_item of urvalValuesHolder.arendeTyp" [value]="arendetyp_item">
                     {{arendetyp_item}}
                   </option>
@@ -95,10 +95,11 @@
           <div class="c-banner__content">
             <span class="c-banner-icon sjv-i-framgang" tabindex="-1"></span>
             <div class="c-banner__text">
-              <p> <b>Masshanteringen har startats. </b> Du kan se i JBR om körningen är färdig. <br> Du kan lämna denna sida utan att körningen avbryts </p>
+              <p> <b>Masshanteringen har startats. </b> Du kan se i JBR om körningen är färdig. <br> Du kan lämna denna
+                sida utan att körningen avbryts </p>
               <div class="c-banner__actionlink-container">
-                <a href="https://www.jordbruksverket.se"
-                  class="c-banner__actionlink c-link__light--icon-right">Interna IT-system<span class="sjv-i-extern-lank"></span></a>
+                <a href="https://www.jordbruksverket.se" class="c-banner__actionlink c-link__light--icon-right">Interna
+                  IT-system<span class="sjv-i-extern-lank"></span></a>
                 <a class="c-banner__actionlink" (click)="togglesuccessBanner()">Stäng</a>
               </div>
             </div>
@@ -109,20 +110,20 @@
 
     <div *ngIf="showSpinner" class="c-spinner">
       <div class="c-spinner__container">
-          <div class="c-banner" role="banner">
-            <div class="c-banner__content">
-              <span class="c-banner-icon sjv-i-varning" tabindex="-1"></span>
-              <div class="c-banner__text">
-                <p><b>Ändra status</b></p>
-                <p> Vill du verkligen massändra status på ditt urval?</p>
-                <p> Statusändringen berör {{arendeSomKommerAttPaverkas}} ärenden. </p>
-                <div class="c-banner__actionlink-container">
-                  <button class="c-btn--compact" (click)="toggleSpinnerAndSuccessBanner()">Ändra status</button>
-                  <button class="c-btn--compact" (click)="toggleSpinner()">Avbryt</button>
-                </div>
+        <div class="c-banner" role="banner">
+          <div class="c-banner__content">
+            <span class="c-banner-icon sjv-i-varning" tabindex="-1"></span>
+            <div class="c-banner__text">
+              <p><b>Ändra status</b></p>
+              <p> Vill du verkligen massändra status på ditt urval?</p>
+              <p> Statusändringen berör {{arendeSomKommerAttPaverkas}} ärenden. </p>
+              <div class="c-banner__actionlink-container">
+                <button class="c-btn--compact" (click)="toggleSpinnerAndSuccessBanner()">Ändra status</button>
+                <button class="c-btn--compact" (click)="toggleSpinner()">Avbryt</button>
               </div>
             </div>
           </div>
+        </div>
         <!-- <div class="c-spinner__animation">
           <div class="c-spinner__animation__item">
             <div class="c-spinner__circle circle--3"></div>

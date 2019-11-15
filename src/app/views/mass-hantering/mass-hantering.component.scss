@@ -4,11 +4,16 @@
   margin: 1rem 0;
 }
 
+
 .filtercontainer {
-  .c-select {
+
+  .c-select,
+  .c-multiselect--tiny {
     display: inline-block;
     margin-right: 1rem;
+    max-width: 10rem;
   }
+
 }
 
 
@@ -25,6 +30,10 @@ button,
   font-size: 13px;
 }
 
+p, .c-banner__content .c-banner__text .c-banner__actionlink-container .c-banner__actionlink {
+  font-size: 1rem;
+}
+
 .c-banner__content .c-banner-icon {
   padding: 2px 1rem 0 0;
   font-size: 2rem;
@@ -34,6 +43,7 @@ button,
   padding-top: 0;
   margin-left: -.4rem;
 }
+
 .banner-width {
   max-width: 30rem;
 }

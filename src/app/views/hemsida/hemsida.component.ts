@@ -34,7 +34,7 @@ interface SokFilter {
 })
 
 export class HemsidaComponent implements AfterViewInit, OnInit {
-  antalArenden = '';
+  antalArenden = '2000';
   antalHamtadeArenden = '';
   arendeLista: Arende[] = [];
   noResults = true;
@@ -105,7 +105,7 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
         this.resultatStatusText = 'Sökningen gav inga resultat';
       } else {
         this.noResults = false;
-        this.antalArenden = data.length.toString();
+        //this.antalArenden = data.length.toString();
         for (let i = 0; i < data.length; i++) {
           this.arendeLista.push(data[i]);
         }
@@ -116,14 +116,6 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
 
   }
 
-  onChangeMultiselect(element: any) {
-    for (let index = 0; index < element.length; index++) {
-      const elementChild = element.options[index] as HTMLOptionElement;
-      if (elementChild.selected === true) {
-        this.sokFilter.arendeTyp.push(elementChild.text);
-      }
-    }
-  }
   onOptionsSelected(sokFilterparameter: string, value: any[]) {
     if (sokFilterparameter === "arendeTyp") {
       this.sokFilter.arendeTyp.length = 0;
