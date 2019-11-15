@@ -11,40 +11,43 @@
               {{stodar_item}}
             </option>
           </select>
-          <div class="select__arrow">
-          </div>
+          <span class="sjv-i-caret-ner ikon">
+          </span>
         </div>
       </div>
+
       <div class="c-input c-input--tiny">
         <label for="input-text-1" id="label-1" tabindex="-1">Kundnummer</label>
         <div class="input__wrapper " tabindex="-1">
-          <input autocomplete="given-name" id="kundnummer-2" type="text" tabindex="0" name="text2" [(ngModel)]="sokFilter.kundNummer">
+          <input autocomplete="given-name" id="kundnummer-2" type="text" tabindex="0" name="text2"
+            [(ngModel)]="sokFilter.kundNummer">
         </div>
       </div>
-      <div class="c-select c-select--tiny">
-        <label for="arendetyp">Ärendetyp</label>
+
+      <div class="c-multiselect--tiny" rel="c-multiselect-js">
+        <label for="arendetyp" class="c-multiselect__label">Ärendetyp</label>
         <div class="c-select__wrapper">
-          <select id="arendetyp" [(ngModel)]="sokFilter.arendeTyp">
+          <select name="arendeTyp[]" id="arendetyp" multiple="multiple" #arendetyp
+            (change)='onOptionsSelected("arendeTyp",arendetyp.selectedOptions)'>
             <option *ngFor="let arendetyp_item of sokFaltValuesHolder.arendeTyp" [value]="arendetyp_item">
               {{arendetyp_item}}
             </option>
           </select>
-          <div class="select__arrow">
-          </div>
         </div>
       </div>
-      <div class="c-select c-select--tiny">
-        <label for="field-1">Ansökanstyp</label>
+
+      <div class="c-multiselect--tiny" rel="c-multiselect-js">
+        <label for="ansokansTyp" class="c-multiselect__label">Ansökanstyp</label>
         <div class="c-select__wrapper">
-          <select id="anstyp" [(ngModel)]="sokFilter.ansokansTyp">
+          <select name="ansokansTyp[]" id="ansokansTyp" multiple="multiple" #ansokansTyp
+            (change)='onOptionsSelected("ansokansTyp",ansokansTyp.selectedOptions)'>
             <option *ngFor="let anstyp_item of sokFaltValuesHolder.ansokansTyp" [value]="anstyp_item">
               {{anstyp_item}}
             </option>
           </select>
-          <div class="select__arrow">
-          </div>
         </div>
       </div>
+
       <div class="confirm-btn">
         <button class="c-btn--primary c-btn--compact" (click)="confirmbtnClick()">Sök</button>
         <button class="c-btn c-btn--compact">Rensa sökfilter</button>
@@ -52,55 +55,56 @@
     </div>
     <div class="col-lg-9">
       <h3 class="farmen-h3" *ngIf="noResults"> {{resultatStatusText}} </h3>
-      <p *ngIf="!noResults">Visar 100 ärenden av {{antalArenden}}</p>
-      <table class="c-table" aria-label="" *ngIf="!noResults">
-        <colgroup>
-          <col>
-          <col>
-          <col>
-        </colgroup>
-        <thead>
-          <tr>
-            <th>Kundnr</th>
-            <th>Namn</th>
-            <th>Stödår</th>
-            <th>Ärendetyp</th>
-            <th>Ansökanstyp</th>
-            <th>Status</th>
-            <th>Ärendenr</th>
-          </tr>
-        </thead>
-        <tbody *ngFor="let arende of arendeLista">
-          <tr>
-            <td><a href="#" class="c-link__light">{{arende.kundNummerAlfaNumerisk}}</a></td>
-            <td>{{arende.kundNamn}}</td>
-            <td>{{arende.stodAr}}</td>
-            <td>{{arende.arendeTyp}}</td>
-            <td>{{arende.ansokansTyp}}</td>
-            <td>{{arende.status}}</td>
-            <td>{{arende.arendeNummer}}</td>
-          </tr>
-
-        </tbody>
-      </table>
+      <div class="tableContainer" *ngIf="!noResults">
+        <p>Visar {{antalHamtadeArenden}} av {{antalArenden}} ärenden</p>
+        <table class="c-table" aria-label="">
+          <colgroup>
+            <col>
+            <col>
+            <col>
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Kundnr</th>
+              <th>Namn</th>
+              <th>Stödår</th>
+              <th>Ärendetyp</th>
+              <th>Ansökanstyp</th>
+              <th>Status</th>
+              <th>Ärendenr</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let arende of arendeLista">
+            <tr>
+              <td><a class="c-link__light" [routerLink] = "'/kundsida'">{{arende.kundNummerBokstav}} {{arende.kundNummer}}</a></td>
+              <td>{{arende.kundNamn}}</td>
+              <td>{{arende.stodAr}}</td>
+              <td>{{arende.arendeTyp}}</td>
+              <td>{{arende.ansokansTyp}}</td>
+              <td>{{arende.status}}</td>
+              <td>{{arende.arendeNummer}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
     <div *ngIf="showSpinner" class="c-spinner">
-        <div class="c-spinner__container">
-          <div class="c-spinner__animation">
-            <div class="c-spinner__animation__item">
-              <div class="c-spinner__circle circle--3"></div>
-            </div>
-            <div class="c-spinner__animation__item">
-              <div class="c-spinner__circle circle--2"></div>
-            </div>
-            <div class="c-spinner__animation__item">
-              <div class="c-spinner__circle circle--1"></div>
-            </div>
+      <div class="c-spinner__container">
+        <div class="c-spinner__animation">
+          <div class="c-spinner__animation__item">
+            <div class="c-spinner__circle circle--3"></div>
           </div>
-          <div class="c-spinner__message"> {{spinnerText}} <span class="cursor">
-              <span class="sjv-i-cursor"></span></span>
+          <div class="c-spinner__animation__item">
+            <div class="c-spinner__circle circle--2"></div>
+          </div>
+          <div class="c-spinner__animation__item">
+            <div class="c-spinner__circle circle--1"></div>
           </div>
         </div>
+        <div class="c-spinner__message"> {{spinnerText}} <span class="cursor">
+            <span class="sjv-i-cursor"></span></span>
+        </div>
       </div>
+    </div>
   </div>
 </div>

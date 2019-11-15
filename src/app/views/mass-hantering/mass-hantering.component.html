@@ -3,100 +3,103 @@
   <div class="row">
     <div class="col">
       <h4 class="underline">Masshöj status</h4>
-      <p><b>Urval:</b> {{arendeSomKommerAttPaverkas}} av totalt 2200 ärenden kommer påverkas.</p>
     </div>
   </div>
   <div class="row">
     <div class="col-sm-8">
       <div class="filtercontainer">
-        <div class="c-select c-select--tiny">
-          <label for="myndighet">Myndighet</label>
-          <div class="c-select__wrapper">
-            <select id="myndighet" [(ngModel)]="urval.myndighet">
-              <option *ngFor = "let myndighet_item of urvalValuesHolder.myndighet"
-                      [value]="myndighet_item">
-                      {{myndighet_item}}
-              </option>
-            </select>
-            <div class="select__arrow">
+        <div class="row">
+          <div class="col">
+            <div class="c-select c-select--tiny">
+              <label for="myndighet">Myndighet</label>
+              <div class="c-select__wrapper">
+                <select id="myndighet" [(ngModel)]="urval.myndighet">
+                  <option *ngFor="let myndighet_item of urvalValuesHolder.myndighet" [value]="myndighet_item">
+                    {{myndighet_item}}
+                  </option>
+                </select>
+                <span class="sjv-i-caret-ner ikon">
+                </span>
+              </div>
+            </div>
+            <div class="c-select c-select--tiny">
+              <label for="stodar">Stödår</label>
+              <div class="c-select__wrapper">
+                <select id="stodar" [(ngModel)]="urval.stodAr">
+                  <option *ngFor="let stodar_item of urvalValuesHolder.stodAr" [value]="stodar_item">
+                    {{stodar_item}}
+                  </option>
+                </select>
+                <span class="sjv-i-caret-ner ikon">
+                </span>
+              </div>
+            </div>
+            <div class="c-select c-select--tiny">
+              <label for="arendetyp">Ärendetyp</label>
+              <div class="c-select__wrapper">
+                <select id="arendetyp" [(ngModel)]="urval.arendeTyp">
+                  <option *ngFor="let arendetyp_item of urvalValuesHolder.arendeTyp" [value]="arendetyp_item">
+                    {{arendetyp_item}}
+                  </option>
+                </select>
+                <span class="sjv-i-caret-ner ikon">
+                </span>
+              </div>
+            </div>
+            <div class="c-select c-select--tiny">
+              <label for="ansokanstyp">Ansökanstyp</label>
+              <div class="c-select__wrapper">
+                <select id="ansokanstyp" [(ngModel)]="urval.ansokansTyp">
+                  <option *ngFor="let ansokanstyp_item of urvalValuesHolder.ansokansTyp" [value]="ansokanstyp_item">
+                    {{ansokanstyp_item}}
+                  </option>
+                </select>
+                <span class="sjv-i-caret-ner ikon">
+                </span>
+              </div>
             </div>
           </div>
         </div>
-        <div class="c-select c-select--tiny">
-          <label for="stodar">Stödår</label>
-          <div class="c-select__wrapper">
-            <select id="stodar" (change)="changeArendeSomKommerAttPaverkas()">
-              <option selected="" value="Välj stödår">Välj stödår</option>
-              <option value="2016">2016</option>
-              <option value="2017">2017</option>
-              <option value="2018">2018</option>
-              <option value="2019">2019</option>
-            </select>
-            <div class="select__arrow">
+        <div class="row">
+          <div class="col">
+            <div class="c-select c-select--tiny">
+              <label for="franstatus">Från status</label>
+              <div class="c-select__wrapper">
+                <select id="franstatus" [(ngModel)]="urval.franStatus">
+                  <option *ngFor="let franstatus_item of urvalValuesHolder.franStatus" [value]="franstatus_item">
+                    {{franstatus_item}}
+                  </option>
+                </select>
+                <span class="sjv-i-caret-ner ikon">
+                </span>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="c-select c-select--tiny">
-          <label for="arendetyp">Ärendetyp</label>
-          <div class="c-select__wrapper">
-            <select id="arendetyp" (change)="changeArendeSomKommerAttPaverkas()">
-              <option selected="" value="Välj ärendetyp">Välj ärendetyp</option>
-              <option value="FARERS">FARERS</option>
-              <option value="KLOVERS">KLOVERS</option>
-              <option value="SUGGERS">SUGGERS</option>
-            </select>
-            <div class="select__arrow">
-            </div>
-          </div>
-        </div>
-        <div class="c-select c-select--tiny">
-          <label for="ansokanstyp">Ansökanstyp</label>
-          <div class="c-select__wrapper">
-            <select id="ansokanstyp" (change)="changeArendeSomKommerAttPaverkas()">
-              <option selected="" value="Välj ansökanstyp">Välj ansökanstyp</option>
-              <option value="UTBET">UTBET</option>
-              <option value="ÅTAG">ÅTAG</option>
-            </select>
-            <div class="select__arrow">
-            </div>
-          </div>
-        </div>
-        <div class="c-select c-select--tiny">
-          <label for="franstatus">Från status</label>
-          <div class="c-select__wrapper">
-            <select id="franstatus">
-              <option selected="" value="Välj från-status">Välj från-status</option>
-              <option value="REG">REG</option>
-              <option value="HANDL">HANDL</option>
-              <option value="BER">BER</option>
-            </select>
-            <div class="select__arrow">
-            </div>
-          </div>
-        </div>
-        <div class="c-select c-select--tiny">
-          <label for="tillstatus">Till status</label>
-          <div class="c-select__wrapper">
-            <select id="tillstatus">
-              <option selected="" value="Välj till-status">Välj till-status</option>
-              <option value="REG">REG</option>
-              <option value="HANDL">HANDL</option>
-              <option value="BER">BER</option>
-            </select>
-            <div class="select__arrow">
+            <div class="c-select c-select--tiny">
+              <label for="tillstatus">Till status</label>
+              <div class="c-select__wrapper">
+                <select id="tillstatus" [(ngModel)]="urval.tillStatus">
+                  <option *ngFor="let tillstatus_item of urvalValuesHolder.tillStatus" [value]="tillstatus_item">
+                    {{tillstatus_item}}
+                  </option>
+                </select>
+                <span class="sjv-i-caret-ner ikon">
+                </span>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <button class="c-btn--primary c-btn--compact" (click)="andraStatus()">Ändra status</button>
       <div *ngIf="successStatus" class="banner-width">
-        <div class="c-banner c-banner--warning banner-width" role="banner">
+        <div class="c-banner banner-width" role="banner">
           <div class="c-banner__content">
-            <span class="c-banner-icon sjv-i-varning" tabindex="-1"></span>
+            <span class="c-banner-icon sjv-i-framgang" tabindex="-1"></span>
             <div class="c-banner__text">
-              <p> <b>Statushöjning klar! </b> 22 ärenden kunde inte höjas till önskad status. </p>
+              <p> <b>Masshanteringen har startats. </b> Du kan se i JBR om körningen är färdig. <br> Du kan lämna denna sida utan att körningen avbryts </p>
               <div class="c-banner__actionlink-container">
-                <a class="c-banner__actionlink" (click)="tooglesuccessBanner()">Stäng</a>
+                <a href="https://www.jordbruksverket.se"
+                  class="c-banner__actionlink c-link__light--icon-right">Interna IT-system<span class="sjv-i-extern-lank"></span></a>
+                <a class="c-banner__actionlink" (click)="togglesuccessBanner()">Stäng</a>
               </div>
             </div>
           </div>
@@ -104,32 +107,36 @@
       </div>
     </div>
 
-    <div class="col-sm-4">
-      <fieldset>
-        <legend> Notes</legend>
-        <p>Det kan ibland ta några minuter att göra detta. Behöver vi ha en form av notifieringar som visas
-          kontinuerligt i systemet när såna här är färdiga? Kan bli komplicerat - kanske räcker att den bara står på
-          sidan och tuggar så länge den behöver men att handläggarna kan ta upp ett annat fönster av FARMEN?
-          <br> Bör även läggas till en "Är du säker att du vill massändra status?"</p>
-      </fieldset>
+    <div *ngIf="showSpinner" class="c-spinner">
+      <div class="c-spinner__container">
+          <div class="c-banner" role="banner">
+            <div class="c-banner__content">
+              <span class="c-banner-icon sjv-i-varning" tabindex="-1"></span>
+              <div class="c-banner__text">
+                <p><b>Ändra status</b></p>
+                <p> Vill du verkligen massändra status på ditt urval?</p>
+                <p> Statusändringen berör {{arendeSomKommerAttPaverkas}} ärenden. </p>
+                <div class="c-banner__actionlink-container">
+                  <button class="c-btn--compact" (click)="toggleSpinnerAndSuccessBanner()">Ändra status</button>
+                  <button class="c-btn--compact" (click)="toggleSpinner()">Avbryt</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        <!-- <div class="c-spinner__animation">
+          <div class="c-spinner__animation__item">
+            <div class="c-spinner__circle circle--3"></div>
+          </div>
+          <div class="c-spinner__animation__item">
+            <div class="c-spinner__circle circle--2"></div>
+          </div>
+          <div class="c-spinner__animation__item">
+            <div class="c-spinner__circle circle--1"></div>
+          </div>
+        </div>
+        <div class="c-spinner__message">Höjer status på {{arendeSomKommerAttPaverkas}} ärenden... <span class="cursor">
+            <span class="sjv-i-cursor"></span></span>
+        </div> -->
+      </div>
     </div>
   </div>
-  <div *ngIf="showSpinner" class="c-spinner">
-    <div class="c-spinner__container">
-      <div class="c-spinner__animation">
-        <div class="c-spinner__animation__item">
-          <div class="c-spinner__circle circle--3"></div>
-        </div>
-        <div class="c-spinner__animation__item">
-          <div class="c-spinner__circle circle--2"></div>
-        </div>
-        <div class="c-spinner__animation__item">
-          <div class="c-spinner__circle circle--1"></div>
-        </div>
-      </div>
-      <div class="c-spinner__message">Höjer status på {{arendeSomKommerAttPaverkas}} ärenden... <span class="cursor">
-          <span class="sjv-i-cursor"></span></span>
-      </div>
-    </div>
-  </div>
-</div>

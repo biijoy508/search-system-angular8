@@ -5,4 +5,6 @@ export const environment = {
   arendeTyperUrl: '/farmen/arende/arendetyper',
   myndigheterUrl: '/farmen/intr/myndigheter',
   stodArUrl: '/farmen/intr/stodar',
+  statusUrl: '/farmen/grund/arendestatusar',
+  paverkadeArendenUrl: 'farmen/arende/antalarenden'
 };
