@@ -33,8 +33,8 @@ interface SokFilter {
 })
 
 export class HemsidaComponent implements AfterViewInit, OnInit {
-  antalArenden = '';
-  antalHamtadeArenden = '';
+  antalArenden = '0';
+  antalHamtadeArenden = '0';
   arendeLista: Arende[] = [];
   noResults = true;
   windowRef: any;

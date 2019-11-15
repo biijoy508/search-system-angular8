@@ -121,6 +121,10 @@ export class MassHanteringComponent implements OnInit, AfterViewInit {
 
   }
 
+  togglesuccessBanner() {
+    this.successStatus = !this.successStatus;
+  }
+
   togglewarningAndSuccessBanner() {
     this.showWarning = false;
     this.successStatus = true;
