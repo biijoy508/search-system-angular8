@@ -4,7 +4,7 @@ export const environment = {
   arendenUrl: '/farmen/arende/arenden',
   arendeTyperUrl: '/farmen/arende/arendetyper',
   myndigheterUrl: '/farmen/intr/myndigheter',
-  stodArUrl: '/farmen/intr/stodar',
+  stodArUrl: '/farmen/intr/stodar/?nuvarandear=2019',
   statusUrl: '/farmen/grund/arendestatusar',
   paverkadeArendenUrl: 'farmen/arende/antalarenden'
 };
