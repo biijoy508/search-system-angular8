@@ -3,8 +3,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { environment } from 'src/environments/environment';
 
 interface Arende {
-  kundNummerBokstav: string;
-  kundNummer: string;
+  kundNummerAlfaNumerisk: string;
   kundNamn: string;
   stodAr: string;
   arendeTyp: string;
@@ -34,7 +33,7 @@ interface SokFilter {
 })
 
 export class HemsidaComponent implements AfterViewInit, OnInit {
-  antalArenden = '2000';
+  antalArenden = '';
   antalHamtadeArenden = '';
   arendeLista: Arende[] = [];
   noResults = true;
@@ -44,7 +43,7 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
   spinnerText = 'Sidan laddas';
 
   sokFaltValuesHolder: SokFaltValues = {
-    stodAr: [''],
+    stodAr: [],
     arendeTyp: [],
     ansokansTyp: []
   };
@@ -83,7 +82,7 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
         for (let i = 0; i < res[2].length; i++) {
           this.sokFaltValuesHolder.ansokansTyp.push(res[2][i].kod);
         }
-        console.log('hämtad');
+        console.log('Sök fält initierat');
         this.showSpinner = false;
       });
 
@@ -100,15 +99,13 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
 
     this.apiService.getDataMedParametrar(environment.arendenUrl, urlParameter).subscribe((data: any[]) => {
       this.arendeLista = [];
-      if (data.length === 0) {
+      if (Object.values(data)[0].length === 0) {
         this.noResults = true;
         this.resultatStatusText = 'Sökningen gav inga resultat';
       } else {
         this.noResults = false;
-        //this.antalArenden = data.length.toString();
-        for (let i = 0; i < data.length; i++) {
-          this.arendeLista.push(data[i]);
-        }
+        this.antalArenden = Object.keys(data)[0];
+        this.arendeLista = Object.values(data)[0];
         this.antalHamtadeArenden = this.arendeLista.length.toString();
       }
       this.showSpinner = false;
@@ -134,8 +131,6 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
   confirmbtnClick() {
     this.showSpinner = true;
     this.spinnerText = 'Ärenden hämtas';
-    console.log(this.sokFilter.arendeTyp);
-    console.log(this.sokFilter.ansokansTyp);
     return new Promise(() => {
       this.hamtaSokResultatFranArendeModule();
     });

@@ -28,18 +28,18 @@ interface Urval {
 })
 export class MassHanteringComponent implements OnInit, AfterViewInit {
   antalPaverkadeArenden = '';
-  arendeSomKommerAttPaverkas = 2200;
+  arendeSomKommerAttPaverkas = '';
   showSpinner = false;
   successStatus = false;
   windowRef: any;
 
   urvalValuesHolder: UrvalValues = {
-    myndighet: ['Gävle', 'Göteborg', 'Jönköping'],
-    stodAr: ['2019', '2018', '2017', '2016'],
-    arendeTyp: ['FARERS', 'KLOVERS', 'SUGGERS'],
-    ansokansTyp: ['UTBET', 'Å TAG'],
-    franStatus: ['REG', 'HANDLE', 'BER'],
-    tillStatus: ['REG', 'HANDLE', 'BER']
+    myndighet: [''],
+    stodAr: [''],
+    arendeTyp: [''],
+    ansokansTyp: [''],
+    franStatus: [''],
+    tillStatus: ['']
   };
 
   urval: Urval = {
@@ -56,7 +56,7 @@ export class MassHanteringComponent implements OnInit, AfterViewInit {
    }
 
   ngOnInit() {
-    //this.hamtaUrvalValues();
+    this.hamtaUrvalValues();
   }
 
   ngAfterViewInit() {
@@ -97,21 +97,10 @@ export class MassHanteringComponent implements OnInit, AfterViewInit {
 
   }
 
-
-
-  changeArendeSomKommerAttPaverkas() {
-    this.arendeSomKommerAttPaverkas = this.arendeSomKommerAttPaverkas - 145;
-  }
-
   andraStatus() {
-    // this.toggleSpinner();
-    // this.hamtaAntalPaverkadeArenden();
-    // this.toggleSpinner();
     this.toggleSpinner();
-    //  setTimeout(() => {
-    //  // this.toggleSpinner();
-    //   this.togglesuccessBanner();
-    // }, 3500);
+    this.hamtaAntalPaverkadeArenden();
+    this.toggleSpinner();
   }
 
   hamtaAntalPaverkadeArenden() {

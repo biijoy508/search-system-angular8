@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class ApiService {
-  
+
   constructor(private httpClient: HttpClient) {
 
   }
@@ -26,7 +26,7 @@ export class ApiService {
     const response3 = this.httpClient.get(environment.arendeTyperUrl);
     const response4 = this.httpClient.get(environment.ansokansTyperUrl);
     const response5 = this.httpClient.get(environment.statusUrl);
-    return forkJoin([response1, response2, response3,response4,response5]);
+    return forkJoin([response1, response2, response3, response4, response5]);
   }
 
   public getData(url) {

@@ -76,7 +76,7 @@
           </thead>
           <tbody *ngFor="let arende of arendeLista">
             <tr>
-              <td><a class="c-link__light" [routerLink] = "'/kundsida'">{{arende.kundNummerBokstav}}{{arende.kundNummer}}</a></td>
+              <td><a class="c-link__light" [routerLink] = "'/kundsida'">{{arende.kundNummerAlfaNumerisk}}</a></td>
               <td>{{arende.kundNamn}}</td>
               <td>{{arende.stodAr}}</td>
               <td>{{arende.arendeTyp}}</td>
