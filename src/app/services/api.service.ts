@@ -20,6 +20,15 @@ export class ApiService {
     return forkJoin([response1, response2, response3]);
   }
 
+  public getChainedDataMassHantering(): Observable<any> {
+    const response1 = this.httpClient.get(environment.myndigheterUrl);
+    const response2 = this.httpClient.get(environment.stodArUrl);
+    const response3 = this.httpClient.get(environment.arendeTyperUrl);
+    const response4 = this.httpClient.get(environment.ansokansTyperUrl);
+    const response5 = this.httpClient.get(environment.statusUrl);
+    return forkJoin([response1, response2, response3,response4,response5]);
+  }
+
   public getData(url) {
     return this.httpClient.get(url);
   }

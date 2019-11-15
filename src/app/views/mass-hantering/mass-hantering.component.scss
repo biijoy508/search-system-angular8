@@ -1,12 +1,11 @@
-.underline
-{
+.underline {
   width: 100%;
   border-bottom: 1px darkgrey solid;
   margin: 1rem 0;
 }
 
-.filtercontainer{
-  .c-select{
+.filtercontainer {
+  .c-select {
     display: inline-block;
     margin-right: 1rem;
   }
@@ -19,6 +18,31 @@ fieldset {
   max-width: 25rem;
 }
 
-.banner-width{
-  max-width: 60rem;
+p,
+a,
+button,
+.c-banner__content .c-banner__text .c-banner__actionlink-container .c-banner__actionlink {
+  font-size: 13px;
+}
+
+.c-banner__content .c-banner-icon {
+  padding: 2px 1rem 0 0;
+  font-size: 2rem;
+}
+
+.c-banner__content .c-banner__text .c-banner__actionlink-container {
+  padding-top: 0;
+  margin-left: -.4rem;
+}
+.banner-width {
+  max-width: 30rem;
+}
+
+.c-spinner .c-spinner__container {
+  top: 30%;
+
+  .c-banner .c-banner__content {
+    padding: 0.5em;
+    border: 1px solid grey;
+  }
 }
