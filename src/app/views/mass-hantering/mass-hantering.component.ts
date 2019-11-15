@@ -27,10 +27,13 @@ interface Urval {
   styleUrls: ['./mass-hantering.component.scss']
 })
 export class MassHanteringComponent implements OnInit, AfterViewInit {
-  antalPaverkadeArenden = '';
-  arendeSomKommerAttPaverkas = '';
-  showSpinner = false;
+  antalPaverkadeArenden = '0';
+
+  showSpinner = true;
+  showWarning = false;
   successStatus = false;
+
+  spinnerText = 'Sidan laddas';
   windowRef: any;
 
   urvalValuesHolder: UrvalValues = {
@@ -94,13 +97,10 @@ export class MassHanteringComponent implements OnInit, AfterViewInit {
         }
         this.showSpinner = false;
       });
-
   }
 
   andraStatus() {
-    this.toggleSpinner();
     this.hamtaAntalPaverkadeArenden();
-    this.toggleSpinner();
   }
 
   hamtaAntalPaverkadeArenden() {
@@ -116,26 +116,21 @@ export class MassHanteringComponent implements OnInit, AfterViewInit {
 
     this.apiService.getDataMedParametrar(environment.paverkadeArendenUrl, urlParameter).subscribe((data: string) => {
       this.antalPaverkadeArenden = data;
-      this.showSpinner = false;
+      this.showWarning = true;
     });
 
   }
 
-  toggleSpinner() {
-    this.showSpinner = !this.showSpinner;
+  togglewarningAndSuccessBanner() {
+    this.showWarning = false;
+    this.successStatus = true;
   }
-
-  togglesuccessBanner() {
-    this.successStatus = !this.successStatus;
-  }
-
-  toggleSpinnerAndSuccessBanner() {
-    this.toggleSpinner();
-    this.successStatus = !this.successStatus;
+  togglewarning() {
+    this.showWarning = false;
   }
 
   onOptionsSelected(sokFilterparameter: string, value: any[]) {
-    if (sokFilterparameter === "arendeTyp") {
+    if (sokFilterparameter === 'arendeTyp') {
       this.urval.arendeTyp.length = 0;
       for (let i = 0; i < value.length; i++) {
         this.urval.arendeTyp.push((value[i] as HTMLOptionElement).text);

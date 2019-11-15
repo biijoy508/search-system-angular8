@@ -34,10 +34,10 @@
                 </span>
               </div>
             </div>
-        <div class="c-select c-select--tiny">
-          <label for="arendetyp">Ärendetyp</label>
-          <div class="c-select__wrapper">
-            <select id="arendetyp" [(ngModel)]="urval.arendeTyp">
+            <div class="c-select c-select--tiny">
+              <label for="arendetyp">Ärendetyp</label>
+              <div class="c-select__wrapper">
+                <select id="arendetyp" [(ngModel)]="urval.arendeTyp">
                   <option *ngFor="let arendetyp_item of urvalValuesHolder.arendeTyp" [value]="arendetyp_item">
                     {{arendetyp_item}}
                   </option>
@@ -108,7 +108,7 @@
       </div>
     </div>
 
-    <div *ngIf="showSpinner" class="c-spinner">
+    <div *ngIf="showWarning" class="c-spinner">
       <div class="c-spinner__container">
         <div class="c-banner" role="banner">
           <div class="c-banner__content">
@@ -116,15 +116,19 @@
             <div class="c-banner__text">
               <p><b>Ändra status</b></p>
               <p> Vill du verkligen massändra status på ditt urval?</p>
-              <p> Statusändringen berör {{arendeSomKommerAttPaverkas}} ärenden. </p>
+              <p> Statusändringen berör {{antalPaverkadeArenden}} ärenden. </p>
               <div class="c-banner__actionlink-container">
-                <button class="c-btn--compact" (click)="toggleSpinnerAndSuccessBanner()">Ändra status</button>
-                <button class="c-btn--compact" (click)="toggleSpinner()">Avbryt</button>
+                <button class="c-btn--compact" (click)="togglewarningAndSuccessBanner()">Ändra status</button>
+                <button class="c-btn--compact" (click)="togglewarning()">Avbryt</button>
               </div>
             </div>
           </div>
         </div>
-        <!-- <div class="c-spinner__animation">
+      </div>
+    </div>
+    <div *ngIf="showSpinner" class="c-spinner">
+      <div class="c-spinner__container">
+        <div class="c-spinner__animation">
           <div class="c-spinner__animation__item">
             <div class="c-spinner__circle circle--3"></div>
           </div>
@@ -135,9 +139,10 @@
             <div class="c-spinner__circle circle--1"></div>
           </div>
         </div>
-        <div class="c-spinner__message">Höjer status på {{arendeSomKommerAttPaverkas}} ärenden... <span class="cursor">
+        <div class="c-spinner__message"> {{spinnerText}} <span class="cursor">
             <span class="sjv-i-cursor"></span></span>
-        </div> -->
+        </div>
       </div>
     </div>
   </div>
+</div>
