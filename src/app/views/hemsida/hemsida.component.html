@@ -20,16 +20,16 @@
         <label for="input-text-1" id="label-1" tabindex="-1">Kundnummer</label>
         <div class="input__wrapper " tabindex="-1">
           <input autocomplete="given-name" id="kundnummer-2" type="text" tabindex="0" name="text2"
-            [(ngModel)]="sokFilter.kundNummer">
+            [(ngModel)]="sokFilter.kundNummerAlfaNumerisk">
         </div>
       </div>
 
       <div class="c-multiselect--tiny" rel="c-multiselect-js">
         <label for="arendetyp" class="c-multiselect__label">Ärendetyp</label>
         <div class="c-select__wrapper">
-          <select name="arendeTyp[]" id="arendetyp" multiple="multiple" #arendetyp
-            (change)='onOptionsSelected("arendeTyp",arendetyp.selectedOptions)'>
-            <option *ngFor="let arendetyp_item of sokFaltValuesHolder.arendeTyp" [value]="arendetyp_item">
+          <select name="arendeTypList[]" id="arendeTyp" multiple="multiple" #arendeTypList
+            (change)='onOptionsSelected("arendeTypList",arendeTypList.selectedOptions)'>
+            <option *ngFor="let arendetyp_item of sokFaltValuesHolder.arendeTypList" [value]="arendetyp_item">
               {{arendetyp_item}}
             </option>
           </select>
@@ -39,10 +39,10 @@
       <div class="c-multiselect--tiny" rel="c-multiselect-js">
         <label for="ansokansTyp" class="c-multiselect__label">Ansökanstyp</label>
         <div class="c-select__wrapper">
-          <select name="ansokansTyp[]" id="ansokansTyp" multiple="multiple" #ansokansTyp
-            (change)='onOptionsSelected("ansokansTyp",ansokansTyp.selectedOptions)'>
-            <option *ngFor="let anstyp_item of sokFaltValuesHolder.ansokansTyp" [value]="anstyp_item">
-              {{anstyp_item}}
+          <select name="ansokansTypList[]" id="ansokansTyp" multiple="multiple" #ansokansTypList
+            (change)='onOptionsSelected("ansokansTypList",ansokansTypList.selectedOptions)'>
+            <option *ngFor="let ansokanstyp_item of sokFaltValuesHolder.ansokansTypList" [value]="ansokanstyp_item">
+              {{ansokanstyp_item}}
             </option>
           </select>
         </div>
