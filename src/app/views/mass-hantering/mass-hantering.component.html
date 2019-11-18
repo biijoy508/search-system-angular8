@@ -13,7 +13,7 @@
             <div class="c-select c-select--tiny">
               <label for="myndighet">Myndighet</label>
               <div class="c-select__wrapper">
-                <select id="myndighet" [(ngModel)]="urval.myndighet">
+                <select id="myndighet" [(ngModel)]="sokFilter.myndighet">
                   <option *ngFor="let myndighet_item of urvalValuesHolder.myndighet" [value]="myndighet_item">
                     {{myndighet_item}}
                   </option>
@@ -25,7 +25,7 @@
             <div class="c-select c-select--tiny">
               <label for="stodar">Stödår</label>
               <div class="c-select__wrapper">
-                <select id="stodar" [(ngModel)]="urval.stodAr">
+                <select id="stodar" [(ngModel)]="sokFilter.stodAr">
                   <option *ngFor="let stodar_item of urvalValuesHolder.stodAr" [value]="stodar_item">
                     {{stodar_item}}
                   </option>
@@ -34,23 +34,23 @@
                 </span>
               </div>
             </div>
-            <div class="c-select c-select--tiny">
-              <label for="arendetyp">Ärendetyp</label>
+            <div class="c-multiselect--tiny" rel="c-multiselect-js">
+              <label for="arendetyp" class="c-multiselect__label">Ärendetyp</label>
               <div class="c-select__wrapper">
-                <select id="arendetyp" [(ngModel)]="urval.arendeTyp">
-                  <option *ngFor="let arendetyp_item of urvalValuesHolder.arendeTyp" [value]="arendetyp_item">
+                <select name="arendeTypList[]" id="arendeTyp" multiple="multiple" #arendeTypList
+                  (change)='onOptionsSelected("arendeTypList", arendeTypList.selectedOptions)'>
+                  <option *ngFor="let arendetyp_item of urvalValuesHolder.arendeTypList" [value]="arendetyp_item">
                     {{arendetyp_item}}
                   </option>
                 </select>
-                <span class="sjv-i-caret-ner ikon">
-                </span>
               </div>
             </div>
             <div class="c-select c-select--tiny">
-              <label for="ansokanstyp">Ansökanstyp</label>
+              <label for="ansokansTypList">Ansökanstyp</label>
               <div class="c-select__wrapper">
-                <select id="ansokanstyp" [(ngModel)]="urval.ansokansTyp">
-                  <option *ngFor="let ansokanstyp_item of urvalValuesHolder.ansokansTyp" [value]="ansokanstyp_item">
+                <select name="ansokansTypList[]" id="ansokansTyp" multiple="multiple" #ansokansTypList
+                  (change)='onOptionsSelected("ansokansTypList", ansokansTypList.selectedOptions)'>
+                  <option *ngFor="let ansokanstyp_item of urvalValuesHolder.ansokansTypList" [value]="ansokanstyp_item">
                     {{ansokanstyp_item}}
                   </option>
                 </select>
@@ -65,7 +65,7 @@
             <div class="c-select c-select--tiny">
               <label for="franstatus">Från status</label>
               <div class="c-select__wrapper">
-                <select id="franstatus" [(ngModel)]="urval.franStatus">
+                <select id="franstatus" [(ngModel)]="sokFilter.franStatus">
                   <option *ngFor="let franstatus_item of urvalValuesHolder.franStatus" [value]="franstatus_item">
                     {{franstatus_item}}
                   </option>
@@ -77,7 +77,7 @@
             <div class="c-select c-select--tiny">
               <label for="tillstatus">Till status</label>
               <div class="c-select__wrapper">
-                <select id="tillstatus" [(ngModel)]="urval.tillStatus">
+                <select id="tillstatus" [(ngModel)]="sokFilter.tillStatus">
                   <option *ngFor="let tillstatus_item of urvalValuesHolder.tillStatus" [value]="tillstatus_item">
                     {{tillstatus_item}}
                   </option>
@@ -145,4 +145,3 @@
       </div>
     </div>
   </div>
-</div>
