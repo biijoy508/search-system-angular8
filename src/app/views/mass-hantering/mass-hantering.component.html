@@ -45,17 +45,15 @@
                 </select>
               </div>
             </div>
-            <div class="c-select c-select--tiny">
-              <label for="ansokansTypList">Ansökanstyp</label>
+            <div class="c-multiselect--tiny" rel="c-multiselect-js">
+              <label for="arendetyp" class="c-multiselect__label">Ansökanstyp</label>
               <div class="c-select__wrapper">
-                <select name="ansokansTypList[]" id="ansokansTyp" multiple="multiple" #ansokansTypList
-                  (change)='onOptionsSelected("ansokansTypList", ansokansTypList.selectedOptions)'>
+                <select name="ansokansTypList[]" id="arendeTyp" multiple="multiple" #ansokansTypList
+                  (change)='onOptionsSelected("arendeTypList", ansokansTypList.selectedOptions)'>
                   <option *ngFor="let ansokanstyp_item of urvalValuesHolder.ansokansTypList" [value]="ansokanstyp_item">
                     {{ansokanstyp_item}}
                   </option>
                 </select>
-                <span class="sjv-i-caret-ner ikon">
-                </span>
               </div>
             </div>
           </div>

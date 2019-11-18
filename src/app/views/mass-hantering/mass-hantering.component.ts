@@ -81,7 +81,9 @@ export class MassHanteringComponent implements OnInit, AfterViewInit {
   }
 
   andraStatus() {
-    this.hamtaAntalPaverkadeArenden();
+    this.showWarning = true;
+    this.successStatus = false;
+   // this.hamtaAntalPaverkadeArenden();
   }
 
   hamtaAntalPaverkadeArenden() {
