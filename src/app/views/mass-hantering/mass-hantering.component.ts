@@ -80,28 +80,31 @@ export class MassHanteringComponent implements OnInit, AfterViewInit {
       });
   }
 
+  visaBekraftelse() {
+    this.hamtaAntalPaverkadeArenden();
+  }
+
   andraStatus() {
-    this.showWarning = true;
-    this.successStatus = false;
-   // this.hamtaAntalPaverkadeArenden();
+    this.showWarning = false;
+    this.apiService.postData(environment.masshanteringUrl, this.sokFilter).subscribe(
+      (data: string) => {
+        this.successStatus = true;
+      }
+    );
   }
 
   hamtaAntalPaverkadeArenden() {
-    this.apiService.hamtaSokData(environment.paverkadeArendenUrl, this.sokFilter).subscribe(
+    this.apiService.postData(environment.paverkadeArendenUrl, this.sokFilter).subscribe(
       (data: string) => {
         this.antalPaverkadeArenden = data;
         this.showWarning = true;
+        this.successStatus = false;
       }
     );
   }
 
   togglesuccessBanner() {
     this.successStatus = !this.successStatus;
-  }
-
-  togglewarningAndSuccessBanner() {
-    this.showWarning = false;
-    this.successStatus = true;
   }
 
   togglewarning() {

@@ -37,11 +37,7 @@ export class ApiService {
     return this.httpClient.get(url, { params: parameters });
   }
 
-  public postData(url, data) {
-    return this.httpClient.post<any>(url, data);
-  }
-
-  public hamtaSokData(url, sokFilter): Observable<any> {
+  public postData(url, sokFilter): Observable<any> {
     return this.httpClient.post<any>(url, sokFilter);
   }
 

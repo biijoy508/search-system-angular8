@@ -77,7 +77,7 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
   }
 
   hamtaSokResultatFranArendeModule() {
-    this.apiService.hamtaSokData(environment.arendenUrl, this.sokFilter).subscribe(
+    this.apiService.postData(environment.arendenUrl, this.sokFilter).subscribe(
       (data: Arende[]) => {
         this.arendeLista = [];
         if (data.length === 0) {
@@ -93,13 +93,13 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
     );
   }
 
- /*  hamtaTotaltAntalArenden() {
-    this.apiService.hamtaSokData(environment.antalArendenUrl, this.sokFilter).subscribe(
+  hamtaTotaltAntalArenden() {
+    this.apiService.postData(environment.antalArendenUrl, this.sokFilter).subscribe(
       (data: string) => {
         this.antalArenden = data;
       }
     )
-  } */
+  }
 
   onOptionsSelected(sokFilterparameter: string, value: any[]) {
     if (sokFilterparameter === "arendeTypList") {
@@ -118,9 +118,9 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
   confirmbtnClick() {
     this.showSpinner = true;
     this.spinnerText = 'Ärenden hämtas';
+    //this.hamtaTotaltAntalArenden();
     return new Promise(() => {
       this.hamtaSokResultatFranArendeModule();
-      // this.hamtaTotaltAntalArenden();
     })
   }
 
