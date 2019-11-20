@@ -30,7 +30,7 @@ export class MassHanteringComponent implements OnInit, AfterViewInit {
   urvalValuesHolder: UrvalValues = {
     myndighet: [''],
     stodAr: [''],
-    arendeTypList: [''],
+    arendeTypList: [],
     ansokansTypList: [''],
     franStatus: [''],
     tillStatus: ['']
@@ -38,7 +38,7 @@ export class MassHanteringComponent implements OnInit, AfterViewInit {
 
   constructor(private apiService: ApiService) {
     this.windowRef = window;
-    this.sokFilter = new SokFilter('', '', [''], [''], '', '', '');
+    this.sokFilter = new SokFilter('', '', [], [], '', '', '');
   }
 
   ngOnInit() {
@@ -60,7 +60,7 @@ export class MassHanteringComponent implements OnInit, AfterViewInit {
         for (let i = 0; i < res[1].length; i++) {
           this.urvalValuesHolder.stodAr.push(res[1][i]);
         }
-        this.urvalValuesHolder.arendeTypList = [''];
+        this.urvalValuesHolder.arendeTypList = [];
         for (let i = 0; i < res[2].length; i++) {
           this.urvalValuesHolder.arendeTypList.push(res[2][i].kod);
         }

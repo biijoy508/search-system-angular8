@@ -29,6 +29,12 @@ export class ApiService {
     return forkJoin([response1, response2, response3, response4, response5]);
   }
 
+  public getChainedDataArenden(sokFilter): Observable<any> {
+    const response1 = this.httpClient.post<any>(environment.arendenUrl, sokFilter);
+    const response2 = this.httpClient.post<any>(environment.antalArendenUrl, sokFilter);
+    return forkJoin([response1, response2]);
+  }
+
   public getData(url) {
     return this.httpClient.get(url);
   }
