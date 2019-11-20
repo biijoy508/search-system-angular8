@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit, ElementRef } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { SokFilter } from 'src/app/model/sokFilter';
 import { environment } from 'src/environments/environment';
@@ -43,15 +43,15 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
     ansokansTypList: []
   };
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService, private element: ElementRef) {
     this.windowRef = window;
-    this.sokFilter = new SokFilter('', '', [''], [''], '', '', '');
+    this.sokFilter = new SokFilter('', '', [], [], '', '', '');
   }
 
   ngOnInit() {
     this.windowRef.komponentbibliotek.initMultiselect();
   }
-  
+
   ngAfterViewInit() {
     this.hamtaSokFaltValues();
   }
@@ -86,7 +86,6 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
         } else {
           this.noResults = false;
           this.arendeLista = data;
-          this.antalHamtadeArenden = this.arendeLista.length.toString();
         }
         this.showSpinner = false;
       }
@@ -118,10 +117,46 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
   confirmbtnClick() {
     this.showSpinner = true;
     this.spinnerText = 'Ärenden hämtas';
-    //this.hamtaTotaltAntalArenden();
-    return new Promise(() => {
-      this.hamtaSokResultatFranArendeModule();
-    })
+    this.apiService.getChainedDataArenden(this.sokFilter).subscribe(
+      res => {
+        this.arendeLista = [];
+        if (res[0].length === 0) {
+          this.noResults = true;
+          this.resultatStatusText = 'Sökningen gav inga resultat';
+        } else {
+          this.noResults = false;
+          this.arendeLista = res[0];
+          this.antalHamtadeArenden = this.arendeLista.length.toString();
+          this.antalArenden = res[1];
+        }
+        this.showSpinner = false;
+      
+
+          }
+
+    )
+    
+    
+  }
+
+  rensaSokFilter() {
+    this.sokFilter.stodAr = '';
+    this.sokFilter.kundNummerAlfaNumerisk = '';
+    this.sokFilter.arendeTypList = [];
+    this.sokFilter.ansokansTypList = [];
+    
+    let multiSelects = this.element.nativeElement.querySelectorAll('.tagsContainer');
+    for (let i = 0; i < multiSelects.length; i++) {
+      while (multiSelects[i].firstChild) {
+        multiSelects[i].removeChild(multiSelects[i].firstChild);
+      }
+    }
+    
+    let checkBoxes = this.element.nativeElement.querySelectorAll('.c-checkbox__input');
+    for(let i = 0; i < checkBoxes.length; i++) {
+      checkBoxes[i].checked = false;
+    }
+
   }
 
 }

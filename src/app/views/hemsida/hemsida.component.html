@@ -50,7 +50,7 @@
 
       <div class="confirm-btn">
         <button class="c-btn--primary c-btn--compact" (click)="confirmbtnClick()">Sök</button>
-        <button class="c-btn c-btn--compact">Rensa sökfilter</button>
+        <button class="c-btn c-btn--compact" (click)="rensaSokFilter()">Rensa sökfilter</button>
       </div>
     </div>
     <div class="col-lg-9">
@@ -76,7 +76,7 @@
           </thead>
           <tbody *ngFor="let arende of arendeLista">
             <tr>
-              <td><a class="c-link__light" [routerLink] = "'/kundsida'">{{arende.kundNummerAlfaNumerisk}}</a></td>
+              <td><a class="c-link__light" [routerLink] = "['/kundsida', arende.arendeNummer, arende.kundNummerAlfaNumerisk]">{{arende.kundNummerAlfaNumerisk}}</a></td>
               <td>{{arende.kundNamn}}</td>
               <td>{{arende.stodAr}}</td>
               <td>{{arende.arendeTyp}}</td>

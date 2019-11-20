@@ -88,7 +88,13 @@
           </div>
         </div>
       </div>
-      <button class="c-btn--primary c-btn--compact" (click)="visaBekraftelse()">Ändra status</button>
+      <button *ngIf="sokFilter.myndighet !== '' && sokFilter.stodAr !== '' && sokFilter.arendeTypList.length !== 0 
+      && sokFilter.ansokansTypList.length !== 0 && sokFilter.ansokansTypList[0] !== '' && sokFilter.franStatus !== '' && sokFilter.tillStatus !== '';else disabledButton"
+        class="c-btn--primary c-btn--compact" (click)="visaBekraftelse()">Ändra status</button>
+      <ng-template #disabledButton>
+        <button class="c-btn--primary c-btn--compact"
+          disabled>Ändra status</button>
+      </ng-template>
       <div *ngIf="successStatus" class="banner-width">
         <div class="c-banner banner-width" role="banner">
           <div class="c-banner__content">
