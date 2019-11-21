@@ -2,7 +2,6 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Arende } from 'src/app/model/arende';
 import { ApiService } from 'src/app/services/api.service';
 import { environment } from 'src/environments/environment';
-import { stringify } from 'querystring';
 import { ActivatedRoute } from '@angular/router';
 
 
@@ -19,9 +18,9 @@ export class KundsidaComponent implements AfterViewInit {
   kundNummerAlfaNumerisk: any;
   adress: string;
 
-  PPNnummer: string = '43,42,41';
-  antalDjur: string = '321';
-  antalDjurenheter: string = '220';
+  PPNnummer = '43,42,41';
+  antalDjur = '321';
+  antalDjurenheter = '220';
 
 
 
@@ -58,20 +57,20 @@ export class KundsidaComponent implements AfterViewInit {
       const redigera = document.querySelectorAll('.redigeraView');
       const vanligt = document.querySelectorAll('.vanligt');
       for (let i = 0; i < redigera.length; i++) {
-        (redigera[i] as HTMLDivElement).style.display = "block";
+        (redigera[i] as HTMLDivElement).style.display = 'block';
       }
       for (let j = 0; j < vanligt.length; j++) {
-        (vanligt[j] as HTMLDivElement).style.display = "none";
+        (vanligt[j] as HTMLDivElement).style.display = 'none';
       }
     } else if (button.innerText === 'Spara') {
       button.innerText = 'Redigera';
       const redigera = document.querySelectorAll('.redigeraView');
       const vanligt = document.querySelectorAll('.vanligt');
       for (let i = 0; i < redigera.length; i++) {
-        (redigera[i] as HTMLDivElement).style.display = "none";
+        (redigera[i] as HTMLDivElement).style.display = 'none';
       }
       for (let j = 0; j < vanligt.length; j++) {
-        (vanligt[j] as HTMLDivElement).style.display = "block";
+        (vanligt[j] as HTMLDivElement).style.display = 'block';
       }
     }
 
