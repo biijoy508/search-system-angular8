@@ -121,10 +121,15 @@ p {
   font-size: 1rem;
 }
 
-.c-tagsinput--tiny {
+.c-tagsinput--tiny,
+.c-input--tiny {
   max-width: 20rem;
+  margin-bottom: 0.5rem;
 }
 
+.redigeraView {
+  display: none;
+}
 
 @media (max-width: 768px) {
   .xyz .abc .standga {
@@ -140,9 +145,8 @@ p {
   }
 }
 
-  @media (max-width: 576px) {
-    .btnFieldWrapper {
-      display: block;
-    }
+@media (max-width: 576px) {
+  .btnFieldWrapper {
+    display: block;
   }
-
+}

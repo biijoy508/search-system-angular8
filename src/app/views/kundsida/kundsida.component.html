@@ -138,16 +138,34 @@
               tabindex="-1">Attribut</button>
           </li>
           <li class="c-tabs__title" role="presentation">
-            <button id="panel3__label" href="#panel3" aria-selected="false" aria-controls="panel3" role="tab">Beslut</button>
+            <button id="panel3__label" href="#panel3" aria-selected="false" aria-controls="panel3"
+              role="tab">Beslut</button>
           </li>
         </ul>
         <div class="c-tabs__content" data-tabs="myTabs_1">
           <div id="panel1" class="c-tabs__panel is-active" role="tabpanel" aria-labelledby="panel1__label">
-            <div class="c-tagsinput--tiny">
+            <div class="inlineWrapper2 vanligt">
+              <span>
+                <p class="header"> PPN </p>
+                <p class="content"> {{PPNnummer}} </p>
+              </span>
+            </div>
+            <div class="inlineWrapper2 vanligt">
+              <span>
+                <p class="header"> Antal djur </p>
+                <p class="content"> {{antalDjur}} </p>
+              </span>
+              <span>
+                <p class="header"> Antal djurenheter </p>
+                <p class="content"> {{antalDjurenheter}} </p>
+              </span>
+            </div>
+
+            <div class="c-tagsinput--tiny redigeraView">
               <label for="input-text-1" tabindex="-1">PPN</label>
               <div class="c-tagsinput-field" rel="c-tagsinput-js">
                 <div class="tagsContainer">
-                  <input autocomplete="off" class="tagValuesHolder" type="hidden" value="">
+                  <input autocomplete="off" class="tagValuesHolder" type="hidden" value={{PPNnummer}}>
                   <input autocomplete="off" type="text" id="1" placeholder="">
                 </div>
                 <div class="select__arrow">
@@ -156,17 +174,22 @@
               </div>
               <p tabindex="-1" id="description-1"></p>
             </div>
-            <div class="inlineWrapper2">
-              <span>
-                <p class="header"> Antal djur </p>
-                <p class="content"> 493,90 </p>
-              </span>
-              <span>
-                <p class="header"> Antal djurenheter </p>
-                <p class="content"> 246,95 </p>
-              </span>
-          </div>
-          <button class="c-btn c-btn--tiny mt-2">Redigera</button>
+            <div class="c-input c-input--tiny redigeraView">
+              <label for="input-compact-text-6" tabindex="-1" id="label-6">Antal djur</label>
+              <div class="input__wrapper input__wrapper--text">
+                <input autocomplete="given-name" id="input-compact-text-6" aria-describedby="description-6" type="text"
+                  tabindex="0" name="text6" [(ngModel)]="antalDjur">
+              </div>
+            </div>
+            <div class="c-input c-input--tiny redigeraView">
+              <label for="input-compact-text-6" tabindex="-1" id="label-6">Antal djurenheter</label>
+              <div class="input__wrapper input__wrapper--text">
+                <input autocomplete="given-name" id="input-compact-text-6" aria-describedby="description-6" type="text"
+                  tabindex="0" name="text6" [(ngModel)]="antalDjurenheter">
+              </div>
+            </div>
+
+            <button class="c-btn c-btn--tiny mt-2" (click)="redigeraView($event.target)">Redigera</button>
           </div>
           <div id="panel2" class="c-tabs__panel" role="tabpanel" aria-labelledby="panel2__label">
 
