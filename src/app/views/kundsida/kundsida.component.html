@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col">
       <div class="arendeKortInfo">
-        Ärende <b> | - 2019 | KALLE VOLYMSON171722</b>
+        Ärende <b> | {{arende.kundNummerAlfaNumerisk}} - {{arende.stodAr}} | {{arende.kundNamn}}</b>
       </div>
       <div class="btnFieldWrapper">
         <button class="c-btn--compact"><span class="sjv-i-pil-vanster"></span>Tillbaka till sökresultat</button>
@@ -25,35 +25,35 @@
       <fieldset class="arendeInfo">
         <span>
           <p class="header"> Ärendetyp </p>
-          <p class="content"> FARERS </p>
+          <p class="content"> {{arende.arendeTyp}} </p>
         </span>
         <span>
           <p class="header"> Ansökanstyp </p>
-          <p class="content"> UTBET </p>
+          <p class="content"> {{arende.ansokansTyp}} </p>
         </span>
         <span>
           <p class="header"> Nuvarande status </p>
-          <p class="content"> REG </p>
+          <p class="content"> {{arende.status}} </p>
         </span>
         <span>
           <p class="header"> Ärendenummer </p>
-          <p class="content"> 8228274 </p>
+          <p class="content"> {{arende.arendeNummer}} </p>
         </span>
         <span>
           <p class="header"> Myndighet </p>
-          <p class="content"> Borås </p>
+          <p class="content"> {{arende.myndighet}} </p>
         </span>
         <span>
           <p class="header"> Organisationsnummer </p>
-          <p class="content"> 670703-3319 </p>
+          <p class="content"> {{arende.kundOrgNummer}} </p>
         </span>
         <span>
           <p class="header"> Ankomstdatum </p>
-          <p class="content"> 2019-10-01 </p>
+          <p class="content"> {{arende.ankomstDatum}} </p>
         </span>
         <span>
           <p class="header"> Adress </p>
-          <p class="content"> Volymgatan 12, 555 55 Volymstad </p>
+          <p class="content"> {{adress}} </p>
         </span>
       </fieldset>
     </div>

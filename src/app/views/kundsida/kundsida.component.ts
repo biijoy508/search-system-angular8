@@ -17,30 +17,32 @@ export class KundsidaComponent implements AfterViewInit {
   arende: Arende;
   arendeNummer: any;
   kundNummerAlfaNumerisk: any;
+  adress: string;
 
   constructor(private apiService: ApiService, private route: ActivatedRoute) {
     this.windowRef = window;
+    this.arende = new Arende('', '',  '', '', '', '', '', '', '', '');
   }
 
 
-  ngAfterViewInit() {
+  ngOnInit() {
     this.windowRef.komponentbibliotek.init();
-    
-    this.arendeNummer = this.route.snapshot.paramMap.get('arendeNummer');
-    console.log(this.arendeNummer);
+  }
+
+  ngAfterViewInit() {
+    this.arendeNummer = this.route.snapshot.paramMap.get('arendeNummer')
 
     this.kundNummerAlfaNumerisk = this.route.snapshot.paramMap.get('kundNummerAlfaNumerisk');
-    console.log(this.kundNummerAlfaNumerisk);
 
     const ARENDENUMMER = {
       arendenummer: this.arendeNummer
-      // , kundNummerAlfaNumerisk: this.kundNummerAlfaNumerisk
+      , kundnummer: this.kundNummerAlfaNumerisk
     };
-    
+
     this.apiService.getDataMedParametrar(environment.arendenUrl, ARENDENUMMER).subscribe(
       (data: Arende[]) => {
-        //this.arende = data;
-        console.log(data[3].kundOrgNummer);
+        this.arende = data[0];
+        this.adress = 'Volymgatan 12, 555 55 Volymstad';
       });
   }
 }
