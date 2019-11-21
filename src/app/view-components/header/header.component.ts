@@ -11,7 +11,7 @@ export class HeaderComponent implements AfterViewInit {
 
   ngAfterViewInit() {
 
-    let menyItemQueryParameter = '[href=\"\#\/' + this.activeView + '\"]';
+    let menyItemQueryParameter = '[id=\"' + this.activeView + '\"]';
     const selectedMenuItem = document.querySelector(menyItemQueryParameter);
 
     if (selectedMenuItem) {
