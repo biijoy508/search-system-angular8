@@ -18,9 +18,9 @@ export class KundsidaComponent implements AfterViewInit {
   kundNummerAlfaNumerisk: any;
   adress: string;
 
-  PPNnummer = '43,42,41';
-  antalDjur = '321';
-  antalDjurenheter = '220';
+  PPNnummer: string = '43,42,41';
+  antalDjur: string = '321';
+  antalDjurenheter: string = '220';
 
 
 
