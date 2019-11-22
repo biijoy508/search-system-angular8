@@ -1,18 +1,7 @@
 import { Component, AfterViewInit, OnInit, ElementRef } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { SokFilter } from 'src/app/model/sokFilter';
-import { environment } from 'src/environments/environment';
-
-interface Arende {
-  kundNummerAlfaNumerisk: string;
-  kundNamn: string;
-  stodAr: string;
-  arendeTyp: string;
-  ansokansTyp: string;
-  status: string;
-  arendeNummer: string;
-}
-
+import { Arende } from 'src/app/model/arende';
 
 interface SokFaltValues {
   stodAr: string[];
@@ -76,30 +65,6 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
       });
   }
 
-  hamtaSokResultatFranArendeModule() {
-    this.apiService.postData(environment.arendenUrl, this.sokFilter).subscribe(
-      (data: Arende[]) => {
-        this.arendeLista = [];
-        if (data.length === 0) {
-          this.noResults = true;
-          this.resultatStatusText = 'Sökningen gav inga resultat';
-        } else {
-          this.noResults = false;
-          this.arendeLista = data;
-        }
-        this.showSpinner = false;
-      }
-    );
-  }
-
-  hamtaTotaltAntalArenden() {
-    this.apiService.postData(environment.antalArendenUrl, this.sokFilter).subscribe(
-      (data: string) => {
-        this.antalArenden = data;
-      }
-    )
-  }
-
   onOptionsSelected(sokFilterparameter: string, value: any[]) {
     if (sokFilterparameter === "arendeTypList") {
       this.sokFilter.arendeTypList.length = 0;
@@ -114,7 +79,7 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
     }
   }
 
-  confirmbtnClick() {
+  hamtaSokResultat() {
     this.showSpinner = true;
     this.spinnerText = 'Ärenden hämtas';
     this.apiService.getChainedDataArenden(this.sokFilter).subscribe(
@@ -130,30 +95,30 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
           this.antalArenden = res[1];
         }
         this.showSpinner = false;
-      
-
-          }
-
+      }
     )
-    
-    
+  }
+
+  confirmbtnClick() {
+    this.hamtaSokResultat();
   }
 
   rensaSokFilter() {
+    
     this.sokFilter.stodAr = '';
     this.sokFilter.kundNummerAlfaNumerisk = '';
     this.sokFilter.arendeTypList = [];
     this.sokFilter.ansokansTypList = [];
-    
+
     let multiSelects = this.element.nativeElement.querySelectorAll('.tagsContainer');
     for (let i = 0; i < multiSelects.length; i++) {
       while (multiSelects[i].firstChild) {
         multiSelects[i].removeChild(multiSelects[i].firstChild);
       }
     }
-    
+
     let checkBoxes = this.element.nativeElement.querySelectorAll('.c-checkbox__input');
-    for(let i = 0; i < checkBoxes.length; i++) {
+    for (let i = 0; i < checkBoxes.length; i++) {
       checkBoxes[i].checked = false;
     }
 

@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './kundsida.component.html',
   styleUrls: ['./kundsida.component.scss']
 })
-export class KundsidaComponent implements AfterViewInit {
+export class KundsidaComponent implements OnInit, AfterViewInit {
   windowRef: any;
   arende: Arende;
   arendeNummer: any;
