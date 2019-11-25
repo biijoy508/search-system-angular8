@@ -39,6 +39,12 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
 
   ngOnInit() {
     this.windowRef.komponentbibliotek.initMultiselect();
+    if (sessionStorage.getItem('arenden') !== null) {
+      this.arendeLista = JSON.parse(sessionStorage.getItem('arenden'));
+      this.antalArenden = sessionStorage.getItem('antalarenden');
+      this.antalHamtadeArenden = this.arendeLista.length.toString();
+      this.noResults = false;
+    }
   }
 
   ngAfterViewInit() {
@@ -82,6 +88,7 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
   hamtaSokResultat() {
     this.showSpinner = true;
     this.spinnerText = 'Ärenden hämtas';
+    sessionStorage.clear();
     this.apiService.getChainedDataArenden(this.sokFilter).subscribe(
       res => {
         this.arendeLista = [];
@@ -93,6 +100,8 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
           this.arendeLista = res[0];
           this.antalHamtadeArenden = this.arendeLista.length.toString();
           this.antalArenden = res[1];
+          sessionStorage.setItem('arenden', JSON.stringify(this.arendeLista));
+          sessionStorage.setItem('antalarenden', this.antalArenden);
         }
         this.showSpinner = false;
       }
@@ -104,7 +113,7 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
   }
 
   rensaSokFilter() {
-    
+
     this.sokFilter.stodAr = '';
     this.sokFilter.kundNummerAlfaNumerisk = '';
     this.sokFilter.arendeTypList = [];

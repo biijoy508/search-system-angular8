@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Arende } from 'src/app/model/arende';
 import { ApiService } from 'src/app/services/api.service';
 import { environment } from 'src/environments/environment';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 
@@ -24,7 +24,7 @@ export class KundsidaComponent implements OnInit, AfterViewInit {
 
 
 
-  constructor(private apiService: ApiService, private route: ActivatedRoute) {
+  constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) {
     this.windowRef = window;
     this.arende = new Arende('', '',  '', '', '', '', '', '', '', '');
   }
