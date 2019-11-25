@@ -26,7 +26,7 @@ export class KundsidaComponent implements OnInit, AfterViewInit {
 
   constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) {
     this.windowRef = window;
-    this.arende = new Arende('', '',  '', '', '', '', '', '', '', '');
+    this.arende = new Arende('', '', '', '', '', '', '', '', '', '');
   }
 
 
@@ -74,5 +74,9 @@ export class KundsidaComponent implements OnInit, AfterViewInit {
       }
     }
 
+  }
+
+  navigeraTillSokResultat() {
+    this.router.navigateByUrl('/hemsida');
   }
 }
