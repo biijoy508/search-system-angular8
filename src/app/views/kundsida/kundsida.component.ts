@@ -14,14 +14,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class KundsidaComponent implements OnInit, AfterViewInit {
   windowRef: any;
   arende: Arende;
-  arendeNummer: any;
-  kundNummerAlfaNumerisk: any;
+  arendeId: any;
   adress: string;
 
   PPNnummer: string = '43,42,41';
   antalDjur: string = '321';
   antalDjurenheter: string = '220';
-
 
 
   constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) {
@@ -35,18 +33,15 @@ export class KundsidaComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.arendeNummer = this.route.snapshot.paramMap.get('arendeNummer');
+    this.arendeId = this.route.snapshot.paramMap.get('arendeId');
 
-    this.kundNummerAlfaNumerisk = this.route.snapshot.paramMap.get('kundNummerAlfaNumerisk');
-
-    const ARENDENUMMER = {
-      arendenummer: this.arendeNummer
-      , kundnummer: this.kundNummerAlfaNumerisk
+    const ARENDEID = {
+      arendeid: this.arendeId
     };
 
-    this.apiService.getDataMedParametrar(environment.arendenUrl, ARENDENUMMER).subscribe(
-      (data: Arende[]) => {
-        this.arende = data[0];
+    this.apiService.getDataMedParametrar(environment.arendenUrl, ARENDEID).subscribe(
+      (data: Arende) => {
+        this.arende = data;
         this.adress = 'Volymgatan 12, 555 55 Volymstad';
       });
   }

@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 const routes: Routes = [
   { path: '', redirectTo: '/hemsida', pathMatch: 'full' },
   { path: 'hemsida', component: HemsidaComponent },
-  { path: 'kundsida/:arendeNummer/:kundNummerAlfaNumerisk', component: KundsidaComponent },
+  { path: 'kundsida/:arendeId', component: KundsidaComponent },
   { path: 'masshantering', component: MassHanteringComponent },
   { path: '**', pathMatch: 'full', redirectTo: '/hemsida' }
 ];
