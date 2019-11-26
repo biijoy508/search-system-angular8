@@ -4,6 +4,7 @@ export const environment = {
   antalArendenUrl: '/farmen/arende/antaltotalt',
   arendenUrl: '/farmen/arende/arenden',
   arendeTyperUrl: '/farmen/arende/arendetyper',
+  atgarderUrl: '/farmen/atg/atgarder',
   masshanteringUrl: '/farmen/arende/masshantering',
   myndigheterUrl: '/farmen/intr/myndigheter',
   paverkadeArendenUrl: '/farmen/arende/antalpaverkade',

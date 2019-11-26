@@ -35,6 +35,22 @@ export class ApiService {
     return forkJoin([response1, response2]);
   }
 
+  public getChainedDataArendeInformation(arendeNummer, kundNummer) {
+
+    const ARENDEINFO = {
+      arendenummer: arendeNummer
+      , kundnummer: kundNummer
+    };
+
+    const ARENDENUMMER = {
+      arendenummer: arendeNummer
+    };
+
+    const response1 = this.httpClient.get(environment.arendenUrl, { params: ARENDEINFO });
+    const response2 = this.httpClient.get(environment.atgarderUrl, { params: ARENDENUMMER });
+    return forkJoin([response1, response2]);
+  }
+
   public getData(url) {
     return this.httpClient.get(url);
   }

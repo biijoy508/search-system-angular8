@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Arende } from 'src/app/model/arende';
+import { Atgard } from 'src/app/model/atgard';
 import { ApiService } from 'src/app/services/api.service';
 import { environment } from 'src/environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,6 +18,7 @@ export class KundsidaComponent implements OnInit, AfterViewInit {
   arendeNummer: any;
   kundNummerAlfaNumerisk: any;
   adress: string;
+  atgardLista: Atgard[] = [];
 
   PPNnummer: string = '43,42,41';
   antalDjur: string = '321';
@@ -39,16 +41,15 @@ export class KundsidaComponent implements OnInit, AfterViewInit {
 
     this.kundNummerAlfaNumerisk = this.route.snapshot.paramMap.get('kundNummerAlfaNumerisk');
 
-    const ARENDENUMMER = {
-      arendenummer: this.arendeNummer
-      , kundnummer: this.kundNummerAlfaNumerisk
-    };
-
-    this.apiService.getDataMedParametrar(environment.arendenUrl, ARENDENUMMER).subscribe(
-      (data: Arende[]) => {
-        this.arende = data[0];
+    this.apiService.getChainedDataArendeInformation(this.arendeNummer, this.kundNummerAlfaNumerisk).subscribe(
+      (data: any) => {
+        this.atgardLista = [];
+        this.arende = data[0][0];
         this.adress = 'Volymgatan 12, 555 55 Volymstad';
+        this.atgardLista = data[1];
+        console.log(this.atgardLista);
       });
+
   }
 
   redigeraView(button: HTMLButtonElement) {

@@ -104,8 +104,7 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
           sessionStorage.setItem('antalarenden', this.antalArenden);
         }
         this.showSpinner = false;
-      }
-    )
+      });
   }
 
   confirmbtnClick() {
