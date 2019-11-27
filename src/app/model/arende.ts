@@ -8,7 +8,7 @@ export class Arende {
     ansokansTyp: string;
     myndighet: string;
     kundOrgNummer: string;
-    arendeNummer: string;
+    arendeId: string;
     ankomstDatum: string;
     constructor(
         stodAr: string,
@@ -19,7 +19,7 @@ export class Arende {
     ansokansTyp: string,
     myndighet: string,
     kundOrgNummer: string,
-    arendeNummer: string,
+    arendeId: string,
     ankomstDatum: string
     ) {
         this.kundNummerAlfaNumerisk = kundNummerAlfaNumerisk;
@@ -28,7 +28,7 @@ export class Arende {
         this.ansokansTyp = ansokansTyp;
         this.myndighet = myndighet;
         this.ankomstDatum = ankomstDatum;
-        this.arendeNummer = arendeNummer;
+        this.arendeId = arendeId;
         this.kundNamn = kundNamn;
         this.kundOrgNummer = kundOrgNummer;
         this.status = status;
