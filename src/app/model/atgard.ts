@@ -5,7 +5,7 @@ export class Atgard {
     statusText: string;
     statusDatum: string;
     kommentar: string;
-    arendeNummer: string;
+    arendeId: string;
     regDatum: string;
     uppdateradDatum: string;
     uppdateradAv: string;
@@ -17,7 +17,7 @@ export class Atgard {
         statusText: string,
         statusDatum: string,
         kommentar: string,
-        arendeNummer: string,
+        arendeId: string,
         regDatum: string,
         uppdateradDatum: string,
         uppdateradAv: string,
@@ -29,7 +29,7 @@ export class Atgard {
         this.statusText = statusText;
         this.statusDatum = statusDatum;
         this.kommentar = kommentar;
-        this.arendeNummer = arendeNummer;
+        this.arendeId = arendeId;
         this.regDatum = regDatum;
         this.uppdateradDatum = uppdateradDatum;
         this.uppdateradAv = uppdateradAv;
