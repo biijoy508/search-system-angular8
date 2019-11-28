@@ -6,7 +6,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-8">
+    <div class="col-sm-4">
       <div class="filtercontainer">
         <div class="row">
           <div class="col">
@@ -95,12 +95,14 @@
         <button class="c-btn--primary c-btn--compact"
           disabled>Ändra status</button>
       </ng-template>
-      <div *ngIf="successStatus" class="banner-width">
-        <div class="c-banner banner-width" role="banner">
+    </div>
+    <div class="col-sm-8 mt-2">
+      <div *ngIf="successStatus">
+        <div class="c-banner" role="banner">
           <div class="c-banner__content">
             <span class="c-banner-icon sjv-i-info" tabindex="-1"></span>
             <div class="c-banner__text">
-              <p> <b>Masshanteringen har startats. </b> Du kan se i JBR om körningen är färdig. <br> Du kan lämna denna
+              <p> <b>Masshanteringen har startats. </b> Du kan se i JBR om körningen är färdig. Du kan lämna denna
                 sida utan att körningen avbryts </p>
               <div class="c-banner__actionlink-container">
                 <a href="https://www.jordbruksverket.se" class="c-banner__actionlink c-link__light--icon-right">Interna
@@ -144,7 +146,7 @@
             <div class="c-spinner__circle circle--1"></div>
           </div>
         </div>
-        <div class="c-spinner__message"> {{spinnerText}} <span class="cursor">
+        <div class="c-spinner__content"> {{spinnerText}} <span class="cursor">
             <span class="sjv-i-cursor"></span></span>
         </div>
       </div>
