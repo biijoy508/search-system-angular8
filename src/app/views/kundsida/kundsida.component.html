@@ -64,8 +64,23 @@
       <h5 class="e-h5">Åtgärder</h5>
       <div class="xyz">
         <span class="abc">
-          <button class="c-btn--primary c-btn--compact">Öppna (1)</button>
-          <button class="c-btn c-btn--compact standga">Stängda (2)</button>
+          <fieldset class="c-radio-btn-group c-radio-btn-group--tiny" role="radiogroup"
+                  aria-labelledby="legend_4">
+                  <div class="c-radio-btn c-radio-btn--tiny">
+                    <input id="radiotiny_1" name="radiogroup_tiny" type="radio" value="Öppna">
+                    <label for="radiotiny_1">Öppna</label>
+                  </div>
+
+                  <div class="c-radio-btn c-radio-btn--tiny">
+                    <input id="radiotiny_2" name="radiogroup_tiny" type="radio" value="Stängda">
+                    <label for="radiotiny_2">Stängda</label>
+                  </div>
+
+                  <div class="c-radio-btn c-radio-btn--tiny">
+                    <input id="radiotiny_3" name="radiogroup_tiny" type="radio" value="Alla" checked>
+                    <label for="radiotiny_3">Alla</label>
+                  </div>
+                </fieldset>
         </span>
         <a class="c-link__light">Lägg till</a>
       </div>
