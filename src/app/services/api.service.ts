@@ -35,6 +35,17 @@ export class ApiService {
     return forkJoin([response1, response2]);
   }
 
+  public getChainedDataArendeInformation(arendeId): Observable<any> {
+
+    const arendeIdParam = {
+      arendeid: arendeId
+    };
+
+    const response1 = this.httpClient.get(environment.arendenUrl, { params: arendeIdParam });
+    const response2 = this.httpClient.get(environment.atgarderUrl, { params: arendeIdParam });
+    return forkJoin([response1, response2]);
+  }
+
   public getData(url) {
     return this.httpClient.get(url);
   }

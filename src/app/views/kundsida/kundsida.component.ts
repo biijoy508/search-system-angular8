@@ -1,9 +1,9 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Arende } from 'src/app/model/arende';
+import { Atgard } from 'src/app/model/atgard';
 import { ApiService } from 'src/app/services/api.service';
 import { environment } from 'src/environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
-
 
 
 @Component({
@@ -14,14 +14,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class KundsidaComponent implements OnInit, AfterViewInit {
   windowRef: any;
   arende: Arende;
-  arendeNummer: any;
-  kundNummerAlfaNumerisk: any;
+  arendeId: any;
   adress: string;
+  atgardLista: Atgard[] = [];
 
   PPNnummer: string = '43,42,41';
   antalDjur: string = '321';
   antalDjurenheter: string = '220';
 
+  filtreringsAlternativ: string = 'alla';
 
 
   constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) {
@@ -35,20 +36,17 @@ export class KundsidaComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.arendeNummer = this.route.snapshot.paramMap.get('arendeNummer');
+    this.arendeId = this.route.snapshot.paramMap.get('arendeId');
 
-    this.kundNummerAlfaNumerisk = this.route.snapshot.paramMap.get('kundNummerAlfaNumerisk');
-
-    const ARENDENUMMER = {
-      arendenummer: this.arendeNummer
-      , kundnummer: this.kundNummerAlfaNumerisk
-    };
-
-    this.apiService.getDataMedParametrar(environment.arendenUrl, ARENDENUMMER).subscribe(
-      (data: Arende[]) => {
+    this.apiService.getChainedDataArendeInformation(this.arendeId).subscribe(
+      (data: any) => {
+        this.atgardLista = [];
         this.arende = data[0];
         this.adress = 'Volymgatan 12, 555 55 Volymstad';
+        this.atgardLista = data[1];
+        console.log(this.atgardLista);
       });
+
   }
 
   redigeraView(button: HTMLButtonElement) {
@@ -78,5 +76,10 @@ export class KundsidaComponent implements OnInit, AfterViewInit {
 
   navigeraTillSokResultat() {
     this.router.navigateByUrl('/hemsida');
+  }
+
+  filtreraAtgarder(filtreringsAlternativ) {
+    console.log(filtreringsAlternativ);
+    this.filtreringsAlternativ = filtreringsAlternativ;
   }
 }

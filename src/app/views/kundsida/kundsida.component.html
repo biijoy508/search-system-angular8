@@ -6,7 +6,8 @@
         Ärende <b> | {{arende.kundNummerAlfaNumerisk}} - {{arende.stodAr}} | {{arende.kundNamn}}</b>
       </div>
       <div class="btnFieldWrapper">
-        <button class="c-btn--compact" (click)="navigeraTillSokResultat()"><span class="sjv-i-pil-vanster"></span>Tillbaka till sökresultat</button>
+        <button class="c-btn--compact" (click)="navigeraTillSokResultat()"><span
+            class="sjv-i-pil-vanster"></span>Tillbaka till sökresultat</button>
         <div class="versionPosition">
           <p> Version :</p>
           <div class="c-select c-select--tiny">
@@ -37,7 +38,7 @@
         </span>
         <span>
           <p class="header"> Ärendenummer </p>
-          <p class="content"> {{arende.arendeNummer}} </p>
+          <p class="content"> {{arende.arendeId}} </p>
         </span>
         <span>
           <p class="header"> Myndighet </p>
@@ -63,42 +64,60 @@
       <h5 class="e-h5">Åtgärder</h5>
       <div class="xyz">
         <span class="abc">
-          <button class="c-btn--primary c-btn--compact">Öppna (1)</button>
-          <button class="c-btn c-btn--compact standga">Stängda (2)</button>
+          <fieldset class="c-radio-btn-group c-radio-btn-group--tiny" role="radiogroup"
+            aria-labelledby="legend_filtreraAtgard" (change)="filtreraAtgarder($event.target.value)">
+            <div class="c-radio-btn c-radio-btn--tiny">
+              <input id="radioknappÖppna" name="radiogroup_filtreraAtgard" type="radio" value="öppna">
+              <label for="radioknappÖppna">Öppna</label>
+            </div>
+
+            <div class="c-radio-btn c-radio-btn--tiny">
+              <input id="radioknappStängda" name="radiogroup_filtreraAtgard" type="radio" value="stängda">
+              <label for="radioknappStängda">Stängda</label>
+            </div>
+
+            <div class="c-radio-btn c-radio-btn--tiny">
+              <input id="radioknappAlla" name="radiogroup_filtreraAtgard" type="radio" value="alla" checked>
+              <label for="radioknappAlla">Alla</label>
+            </div>
+          </fieldset>
         </span>
         <a class="c-link__light">Lägg till</a>
       </div>
-      <form>
+      <form *ngFor="let atgard of atgardLista | filtreraAtgarder:filtreringsAlternativ">
         <div class="c-accordion-wrapper">
           <ul aria-label="accordion Control Group links" class="c-accordion">
             <li aria-controls="content-1" aria-expanded="true" rel="c-accordion-js">
               <button tabindex="0" name="item-one" id="accordion-control-1" class="c-accordion-item__title">
                 <span class="accordion__icon toggle-down"></span>
-                <span>1191 - Konto saknas</span>
+                <span>{{atgard.kod}} - {{atgard.beskrivning}}</span>
               </button>
               <div role="region" aria-labelledby="accordion-control-1" aria-hidden="false" id="content-1"
                 class="c-accordion-item__content">
                 <fieldset class="c-radio-btn-group c-radio-btn-group--tiny" role="radiogroup"
                   aria-labelledby="legend_4">
                   <div class="c-radio-btn c-radio-btn--tiny">
-                    <input id="radiotiny_1" name="radiogroup_tiny" type="radio" value="ÖPP" checked="checked">
+                    <input id="radiotiny_1" name="radiogroup_tiny" type="radio" value="ÖPP"
+                      [(ngModel)]="atgard.statusKod">
                     <label for="radiotiny_1">ÖPP</label>
                   </div>
 
                   <div class="c-radio-btn c-radio-btn--tiny">
-                    <input id="radiotiny_2" name="radiogroup_tiny" type="radio" value="LUÅ">
+                    <input id="radiotiny_2" name="radiogroup_tiny" type="radio" value="LUÅ"
+                      [(ngModel)]="atgard.statusKod">
                     <label for="radiotiny_2">LUÅ</label>
                   </div>
 
                   <div class="c-radio-btn c-radio-btn--tiny">
-                    <input id="radiotiny_3" name="radiogroup_tiny" type="radio" value="MAÅ">
+                    <input id="radiotiny_3" name="radiogroup_tiny" type="radio" value="MAÅ"
+                      [(ngModel)]="atgard.statusKod">
                     <label for="radiotiny_3">MAÅ</label>
                   </div>
                 </fieldset>
                 <div class="c-textarea c-textarea--tiny">
                   <label for="textarea5">Kommentar<i class="label--valfritt">(Valfritt)</i></label>
                   <textarea aria-describedby="textarea-description-4" class="textarea_exempel" id="textarea5" rows="4"
-                    wrap="soft"></textarea>
+                    wrap="soft" [(ngModel)]="atgard.kommentar" name="kommentar"></textarea>
                   <div class="c-textarea__wrapper">
                     <p id="textarea-description-4" class="c-textarea__description"></p>
                     <p class="c-text-counter__count_characters"></p>
@@ -107,15 +126,15 @@
                 <div class="inlineWrapper2">
                   <span>
                     <p class="header"> Skapad </p>
-                    <p class="content"> 2019-10-02 </p>
+                    <p class="content">{{atgard.regDatum}} </p>
                   </span>
                   <span>
                     <p class="header"> Uppdaterad </p>
-                    <p class="content"> 2019-10-03 </p>
+                    <p class="content">{{atgard.uppdateradDatum}} </p>
                   </span>
                   <span>
                     <p class="header"> Uppdaterad av </p>
-                    <p class="content"> LLUNS </p>
+                    <p class="content"> {{atgard.uppdateradAv}} </p>
                   </span>
                 </div>
                 <button class="c-btn c-btn--tiny">Spara</button>
