@@ -6,11 +6,12 @@ import { MassHanteringComponent } from './mass-hantering/mass-hantering.componen
 import { ViewComponentsModule } from '../view-components/view-components.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { filtreraAtgarderPipe } from './filtreraAtgarder.pipe';
 
 
 
 @NgModule({
-  declarations: [HemsidaComponent, KundsidaComponent, MassHanteringComponent],
+  declarations: [HemsidaComponent, KundsidaComponent, MassHanteringComponent, filtreraAtgarderPipe],
   imports: [
     CommonModule, ViewComponentsModule, FormsModule, ReactiveFormsModule, RouterModule
   ],

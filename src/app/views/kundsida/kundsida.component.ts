@@ -6,7 +6,6 @@ import { environment } from 'src/environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 
 
-
 @Component({
   selector: 'app-kundsida',
   templateUrl: './kundsida.component.html',
@@ -22,6 +21,8 @@ export class KundsidaComponent implements OnInit, AfterViewInit {
   PPNnummer: string = '43,42,41';
   antalDjur: string = '321';
   antalDjurenheter: string = '220';
+
+  filtreringsAlternativ: string = 'alla';
 
 
   constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) {
@@ -75,5 +76,10 @@ export class KundsidaComponent implements OnInit, AfterViewInit {
 
   navigeraTillSokResultat() {
     this.router.navigateByUrl('/hemsida');
+  }
+
+  filtreraAtgarder(filtreringsAlternativ) {
+    console.log(filtreringsAlternativ);
+    this.filtreringsAlternativ = filtreringsAlternativ;
   }
 }
