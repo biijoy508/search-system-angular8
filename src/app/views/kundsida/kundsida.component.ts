@@ -44,6 +44,9 @@ export class KundsidaComponent implements AfterViewInit {
         this.adress = 'Volymgatan 12, 555 55 Volymstad';
         this.atgardLista = data[1];
         console.log(this.atgardLista);
+        setTimeout(() => {
+           this.windowRef.komponentbibliotek.init();
+        }, 100);
       });
 
   }
