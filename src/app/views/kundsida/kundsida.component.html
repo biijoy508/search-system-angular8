@@ -2,15 +2,14 @@
 <div role="main" class="container">
   <div class="row">
     <div class="col">
-      <div class="arendeKortInfo">
+      <a [routerLink]="'/hemsida'" class="c-link__light">
+        << Tillbaka till sökresultat</a> <div class="btnFieldWrapper">
+          <div>
         Ärende <b> | {{arende.kundNummerAlfaNumerisk}} - {{arende.stodAr}} | {{arende.kundNamn}}</b>
       </div>
-      <div class="btnFieldWrapper">
-        <button class="c-btn--compact" (click)="navigeraTillSokResultat()"><span
-            class="sjv-i-pil-vanster"></span>Tillbaka till sökresultat</button>
         <div class="versionPosition">
           <p> Version :</p>
-          <div class="c-select c-select--tiny">
+            <div class="c-select c-select--tiny version">
             <div class="c-select__wrapper">
               <select id="version">
                 <option>Aktuell version</option>
@@ -22,8 +21,8 @@
           </div>
         </div>
       </div>
-      <p><b>Ärendeinformation</b></p>
-      <fieldset class="arendeInfo">
+
+    <div class="inlineContentWrapper p-2">
         <span>
           <p class="header"> Ärendetyp </p>
           <p class="content"> {{arende.arendeTyp}} </p>
@@ -56,14 +55,12 @@
           <p class="header"> Adress </p>
           <p class="content"> {{adress}} </p>
         </span>
-      </fieldset>
     </div>
   </div>
+</div>
   <div class="row">
-    <div class="col-sm-5">
+  <div class="col-md-4 border-right">
       <h5 class="e-h5">Åtgärder</h5>
-      <div class="xyz">
-        <span class="abc">
           <fieldset class="c-radio-btn-group c-radio-btn-group--tiny" role="radiogroup"
             aria-labelledby="legend_filtreraAtgard" (change)="filtreraAtgarder($event.target.value)">
             <div class="c-radio-btn c-radio-btn--tiny">
@@ -81,8 +78,21 @@
               <label for="radioknappAlla">Alla</label>
             </div>
           </fieldset>
+    <a class="c-link__light mb-1" (click)="laggTillAtgard()"><span class="sjv-i-plus"></span>Lägg till åtgärd</a>
+    <div class="skapaManuelAtgard">
+      <div class="c-select c-select--tiny">
+        <label>Skapa manuell åtgärd</label>
+        <div class="c-select__wrapper">
+          <select id="version">
+            <option>Atgärd 1</option>
+            <option>Atgärd 2</option>
+          </select>
+          <span class="sjv-i-caret-ner ikon">
         </span>
-        <a class="c-link__light">Lägg till</a>
+        </div>
+      </div>
+     <button class="c-btn c-btn--tiny ml-1">Lägg till</button>
+    <button class="c-btn c-btn--tiny ml-1" (click)="avbrytLaggtillatgard()">Avbryt</button>
       </div>
       <form *ngFor="let atgard of atgardLista | filtreraAtgarder:filtreringsAlternativ">
         <div class="c-accordion-wrapper">
@@ -137,20 +147,20 @@
                     <p class="content"> {{atgard.uppdateradAv}} </p>
                   </span>
                 </div>
-                <button class="c-btn c-btn--tiny">Spara</button>
+              <button class="c-btn c-btn--tiny ml-1">Spara</button>
               </div>
             </li>
           </ul>
         </div>
       </form>
     </div>
-    <div class="col-sm-1"></div>
-    <div class="col-sm-6">
+
+  <div class="col-md-8">
       <div class="c-tabs" rel="c-tabs-js">
         <ul id="myTabs_1" class="c-tabs__labels" role="tablist" aria-label="Code Examples">
           <li class="c-tabs__title" role="presentation">
-            <button id="panel1__label" href="#panel1" aria-selected="true" role="tab" aria-controls="panel1"
-              tabindex="-1" class="is-active">Ansökan Djurvälfärd</button>
+          <button id="panel1__label" href="#panel1" aria-selected="true" role="tab" aria-controls="panel1" tabindex="-1"
+            class="is-active">Ansökan Djurvälfärd</button>
           </li>
           <li class="c-tabs__title" role="presentation">
             <button id="panel2__label" href="#panel2" aria-selected="false" aria-controls="panel2" role="tab"
@@ -184,7 +194,7 @@
               <label for="input-text-1" tabindex="-1">PPN</label>
               <div class="c-tagsinput-field" rel="c-tagsinput-js">
                 <div class="tagsContainer">
-                  <input autocomplete="off" class="tagValuesHolder" type="hidden" value='43, 42, 41'>
+                  <input autocomplete="off" class="tagValuesHolder" type="hidden" [(ngModel)]="PPNnummer">
                   <input autocomplete="off" type="text" id="1" placeholder="">
                 </div>
                 <div class="select__arrow">

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { Arende } from 'src/app/model/arende';
 import { Atgard } from 'src/app/model/atgard';
 import { ApiService } from 'src/app/services/api.service';
@@ -11,14 +11,14 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './kundsida.component.html',
   styleUrls: ['./kundsida.component.scss']
 })
-export class KundsidaComponent implements OnInit, AfterViewInit {
+export class KundsidaComponent implements AfterViewInit {
   windowRef: any;
   arende: Arende;
   arendeId: any;
   adress: string;
   atgardLista: Atgard[] = [];
 
-  PPNnummer: string = '43,42,41';
+  PPNnummer: string = "43,42";
   antalDjur: string = '321';
   antalDjurenheter: string = '220';
 
@@ -28,14 +28,13 @@ export class KundsidaComponent implements OnInit, AfterViewInit {
   constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) {
     this.windowRef = window;
     this.arende = new Arende('', '', '', '', '', '', '', '', '', '');
-  }
 
-
-  ngOnInit() {
-    this.windowRef.komponentbibliotek.init();
   }
 
   ngAfterViewInit() {
+
+    this.windowRef.komponentbibliotek.init();
+    this.atgardLista.push(new Atgard('756715', '', 'ÖPP', '', '', '', '', '', '', '', ''));
     this.arendeId = this.route.snapshot.paramMap.get('arendeId');
 
     this.apiService.getChainedDataArendeInformation(this.arendeId).subscribe(
@@ -74,12 +73,17 @@ export class KundsidaComponent implements OnInit, AfterViewInit {
 
   }
 
-  navigeraTillSokResultat() {
-    this.router.navigateByUrl('/hemsida');
-  }
-
   filtreraAtgarder(filtreringsAlternativ) {
     console.log(filtreringsAlternativ);
     this.filtreringsAlternativ = filtreringsAlternativ;
+  }
+  laggTillAtgard() {
+    let skapamanuelatgardBlock = document.querySelector('.skapaManuelAtgard') as HTMLDivElement;
+    skapamanuelatgardBlock.style.display = "block";
+  }
+
+  avbrytLaggtillatgard() {
+    let skapamanuelatgardBlock = document.querySelector('.skapaManuelAtgard') as HTMLDivElement;
+    skapamanuelatgardBlock.style.display = "none";
   }
 }
