@@ -17,6 +17,8 @@ export class KundsidaComponent implements AfterViewInit {
   arendeId: any;
   adress: string;
   atgardLista: Atgard[] = [];
+  // atgardskodLista: string[] = [];
+  // valdAtgardskod: string;
 
   PPNnummer: string = "43,42";
   antalDjur: string = '321';
@@ -34,7 +36,6 @@ export class KundsidaComponent implements AfterViewInit {
   ngAfterViewInit() {
 
     this.windowRef.komponentbibliotek.init();
-    this.atgardLista.push(new Atgard('756715', '', 'ÖPP', '', '', '', '', '', '', '', ''));
     this.arendeId = this.route.snapshot.paramMap.get('arendeId');
 
     this.apiService.getChainedDataArendeInformation(this.arendeId).subscribe(
@@ -43,9 +44,11 @@ export class KundsidaComponent implements AfterViewInit {
         this.arende = data[0];
         this.adress = 'Volymgatan 12, 555 55 Volymstad';
         this.atgardLista = data[1];
+       /*  this.atgardskodLista = data[2];
+        console.log(this.atgardskodLista); */
         console.log(this.atgardLista);
         setTimeout(() => {
-           this.windowRef.komponentbibliotek.init();
+          this.windowRef.komponentbibliotek.init();
         }, 100);
       });
 
@@ -77,9 +80,22 @@ export class KundsidaComponent implements AfterViewInit {
   }
 
   filtreraAtgarder(filtreringsAlternativ) {
-    console.log(filtreringsAlternativ);
     this.filtreringsAlternativ = filtreringsAlternativ;
   }
+
+  /* skapaManuellAtgard() {
+
+    const valdAtgardskodParam = {
+      valdAtgardskod: this.valdAtgardskod
+    };
+
+    this.apiService.postData(environment.skapaManuellAtgardUrl, valdAtgardskodParam).subscribe(
+      (data: string) => {
+        console.log(data);
+      }
+    );
+  } */
+
   laggTillAtgard() {
     let skapamanuelatgardBlock = document.querySelector('.skapaManuelAtgard') as HTMLDivElement;
     skapamanuelatgardBlock.style.display = "block";
@@ -89,4 +105,5 @@ export class KundsidaComponent implements AfterViewInit {
     let skapamanuelatgardBlock = document.querySelector('.skapaManuelAtgard') as HTMLDivElement;
     skapamanuelatgardBlock.style.display = "none";
   }
+
 }
