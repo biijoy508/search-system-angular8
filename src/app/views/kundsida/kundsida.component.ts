@@ -17,6 +17,8 @@ export class KundsidaComponent implements AfterViewInit {
   arendeId: any;
   adress: string;
   atgardLista: Atgard[] = [];
+  atgardskodLista: string[] = [];
+  valdAtgardskod: string;
 
   PPNnummer: string = "43,42";
   antalDjur: string = '321';
@@ -43,6 +45,8 @@ export class KundsidaComponent implements AfterViewInit {
         this.arende = data[0];
         this.adress = 'Volymgatan 12, 555 55 Volymstad';
         this.atgardLista = data[1];
+        this.atgardskodLista = data[2];
+        console.log(this.atgardskodLista);
         console.log(this.atgardLista);
         setTimeout(() => {
            this.windowRef.komponentbibliotek.init();
@@ -77,8 +81,20 @@ export class KundsidaComponent implements AfterViewInit {
   }
 
   filtreraAtgarder(filtreringsAlternativ) {
-    console.log(filtreringsAlternativ);
     this.filtreringsAlternativ = filtreringsAlternativ;
+  }
+
+  skapaManuellAtgard() {
+
+    const valdAtgardskodParam = {
+      valdAtgardskod: this.valdAtgardskod
+    };
+
+    this.apiService.postData(environment.skapaManuellAtgardUrl, valdAtgardskodParam).subscribe(
+      (data: string) => {
+        console.log(data);
+      }
+    );
   }
   laggTillAtgard() {
     let skapamanuelatgardBlock = document.querySelector('.skapaManuelAtgard') as HTMLDivElement;
@@ -89,4 +105,5 @@ export class KundsidaComponent implements AfterViewInit {
     let skapamanuelatgardBlock = document.querySelector('.skapaManuelAtgard') as HTMLDivElement;
     skapamanuelatgardBlock.style.display = "none";
   }
+
 }
