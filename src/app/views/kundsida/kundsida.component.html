@@ -78,15 +78,19 @@
         <label for="radioknappAlla">Alla</label>
       </div>
     </fieldset>
-    <!-- <a class="c-link__light mb-1" (click)="laggTillAtgard()"><span class="sjv-i-plus"></span>Lägg till åtgärd</a> -->
-   <!--  <div class="skapaManuelAtgard">
+    <a class="c-link__light mb-1" (click)="laggTillAtgard()"><span class="sjv-i-plus"></span>Lägg till åtgärd</a>
+    <div class="skapaManuelAtgard">
       <div class="c-select c-select--tiny">
         <label>Skapa manuell åtgärd</label>
         <div class="c-select__wrapper">
-          <select id="atgardskod" [(ngModel)]="valdAtgardskod">
+          <!-- <select id="atgardskod" [(ngModel)]="valdAtgardskod">
             <option *ngFor="let atgardskod_item of atgardskodLista" [value]="atgardskod_item">
               {{atgardskod_item}}
             </option>
+          </select> -->
+          <select id="version">
+            <option>Atgärd 1</option>
+            <option>Atgärd 2</option>
           </select>
           <span class="sjv-i-caret-ner ikon">
           </span>
@@ -94,7 +98,7 @@
       </div>
       <button class="c-btn c-btn--tiny ml-1" (click)="skapaManuellAtgard()">Lägg till</button>
       <button class="c-btn c-btn--tiny ml-1" (click)="avbrytLaggtillatgard()">Avbryt</button>
-  </div> -->
+  </div>
   <form *ngFor="let atgard of atgardLista | filtreraAtgarder:filtreringsAlternativ; index as i">
     <div class="c-accordion-wrapper">
       <ul aria-label="accordion Control Group links" class="c-accordion">
