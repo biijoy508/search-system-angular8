@@ -78,8 +78,8 @@
         <label for="radioknappAlla">Alla</label>
       </div>
     </fieldset>
-    <a class="c-link__light mb-1" (click)="laggTillAtgard()"><span class="sjv-i-plus"></span>Lägg till åtgärd</a>
-    <div class="skapaManuelAtgard">
+    <!-- <a class="c-link__light mb-1" (click)="laggTillAtgard()"><span class="sjv-i-plus"></span>Lägg till åtgärd</a> -->
+   <!--  <div class="skapaManuelAtgard">
       <div class="c-select c-select--tiny">
         <label>Skapa manuell åtgärd</label>
         <div class="c-select__wrapper">
@@ -94,9 +94,8 @@
       </div>
       <button class="c-btn c-btn--tiny ml-1" (click)="skapaManuellAtgard()">Lägg till</button>
       <button class="c-btn c-btn--tiny ml-1" (click)="avbrytLaggtillatgard()">Avbryt</button>
-    </div>
-  </div>
-  <form *ngFor="let atgard of atgardLista | filtreraAtgarder:filtreringsAlternativ">
+  </div> -->
+  <form *ngFor="let atgard of atgardLista | filtreraAtgarder:filtreringsAlternativ; index as i">
     <div class="c-accordion-wrapper">
       <ul aria-label="accordion Control Group links" class="c-accordion">
         <li aria-controls="content-1" aria-expanded="true" rel="c-accordion-js">
@@ -106,20 +105,10 @@
           </button>
           <div role="region" aria-labelledby="accordion-control-1" aria-hidden="false" id="content-1"
             class="c-accordion-item__content">
-            <fieldset class="c-radio-btn-group c-radio-btn-group--tiny" role="radiogroup" aria-labelledby="legend_4">
-              <div class="c-radio-btn c-radio-btn--tiny">
-                <input id="radiotiny_1" name="radiogroup_tiny" type="radio" value="ÖPP" [(ngModel)]="atgard.statusKod">
-                <label for="radiotiny_1">ÖPP</label>
-              </div>
-
-              <div class="c-radio-btn c-radio-btn--tiny">
-                <input id="radiotiny_2" name="radiogroup_tiny" type="radio" value="LUÅ" [(ngModel)]="atgard.statusKod">
-                <label for="radiotiny_2">LUÅ</label>
-              </div>
-
-              <div class="c-radio-btn c-radio-btn--tiny">
-                <input id="radiotiny_3" name="radiogroup_tiny" type="radio" value="MAÅ" [(ngModel)]="atgard.statusKod">
-                <label for="radiotiny_3">MAÅ</label>
+            <fieldset  class="c-radio-btn-group c-radio-btn-group--tiny" role="radiogroup" aria-labelledby="legend_4">
+              <div *ngFor="let mojligStatus_item of atgard.mojligaStatusar" class="c-radio-btn c-radio-btn--tiny">
+                <input [id]="mojligStatus_item + i" name="radiogroup_tiny" type="radio" [value]="mojligStatus_item" [(ngModel)]="atgard.statusKod">
+                <label [for]="mojligStatus_item + i">{{mojligStatus_item}}</label>
               </div>
             </fieldset>
             <div class="c-textarea c-textarea--tiny">

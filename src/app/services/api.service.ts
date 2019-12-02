@@ -43,8 +43,9 @@ export class ApiService {
 
     const response1 = this.httpClient.get(environment.arendenUrl, { params: arendeIdParam });
     const response2 = this.httpClient.get(environment.atgarderUrl, { params: arendeIdParam });
-    const response3 = this.httpClient.get(environment.atgardskoderUrl);
-    return forkJoin([response1, response2, response3]);
+    // const response3 = this.httpClient.get(environment.atgardskoderUrl);
+    // return forkJoin([response1, response2, response3]);
+    return forkJoin([response1, response2]);
   }
 
   public getData(url) {
