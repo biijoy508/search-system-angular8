@@ -2,89 +2,86 @@
 <div role="main" class="container">
   <div class="row">
     <div class="col">
-      <div class="arendeKortInfo">
-        Ärende <b> | {{arende.kundNummerAlfaNumerisk}} - {{arende.stodAr}} | {{arende.kundNamn}}</b>
-      </div>
-      <div class="btnFieldWrapper">
-        <button class="c-btn--compact" (click)="navigeraTillSokResultat()"><span
-            class="sjv-i-pil-vanster"></span>Tillbaka till sökresultat</button>
-        <div class="versionPosition">
-          <p> Version :</p>
-          <div class="c-select c-select--tiny">
-            <div class="c-select__wrapper">
-              <select id="version">
-                <option>Aktuell version</option>
-                <option>Version 1 - 2019-02-13</option>
-              </select>
-              <span class="sjv-i-caret-ner ikon">
-              </span>
+      <a [routerLink]="'/hemsida'" class="c-link__light">
+        << Tillbaka till sökresultat</a> <div class="btnFieldWrapper">
+          <div>
+            Ärende <b> | {{arende.kundNummerAlfaNumerisk}} - {{arende.stodAr}} | {{arende.kundNamn}}</b>
+          </div>
+          <div class="versionPosition">
+            <p> Version :</p>
+            <div class="c-select c-select--tiny version">
+              <div class="c-select__wrapper">
+                <select id="version">
+                  <option>Aktuell version</option>
+                  <option>Version 1 - 2019-02-13</option>
+                </select>
+                <span class="sjv-i-caret-ner ikon">
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      <p><b>Ärendeinformation</b></p>
-      <fieldset class="arendeInfo">
-        <span>
-          <p class="header"> Ärendetyp </p>
-          <p class="content"> {{arende.arendeTyp}} </p>
-        </span>
-        <span>
-          <p class="header"> Ansökanstyp </p>
-          <p class="content"> {{arende.ansokansTyp}} </p>
-        </span>
-        <span>
-          <p class="header"> Nuvarande status </p>
-          <p class="content"> {{arende.status}} </p>
-        </span>
-        <span>
-          <p class="header"> Ärendenummer </p>
-          <p class="content"> {{arende.arendeId}} </p>
-        </span>
-        <span>
-          <p class="header"> Myndighet </p>
-          <p class="content"> {{arende.myndighet}} </p>
-        </span>
-        <span>
-          <p class="header"> Organisationsnummer </p>
-          <p class="content"> {{arende.kundOrgNummer}} </p>
-        </span>
-        <span>
-          <p class="header"> Ankomstdatum </p>
-          <p class="content"> {{arende.ankomstDatum}} </p>
-        </span>
-        <span>
-          <p class="header"> Adress </p>
-          <p class="content"> {{adress}} </p>
-        </span>
-      </fieldset>
+    </div>
+
+    <div class="inlineContentWrapper p-2">
+      <span>
+        <p class="header"> Ärendetyp </p>
+        <p class="content"> {{arende.arendeTyp}} </p>
+      </span>
+      <span>
+        <p class="header"> Ansökanstyp </p>
+        <p class="content"> {{arende.ansokansTyp}} </p>
+      </span>
+      <span>
+        <p class="header"> Nuvarande status </p>
+        <p class="content"> {{arende.status}} </p>
+      </span>
+      <span>
+        <p class="header"> Ärendenummer </p>
+        <p class="content"> {{arende.arendeId}} </p>
+      </span>
+      <span>
+        <p class="header"> Myndighet </p>
+        <p class="content"> {{arende.myndighet}} </p>
+      </span>
+      <span>
+        <p class="header"> Organisationsnummer </p>
+        <p class="content"> {{arende.kundOrgNummer}} </p>
+      </span>
+      <span>
+        <p class="header"> Ankomstdatum </p>
+        <p class="content"> {{arende.ankomstDatum}} </p>
+      </span>
+      <span>
+        <p class="header"> Adress </p>
+        <p class="content"> {{adress}} </p>
+      </span>
     </div>
   </div>
-  <div class="row">
-    <div class="col-sm-5">
-      <h5 class="e-h5">Åtgärder</h5>
-      <div class="xyz">
-        <span class="abc">
-          <fieldset class="c-radio-btn-group c-radio-btn-group--tiny" role="radiogroup"
-            aria-labelledby="legend_filtreraAtgard" (change)="filtreraAtgarder($event.target.value)">
-            <div class="c-radio-btn c-radio-btn--tiny">
-              <input id="radioknappÖppna" name="radiogroup_filtreraAtgard" type="radio" value="öppna">
-              <label for="radioknappÖppna">Öppna</label>
-            </div>
-
-            <div class="c-radio-btn c-radio-btn--tiny">
-              <input id="radioknappStängda" name="radiogroup_filtreraAtgard" type="radio" value="stängda">
-              <label for="radioknappStängda">Stängda</label>
-            </div>
-
-            <div class="c-radio-btn c-radio-btn--tiny">
-              <input id="radioknappAlla" name="radiogroup_filtreraAtgard" type="radio" value="alla" checked>
-              <label for="radioknappAlla">Alla</label>
-            </div>
-          </fieldset>
-        </span>
+</div>
+<div class="row">
+  <div class="col-md-4 border-right">
+    <h5 class="e-h5">Åtgärder</h5>
+    <fieldset class="c-radio-btn-group c-radio-btn-group--tiny" role="radiogroup"
+      aria-labelledby="legend_filtreraAtgard" (change)="filtreraAtgarder($event.target.value)">
+      <div class="c-radio-btn c-radio-btn--tiny">
+        <input id="radioknappÖppna" name="radiogroup_filtreraAtgard" type="radio" value="öppna">
+        <label for="radioknappÖppna">Öppna</label>
       </div>
+
+      <div class="c-radio-btn c-radio-btn--tiny">
+        <input id="radioknappStängda" name="radiogroup_filtreraAtgard" type="radio" value="stängda">
+        <label for="radioknappStängda">Stängda</label>
+      </div>
+
+      <div class="c-radio-btn c-radio-btn--tiny">
+        <input id="radioknappAlla" name="radiogroup_filtreraAtgard" type="radio" value="alla" checked>
+        <label for="radioknappAlla">Alla</label>
+      </div>
+    </fieldset>
+    <a class="c-link__light mb-1" (click)="laggTillAtgard()"><span class="sjv-i-plus"></span>Lägg till åtgärd</a>
+    <div class="skapaManuelAtgard">
       <div class="c-select c-select--tiny">
-        <label for="atgardskod">Skapa manuell åtgärd</label>
+        <label>Skapa manuell åtgärd</label>
         <div class="c-select__wrapper">
           <select id="atgardskod" [(ngModel)]="valdAtgardskod">
             <option *ngFor="let atgardskod_item of atgardskodLista" [value]="atgardskod_item">
@@ -95,144 +92,140 @@
           </span>
         </div>
       </div>
-      <div class="confirm-btn">
-        <button class="c-btn--primary c-btn--compact" (click)="skapaManuellAtgard()">Lägg till</button>
-        <button class="c-btn c-btn--compact">Avbryt</button>
-      </div>
-      <form *ngFor="let atgard of atgardLista | filtreraAtgarder:filtreringsAlternativ">
-        <div class="c-accordion-wrapper">
-          <ul aria-label="accordion Control Group links" class="c-accordion">
-            <li aria-controls="content-1" aria-expanded="true" rel="c-accordion-js">
-              <button tabindex="0" name="item-one" id="accordion-control-1" class="c-accordion-item__title">
-                <span class="accordion__icon toggle-down"></span>
-                <span>{{atgard.kod}} - {{atgard.beskrivning}}</span>
-              </button>
-              <div role="region" aria-labelledby="accordion-control-1" aria-hidden="false" id="content-1"
-                class="c-accordion-item__content">
-                <fieldset class="c-radio-btn-group c-radio-btn-group--tiny" role="radiogroup"
-                  aria-labelledby="legend_4">
-                  <div class="c-radio-btn c-radio-btn--tiny">
-                    <input id="radiotiny_1" name="radiogroup_tiny" type="radio" value="ÖPP"
-                      [(ngModel)]="atgard.statusKod">
-                    <label for="radiotiny_1">ÖPP</label>
-                  </div>
-
-                  <div class="c-radio-btn c-radio-btn--tiny">
-                    <input id="radiotiny_2" name="radiogroup_tiny" type="radio" value="LUÅ"
-                      [(ngModel)]="atgard.statusKod">
-                    <label for="radiotiny_2">LUÅ</label>
-                  </div>
-
-                  <div class="c-radio-btn c-radio-btn--tiny">
-                    <input id="radiotiny_3" name="radiogroup_tiny" type="radio" value="MAÅ"
-                      [(ngModel)]="atgard.statusKod">
-                    <label for="radiotiny_3">MAÅ</label>
-                  </div>
-                </fieldset>
-                <div class="c-textarea c-textarea--tiny">
-                  <label for="textarea5">Kommentar<i class="label--valfritt">(Valfritt)</i></label>
-                  <textarea aria-describedby="textarea-description-4" class="textarea_exempel" id="textarea5" rows="4"
-                    wrap="soft" [(ngModel)]="atgard.kommentar" name="kommentar"></textarea>
-                  <div class="c-textarea__wrapper">
-                    <p id="textarea-description-4" class="c-textarea__description"></p>
-                    <p class="c-text-counter__count_characters"></p>
-                  </div>
-                </div>
-                <div class="inlineWrapper2">
-                  <span>
-                    <p class="header"> Skapad </p>
-                    <p class="content">{{atgard.regDatum}} </p>
-                  </span>
-                  <span>
-                    <p class="header"> Uppdaterad </p>
-                    <p class="content">{{atgard.uppdateradDatum}} </p>
-                  </span>
-                  <span>
-                    <p class="header"> Uppdaterad av </p>
-                    <p class="content"> {{atgard.uppdateradAv}} </p>
-                  </span>
-                </div>
-                <button class="c-btn c-btn--tiny">Spara</button>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </form>
+      <button class="c-btn c-btn--tiny ml-1" (click)="skapaManuellAtgard()">Lägg till</button>
+      <button class="c-btn c-btn--tiny ml-1" (click)="avbrytLaggtillatgard()">Avbryt</button>
     </div>
-    <div class="col-sm-1"></div>
-    <div class="col-sm-6">
-      <div class="c-tabs" rel="c-tabs-js">
-        <ul id="myTabs_1" class="c-tabs__labels" role="tablist" aria-label="Code Examples">
-          <li class="c-tabs__title" role="presentation">
-            <button id="panel1__label" href="#panel1" aria-selected="true" role="tab" aria-controls="panel1"
-              tabindex="-1" class="is-active">Ansökan Djurvälfärd</button>
-          </li>
-          <li class="c-tabs__title" role="presentation">
-            <button id="panel2__label" href="#panel2" aria-selected="false" aria-controls="panel2" role="tab"
-              tabindex="-1">Attribut</button>
-          </li>
-          <li class="c-tabs__title" role="presentation">
-            <button id="panel3__label" href="#panel3" aria-selected="false" aria-controls="panel3"
-              role="tab">Beslut</button>
-          </li>
-        </ul>
-        <div class="c-tabs__content" data-tabs="myTabs_1">
-          <div id="panel1" class="c-tabs__panel is-active" role="tabpanel" aria-labelledby="panel1__label">
-            <div class="inlineWrapper2 vanligt">
-              <span>
-                <p class="header"> PPN </p>
-                <p class="content"> {{PPNnummer}} </p>
-              </span>
-            </div>
-            <div class="inlineWrapper2 vanligt">
-              <span>
-                <p class="header"> Antal djur </p>
-                <p class="content"> {{antalDjur}} </p>
-              </span>
-              <span>
-                <p class="header"> Antal djurenheter </p>
-                <p class="content"> {{antalDjurenheter}} </p>
-              </span>
-            </div>
+  </div>
+  <form *ngFor="let atgard of atgardLista | filtreraAtgarder:filtreringsAlternativ">
+    <div class="c-accordion-wrapper">
+      <ul aria-label="accordion Control Group links" class="c-accordion">
+        <li aria-controls="content-1" aria-expanded="true" rel="c-accordion-js">
+          <button tabindex="0" name="item-one" id="accordion-control-1" class="c-accordion-item__title">
+            <span class="accordion__icon toggle-down"></span>
+            <span>{{atgard.kod}} - {{atgard.beskrivning}}</span>
+          </button>
+          <div role="region" aria-labelledby="accordion-control-1" aria-hidden="false" id="content-1"
+            class="c-accordion-item__content">
+            <fieldset class="c-radio-btn-group c-radio-btn-group--tiny" role="radiogroup" aria-labelledby="legend_4">
+              <div class="c-radio-btn c-radio-btn--tiny">
+                <input id="radiotiny_1" name="radiogroup_tiny" type="radio" value="ÖPP" [(ngModel)]="atgard.statusKod">
+                <label for="radiotiny_1">ÖPP</label>
+              </div>
 
-            <div class="c-tagsinput--tiny redigeraView">
-              <label for="input-text-1" tabindex="-1">PPN</label>
-              <div class="c-tagsinput-field" rel="c-tagsinput-js">
-                <div class="tagsContainer">
-                  <input autocomplete="off" class="tagValuesHolder" type="hidden" value='43, 42, 41'>
-                  <input autocomplete="off" type="text" id="1" placeholder="">
-                </div>
-                <div class="select__arrow">
-                  <span class="sjv-i-multiselect-ikon"></span>
-                </div>
+              <div class="c-radio-btn c-radio-btn--tiny">
+                <input id="radiotiny_2" name="radiogroup_tiny" type="radio" value="LUÅ" [(ngModel)]="atgard.statusKod">
+                <label for="radiotiny_2">LUÅ</label>
               </div>
-              <p tabindex="-1" id="description-1"></p>
-            </div>
-            <div class="c-input c-input--tiny redigeraView">
-              <label for="input-compact-text-6" tabindex="-1" id="label-6">Antal djur</label>
-              <div class="input__wrapper input__wrapper--text">
-                <input autocomplete="given-name" id="input-compact-text-6" aria-describedby="description-6" type="text"
-                  tabindex="0" name="text6" [(ngModel)]="antalDjur">
-              </div>
-            </div>
-            <div class="c-input c-input--tiny redigeraView">
-              <label for="input-compact-text-6" tabindex="-1" id="label-6">Antal djurenheter</label>
-              <div class="input__wrapper input__wrapper--text">
-                <input autocomplete="given-name" id="input-compact-text-6" aria-describedby="description-6" type="text"
-                  tabindex="0" name="text6" [(ngModel)]="antalDjurenheter">
-              </div>
-            </div>
 
-            <button class="c-btn c-btn--tiny mt-2" (click)="redigeraView($event.target)">Redigera</button>
+              <div class="c-radio-btn c-radio-btn--tiny">
+                <input id="radiotiny_3" name="radiogroup_tiny" type="radio" value="MAÅ" [(ngModel)]="atgard.statusKod">
+                <label for="radiotiny_3">MAÅ</label>
+              </div>
+            </fieldset>
+            <div class="c-textarea c-textarea--tiny">
+              <label for="textarea5">Kommentar<i class="label--valfritt">(Valfritt)</i></label>
+              <textarea aria-describedby="textarea-description-4" class="textarea_exempel" id="textarea5" rows="4"
+                wrap="soft" [(ngModel)]="atgard.kommentar" name="kommentar"></textarea>
+              <div class="c-textarea__wrapper">
+                <p id="textarea-description-4" class="c-textarea__description"></p>
+                <p class="c-text-counter__count_characters"></p>
+              </div>
+            </div>
+            <div class="inlineWrapper2">
+              <span>
+                <p class="header"> Skapad </p>
+                <p class="content">{{atgard.regDatum}} </p>
+              </span>
+              <span>
+                <p class="header"> Uppdaterad </p>
+                <p class="content">{{atgard.uppdateradDatum}} </p>
+              </span>
+              <span>
+                <p class="header"> Uppdaterad av </p>
+                <p class="content"> {{atgard.uppdateradAv}} </p>
+              </span>
+            </div>
+            <button class="c-btn c-btn--tiny ml-1">Spara</button>
           </div>
-          <div id="panel2" class="c-tabs__panel" role="tabpanel" aria-labelledby="panel2__label">
+        </li>
+      </ul>
+    </div>
+  </form>
+</div>
 
+<div class="col-md-8">
+  <div class="c-tabs" rel="c-tabs-js">
+    <ul id="myTabs_1" class="c-tabs__labels" role="tablist" aria-label="Code Examples">
+      <li class="c-tabs__title" role="presentation">
+        <button id="panel1__label" href="#panel1" aria-selected="true" role="tab" aria-controls="panel1" tabindex="-1"
+          class="is-active">Ansökan Djurvälfärd</button>
+      </li>
+      <li class="c-tabs__title" role="presentation">
+        <button id="panel2__label" href="#panel2" aria-selected="false" aria-controls="panel2" role="tab"
+          tabindex="-1">Attribut</button>
+      </li>
+      <li class="c-tabs__title" role="presentation">
+        <button id="panel3__label" href="#panel3" aria-selected="false" aria-controls="panel3"
+          role="tab">Beslut</button>
+      </li>
+    </ul>
+    <div class="c-tabs__content" data-tabs="myTabs_1">
+      <div id="panel1" class="c-tabs__panel is-active" role="tabpanel" aria-labelledby="panel1__label">
+        <div class="inlineWrapper2 vanligt">
+          <span>
+            <p class="header"> PPN </p>
+            <p class="content"> {{PPNnummer}} </p>
+          </span>
+        </div>
+        <div class="inlineWrapper2 vanligt">
+          <span>
+            <p class="header"> Antal djur </p>
+            <p class="content"> {{antalDjur}} </p>
+          </span>
+          <span>
+            <p class="header"> Antal djurenheter </p>
+            <p class="content"> {{antalDjurenheter}} </p>
+          </span>
+        </div>
+
+        <div class="c-tagsinput--tiny redigeraView">
+          <label for="input-text-1" tabindex="-1">PPN</label>
+          <div class="c-tagsinput-field" rel="c-tagsinput-js">
+            <div class="tagsContainer">
+              <input autocomplete="off" class="tagValuesHolder" type="hidden" [(ngModel)]="PPNnummer">
+              <input autocomplete="off" type="text" id="1" placeholder="">
+            </div>
+            <div class="select__arrow">
+              <span class="sjv-i-multiselect-ikon"></span>
+            </div>
           </div>
-          <div id="panel3" class="c-tabs__panel" role="tabpanel" aria-labelledby="panel3__label">
-
+          <p tabindex="-1" id="description-1"></p>
+        </div>
+        <div class="c-input c-input--tiny redigeraView">
+          <label for="input-compact-text-6" tabindex="-1" id="label-6">Antal djur</label>
+          <div class="input__wrapper input__wrapper--text">
+            <input autocomplete="given-name" id="input-compact-text-6" aria-describedby="description-6" type="text"
+              tabindex="0" name="text6" [(ngModel)]="antalDjur">
           </div>
         </div>
+        <div class="c-input c-input--tiny redigeraView">
+          <label for="input-compact-text-6" tabindex="-1" id="label-6">Antal djurenheter</label>
+          <div class="input__wrapper input__wrapper--text">
+            <input autocomplete="given-name" id="input-compact-text-6" aria-describedby="description-6" type="text"
+              tabindex="0" name="text6" [(ngModel)]="antalDjurenheter">
+          </div>
+        </div>
+
+        <button class="c-btn c-btn--tiny mt-2" (click)="redigeraView($event.target)">Redigera</button>
+      </div>
+      <div id="panel2" class="c-tabs__panel" role="tabpanel" aria-labelledby="panel2__label">
+
+      </div>
+      <div id="panel3" class="c-tabs__panel" role="tabpanel" aria-labelledby="panel3__label">
+
       </div>
     </div>
   </div>
+</div>
+</div>
 </div>
