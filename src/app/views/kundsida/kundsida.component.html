@@ -82,7 +82,22 @@
             </div>
           </fieldset>
         </span>
-        <a class="c-link__light">Lägg till</a>
+      </div>
+      <div class="c-select c-select--tiny">
+        <label for="atgardskod">Skapa manuell åtgärd</label>
+        <div class="c-select__wrapper">
+          <select id="atgardskod" [(ngModel)]="valdAtgardskod">
+            <option *ngFor="let atgardskod_item of atgardskodLista" [value]="atgardskod_item">
+              {{atgardskod_item}}
+            </option>
+          </select>
+          <span class="sjv-i-caret-ner ikon">
+          </span>
+        </div>
+      </div>
+      <div class="confirm-btn">
+        <button class="c-btn--primary c-btn--compact" (click)="skapaManuellAtgard()">Lägg till</button>
+        <button class="c-btn c-btn--compact">Avbryt</button>
       </div>
       <form *ngFor="let atgard of atgardLista | filtreraAtgarder:filtreringsAlternativ">
         <div class="c-accordion-wrapper">

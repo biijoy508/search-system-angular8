@@ -5,9 +5,11 @@ export const environment = {
   arendenUrl: '/farmen/arende/arenden',
   arendeTyperUrl: '/farmen/arende/arendetyper',
   atgarderUrl: '/farmen/atg/atgarder',
+  atgardskoderUrl: '/farmen/atg/atgardskoder',
   masshanteringUrl: '/farmen/arende/masshantering',
   myndigheterUrl: '/farmen/intr/myndigheter',
   paverkadeArendenUrl: '/farmen/arende/antalpaverkade',
+  skapaManuellAtgardUrl: '/farmen/atg/skapamanuellatgard',
   stodArUrl: '/farmen/intr/stodar',
   statusUrl: '/farmen/grund/arendestatusar'
 };

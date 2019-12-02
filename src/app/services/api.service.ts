@@ -43,7 +43,8 @@ export class ApiService {
 
     const response1 = this.httpClient.get(environment.arendenUrl, { params: arendeIdParam });
     const response2 = this.httpClient.get(environment.atgarderUrl, { params: arendeIdParam });
-    return forkJoin([response1, response2]);
+    const response3 = this.httpClient.get(environment.atgardskoderUrl);
+    return forkJoin([response1, response2, response3]);
   }
 
   public getData(url) {
@@ -54,8 +55,8 @@ export class ApiService {
     return this.httpClient.get(url, { params: parameters });
   }
 
-  public postData(url, sokFilter): Observable<any> {
-    return this.httpClient.post<any>(url, sokFilter);
+  public postData(url, data): Observable<any> {
+    return this.httpClient.post<any>(url, data);
   }
 
 }
