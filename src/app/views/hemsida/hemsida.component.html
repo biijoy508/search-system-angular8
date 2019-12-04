@@ -1,7 +1,7 @@
 <app-header activeView="hemsida"></app-header>
 <div role="main" class="container">
   <div class="row">
-    <div class="col-lg-3">
+    <div class="col-sm-3">
       <h3 class="farmen-h3">Sökfilter</h3>
       <div class="c-select c-select--tiny">
         <label for="stodar">Stödår</label>
@@ -15,7 +15,6 @@
           </span>
         </div>
       </div>
-
       <div class="c-input c-input--tiny">
         <label for="input-text-1" id="label-1" tabindex="-1">Kundnummer</label>
         <div class="input__wrapper " tabindex="-1">
@@ -53,7 +52,7 @@
         <button class="c-btn c-btn--compact" (click)="rensaSokFilter()">Rensa sökfilter</button>
       </div>
     </div>
-    <div class="col-lg-9">
+    <div class="col-sm-9">
       <h3 class="farmen-h3" *ngIf="noResults"> {{resultatStatusText}} </h3>
       <div class="tableContainer" *ngIf="!noResults">
         <p>Visar {{antalHamtadeArenden}} av {{antalArenden}} ärenden</p>
