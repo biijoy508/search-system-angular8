@@ -35,17 +35,22 @@ export class ApiService {
     return forkJoin([response1, response2]);
   }
 
-  public getChainedDataArendeInformation(arendeId): Observable<any> {
+  public getChainedDataArendeInformation(arendeId, stodAr): Observable<any> {
+
+    console.log(stodAr);
 
     const arendeIdParam = {
       arendeid: arendeId
     };
 
+    const stodArParam = {
+      stodar: stodAr
+    }
+
     const response1 = this.httpClient.get(environment.arendenUrl, { params: arendeIdParam });
     const response2 = this.httpClient.get(environment.atgarderUrl, { params: arendeIdParam });
-    // const response3 = this.httpClient.get(environment.atgardskoderUrl);
-    // return forkJoin([response1, response2, response3]);
-    return forkJoin([response1, response2]);
+    const response3 = this.httpClient.get(environment.atgardskoderUrl, { params: stodArParam });
+    return forkJoin([response1, response2, response3]);
   }
 
   public getData(url) {

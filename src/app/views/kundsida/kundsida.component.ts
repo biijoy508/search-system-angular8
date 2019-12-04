@@ -1,6 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { Arende } from 'src/app/model/arende';
 import { Atgard } from 'src/app/model/atgard';
+import { ManuellAtgard } from 'src/app/model/manuellAtgard';
 import { ApiService } from 'src/app/services/api.service';
 import { environment } from 'src/environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,10 +16,11 @@ export class KundsidaComponent implements AfterViewInit {
   windowRef: any;
   arende: Arende;
   arendeId: any;
+  stodAr: any;
   adress: string;
   atgardLista: Atgard[] = [];
-  // atgardskodLista: string[] = [];
-  // valdAtgardskod: string;
+  atgardskodLista: ManuellAtgard[] = [];
+  valdAtgardskod: string;
 
   PPNnummer = '43,42';
   antalDjur = '321';
@@ -39,15 +41,17 @@ export class KundsidaComponent implements AfterViewInit {
 
     this.windowRef.komponentbibliotek.init();
     this.arendeId = this.route.snapshot.paramMap.get('arendeId');
+    this.stodAr = this.route.snapshot.paramMap.get('stodAr');
 
-    this.apiService.getChainedDataArendeInformation(this.arendeId).subscribe(
+
+    this.apiService.getChainedDataArendeInformation(this.arendeId, this.stodAr).subscribe(
       (data: any) => {
         this.atgardLista = [];
         this.arende = data[0];
         this.adress = 'Volymgatan 12, 555 55 Volymstad';
         this.atgardLista = data[1];
-       /*  this.atgardskodLista = data[2];
-        console.log(this.atgardskodLista); */
+        this.atgardskodLista = data[2];
+        console.log(this.atgardskodLista);
         console.log(this.atgardLista);
         setTimeout(() => {
           this.windowRef.komponentbibliotek.init();

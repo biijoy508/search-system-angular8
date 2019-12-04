@@ -70,15 +70,15 @@
           <div class="c-select c-select--tiny">
             <label>Skapa manuell åtgärd</label>
             <div class="c-select__wrapper">
-              <!-- <select id="atgardskod" [(ngModel)]="valdAtgardskod">
+              <select id="atgardskod" [(ngModel)]="valdAtgardskod">
                     <option *ngFor="let atgardskod_item of atgardskodLista" [value]="atgardskod_item">
-                      {{atgardskod_item}}
+                      {{atgardskod_item.kod}} - {{atgardskod_item.text}}
                     </option>
-                  </select> -->
-              <select id="version">
+                  </select>
+            <!--   <select id="version">
                 <option>Atgärd 1</option>
                 <option>Atgärd 2</option>
-              </select>
+              </select> -->
               <span class="sjv-i-caret-ner ikon">
               </span>
             </div>
