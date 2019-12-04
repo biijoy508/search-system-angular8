@@ -7,11 +7,12 @@ import { ViewComponentsModule } from '../view-components/view-components.module'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { filtreraAtgarderPipe } from './filtreraAtgarder.pipe';
+import { DomChangeDirective } from './dom-change.directive';
 
 
 
 @NgModule({
-  declarations: [HemsidaComponent, KundsidaComponent, MassHanteringComponent, filtreraAtgarderPipe],
+  declarations: [HemsidaComponent, KundsidaComponent, MassHanteringComponent, filtreraAtgarderPipe, DomChangeDirective],
   imports: [
     CommonModule, ViewComponentsModule, FormsModule, ReactiveFormsModule, RouterModule
   ],

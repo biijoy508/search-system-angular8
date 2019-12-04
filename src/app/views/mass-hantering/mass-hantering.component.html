@@ -7,93 +7,83 @@
   </div>
   <div class="row">
     <div class="col-sm-4">
-      <div class="filtercontainer">
-        <div class="row">
-          <div class="col">
-            <div class="c-select c-select--tiny">
-              <label for="myndighet">Myndighet</label>
-              <div class="c-select__wrapper">
-                <select id="myndighet" [(ngModel)]="sokFilter.myndighet">
-                  <option *ngFor="let myndighet_item of urvalValuesHolder.myndighet" [value]="myndighet_item">
-                    {{myndighet_item}}
-                  </option>
-                </select>
-                <span class="sjv-i-caret-ner ikon">
-                </span>
-              </div>
-            </div>
-            <div class="c-select c-select--tiny">
-              <label for="stodar">Stödår</label>
-              <div class="c-select__wrapper">
-                <select id="stodar" [(ngModel)]="sokFilter.stodAr">
-                  <option *ngFor="let stodar_item of urvalValuesHolder.stodAr" [value]="stodar_item">
-                    {{stodar_item}}
-                  </option>
-                </select>
-                <span class="sjv-i-caret-ner ikon">
-                </span>
-              </div>
-            </div>
-            <div class="c-multiselect--tiny" rel="c-multiselect-js">
-              <label for="arendetyp" class="c-multiselect__label">Ärendetyp</label>
-              <div class="c-select__wrapper">
-                <select name="arendeTypList[]" id="arendeTyp" multiple="multiple" #arendeTypList
-                  (change)='onOptionsSelected("arendeTypList", arendeTypList.selectedOptions)'>
-                  <option *ngFor="let arendetyp_item of urvalValuesHolder.arendeTypList" [value]="arendetyp_item">
-                    {{arendetyp_item}}
-                  </option>
-                </select>
-              </div>
-            </div>
-            <div class="c-select c-select--tiny">
-              <label for="ansokansTypList">Ansökanstyp</label>
-              <div class="c-select__wrapper">
-                <select name="ansokansTypListn" id="ansokansTyp" [(ngModel)]="sokFilter.ansokansTypList[0]">
-                  <option *ngFor="let ansokanstyp_item of urvalValuesHolder.ansokansTypList" [value]="ansokanstyp_item">
-                    {{ansokanstyp_item}}
-                  </option>
-                </select>
-                <span class="sjv-i-caret-ner ikon">
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <div class="c-select c-select--tiny">
-              <label for="franstatus">Från status</label>
-              <div class="c-select__wrapper">
-                <select id="franstatus" [(ngModel)]="sokFilter.franStatus">
-                  <option *ngFor="let franstatus_item of urvalValuesHolder.franStatus" [value]="franstatus_item">
-                    {{franstatus_item}}
-                  </option>
-                </select>
-                <span class="sjv-i-caret-ner ikon">
-                </span>
-              </div>
-            </div>
-            <div class="c-select c-select--tiny">
-              <label for="tillstatus">Till status</label>
-              <div class="c-select__wrapper">
-                <select id="tillstatus" [(ngModel)]="sokFilter.tillStatus">
-                  <option *ngFor="let tillstatus_item of urvalValuesHolder.tillStatus" [value]="tillstatus_item">
-                    {{tillstatus_item}}
-                  </option>
-                </select>
-                <span class="sjv-i-caret-ner ikon">
-                </span>
-              </div>
-            </div>
-          </div>
+      <div class="c-select c-select--tiny">
+        <label for="myndighet">Myndighet</label>
+        <div class="c-select__wrapper">
+          <select id="myndighet" [(ngModel)]="sokFilter.myndighet">
+            <option *ngFor="let myndighet_item of urvalValuesHolder.myndighet" [value]="myndighet_item">
+              {{myndighet_item}}
+            </option>
+          </select>
+          <span class="sjv-i-caret-ner ikon">
+          </span>
         </div>
       </div>
-      <button *ngIf="sokFilter.myndighet !== '' && sokFilter.stodAr !== '' && sokFilter.arendeTypList.length !== 0 
+      <div class="c-select c-select--tiny">
+        <label for="stodar">Stödår</label>
+        <div class="c-select__wrapper">
+          <select id="stodar" [(ngModel)]="sokFilter.stodAr">
+            <option *ngFor="let stodar_item of urvalValuesHolder.stodAr" [value]="stodar_item">
+              {{stodar_item}}
+            </option>
+          </select>
+          <span class="sjv-i-caret-ner ikon">
+          </span>
+        </div>
+      </div>
+      <div class="c-multiselect--tiny" rel="c-multiselect-js">
+        <label for="arendetyp" class="c-multiselect__label">Ärendetyp</label>
+        <div class="c-select__wrapper">
+          <select name="arendeTypList[]" id="arendeTyp" multiple="multiple" #arendeTypList
+            (change)='onOptionsSelected("arendeTypList", arendeTypList.selectedOptions)'>
+            <option *ngFor="let arendetyp_item of urvalValuesHolder.arendeTypList" [value]="arendetyp_item">
+              {{arendetyp_item}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="c-select c-select--tiny">
+        <label for="ansokansTypList">Ansökanstyp</label>
+        <div class="c-select__wrapper">
+          <select name="ansokansTypListn" id="ansokansTyp" [(ngModel)]="sokFilter.ansokansTypList[0]">
+            <option *ngFor="let ansokanstyp_item of urvalValuesHolder.ansokansTypList" [value]="ansokanstyp_item">
+              {{ansokanstyp_item}}
+            </option>
+          </select>
+          <span class="sjv-i-caret-ner ikon">
+          </span>
+        </div>
+      </div>
+      <div class="c-select c-select--tiny">
+        <label for="franstatus">Från status</label>
+        <div class="c-select__wrapper">
+          <select id="franstatus" [(ngModel)]="sokFilter.franStatus">
+            <option *ngFor="let franstatus_item of urvalValuesHolder.franStatus" [value]="franstatus_item">
+              {{franstatus_item}}
+            </option>
+          </select>
+          <span class="sjv-i-caret-ner ikon">
+          </span>
+        </div>
+      </div>
+      <div class="c-select c-select--tiny">
+        <label for="tillstatus">Till status</label>
+        <div class="c-select__wrapper">
+          <select id="tillstatus" [(ngModel)]="sokFilter.tillStatus">
+            <option *ngFor="let tillstatus_item of urvalValuesHolder.tillStatus" [value]="tillstatus_item">
+              {{tillstatus_item}}
+            </option>
+          </select>
+          <span class="sjv-i-caret-ner ikon">
+          </span>
+        </div>
+      </div>
+      <button
+        *ngIf="sokFilter.myndighet !== '' && sokFilter.stodAr !== '' && sokFilter.arendeTypList.length !== 0
       && sokFilter.ansokansTypList.length !== 0 && sokFilter.ansokansTypList[0] !== '' && sokFilter.franStatus !== '' && sokFilter.tillStatus !== '';else disabledButton"
         class="c-btn--primary c-btn--compact" (click)="visaBekraftelse()">Ändra status</button>
       <ng-template #disabledButton>
-        <button class="c-btn--primary c-btn--compact"
-          disabled>Ändra status</button>
+        <button class="c-btn--primary c-btn--compact" disabled>Ändra status</button>
       </ng-template>
     </div>
     <div class="col-sm-8 mt-2">

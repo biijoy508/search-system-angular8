@@ -11,10 +11,22 @@
   }
 }
 
+.tillbakaIkon {
+  vertical-align: text-top;
+  padding-top: 1px;
+  margin-right: 2px;
+}
+
 .btnFieldWrapper {
   @extend .arendeKortInfo;
   justify-content: space-between;
   margin-top: 0.5rem;
+
+  .tidigareVersion {
+    border: dashed #B3B3B3;
+    margin: -0.5rem 0 0.5rem 0;
+    padding: 0.25rem;
+  }
 
   .versionPosition {
     display: inline-flex;
@@ -32,10 +44,11 @@
   }
 }
 
-.skapaManuelAtgard{
+.skapaManuellAtgard {
   padding-left: 1.2rem;
   display: none;
 }
+
 .version {
   margin-right: 2rem;
   max-width: 10rem;
@@ -64,6 +77,12 @@ p {
   margin-bottom: 1.5rem;
 }
 
+.atgardBeskrivning {
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
 .inlineWrapper {
 
   span,
@@ -82,7 +101,7 @@ p {
 
 .inlineWrapper2 {
   * {
-    font-size: 13px;
+    font-size: 0.8125rem;
   }
 
   span {
@@ -91,8 +110,21 @@ p {
   }
 }
 
+p {
+  line-height: 1.5;
+}
+
 .inlineContentWrapper {
-  @extend .inlineWrapper2;
+  * {
+    font-size: 1rem;
+
+  }
+
+  span {
+    margin-right: 2rem;
+    display: inline-block;
+  }
+
   border-bottom: solid 1px darkgrey;
 }
 
@@ -102,17 +134,12 @@ p {
 }
 
 .c-link__light {
-  font-size: 13px;
+  font-size: 0.8125rem;
   max-height: 1rem;
 }
 
 .c-tabs {
-  margin-top: 1.5rem;
-}
-
-
-.c-accordion .c-accordion-item__title {
-  font-size: 1rem;
+  margin-top: 1.25rem;
 }
 
 .c-tagsinput--tiny,
@@ -132,6 +159,17 @@ p {
 
 .border-right {
   border-right: solid 1px darkgrey;
+}
+
+.laggtillatgard {
+  margin-bottom: 1.5rem;
+}
+
+.c-toaster {
+  position: absolute;
+  bottom: 5rem;
+  left: 40%;
+  display: none;
 }
 
 @media (max-width: 768px) {

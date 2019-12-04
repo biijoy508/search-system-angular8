@@ -20,17 +20,19 @@ export class KundsidaComponent implements AfterViewInit {
   // atgardskodLista: string[] = [];
   // valdAtgardskod: string;
 
-  PPNnummer: string = "43,42";
-  antalDjur: string = '321';
-  antalDjurenheter: string = '220';
+  PPNnummer = '43,42';
+  antalDjur = '321';
+  antalDjurenheter = '220';
 
-  filtreringsAlternativ: string = 'alla';
+  filtreringsAlternativ = 'alla';
+
+  toasterMessage = '';
+  tidigareVersion = false;
 
 
   constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) {
     this.windowRef = window;
     this.arende = new Arende('', '', '', '', '', '', '', '', '', '');
-
   }
 
   ngAfterViewInit() {
@@ -83,6 +85,20 @@ export class KundsidaComponent implements AfterViewInit {
     this.filtreringsAlternativ = filtreringsAlternativ;
   }
 
+  showToaster(message) {
+    const toaster = document.querySelector('.c-toaster') as HTMLDivElement;
+    toaster.style.display = 'block';
+    this.toasterMessage = message;
+    setTimeout(() => {
+      this.closeToaster();
+    }, 2000);
+  }
+  closeToaster() {
+    const toaster = document.querySelector('.c-toaster') as HTMLDivElement;
+    toaster.style.display = 'none';
+    this.toasterMessage = '';
+  }
+
   /* skapaManuellAtgard() {
 
     const valdAtgardskodParam = {
@@ -97,13 +113,21 @@ export class KundsidaComponent implements AfterViewInit {
   } */
 
   laggTillAtgard() {
-    let skapamanuelatgardBlock = document.querySelector('.skapaManuelAtgard') as HTMLDivElement;
-    skapamanuelatgardBlock.style.display = "block";
+    const skapaManuellAtgardBlock = document.querySelector('.skapaManuellAtgard') as HTMLDivElement;
+    skapaManuellAtgardBlock.style.display = 'block';
   }
 
-  avbrytLaggtillatgard() {
-    let skapamanuelatgardBlock = document.querySelector('.skapaManuelAtgard') as HTMLDivElement;
-    skapamanuelatgardBlock.style.display = "none";
+  avbrytLaggTillAtgard() {
+    const skapaManuellAtgardBlock = document.querySelector('.skapaManuellAtgard') as HTMLDivElement;
+    skapaManuellAtgardBlock.style.display = 'none';
+  }
+
+  visaTidigareVersionText(select: HTMLSelectElement) {
+    if (select.value.includes('Aktuell version')) {
+      this.tidigareVersion = false;
+    } else {
+      this.tidigareVersion = true;
+    }
   }
 
 }
