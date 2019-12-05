@@ -91,6 +91,31 @@ export class KundsidaComponent implements AfterViewInit {
 
   filtreraAtgarder(filtreringsAlternativ) {
     this.filtreringsAlternativ = filtreringsAlternativ;
+    const atgarderUILista = document.querySelectorAll('.c-accordion-group');
+    if (filtreringsAlternativ === 'öppna') {
+      for (let i = 0; i < atgarderUILista.length; i++) {
+        let atgard = atgarderUILista[i] as HTMLElement;
+        if (atgard.id === 'ÖPP') {
+          atgard.style.display = 'block';
+        } else {
+          atgard.style.display = 'none';
+        }
+      }
+    } else if (filtreringsAlternativ === 'stängda') {
+      for (let i = 0; i < atgarderUILista.length; i++) {
+        let atgard = atgarderUILista[i] as HTMLElement;
+        if (atgard.id === 'ÖPP') {
+          atgard.style.display = 'none';
+        } else {
+          atgard.style.display = 'block';
+        }
+      }
+    } else {
+      for (let i = 0; i < atgarderUILista.length; i++) {
+        let atgard = atgarderUILista[i] as HTMLElement;
+          atgard.style.display = 'block';
+        }
+    }
   }
 
   showToaster(message) {

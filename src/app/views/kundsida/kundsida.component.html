@@ -61,7 +61,7 @@
   </div>
   </div>
   <div class="row">
-  <div class="col-md-4 border-right">
+  <div class="col-md-5 border-right">
     <h5 class="e-h5">Åtgärder</h5>
         <button class="c-btn c-btn--compact" (click)="laggTillAtgard()"><span class="sjv-i-plus"></span>Lägg till
           åtgärd</button>
@@ -84,26 +84,25 @@
         </div>
     <fieldset class="c-radio-btn-group c-radio-btn-group--tiny" role="radiogroup"
       aria-labelledby="legend_filtreraAtgard" (change)="filtreraAtgarder($event.target.value)">
-      <div class="c-radio-btn c-radio-btn--tiny">
+      <div class="c-radio-btn c-radio-btn--tiny inline">
         <input id="radioknappÖppna" name="radiogroup_filtreraAtgard" type="radio" value="öppna">
         <label for="radioknappÖppna">Öppna</label>
       </div>
 
-      <div class="c-radio-btn c-radio-btn--tiny">
+      <div class="c-radio-btn c-radio-btn--tiny inline">
         <input id="radioknappStängda" name="radiogroup_filtreraAtgard" type="radio" value="stängda">
         <label for="radioknappStängda">Stängda</label>
       </div>
 
-      <div class="c-radio-btn c-radio-btn--tiny">
+      <div class="c-radio-btn c-radio-btn--tiny inline">
         <input id="radioknappAlla" name="radiogroup_filtreraAtgard" type="radio" value="alla" checked>
         <label for="radioknappAlla">Alla</label>
       </div>
     </fieldset>
 
-    <form *ngFor="let atgard of atgardLista | filtreraAtgarder:filtreringsAlternativ; index as i">
-      <div class="c-accordion-wrapper">
-        <ul aria-label="accordion Control Group links" class="c-accordion--tiny">
-          <li aria-controls="content-1" aria-expanded="true" rel="c-accordion-js">
+    <form *ngFor="let atgard of atgardLista; index as i">
+        <ul aria-label="accordion Control Group links" class="c-accordion-group" [id]="this.atgard.statusKod">
+          <li aria-controls="content-1" aria-expanded="true" class="c-accordion--tiny" rel="c-accordion-js">
             <button tabindex="0" name="item-one" id="accordion-control-1" class="c-accordion-item__title">
               <span class="accordion__icon toggle-down"></span>
               <span class="accordion__title-text">{{atgard.kod}} - {{atgard.beskrivning.split('.')[0]}}</span>
@@ -145,11 +144,10 @@
             </div>
           </li>
         </ul>
-      </div>
     </form>
   </div>
 
-  <div class="col-md-8">
+  <div class="col-md-7">
     <div class="c-tabs" rel="c-tabs-js">
       <ul id="myTabs_1" class="c-tabs__labels" role="tablist" aria-label="Code Examples">
         <li class="c-tabs__title" role="presentation">

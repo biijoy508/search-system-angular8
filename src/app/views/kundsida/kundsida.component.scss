@@ -79,8 +79,7 @@ p {
 
 .atgardBeskrivning {
   font-size: 0.875rem;
-  margin-bottom: 1rem;
-  line-height: 1.5;
+  margin-bottom: 0.25rem;
 }
 
 .inlineWrapper {
@@ -170,6 +169,11 @@ p {
   bottom: 5rem;
   left: 40%;
   display: none;
+}
+
+.inline{
+  display: inline-block;
+  margin-right: 0.5rem;
 }
 
 @media (max-width: 768px) {
