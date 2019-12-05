@@ -15,8 +15,7 @@
             <div class="c-select c-select--tiny version">
               <div class="c-select__wrapper">
                 <select (change)='visaTidigareVersionText($event.target)' id="version">
-                  <option>Aktuell version</option>
-                  <option>Version 1 - 2019-02-13</option>
+                  <option *ngFor="let arendeversion_item of arendeVersionLista" [value]="arendeversion_item">{{ arendeversion_item.presentationsText}}</option>
                 </select>
                 <span class="sjv-i-caret-ner ikon">
                 </span>
@@ -75,16 +74,11 @@
                       {{atgardskod_item.kod}} - {{atgardskod_item.text}}
                     </option>
                   </select>
-            <!--   <select id="version">
-                <option>Atgärd 1</option>
-                <option>Atgärd 2</option>
-              </select> -->
               <span class="sjv-i-caret-ner ikon">
               </span>
             </div>
           </div>
-          <!--   <button class="c-btn c-btn--tiny ml-1" (click)="skapaManuellAtgard()">Lägg till</button>
-              <button class="c-btn c-btn--tiny ml-1" (click)="avbrytLaggTillAtgard()">Avbryt</button> -->
+          <!--   <button class="c-btn c-btn--tiny ml-1" (click)="skapaManuellAtgard()">Lägg till</button> -->
           <button class="c-btn--primary c-btn--tiny ml-1" (click)='showToaster("Åtgärden har lagts till.")'>Lägg till</button>
           <button class="c-btn c-btn--tiny ml-1" (click)="avbrytLaggTillAtgard()">Avbryt</button>
         </div>
@@ -176,17 +170,19 @@
           <div class="inlineWrapper2 vanligt">
             <span>
               <p class="header"> PPN </p>
-              <p class="content"> {{PPNnummer}} </p>
+              <ul>
+                <li class="content" *ngFor="let ppn_item of ansokanDjurvalfard.ppnLista"> {{ppn_item}}</li>
+              </ul>
             </span>
           </div>
           <div class="inlineWrapper2 vanligt">
             <span>
               <p class="header"> Antal djur </p>
-              <p class="content"> {{antalDjur}} </p>
+              <p class="content"> {{ansokanDjurvalfard.antalDjur}} </p>
             </span>
             <span>
               <p class="header"> Antal djurenheter </p>
-              <p class="content"> {{antalDjurenheter}} </p>
+              <p class="content"> {{ansokanDjurvalfard.antalDjurenheter}} </p>
             </span>
           </div>
 
@@ -207,14 +203,14 @@
             <label for="input-compact-text-6" tabindex="-1" id="label-6">Antal djur</label>
             <div class="input__wrapper input__wrapper--text">
               <input autocomplete="given-name" id="input-compact-text-6" aria-describedby="description-6" type="text"
-                tabindex="0" name="text6" [(ngModel)]="antalDjur">
+                tabindex="0" name="text6" [(ngModel)]="ansokanDjurvalfard.antalDjur">
             </div>
           </div>
           <div class="c-input c-input--tiny redigeraView">
             <label for="input-compact-text-6" tabindex="-1" id="label-6">Antal djurenheter</label>
             <div class="input__wrapper input__wrapper--text">
               <input autocomplete="given-name" id="input-compact-text-6" aria-describedby="description-6" type="text"
-                tabindex="0" name="text6" [(ngModel)]="antalDjurenheter">
+                tabindex="0" name="text6" [(ngModel)]="ansokanDjurvalfard.antalDjurenheter">
             </div>
           </div>
 

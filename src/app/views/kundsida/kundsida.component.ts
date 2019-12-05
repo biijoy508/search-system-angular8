@@ -1,9 +1,10 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { Arende } from 'src/app/model/arende';
+import { ArendeVersion } from 'src/app/model/arendeVersion';
 import { Atgard } from 'src/app/model/atgard';
 import { ManuellAtgard } from 'src/app/model/manuellAtgard';
+import { AnsokanDjurvalfard } from 'src/app/model/ansokanDjurvalfard';
 import { ApiService } from 'src/app/services/api.service';
-import { environment } from 'src/environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 
 
@@ -21,10 +22,10 @@ export class KundsidaComponent implements AfterViewInit {
   atgardLista: Atgard[] = [];
   atgardskodLista: ManuellAtgard[] = [];
   valdAtgardskod: string;
+  arendeVersionLista: ArendeVersion[] = [];
+  ansokanDjurvalfard: AnsokanDjurvalfard;
 
   PPNnummer = '43,42';
-  antalDjur = '321';
-  antalDjurenheter = '220';
 
   filtreringsAlternativ = 'alla';
 
@@ -35,6 +36,7 @@ export class KundsidaComponent implements AfterViewInit {
   constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) {
     this.windowRef = window;
     this.arende = new Arende('', '', '', '', '', '', '', '', '', '');
+    this.ansokanDjurvalfard = new AnsokanDjurvalfard([], '', '');
   }
 
   ngAfterViewInit() {
@@ -42,17 +44,19 @@ export class KundsidaComponent implements AfterViewInit {
     this.windowRef.komponentbibliotek.init();
     this.arendeId = this.route.snapshot.paramMap.get('arendeId');
     this.stodAr = this.route.snapshot.paramMap.get('stodAr');
-
-
+  
     this.apiService.getChainedDataArendeInformation(this.arendeId, this.stodAr).subscribe(
       (data: any) => {
         this.atgardLista = [];
-        this.arende = data[0];
+        this.atgardskodLista = [];
+        this.arendeVersionLista = [];
+        this.ansokanDjurvalfard = data.data[0];
+        this.arende = data.data[1];
         this.adress = 'Volymgatan 12, 555 55 Volymstad';
-        this.atgardLista = data[1];
-        this.atgardskodLista = data[2];
-        console.log(this.atgardskodLista);
-        console.log(this.atgardLista);
+        this.atgardLista = data.data[2];
+        this.atgardskodLista = data.data[3];
+        this.arendeVersionLista = data.data[4];
+        
         setTimeout(() => {
           this.windowRef.komponentbibliotek.init();
         }, 100);
@@ -97,6 +101,7 @@ export class KundsidaComponent implements AfterViewInit {
       this.closeToaster();
     }, 2000);
   }
+  
   closeToaster() {
     const toaster = document.querySelector('.c-toaster') as HTMLDivElement;
     toaster.style.display = 'none';
