@@ -6,6 +6,7 @@ import { ManuellAtgard } from 'src/app/model/manuellAtgard';
 import { AnsokanDjurvalfard } from 'src/app/model/ansokanDjurvalfard';
 import { ApiService } from 'src/app/services/api.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -31,6 +32,7 @@ export class KundsidaComponent implements AfterViewInit {
 
   toasterMessage = '';
   tidigareVersion = false;
+  valdFlik = 'ansokanDjurvalfard';
 
 
   constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) {
@@ -44,7 +46,7 @@ export class KundsidaComponent implements AfterViewInit {
     this.windowRef.komponentbibliotek.init();
     this.arendeId = this.route.snapshot.paramMap.get('arendeId');
     this.stodAr = this.route.snapshot.paramMap.get('stodAr');
-  
+
     this.apiService.getChainedDataArendeInformation(this.arendeId, this.stodAr).subscribe(
       (data: any) => {
         this.atgardLista = [];
@@ -56,7 +58,7 @@ export class KundsidaComponent implements AfterViewInit {
         this.atgardLista = data.data[2];
         this.atgardskodLista = data.data[3];
         this.arendeVersionLista = data.data[4];
-        
+
         setTimeout(() => {
           this.windowRef.komponentbibliotek.init();
         }, 100);
@@ -113,8 +115,8 @@ export class KundsidaComponent implements AfterViewInit {
     } else {
       for (let i = 0; i < atgarderUILista.length; i++) {
         let atgard = atgarderUILista[i] as HTMLElement;
-          atgard.style.display = 'block';
-        }
+        atgard.style.display = 'block';
+      }
     }
   }
 
@@ -126,7 +128,7 @@ export class KundsidaComponent implements AfterViewInit {
       this.closeToaster();
     }, 2000);
   }
-  
+
   closeToaster() {
     const toaster = document.querySelector('.c-toaster') as HTMLDivElement;
     toaster.style.display = 'none';
@@ -156,12 +158,38 @@ export class KundsidaComponent implements AfterViewInit {
     skapaManuellAtgardBlock.style.display = 'none';
   }
 
-  visaTidigareVersionText(select: HTMLSelectElement) {
+  hamtaAnsokanDjurvalfard(arendeVersionId) {
+    this.apiService.getData(`${environment.ansokanDjurvalfardUrl}/${arendeVersionId}`).subscribe(
+      (data: any) => {
+        this.ansokanDjurvalfard = data;
+        setTimeout(() => {
+          this.windowRef.komponentbibliotek.init();
+        }, 100);
+      });
+  }
+
+  visaTidigareVersion(select: HTMLSelectElement) {
     if (select.value.includes('Aktuell version')) {
       this.tidigareVersion = false;
+      if (this.valdFlik === 'ansokanDjurvalfard') {
+        let arendeVersionId = this.arendeVersionLista.find(entity => entity.gallande === 'J').arendeversionId;
+        this.hamtaAnsokanDjurvalfard(arendeVersionId);
+      }
     } else {
       this.tidigareVersion = true;
+
+      let presText = select.value.split('-');
+      let versionsNummer = presText[0].substr(8).trim();
+      let arendeVersionId = this.arendeVersionLista.find(entity => entity.versionsNummer === versionsNummer).arendeversionId;
+
+      if (this.valdFlik === 'ansokanDjurvalfard') {
+        this.hamtaAnsokanDjurvalfard(arendeVersionId);
+      }
     }
+  }
+
+  sattValdFlik(valdFlik) {
+    this.valdFlik = valdFlik;
   }
 
 }
