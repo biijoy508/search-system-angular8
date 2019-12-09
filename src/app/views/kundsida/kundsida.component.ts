@@ -4,6 +4,7 @@ import { ArendeVersion } from 'src/app/model/arendeVersion';
 import { Atgard } from 'src/app/model/atgard';
 import { ManuellAtgard } from 'src/app/model/manuellAtgard';
 import { AnsokanDjurvalfard } from 'src/app/model/ansokanDjurvalfard';
+import { Attribut } from 'src/app/model/attribut';
 import { ApiService } from 'src/app/services/api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
@@ -25,6 +26,8 @@ export class KundsidaComponent implements AfterViewInit {
   valdAtgardskod: string;
   arendeVersionLista: ArendeVersion[] = [];
   ansokanDjurvalfard: AnsokanDjurvalfard;
+  attributLista: Attribut[] = [];
+  valdArendeversion: ArendeVersion;
 
   PPNnummer = '43,42';
 
@@ -58,7 +61,7 @@ export class KundsidaComponent implements AfterViewInit {
         this.atgardLista = data.data[2];
         this.atgardskodLista = data.data[3];
         this.arendeVersionLista = data.data[4];
-
+        this.valdArendeversion = this.arendeVersionLista.find(entity => entity.gallande === 'J');
         setTimeout(() => {
           this.windowRef.komponentbibliotek.init();
         }, 100);
@@ -158,8 +161,16 @@ export class KundsidaComponent implements AfterViewInit {
     skapaManuellAtgardBlock.style.display = 'none';
   }
 
-  hamtaAnsokanDjurvalfard(arendeVersionId) {
-    this.apiService.getData(`${environment.ansokanDjurvalfardUrl}/${arendeVersionId}`).subscribe(
+  hamtaDataForValdFlik() {
+    if (this.valdFlik === 'ansokanDjurvalfard') {
+      this.hamtaAnsokanDjurvalfard();
+    } else if(this.valdFlik === 'attribut') {
+      this.hamtaAttribut();
+    }
+  }
+
+  hamtaAnsokanDjurvalfard() {
+    this.apiService.getData(`${environment.ansokanDjurvalfardUrl}/${this.valdArendeversion.arendeversionId}`).subscribe(
       (data: any) => {
         this.ansokanDjurvalfard = data;
         setTimeout(() => {
@@ -168,28 +179,41 @@ export class KundsidaComponent implements AfterViewInit {
       });
   }
 
+  hamtaAttribut() {
+
+    const arendeParam = {
+      arendeid: this.valdArendeversion.arendeId,
+      arendeversionid: this.valdArendeversion.arendeversionId,
+      arendetyp: this.arende.arendeTyp
+    }
+
+    this.apiService.getDataMedParametrar(environment.attributUrl, arendeParam).subscribe(
+      (data: any) => {
+        this.attributLista = data;
+        console.log(this.attributLista);
+        setTimeout(() => {
+          this.windowRef.komponentbibliotek.init();
+        }, 100);
+      });
+  }
+
   visaTidigareVersion(select: HTMLSelectElement) {
-    if (select.value.includes('Aktuell version')) {
+    
+    this.valdArendeversion = this.arendeVersionLista.find(entity => entity.arendeversionId === select.value);
+    
+    if(this.valdArendeversion.gallande === 'J'){
       this.tidigareVersion = false;
-      if (this.valdFlik === 'ansokanDjurvalfard') {
-        let arendeVersionId = this.arendeVersionLista.find(entity => entity.gallande === 'J').arendeversionId;
-        this.hamtaAnsokanDjurvalfard(arendeVersionId);
-      }
     } else {
       this.tidigareVersion = true;
-
-      let presText = select.value.split('-');
-      let versionsNummer = presText[0].substr(8).trim();
-      let arendeVersionId = this.arendeVersionLista.find(entity => entity.versionsNummer === versionsNummer).arendeversionId;
-
-      if (this.valdFlik === 'ansokanDjurvalfard') {
-        this.hamtaAnsokanDjurvalfard(arendeVersionId);
-      }
     }
+
+    this.hamtaDataForValdFlik();
+    
   }
 
   sattValdFlik(valdFlik) {
     this.valdFlik = valdFlik;
+    this.hamtaDataForValdFlik();
   }
 
 }

@@ -15,7 +15,7 @@
             <div class="c-select c-select--tiny version">
               <div class="c-select__wrapper">
                 <select (change)='visaTidigareVersion($event.target)' id="version">
-                  <option *ngFor="let arendeversion_item of arendeVersionLista" [value]="arendeversion_item.presentationsText">{{ arendeversion_item.presentationsText}}</option>
+                  <option *ngFor="let arendeversion_item of arendeVersionLista" [value]="arendeversion_item.arendeversionId">{{ arendeversion_item.presentationsText}}</option>
                 </select>
                 <span class="sjv-i-caret-ner ikon">
                 </span>
