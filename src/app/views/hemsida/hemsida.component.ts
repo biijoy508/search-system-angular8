@@ -111,6 +111,10 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
     this.hamtaSokResultat();
   }
 
+  hideSpinner() {
+    this.showSpinner = false;
+  }
+
   rensaSokFilter() {
 
     this.sokFilter.stodAr = '';
