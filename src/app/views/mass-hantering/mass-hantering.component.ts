@@ -66,7 +66,7 @@ export class MassHanteringComponent implements OnInit, AfterViewInit {
         }
         this.urvalValuesHolder.ansokansTypList = [''];
         for (let i = 0; i < res[3].length; i++) {
-          this.urvalValuesHolder.ansokansTypList.push(res[3][i].kod);
+          this.urvalValuesHolder.ansokansTypList.push(res[3][i]);
         }
         this.urvalValuesHolder.franStatus = [''];
         for (let i = 0; i < res[4].length; i++) {

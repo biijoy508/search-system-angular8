@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   ansokanDjurvalfardUrl: '/farmen/aredat/ansokandjurvalfard',
-  ansokansTyperUrl: '/farmen/arende/ansokanstyper',
+  ansokansTyperUrl: '/farmen/grund/ansokanstyper',
   antalArendenUrl: '/farmen/arende/antaltotalt',
   arendenUrl: '/farmen/arende/arenden',
   arendeTyperUrl: '/farmen/arende/arendetyper',
