@@ -8,6 +8,7 @@ export class Atgard {
     kommentar: string;
     arendeId: string;
     regDatum: string;
+    registreradAv: string;
     uppdateradDatum: string;
     uppdateradAv: string;
     manuell: string;
@@ -22,6 +23,7 @@ export class Atgard {
         kommentar: string,
         arendeId: string,
         regDatum: string,
+        registreradAv: string,
         uppdateradDatum: string,
         uppdateradAv: string,
         manuell: string,
@@ -36,6 +38,7 @@ export class Atgard {
         this.kommentar = kommentar;
         this.arendeId = arendeId;
         this.regDatum = regDatum;
+        this.registreradAv = registreradAv;
         this.uppdateradDatum = uppdateradDatum;
         this.uppdateradAv = uppdateradAv;
         this.manuell = manuell;

@@ -64,6 +64,25 @@
   font-weight: 700;
 }
 
+.ulContent {
+  display: inline;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    display: inline;
+  }
+
+  li::after {
+    content: ", ";
+  }
+
+  li:last-child::after {
+    content: "";
+  }
+}
+
 p {
   margin: 0;
 }
@@ -171,7 +190,7 @@ p {
   display: none;
 }
 
-.inline{
+.inline {
   display: inline-block;
   margin-right: 0.5rem;
 }

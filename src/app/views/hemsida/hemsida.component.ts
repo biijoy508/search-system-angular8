@@ -64,7 +64,7 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
         }
         this.sokFaltValuesHolder.ansokansTypList = [];
         for (let i = 0; i < res[2].length; i++) {
-          this.sokFaltValuesHolder.ansokansTypList.push(res[2][i].kod);
+          this.sokFaltValuesHolder.ansokansTypList.push(res[2][i]);
         }
         console.log('Sök fält initierat');
         this.showSpinner = false;
@@ -109,6 +109,10 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
 
   confirmbtnClick() {
     this.hamtaSokResultat();
+  }
+
+  hideSpinner() {
+    this.showSpinner = false;
   }
 
   rensaSokFilter() {

@@ -100,8 +100,13 @@
             <div class="c-spinner__circle circle--1"></div>
           </div>
         </div>
-        <div class="c-spinner__content"> {{spinnerText}} <span class="cursor">
-            <span class="sjv-i-cursor"></span></span>
+        <div class="c-spinner__content">
+          <span>{{spinnerText}}</span>
+          <span class="cursor">
+            <span class="sjv-i-cursor">
+            </span>
+          </span> <br><br>
+          <button class="c-btn--compact" (click)="hideSpinner()">Avbryt</button>
         </div>
       </div>
     </div>

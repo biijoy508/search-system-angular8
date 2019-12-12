@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, forkJoin } from 'rxjs';
+import { concatMap, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 
@@ -37,8 +38,6 @@ export class ApiService {
 
   public getChainedDataArendeInformation(arendeId, stodAr): Observable<any> {
 
-    console.log(stodAr);
-
     const arendeIdParam = {
       arendeid: arendeId
     };
@@ -49,8 +48,26 @@ export class ApiService {
 
     const response1 = this.httpClient.get(environment.arendenUrl, { params: arendeIdParam });
     const response2 = this.httpClient.get(environment.atgarderUrl, { params: arendeIdParam });
-    const response3 = this.httpClient.get(environment.atgardskoderUrl, { params: stodArParam });
-    return forkJoin([response1, response2, response3]);
+    const response3 = this.httpClient.get(environment.atgardskoderUrl, { params: stodArParam })
+    const response4 = this.httpClient.get(environment.arendeVersionerUrl, { params: arendeIdParam });
+
+    return this.httpClient.get(environment.arendeVersionIdUrl, { params: arendeIdParam })
+      .pipe(
+        concatMap(
+          arendeversionId =>
+            <Observable<any>>(
+              forkJoin([this.httpClient.get(`${environment.ansokanDjurvalfardUrl}/${arendeversionId}`), response1,
+              response2, response3, response4])
+                .pipe(
+                  map(data => ({
+                    arendeversionId: arendeversionId,
+                    data: data
+                  }))
+                )
+            )
+        )
+      );
+
   }
 
   public getData(url) {

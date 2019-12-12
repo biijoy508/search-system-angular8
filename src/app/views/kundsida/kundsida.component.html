@@ -14,9 +14,8 @@
             <p> Version :</p>
             <div class="c-select c-select--tiny version">
               <div class="c-select__wrapper">
-                <select (change)='visaTidigareVersionText($event.target)' id="version">
-                  <option>Aktuell version</option>
-                  <option>Version 1 - 2019-02-13</option>
+                <select (change)='visaTidigareVersion($event.target)' id="version">
+                  <option *ngFor="let arendeversion_item of arendeVersionLista" [value]="arendeversion_item.presentationsText">{{ arendeversion_item.presentationsText}}</option>
                 </select>
                 <span class="sjv-i-caret-ner ikon">
                 </span>
@@ -75,16 +74,11 @@
                       {{atgardskod_item.kod}} - {{atgardskod_item.text}}
                     </option>
                   </select>
-            <!--   <select id="version">
-                <option>Atgärd 1</option>
-                <option>Atgärd 2</option>
-              </select> -->
               <span class="sjv-i-caret-ner ikon">
               </span>
             </div>
           </div>
-          <!--   <button class="c-btn c-btn--tiny ml-1" (click)="skapaManuellAtgard()">Lägg till</button>
-              <button class="c-btn c-btn--tiny ml-1" (click)="avbrytLaggTillAtgard()">Avbryt</button> -->
+          <!--   <button class="c-btn c-btn--tiny ml-1" (click)="skapaManuellAtgard()">Lägg till</button> -->
           <button class="c-btn--primary c-btn--tiny ml-1" (click)='showToaster("Åtgärden har lagts till.")'>Lägg till</button>
           <button class="c-btn c-btn--tiny ml-1" (click)="avbrytLaggTillAtgard()">Avbryt</button>
         </div>
@@ -138,6 +132,10 @@
                   <p class="content">{{atgard.regDatum}} </p>
                 </span>
                 <span>
+                  <p class="header"> Skapad av </p>
+                  <p class="content">{{atgard.registreradAv}} </p>
+                </span>
+                <span>
                   <p class="header"> Uppdaterad </p>
                   <p class="content">{{atgard.uppdateradDatum}} &nbsp;</p>
                 </span>
@@ -158,15 +156,15 @@
       <ul id="myTabs_1" class="c-tabs__labels" role="tablist" aria-label="Code Examples">
         <li class="c-tabs__title" role="presentation">
           <button id="panel1__label" href="#panel1" aria-selected="true" role="tab" aria-controls="panel1" tabindex="-1"
-            class="is-active">Ansökan Djurvälfärd</button>
+            class="is-active" (click)="sattValdFlik('ansokanDjurvalfard')">Ansökan Djurvälfärd</button>
         </li>
         <li class="c-tabs__title" role="presentation">
           <button id="panel2__label" href="#panel2" aria-selected="false" aria-controls="panel2" role="tab"
-            tabindex="-1">Attribut</button>
+            tabindex="-1" (click)="sattValdFlik('attribut')">Attribut</button>
         </li>
         <li class="c-tabs__title" role="presentation">
           <button id="panel3__label" href="#panel3" aria-selected="false" aria-controls="panel3"
-            role="tab">Beslut</button>
+            role="tab" (click)="sattValdFlik('beslut')">Beslut</button>
         </li>
       </ul>
       <div class="c-tabs__content" data-tabs="myTabs_1">
@@ -174,17 +172,19 @@
           <div class="inlineWrapper2 vanligt">
             <span>
               <p class="header"> PPN </p>
-              <p class="content"> {{PPNnummer}} </p>
+              <ul class="ulContent">
+                <li class="content" *ngFor="let ppn_item of ansokanDjurvalfard.ppnLista"> {{ppn_item}}</li>
+              </ul>
             </span>
           </div>
           <div class="inlineWrapper2 vanligt">
             <span>
               <p class="header"> Antal djur </p>
-              <p class="content"> {{antalDjur}} </p>
+              <p class="content"> {{ansokanDjurvalfard.antalDjur}} </p>
             </span>
             <span>
               <p class="header"> Antal djurenheter </p>
-              <p class="content"> {{antalDjurenheter}} </p>
+              <p class="content"> {{ansokanDjurvalfard.antalDjurenheter}} </p>
             </span>
           </div>
 
@@ -205,18 +205,18 @@
             <label for="input-compact-text-6" tabindex="-1" id="label-6">Antal djur</label>
             <div class="input__wrapper input__wrapper--text">
               <input autocomplete="given-name" id="input-compact-text-6" aria-describedby="description-6" type="text"
-                tabindex="0" name="text6" [(ngModel)]="antalDjur">
+                tabindex="0" name="text6" [(ngModel)]="ansokanDjurvalfard.antalDjur">
             </div>
           </div>
           <div class="c-input c-input--tiny redigeraView">
             <label for="input-compact-text-6" tabindex="-1" id="label-6">Antal djurenheter</label>
             <div class="input__wrapper input__wrapper--text">
               <input autocomplete="given-name" id="input-compact-text-6" aria-describedby="description-6" type="text"
-                tabindex="0" name="text6" [(ngModel)]="antalDjurenheter">
+                tabindex="0" name="text6" [(ngModel)]="ansokanDjurvalfard.antalDjurenheter">
             </div>
           </div>
 
-          <button class="c-btn c-btn--tiny mt-2" (click)="redigeraView($event.target)">Redigera</button>
+          <button *ngIf="!tidigareVersion" class="c-btn c-btn--tiny mt-2" (click)="redigeraView($event.target)">Redigera</button>
         </div>
         <div id="panel2" class="c-tabs__panel" role="tabpanel" aria-labelledby="panel2__label">
 
