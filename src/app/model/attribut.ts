@@ -1,17 +1,21 @@
 export class Attribut {
+
+    arendeId: string;
     arendeversionId: string;
+    namn: string;
     varde: string;
-    objDatatyp: string;
-    grundDatatyp: string;
+    datatyp: string;
     constructor(
+        arendeId: string,
         arendeversionId: string,
+        namn: string,
         varde: string,
-        objDatatyp: string,
-        grundDatatyp: string
+        datatyp: string
     ) {
+        this.arendeId = arendeId;
         this.arendeversionId = arendeversionId;
+        this.namn = namn;
         this.varde = varde;
-        this.objDatatyp = objDatatyp;
-        this.grundDatatyp = grundDatatyp;
+        this.datatyp = datatyp;
     }
 }
