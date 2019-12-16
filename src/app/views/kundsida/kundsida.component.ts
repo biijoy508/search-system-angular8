@@ -55,12 +55,17 @@ export class KundsidaComponent implements AfterViewInit {
         this.atgardLista = [];
         this.atgardskodLista = [];
         this.arendeVersionLista = [];
-        this.ansokanDjurvalfard = data.data[0];
+        this.arende = data.data[0];
+        this.adress = 'Volymgatan 12, 555 55 Volymstad';
+        this.atgardLista = data.data[1];
+        this.atgardskodLista = data.data[2];
+        this.arendeVersionLista = data.data[3];
+      /*   this.ansokanDjurvalfard = data.data[0];
         this.arende = data.data[1];
         this.adress = 'Volymgatan 12, 555 55 Volymstad';
         this.atgardLista = data.data[2];
         this.atgardskodLista = data.data[3];
-        this.arendeVersionLista = data.data[4];
+        this.arendeVersionLista = data.data[4]; */
         this.valdArendeversion = this.arendeVersionLista.find(entity => entity.gallande === 'J');
         setTimeout(() => {
           this.windowRef.komponentbibliotek.init();
@@ -163,7 +168,7 @@ export class KundsidaComponent implements AfterViewInit {
 
   hamtaDataForValdFlik() {
     if (this.valdFlik === 'ansokanDjurvalfard') {
-      this.hamtaAnsokanDjurvalfard();
+      //this.hamtaAnsokanDjurvalfard();
     } else if(this.valdFlik === 'attribut') {
       this.hamtaAttribut();
     }
