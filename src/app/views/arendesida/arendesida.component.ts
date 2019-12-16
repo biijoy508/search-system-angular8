@@ -9,13 +9,12 @@ import { ApiService } from 'src/app/services/api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
-
 @Component({
-  selector: 'app-kundsida',
-  templateUrl: './kundsida.component.html',
-  styleUrls: ['./kundsida.component.scss']
+  selector: 'app-arendesida',
+  templateUrl: './arendesida.component.html',
+  styleUrls: ['./arendesida.component.scss']
 })
-export class KundsidaComponent implements AfterViewInit {
+export class ArendesidaComponent implements AfterViewInit {
   windowRef: any;
   arende: Arende;
   arendeId: any;
@@ -60,12 +59,12 @@ export class KundsidaComponent implements AfterViewInit {
         this.atgardLista = data.data[1];
         this.atgardskodLista = data.data[2];
         this.arendeVersionLista = data.data[3];
-      /*   this.ansokanDjurvalfard = data.data[0];
-        this.arende = data.data[1];
-        this.adress = 'Volymgatan 12, 555 55 Volymstad';
-        this.atgardLista = data.data[2];
-        this.atgardskodLista = data.data[3];
-        this.arendeVersionLista = data.data[4]; */
+        /*   this.ansokanDjurvalfard = data.data[0];
+          this.arende = data.data[1];
+          this.adress = 'Volymgatan 12, 555 55 Volymstad';
+          this.atgardLista = data.data[2];
+          this.atgardskodLista = data.data[3];
+          this.arendeVersionLista = data.data[4]; */
         this.valdArendeversion = this.arendeVersionLista.find(entity => entity.gallande === 'J');
         setTimeout(() => {
           this.windowRef.komponentbibliotek.init();
@@ -169,7 +168,7 @@ export class KundsidaComponent implements AfterViewInit {
   hamtaDataForValdFlik() {
     if (this.valdFlik === 'ansokanDjurvalfard') {
       //this.hamtaAnsokanDjurvalfard();
-    } else if(this.valdFlik === 'attribut') {
+    } else if (this.valdFlik === 'attribut') {
       this.hamtaAttribut();
     }
   }
@@ -203,17 +202,17 @@ export class KundsidaComponent implements AfterViewInit {
   }
 
   visaTidigareVersion(select: HTMLSelectElement) {
-    
+
     this.valdArendeversion = this.arendeVersionLista.find(entity => entity.arendeversionId === select.value);
-    
-    if(this.valdArendeversion.gallande === 'J'){
+
+    if (this.valdArendeversion.gallande === 'J') {
       this.tidigareVersion = false;
     } else {
       this.tidigareVersion = true;
     }
 
     this.hamtaDataForValdFlik();
-    
+
   }
 
   sattValdFlik(valdFlik) {
