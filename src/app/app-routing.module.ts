@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HemsidaComponent } from './views/hemsida/hemsida.component';
-import { KundsidaComponent } from './views/kundsida/kundsida.component';
+import { ArendesidaComponent } from './views/arendesida/arendesida.component';
 import { MassHanteringComponent } from './views/mass-hantering/mass-hantering.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 const routes: Routes = [
   { path: '', redirectTo: '/hemsida', pathMatch: 'full' },
   { path: 'hemsida', component: HemsidaComponent },
-  { path: 'kundsida/:arendeId/:stodAr', component: KundsidaComponent },
+  { path: 'arendesida/:arendeId/:stodAr', component: ArendesidaComponent },
   { path: 'masshantering', component: MassHanteringComponent },
   { path: '**', pathMatch: 'full', redirectTo: '/hemsida' }
 ];
