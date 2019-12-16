@@ -18,6 +18,7 @@ export class ArendesidaComponent implements AfterViewInit {
   windowRef: any;
   arende: Arende;
   arendeId: any;
+  kundNummer: any;
   stodAr: any;
   adress: string;
   atgardLista: Atgard[] = [];
@@ -47,9 +48,10 @@ export class ArendesidaComponent implements AfterViewInit {
 
     this.windowRef.komponentbibliotek.init();
     this.arendeId = this.route.snapshot.paramMap.get('arendeId');
+    this.kundNummer = this.route.snapshot.paramMap.get('kundNummer');
     this.stodAr = this.route.snapshot.paramMap.get('stodAr');
 
-    this.apiService.getChainedDataArendeInformation(this.arendeId, this.stodAr).subscribe(
+    this.apiService.getChainedDataArendeInformation(this.arendeId, this.kundNummer, this.stodAr).subscribe(
       (data: any) => {
         this.atgardLista = [];
         this.atgardskodLista = [];
