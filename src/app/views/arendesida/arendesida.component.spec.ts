@@ -1,22 +1,23 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { KundsidaComponent } from './kundsida.component';
+import { ArendesidaComponent } from './arendesida.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-describe('KundsidaComponent', () => {
-  let component: KundsidaComponent;
-  let fixture: ComponentFixture<KundsidaComponent>;
+describe('ArendesidaComponent', () => {
+  let component: ArendesidaComponent;
+  let fixture: ComponentFixture<ArendesidaComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [KundsidaComponent],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+      declarations: [ArendesidaComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
+
   beforeEach(() => {
-    fixture = TestBed.createComponent(KundsidaComponent);
+    fixture = TestBed.createComponent(ArendesidaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
