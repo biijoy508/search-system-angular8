@@ -30,7 +30,12 @@ export class ApiService {
     return forkJoin([response1, response2, response3, response4, response5]);
   }
 
-  public getChainedDataArendeInformation(arendeId, stodAr): Observable<any> {
+  public getChainedDataArendeInformation(arendeId, kundNummer, stodAr): Observable<any> {
+
+    const arendeversionIdParam = {
+      arendeid: arendeId,
+      kundnummer: kundNummer
+    };
 
     const arendeIdParam = {
       arendeid: arendeId
@@ -38,14 +43,14 @@ export class ApiService {
 
     const stodArParam = {
       stodar: stodAr
-    }
+    };
 
     const response1 = this.httpClient.get(environment.arendenUrl, { params: arendeIdParam });
     const response2 = this.httpClient.get(environment.atgarderUrl, { params: arendeIdParam });
     const response3 = this.httpClient.get(environment.atgardskoderUrl, { params: stodArParam })
     const response4 = this.httpClient.get(environment.arendeVersionerUrl, { params: arendeIdParam });
 
-    return this.httpClient.get(environment.arendeVersionIdUrl, { params: arendeIdParam })
+    return this.httpClient.get(environment.arendeVersionIdUrl, { params: arendeversionIdParam })
       .pipe(
         concatMap(
           arendeversionId =>
