@@ -108,6 +108,11 @@
             <button tabindex="0" name="item-one" id="accordion-control-1" class="c-accordion-item__title">
               <span class="accordion__icon toggle-down"></span>
               <span class="accordion__title-text">{{atgard.kod}} - {{atgard.beskrivning.split('.')[0]}}</span>
+              <div class="ikon-float-right">
+                <span *ngIf="atgard.kommentar" class="sjv-i-kommentar"></span>
+                <span *ngIf="atgard.statusKod !== 'ÖPP'" class="sjv-i-framgang"></span>
+                <span *ngIf="atgard.statusKod === 'ÖPP'" class="sjv-i-oppen-mapp"></span>
+              </div>
             </button>
             <div role="region" aria-labelledby="accordion-control-1" aria-hidden="false" id="content-1"
               class="c-accordion-item__content">
