@@ -61,6 +61,7 @@ export class ArendesidaComponent implements AfterViewInit {
         this.atgardLista = data.data[1];
         this.atgardskodLista = data.data[2];
         this.arendeVersionLista = data.data[3];
+        this.toggleAktivFlik(this.arende.status);
         /*   this.ansokanDjurvalfard = data.data[0];
           this.arende = data.data[1];
           this.adress = 'Volymgatan 12, 555 55 Volymstad';
@@ -75,6 +76,13 @@ export class ArendesidaComponent implements AfterViewInit {
 
   }
 
+  toggleAktivFlik(arendeStatus: string) {
+    if (arendeStatus === 'BESL' || arendeStatus === 'BER') {
+      let beslutFlik = document.getElementById('beslut');
+      beslutFlik.click();
+    }
+  }
+  
   redigeraView(button: HTMLButtonElement) {
     if (button.innerText === 'Redigera') {
       button.innerText = 'Spara';
@@ -196,7 +204,7 @@ export class ArendesidaComponent implements AfterViewInit {
     this.apiService.getDataMedParametrar(environment.attributUrl, arendeParam).subscribe(
       (data: any) => {
         this.attributLista = data;
-        console.log(this.attributLista);
+
         setTimeout(() => {
           this.windowRef.komponentbibliotek.init();
         }, 100);
