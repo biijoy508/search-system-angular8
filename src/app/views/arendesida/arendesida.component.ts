@@ -5,6 +5,7 @@ import { Atgard } from 'src/app/model/atgard';
 import { ManuellAtgard } from 'src/app/model/manuellAtgard';
 import { AnsokanDjurvalfard } from 'src/app/model/ansokanDjurvalfard';
 import { Attribut } from 'src/app/model/attribut';
+import { Beslut } from 'src/app/model/beslut';
 import { ApiService } from 'src/app/services/api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
@@ -19,7 +20,6 @@ export class ArendesidaComponent implements AfterViewInit {
   arende: Arende;
   arendeId: any;
   kundNummer: any;
-  stodAr: any;
   adress: string;
   atgardLista: Atgard[] = [];
   atgardskodLista: ManuellAtgard[] = [];
@@ -28,9 +28,7 @@ export class ArendesidaComponent implements AfterViewInit {
   ansokanDjurvalfard: AnsokanDjurvalfard;
   attributLista: Attribut[] = [];
   valdArendeversion: ArendeVersion;
-  beslut: any;
-
-  PPNnummer = '43,42';
+  beslut: Beslut;
 
   filtreringsAlternativ = 'alla';
 
@@ -41,8 +39,8 @@ export class ArendesidaComponent implements AfterViewInit {
 
   constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) {
     this.windowRef = window;
-    this.arende = new Arende('', '', '', '', '', '', '', '', '', '');
-    this.ansokanDjurvalfard = new AnsokanDjurvalfard([], '', '');
+    // this.arende = new Arende('', '', '', '', '', '', '', '', '', '');
+    // this.ansokanDjurvalfard = new AnsokanDjurvalfard([], '', '');
   }
 
   ngAfterViewInit() {
@@ -201,6 +199,20 @@ export class ArendesidaComponent implements AfterViewInit {
   }
 
   hamtaBeslut() {
+
+    const arendeParam = {
+      arendeid: this.valdArendeversion.arendeId,
+      arendeversionid: this.valdArendeversion.arendeversionId
+    }
+
+    this.apiService.getDataMedParametrar(environment.beslutInfoUrl, arendeParam).subscribe(
+      (data: any) => {
+        this.beslut = data;
+        console.log(this.beslut);
+        setTimeout(() => {
+          this.windowRef.komponentbibliotek.init();
+        }, 100);
+      });
 
   }
 
