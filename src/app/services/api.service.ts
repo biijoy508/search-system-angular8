@@ -55,7 +55,7 @@ export class ApiService {
         concatMap(
           arendeversionId =>
             <Observable<any>>(
-              forkJoin([/*this.httpClient.get(`${environment.ansokanDjurvalfardUrl}/${arendeversionId}`),*/ response1,
+              forkJoin([this.httpClient.get(`${environment.ansokanDjurvalfardUrl}/${arendeversionId}`), response1,
               response2, response3, response4])
                 .pipe(
                   map(data => ({

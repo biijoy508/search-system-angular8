@@ -41,7 +41,7 @@ export class ArendesidaComponent implements AfterViewInit {
   constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) {
     this.windowRef = window;
     this.arende = new Arende('', '', '', '', '', '', '', '', '', '');
-    this.ansokanDjurvalfard = new AnsokanDjurvalfard([], '', '');
+    this.ansokanDjurvalfard = new AnsokanDjurvalfard([], '');
   }
 
   ngAfterViewInit() {
@@ -56,19 +56,14 @@ export class ArendesidaComponent implements AfterViewInit {
         this.atgardLista = [];
         this.atgardskodLista = [];
         this.arendeVersionLista = [];
-        this.arende = data.data[0];
+        this.ansokanDjurvalfard = data.data[0];
+        this.arende = data.data[1];
         this.adress = 'Volymgatan 12, 555 55 Volymstad';
-        this.atgardLista = data.data[1];
-        this.atgardskodLista = data.data[2];
-        this.arendeVersionLista = data.data[3];
-        this.toggleAktivFlik(this.arende.status);
-        /*   this.ansokanDjurvalfard = data.data[0];
-          this.arende = data.data[1];
-          this.adress = 'Volymgatan 12, 555 55 Volymstad';
-          this.atgardLista = data.data[2];
-          this.atgardskodLista = data.data[3];
-          this.arendeVersionLista = data.data[4]; */
+        this.atgardLista = data.data[2];
+        this.atgardskodLista = data.data[3];
+        this.arendeVersionLista = data.data[4];
         this.valdArendeversion = this.arendeVersionLista.find(entity => entity.gallande === 'J');
+        this.toggleAktivFlik(this.arende.status);
         setTimeout(() => {
           this.windowRef.komponentbibliotek.init();
         }, 100);
@@ -82,7 +77,7 @@ export class ArendesidaComponent implements AfterViewInit {
       beslutFlik.click();
     }
   }
-  
+
   redigeraView(button: HTMLButtonElement) {
     if (button.innerText === 'Redigera') {
       button.innerText = 'Spara';
@@ -152,19 +147,6 @@ export class ArendesidaComponent implements AfterViewInit {
     this.toasterMessage = '';
   }
 
-  /* skapaManuellAtgard() {
-
-    const valdAtgardskodParam = {
-      valdAtgardskod: this.valdAtgardskod
-    };
-
-    this.apiService.postData(environment.skapaManuellAtgardUrl, valdAtgardskodParam).subscribe(
-      (data: string) => {
-        console.log(data);
-      }
-    );
-  } */
-
   laggTillAtgard() {
     const skapaManuellAtgardBlock = document.querySelector('.skapaManuellAtgard') as HTMLDivElement;
     skapaManuellAtgardBlock.style.display = 'block';
@@ -177,7 +159,7 @@ export class ArendesidaComponent implements AfterViewInit {
 
   hamtaDataForValdFlik() {
     if (this.valdFlik === 'ansokanDjurvalfard') {
-      //this.hamtaAnsokanDjurvalfard();
+      this.hamtaAnsokanDjurvalfard();
     } else if (this.valdFlik === 'attribut') {
       this.hamtaAttribut();
     }
