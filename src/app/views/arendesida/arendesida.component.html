@@ -118,15 +118,21 @@
               class="c-accordion-item__content">
               <fieldset class="c-radio-btn-group c-radio-btn-group--tiny" role="radiogroup" aria-labelledby="legend_4">
                 <p class="atgardBeskrivning">{{atgard.beskrivning}}</p>
+                <div class="text">
+                  <span><b>Status : </b></span>
+                  <span>{{atgard.statusKod}}</span>
+                </div>
+                <!--
                 <div *ngFor="let mojligStatus_item of atgard.mojligaStatusar" class="c-radio-btn c-radio-btn--tiny">
-                  <input [id]="mojligStatus_item + i" name="radiogroup_tiny" type="radio" [value]="mojligStatus_item"
+                   <input [id]="mojligStatus_item + i" name="radiogroup_tiny" type="radio" [value]="mojligStatus_item"
                     [(ngModel)]="atgard.statusKod">
                   <label [for]="mojligStatus_item + i">{{mojligStatus_item}}</label>
                 </div>
+                -->
               </fieldset>
-              <div class="c-textarea c-textarea--tiny">
+              <div class="c-textarea c-textarea--readonly c-textarea--tiny">
                 <label for="textarea5">Kommentar<i class="label--valfritt">(Valfritt)</i></label>
-                <textarea aria-describedby="textarea-description-4" class="textarea_exempel" id="textarea5" rows="4"
+                <textarea  readonly="readonly" aria-describedby="textarea-description-4" class="textarea_exempel" id="textarea5" rows="4"
                   wrap="soft" [(ngModel)]="atgard.kommentar" name="kommentar"></textarea>
                 <div class="c-textarea__wrapper">
                   <p id="textarea-description-4" class="c-textarea__description"></p>
@@ -166,8 +172,8 @@
               tabindex="-1" class="is-active" (click)="sattValdFlik('ansokanDjurvalfard')">Ansökan Djurvälfärd</button>
           </li>
           <li class="c-tabs__title" role="presentation">
-            <button id="attribut" href="#panel2" aria-selected="false" aria-controls="panel2" role="tab"
-              tabindex="-1" (click)="sattValdFlik('attribut')">Attribut</button>
+            <button id="attribut" href="#panel2" aria-selected="false" aria-controls="panel2" role="tab" tabindex="-1"
+              (click)="sattValdFlik('attribut')">Attribut</button>
           </li>
           <li class="c-tabs__title" role="presentation">
             <button id="beslut" href="#panel3" aria-selected="false" aria-controls="panel3" role="tab"
@@ -227,15 +233,122 @@
               (click)="redigeraView($event.target)">Redigera</button>
           </div>
           <div id="panel2" class="c-tabs__panel" role="tabpanel" aria-labelledby="panel2__label">
-
+            <div class="attributeHeader">
+              <span>Attribut</span>
+              <span>Värde</span>
+            </div>
+            <div *ngFor="let attribut of attributLista" class="attributeContectWrapper">
+              <div class="attributeContect">
+                <span>{{attribut.namn}}</span>
+                <span>{{attribut.varde}}</span>
+              </div>
+            </div>
+            <div class="c-space--m"></div>
+            <button class="c-btn c-btn--tiny">Redigera</button>
           </div>
           <div id="panel3" class="c-tabs__panel" role="tabpanel" aria-labelledby="panel3__label">
+            <div class="inlineWrapper2 vanligt">
+              <span>
+                <p class="header"> Beslutstyp </p>
+                <p class="content"> Bifall </p>
+              </span>
+              <span>
+                <p class="header"> Beslutsnummer </p>
+                <p class="content"> 9478676 </p>
+              </span>
+              <span>
+                <p class="header"> Beräkningsdatum </p>
+                <p class="content"> 2017-07-11 </p>
+              </span>
+              <span>
+                <p class="header"> Beslutsdatum </p>
+                <p class="content"> 2017-07-12 </p>
+              </span>
+            </div>
+            <form>
+              <div class="beslutWrapper">
+              <div class="beslutRad">
+                <ul aria-label="accordion Control Group links" class="c-accordion-group">
+                  <li aria-controls="content-1" aria-expanded="true" class="c-accordion--tiny" rel="c-accordion-js">
+                    <button href="#item-three" name="item-three" id="accordion-control-3"
+                      class="c-accordion-item__title">
+                      <span class="accordion__icon toggle-down"></span>
+                      <span class="accordion__title-text"> Ärende</span>
+                    </button>
+                    <div role="region" aria-labelledby="accordion-control-3" aria-hidden="true" id="content-3"
+                      class="c-accordion-item__content">
+                      <div class="beslutContent">
+                        <div class="beslutContentText">
+                          <span>Stödbelopp innan avdrag:</span>
+                          <span>300SEK</span>
+                        </div>
+                        <div class="beslutContentText">
+                          <span>Analys, bristfällig dokumentation:</span>
+                          <span>15000SEK</span>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <ul aria-label="accordion Control Group links" class="c-accordion-group">
+                  <li aria-controls="content-1" aria-expanded="true" class="c-accordion--tiny" rel="c-accordion-js">
+                    <button href="#item-three" name="item-three" id="accordion-control-3"
+                      class="c-accordion-item__title">
+                      <span class="accordion__icon toggle-down"></span>
+                      <span class="accordion__title-text"> Ytterligare nivå till vänster</span>
+                    </button>
+                    <div role="region" aria-labelledby="accordion-control-3" aria-hidden="true" id="content-3"
+                      class="c-accordion-item__content">
+                      <div class="beslutContent">
+                      <div class="beslutContentText">
+                        <span>Stödbelopp innan avdrag:</span>
+                        <span>300SEK</span>
+                      </div>
+                      <div class="beslutContentText">
+                        <span>Analys, bristfällig dokumentation:</span>
+                        <span>15000SEK</span>
+                      </div>
+                    </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="beslutRad">
+                <ul aria-label="accordion Control Group links" class="c-accordion-group">
+                  <li aria-controls="content-1" aria-expanded="true" class="c-accordion--tiny" rel="c-accordion-js">
+                    <button href="#item-three" name="item-three" id="accordion-control-3"
+                      class="c-accordion-item__title">
+                      <span class="accordion__icon toggle-down"></span>
+                      <span class="accordion__title-text"> Djurvälfärd FARERS</span>
+                    </button>
+                    <div role="region" aria-labelledby="accordion-control-3" aria-hidden="true" id="content-3"
+                      class="c-accordion-item__content">
 
+                    </div>
+                  </li>
+                </ul>
+                <ul aria-label="accordion Control Group links" class="c-accordion-group">
+                  <li aria-controls="content-1" aria-expanded="true" class="c-accordion--tiny" rel="c-accordion-js">
+                    <button href="#item-three" name="item-three" id="accordion-control-3"
+                      class="c-accordion-item__title">
+                      <span class="accordion__icon toggle-down"></span>
+                      <span class="accordion__title-text"> Ytterligare nivå till vänster</span>
+                    </button>
+                    <div role="region" aria-labelledby="accordion-control-3" aria-hidden="true" id="content-3"
+                      class="c-accordion-item__content">
+
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
   </div>
+
   <div class="c-toaster" role="alert">
     <div class="c-toaster__content">
       <p><strong>{{toasterMessage}}</strong>
