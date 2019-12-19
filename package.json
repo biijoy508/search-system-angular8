@@ -1,6 +1,8 @@
 {
   "name": "farmen-gui",
   "version": "1.0.2-SNAPSHOT",
+  "description": "GUI för farmen projektet",
+  "license": "MIT",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.js --port 4500 --open",
