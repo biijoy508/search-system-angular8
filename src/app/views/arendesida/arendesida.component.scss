@@ -117,7 +117,12 @@ p {
   }
 }
 
+.c-textarea {
+  margin-bottom: 1rem;
+}
+
 .inlineWrapper2 {
+  margin-bottom: 1rem;
   * {
     font-size: 0.8125rem;
   }
@@ -183,6 +188,10 @@ p {
   margin-bottom: 1.5rem;
 }
 
+.bold{
+  font-weight: bold;
+}
+
 .c-toaster {
   position: absolute;
   bottom: 5rem;
@@ -195,6 +204,10 @@ p {
   margin-right: 0.5rem;
 }
 
+form .c-accordion--tiny .c-accordion-item__title .accordion__title-text {
+  margin-right: 2rem;
+}
+
 .ikon-float-right {
   position: absolute;
   right: 0;
@@ -204,6 +217,71 @@ p {
   }
 }
 
+.attributeHeader {
+  display: flex;
+  width: 100%;
+
+  span {
+    font-size: 13px;
+    width: 25%;
+    min-width: 25%;
+    text-align: left;
+  }
+}
+
+.attributeContectWrapper {
+  .attributeContect {
+    display: flex;
+    width: 100%;
+
+    span {
+      text-align: left;
+      font-weight: bold;
+      padding: 0.25rem 0;
+      margin-bottom: 0.25rem;
+      font-size: 13px;
+      width: 25%;
+      min-width: 25%;
+      background-color: #e6e6e6;
+      word-wrap: normal;
+    }
+  }
+}
+
+.beslutWrapper {
+  display: flex;
+  width: 100%;
+
+  .beslutRad {
+    width: 48%;
+    margin-right: 2%;
+    min-width: 25%;
+  }
+}
+
+.beslutContent {
+  padding-bottom: 0.5rem;
+}
+
+.text {
+  font-size: 13px;
+
+  * {
+    font-size: 13px;
+  }
+}
+
+.beslutContentText {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 0.25rem;
+  line-height: 1.5;
+  font-size: 13px;
+}
+
+.c-btn {
+  display: none;
+}
 
 @media (max-width: 768px) {
 
@@ -212,6 +290,21 @@ p {
   .c-btn--primary,
   .c-btn--tiny {
     width: auto;
+    margin-right: 1rem;
+  }
+
+  .beslutWrapper {
+    display: flex;
+    width: 100%;
+
+    .beslutRad {
+      width: 100%;
+      margin-right: 0;
+      min-width: 100%;
+    }
+  }
+
+  form .c-accordion--tiny .c-accordion-item__title .accordion__title-text {
     margin-right: 1rem;
   }
 }
@@ -227,5 +320,21 @@ p {
 
   .border-right {
     border: none;
+  }
+
+  .attributeHeader {
+    span {
+      width: 50%;
+      min-width: 50%;
+    }
+  }
+
+  .attributeContectWrapper {
+    .attributeContect {
+      span {
+        width: 50%;
+        min-width: 50%;
+      }
+    }
   }
 }
