@@ -28,6 +28,7 @@ export class ArendesidaComponent implements AfterViewInit {
   ansokanDjurvalfard: AnsokanDjurvalfard;
   attributLista: Attribut[] = [];
   valdArendeversion: ArendeVersion;
+  beslut: any;
 
   PPNnummer = '43,42';
 
@@ -49,26 +50,24 @@ export class ArendesidaComponent implements AfterViewInit {
     this.windowRef.komponentbibliotek.init();
     this.arendeId = this.route.snapshot.paramMap.get('arendeId');
     this.kundNummer = this.route.snapshot.paramMap.get('kundNummer');
-    this.stodAr = this.route.snapshot.paramMap.get('stodAr');
 
-    this.apiService.getChainedDataArendeInformation(this.arendeId, this.kundNummer, this.stodAr).subscribe(
+    const arendeParam = {
+      arendeid: this.arendeId,
+      kundnummer: this.kundNummer
+    };
+
+    this.apiService.getChainedDataArendeInformation(arendeParam).subscribe(
       (data: any) => {
         this.atgardLista = [];
-        this.atgardskodLista = [];
         this.arendeVersionLista = [];
-        this.arende = data.data[0];
+        this.arende = data[0];
         this.adress = 'Volymgatan 12, 555 55 Volymstad';
-        this.atgardLista = data.data[1];
-        this.atgardskodLista = data.data[2];
-        this.arendeVersionLista = data.data[3];
-        this.toggleAktivFlik(this.arende.status);
-        /*   this.ansokanDjurvalfard = data.data[0];
-          this.arende = data.data[1];
-          this.adress = 'Volymgatan 12, 555 55 Volymstad';
-          this.atgardLista = data.data[2];
-          this.atgardskodLista = data.data[3];
-          this.arendeVersionLista = data.data[4]; */
+        this.arendeVersionLista = data[1];
+        this.atgardLista = data[2];
         this.valdArendeversion = this.arendeVersionLista.find(entity => entity.gallande === 'J');
+        if (this.arende.ansokansTyp === 'UTBET') {
+          this.toggleAktivFlik(this.arende.status);
+        }
         setTimeout(() => {
           this.windowRef.komponentbibliotek.init();
         }, 100);
@@ -78,11 +77,12 @@ export class ArendesidaComponent implements AfterViewInit {
 
   toggleAktivFlik(arendeStatus: string) {
     if (arendeStatus === 'BESL' || arendeStatus === 'BER') {
-      let beslutFlik = document.getElementById('beslut');
-      beslutFlik.click();
+      document.getElementById('beslut').click();
+    } else {
+      document.getElementById('ansokanDjurvalfard').click();
     }
   }
-  
+
   redigeraView(button: HTMLButtonElement) {
     if (button.innerText === 'Redigera') {
       button.innerText = 'Spara';
@@ -152,19 +152,6 @@ export class ArendesidaComponent implements AfterViewInit {
     this.toasterMessage = '';
   }
 
-  /* skapaManuellAtgard() {
-
-    const valdAtgardskodParam = {
-      valdAtgardskod: this.valdAtgardskod
-    };
-
-    this.apiService.postData(environment.skapaManuellAtgardUrl, valdAtgardskodParam).subscribe(
-      (data: string) => {
-        console.log(data);
-      }
-    );
-  } */
-
   laggTillAtgard() {
     const skapaManuellAtgardBlock = document.querySelector('.skapaManuellAtgard') as HTMLDivElement;
     skapaManuellAtgardBlock.style.display = 'block';
@@ -177,9 +164,11 @@ export class ArendesidaComponent implements AfterViewInit {
 
   hamtaDataForValdFlik() {
     if (this.valdFlik === 'ansokanDjurvalfard') {
-      //this.hamtaAnsokanDjurvalfard();
+      this.hamtaAnsokanDjurvalfard();
     } else if (this.valdFlik === 'attribut') {
       this.hamtaAttribut();
+    } else if (this.valdFlik === 'beslut') {
+      this.hamtaBeslut();
     }
   }
 
@@ -209,6 +198,10 @@ export class ArendesidaComponent implements AfterViewInit {
           this.windowRef.komponentbibliotek.init();
         }, 100);
       });
+  }
+
+  hamtaBeslut() {
+
   }
 
   visaTidigareVersion(select: HTMLSelectElement) {
