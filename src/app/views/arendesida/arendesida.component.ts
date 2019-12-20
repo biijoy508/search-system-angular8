@@ -20,7 +20,6 @@ export class ArendesidaComponent implements AfterViewInit {
   arendeId: any;
   kundNummer: any;
   stodAr: any;
-  adress: string;
   atgardLista: Atgard[] = [];
   atgardskodLista: ManuellAtgard[] = [];
   valdAtgardskod: string;
@@ -28,8 +27,6 @@ export class ArendesidaComponent implements AfterViewInit {
   ansokanDjurvalfard: AnsokanDjurvalfard;
   attributLista: Attribut[] = [];
   valdArendeversion: ArendeVersion;
-
-  PPNnummer = '43,42';
 
   filtreringsAlternativ = 'alla';
 
@@ -58,7 +55,6 @@ export class ArendesidaComponent implements AfterViewInit {
         this.arendeVersionLista = [];
         this.ansokanDjurvalfard = data.data[0];
         this.arende = data.data[1];
-        this.adress = 'Volymgatan 12, 555 55 Volymstad';
         this.atgardLista = data.data[2];
         this.atgardskodLista = data.data[3];
         this.arendeVersionLista = data.data[4];
