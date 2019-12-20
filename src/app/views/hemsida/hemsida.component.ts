@@ -3,6 +3,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { SokFilter } from 'src/app/model/sokFilter';
 import { Arende } from 'src/app/model/arende';
 import { environment } from 'src/environments/environment';
+import { Subscription } from 'rxjs';
 
 interface SokFaltValues {
   stodAr: string[];
@@ -25,6 +26,7 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
   resultatStatusText = 'Välj sökfilter och klicka på sök för att visa resultat';
   spinnerText = 'Sidan laddas';
   sokFilter: SokFilter;
+  hamtaSokResultAnrop: Subscription;
 
   sokFaltValuesHolder: SokFaltValues = {
     stodAr: [],
@@ -88,7 +90,7 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
     this.showSpinner = true;
     this.spinnerText = 'Ärenden hämtas';
     sessionStorage.clear();
-    this.apiService.postData(environment.arendenUrl, this.sokFilter).subscribe(
+    this.hamtaSokResultAnrop = this.apiService.postData(environment.arendenUrl, this.sokFilter).subscribe(
       res => {
         this.arendeLista = [];
         if (res.length === 0) {
@@ -109,6 +111,9 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
   }
 
   hideSpinner() {
+    if (this.hamtaSokResultAnrop) {
+      this.hamtaSokResultAnrop.unsubscribe();
+    }
     this.showSpinner = false;
   }
 

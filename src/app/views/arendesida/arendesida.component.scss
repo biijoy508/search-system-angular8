@@ -123,6 +123,7 @@ p {
 
 .inlineWrapper2 {
   margin-bottom: 1rem;
+
   * {
     font-size: 0.8125rem;
   }
@@ -130,6 +131,25 @@ p {
   span {
     margin-right: 3rem;
     display: inline-block;
+  }
+}
+
+.beslutsumma {
+  vertical-align: super;
+  padding: 0.7rem;
+  border: 1px solid black;
+
+  .beslutsumma__label {
+    margin-right: 0.5rem;
+    font-weight: bold;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .beslutsumma__nummer {
+    font-size: 1rem;
+    line-height: 1.5;
+    font-weight: bold;
   }
 }
 
@@ -188,7 +208,7 @@ p {
   margin-bottom: 1.5rem;
 }
 
-.bold{
+.bold {
   font-weight: bold;
 }
 
@@ -251,6 +271,7 @@ form .c-accordion--tiny .c-accordion-item__title .accordion__title-text {
 .beslutWrapper {
   display: flex;
   width: 100%;
+  margin-top: 1rem;
 
   .beslutRad {
     width: 48%;
@@ -294,14 +315,8 @@ form .c-accordion--tiny .c-accordion-item__title .accordion__title-text {
   }
 
   .beslutWrapper {
-    display: flex;
-    width: 100%;
-
-    .beslutRad {
-      width: 100%;
-      margin-right: 0;
-      min-width: 100%;
-    }
+    display: block;
+    width: unset;
   }
 
   form .c-accordion--tiny .c-accordion-item__title .accordion__title-text {
@@ -327,6 +342,11 @@ form .c-accordion--tiny .c-accordion-item__title .accordion__title-text {
       width: 50%;
       min-width: 50%;
     }
+  }
+
+  .beslutWrapper {
+    display: block;
+    width: unset;
   }
 
   .attributeContectWrapper {
