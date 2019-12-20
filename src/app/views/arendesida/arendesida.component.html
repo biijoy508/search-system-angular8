@@ -58,7 +58,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-5 border-right">
+    <div class="col-md-4 border-right">
       <h5 class="e-h5">Åtgärder</h5>
       <button class="c-btn c-btn--compact" (click)="laggTillAtgard()"><span class="sjv-i-plus"></span>Lägg till
         åtgärd</button>
@@ -160,7 +160,7 @@
       </form>
     </div>
 
-    <div class="col-md-7">
+    <div class="col-md-8">
       <div class="c-tabs" rel="c-tabs-js">
         <ul id="myTabs_1" class="c-tabs__labels" role="tablist" aria-label="Code Examples">
           <li class="c-tabs__title" role="presentation">
@@ -243,7 +243,7 @@
             <button class="c-btn c-btn--tiny">Redigera</button>
           </div>
           <div id="panel3" class="c-tabs__panel" role="tabpanel" aria-labelledby="panel3__label">
-            <div class="inlineWrapper2 vanligt">
+            <span class="inlineWrapper2 vanligt">
               <span>
                 <p class="header"> Beslutstyp </p>
                 <p class="content">{{beslut.beslutsTyp}} </p>
@@ -260,48 +260,88 @@
                 <p class="header"> Beslutsdatum </p>
                 <p class="content">{{beslut.beslutsDatum}}</p>
               </span>
-            </div>
+            </span>
+            <span class="beslutsumma">
+              <span class="beslutsumma__label">Utbetalning/Återkrav:</span>
+              <span class="beslutsumma__nummer">11 050 SEK</span>
+            </span>
             <form>
               <div class="beslutWrapper">
-              <div class="beslutRad">
-                <ul aria-label="accordion Control Group links" class="c-accordion-group">
-                  <li aria-controls="content-1" aria-expanded="true" class="c-accordion--tiny" rel="c-accordion-js">
-                    <button href="#item-three" name="item-three" id="accordion-control-3"
-                      class="c-accordion-item__title">
-                      <span class="accordion__icon toggle-down"></span>
-                      <span class="accordion__title-text"> Ärende</span>
-                    </button>
-                    <div role="region" aria-labelledby="accordion-control-3" aria-hidden="true" id="content-3"
-                      class="c-accordion-item__content">
-                      <div class="beslutContent">
-                        <div class="beslutContentText">
-                          <span>Stödbelopp innan avdrag:</span>
-                          <span>300SEK</span>
-                        </div>
-                        <div class="beslutContentText">
-                          <span>Analys, bristfällig dokumentation:</span>
-                          <span>15000SEK</span>
+                <div class="beslutRad">
+                  <ul aria-label="accordion Control Group links" class="c-accordion-group">
+                    <li aria-controls="content-1" aria-expanded="true" class="c-accordion--tiny" rel="c-accordion-js">
+                      <button href="#item-three" name="item-three" id="accordion-control-3"
+                        class="c-accordion-item__title">
+                        <span class="accordion__icon toggle-down"></span>
+                        <span class="accordion__title-text"> Ärende</span>
+                      </button>
+                      <div role="region" aria-labelledby="accordion-control-3" aria-hidden="true" id="content-3"
+                        class="c-accordion-item__content">
+                        <div class="beslutContent">
+                          <div class="beslutContentText">
+                            <span>Stödbelopp innan avdrag:</span>
+                            <span>300SEK</span>
+                          </div>
+                          <div class="beslutContentText">
+                            <span>Analys, bristfällig dokumentation:</span>
+                            <span>15000SEK</span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </li>
-                </ul>
+                    </li>
+                  </ul>
+                  <ul aria-label="accordion Control Group links" class="c-accordion-group">
+                    <li aria-controls="content-1" aria-expanded="true" class="c-accordion--tiny" rel="c-accordion-js">
+                      <button href="#item-three" name="item-three" id="accordion-control-3"
+                        class="c-accordion-item__title">
+                        <span class="accordion__icon toggle-down"></span>
+                        <span class="accordion__title-text"> Ytterligare nivå till vänster</span>
+                      </button>
+                      <div role="region" aria-labelledby="accordion-control-3" aria-hidden="true" id="content-3"
+                        class="c-accordion-item__content">
+
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="beslutRad">
+                  <ul aria-label="accordion Control Group links" class="c-accordion-group">
+                    <li aria-controls="content-1" aria-expanded="true" class="c-accordion--tiny" rel="c-accordion-js">
+                      <button href="#item-three" name="item-three" id="accordion-control-3"
+                        class="c-accordion-item__title">
+                        <span class="accordion__icon toggle-down"></span>
+                        <span class="accordion__title-text"> Djurvälfärd FARERS</span>
+                      </button>
+                      <div role="region" aria-labelledby="accordion-control-3" aria-hidden="true" id="content-3"
+                        class="c-accordion-item__content">
+                        <div class="beslutContent">
+                          <div class="beslutContentText">
+                            <span>Ansökt antal djur:</span>
+                            <span>15 st</span>
+                          </div>
+                          <div class="beslutContentText">
+                            <span>Ansökta stödberättigade djur:</span>
+                            <span>7,50 Djurenheter</span>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                  <ul aria-label="accordion Control Group links" class="c-accordion-group">
+                    <li aria-controls="content-1" aria-expanded="true" class="c-accordion--tiny" rel="c-accordion-js">
+                      <button href="#item-three" name="item-three" id="accordion-control-3"
+                        class="c-accordion-item__title">
+                        <span class="accordion__icon toggle-down"></span>
+                        <span class="accordion__title-text"> Ytterligare nivå till vänster</span>
+                      </button>
+                      <div role="region" aria-labelledby="accordion-control-3" aria-hidden="true" id="content-3"
+                        class="c-accordion-item__content">
+
+                      </div>
+                    </li>
+                  </ul>
+                </div>
               </div>
-              <div class="beslutRad">
-                <ul aria-label="accordion Control Group links" class="c-accordion-group">
-                  <li aria-controls="content-1" aria-expanded="true" class="c-accordion--tiny" rel="c-accordion-js">
-                    <button href="#item-three" name="item-three" id="accordion-control-3"
-                      class="c-accordion-item__title">
-                      <span class="accordion__icon toggle-down"></span>
-                      <span class="accordion__title-text"> Djurvälfärd FARERS</span>
-                    </button>
-                    <div role="region" aria-labelledby="accordion-control-3" aria-hidden="true" id="content-3"
-                      class="c-accordion-item__content">
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
             </form>
           </div>
         </div>
