@@ -30,6 +30,8 @@ export class ArendesidaComponent implements AfterViewInit {
   valdArendeversion: ArendeVersion;
   beslut: Beslut;
 
+  PPNnummer = '43,42';
+
   filtreringsAlternativ = 'alla';
 
   toasterMessage = '';
