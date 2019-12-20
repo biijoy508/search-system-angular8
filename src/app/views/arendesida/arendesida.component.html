@@ -48,7 +48,9 @@
         </span>
         <span>
           <p class="header"> Pers.nr./Org.nr. </p>
-          <p class="content"> {{arende.kundOrgNummer | slice:0:arende.kundOrgNummer.length - 4}}-{{arende.kundOrgNummer | slice:arende.kundOrgNummer.length -4:arende.kundOrgNummer.length}}</p>
+          <p class="content">
+            {{arende.kundOrgNummer | slice:0:arende.kundOrgNummer.length - 4}}-{{arende.kundOrgNummer | slice:arende.kundOrgNummer.length -4:arende.kundOrgNummer.length}}
+          </p>
         </span>
         <span>
           <p class="header"> Ankomstdatum </p>
@@ -80,88 +82,82 @@
           till</button>
         <button class="c-btn c-btn--tiny ml-1" (click)="avbrytLaggTillAtgard()">Avbryt</button>
       </div>
-      <fieldset class="c-radio-btn-group c-radio-btn-group--tiny" role="radiogroup"
-        aria-labelledby="legend_filtreraAtgard" (change)="filtreraAtgarder($event.target.value)">
-        <div class="c-radio-btn c-radio-btn--tiny inline">
-          <input id="radioknappÖppna" name="radiogroup_filtreraAtgard" type="radio" value="öppna">
-          <label for="radioknappÖppna">Öppna</label>
+      <div class="c-filterbar" rel="c-filterbar-js">
+        <div class="c-filterbar__labels">
+          <button class="filter-label is-active" id="alla" (click)="filtreraAtgarder($event.target.id)"> Visa
+            alla</button>
+          <button class="filter-label" id="öppna" (click)="filtreraAtgarder($event.target.id)"> Öppna</button>
+          <button class="filter-label" id="stängda" (click)="filtreraAtgarder($event.target.id)"> Stängda</button>
         </div>
-
-        <div class="c-radio-btn c-radio-btn--tiny inline">
-          <input id="radioknappStängda" name="radiogroup_filtreraAtgard" type="radio" value="stängda">
-          <label for="radioknappStängda">Stängda</label>
+        <div id="atgardLista" class="c-filterbar__content">
+          <form *ngFor="let atgard of atgardLista; index as i">
+            <ul aria-label="accordion Control Group links" class="c-accordion-group" [id]="this.atgard.statusKod">
+              <li aria-controls="content-1" aria-expanded="true" class="c-accordion--tiny" rel="c-accordion-js">
+                <button tabindex="0" name="item-one" [id]="'atgard'+i" class="c-accordion-item__title">
+                  <span class="accordion__icon toggle-down"></span>
+                  <span class="accordion__title-text">{{atgard.kod}} - {{atgard.beskrivning.split('.')[0]}}</span>
+                  <div class="ikon-float-right">
+                    <span *ngIf="atgard.kommentar" class="sjv-i-kommentar"></span>
+                    <span *ngIf="atgard.statusKod !== 'ÖPP'" class="sjv-i-framgang"></span>
+                    <span *ngIf="atgard.statusKod === 'ÖPP'" class="sjv-i-oppen-mapp"></span>
+                  </div>
+                </button>
+                <div role="region" [aria-labelledby]="'atgard'+i" aria-hidden="false" id="content-1"
+                  class="c-accordion-item__content">
+                  <fieldset class="c-radio-btn-group c-radio-btn-group--tiny" role="radiogroup"
+                    aria-labelledby="legend_4">
+                    <p class="atgardBeskrivning">{{atgard.beskrivning}}</p>
+                    <div class="text">
+                      <span><b>Status : </b></span>
+                      <span>{{atgard.statusKod}}</span>
+                    </div>
+                    <!--
+                        <div *ngFor="let mojligStatus_item of atgard.mojligaStatusar" class="c-radio-btn c-radio-btn--tiny">
+                           <input [id]="mojligStatus_item + i" name="radiogroup_tiny" type="radio" [value]="mojligStatus_item"
+                            [(ngModel)]="atgard.statusKod">
+                          <label [for]="mojligStatus_item + i">{{mojligStatus_item}}</label>
+                        </div>
+                        -->
+                  </fieldset>
+                  <div class="c-textarea c-textarea--readonly c-textarea--tiny">
+                    <label [for]="'textarea'+i">Kommentar<i class="label--valfritt">(Valfritt)</i></label>
+                    <textarea readonly="readonly" aria-describedby="textarea-description-4" class="textarea_exempel"
+                      [id]="'textarea'+i" rows="4" wrap="soft" [(ngModel)]="atgard.kommentar"
+                      name="kommentar"></textarea>
+                    <div class="c-textarea__wrapper">
+                      <p id="textarea-description-4" class="c-textarea__description"></p>
+                      <p class="c-text-counter__count_characters"></p>
+                    </div>
+                  </div>
+                  <div class="inlineWrapper2 inlineWrapper2__compact">
+                    <span>
+                      <p class="header"> Skapad </p>
+                      <p class="content">{{atgard.regDatum}} &nbsp;</p>
+                    </span>
+                    <span>
+                      <p class="header"> Skapad av </p>
+                      <p class="content">{{atgard.registreradAv}} &nbsp;</p>
+                    </span>
+                    <span>
+                      <p class="header"> Uppdaterad </p>
+                      <p class="content">{{atgard.uppdateradDatum}} &nbsp;</p>
+                    </span>
+                    <span>
+                      <p class="header"> Uppdaterad av </p>
+                      <p class="content"> {{atgard.uppdateradAv}} &nbsp;</p>
+                    </span>
+                  </div>
+                  <button class="c-btn c-btn--tiny ml-1">Spara</button>
+                </div>
+              </li>
+            </ul>
+          </form>
         </div>
-
-        <div class="c-radio-btn c-radio-btn--tiny inline">
-          <input id="radioknappAlla" name="radiogroup_filtreraAtgard" type="radio" value="alla" checked>
-          <label for="radioknappAlla">Alla</label>
-        </div>
-      </fieldset>
-
-      <form *ngFor="let atgard of atgardLista; index as i">
-        <ul aria-label="accordion Control Group links" class="c-accordion-group" [id]="this.atgard.statusKod">
-          <li aria-controls="content-1" aria-expanded="true" class="c-accordion--tiny" rel="c-accordion-js">
-            <button tabindex="0" name="item-one" id="accordion-control-1" class="c-accordion-item__title">
-              <span class="accordion__icon toggle-down"></span>
-              <span class="accordion__title-text">{{atgard.kod}} - {{atgard.beskrivning.split('.')[0]}}</span>
-              <div class="ikon-float-right">
-                <span *ngIf="atgard.kommentar" class="sjv-i-kommentar"></span>
-                <span *ngIf="atgard.statusKod !== 'ÖPP'" class="sjv-i-framgang"></span>
-                <span *ngIf="atgard.statusKod === 'ÖPP'" class="sjv-i-oppen-mapp"></span>
-              </div>
-            </button>
-            <div role="region" aria-labelledby="accordion-control-1" aria-hidden="false" id="content-1"
-              class="c-accordion-item__content">
-              <fieldset class="c-radio-btn-group c-radio-btn-group--tiny" role="radiogroup" aria-labelledby="legend_4">
-                <p class="atgardBeskrivning">{{atgard.beskrivning}}</p>
-                <div class="text">
-                  <span><b>Status : </b></span>
-                  <span>{{atgard.statusKod}}</span>
-                </div>
-                <!--
-                <div *ngFor="let mojligStatus_item of atgard.mojligaStatusar" class="c-radio-btn c-radio-btn--tiny">
-                   <input [id]="mojligStatus_item + i" name="radiogroup_tiny" type="radio" [value]="mojligStatus_item"
-                    [(ngModel)]="atgard.statusKod">
-                  <label [for]="mojligStatus_item + i">{{mojligStatus_item}}</label>
-                </div>
-                -->
-              </fieldset>
-              <div class="c-textarea c-textarea--readonly c-textarea--tiny">
-                <label for="textarea5">Kommentar<i class="label--valfritt">(Valfritt)</i></label>
-                <textarea  readonly="readonly" aria-describedby="textarea-description-4" class="textarea_exempel" id="textarea5" rows="4"
-                  wrap="soft" [(ngModel)]="atgard.kommentar" name="kommentar"></textarea>
-                <div class="c-textarea__wrapper">
-                  <p id="textarea-description-4" class="c-textarea__description"></p>
-                  <p class="c-text-counter__count_characters"></p>
-                </div>
-              </div>
-              <div class="inlineWrapper2">
-                <span>
-                  <p class="header"> Skapad </p>
-                  <p class="content">{{atgard.regDatum}} </p>
-                </span>
-                <span>
-                  <p class="header"> Skapad av </p>
-                  <p class="content">{{atgard.registreradAv}} </p>
-                </span>
-                <span>
-                  <p class="header"> Uppdaterad </p>
-                  <p class="content">{{atgard.uppdateradDatum}} &nbsp;</p>
-                </span>
-                <span>
-                  <p class="header"> Uppdaterad av </p>
-                  <p class="content"> {{atgard.uppdateradAv}} &nbsp;</p>
-                </span>
-              </div>
-              <button class="c-btn c-btn--tiny ml-1">Spara</button>
-            </div>
-          </li>
-        </ul>
-      </form>
+      </div>
     </div>
 
     <div class="col-md-8">
-      <div class="c-tabs" rel="c-tabs-js">
+      <div id='utbetFlikar' class="c-tabs" rel="c-tabs-js">
         <ul id="myTabs_1" class="c-tabs__labels" role="tablist" aria-label="Code Examples">
           <li class="c-tabs__title" role="presentation">
             <button id="ansokanDjurvalfard" href="#panel1" aria-selected="true" role="tab" aria-controls="panel1"
@@ -217,7 +213,7 @@
                   tabindex="0" name="text6" [(ngModel)]="ansokanDjurvalfard.antalDjur">
               </div>
             </div>
-           <!--  <div class="c-input c-input--tiny redigeraView">
+            <!--  <div class="c-input c-input--tiny redigeraView">
               <label for="antaldjurenheter" tabindex="-1" id="label-6">Antal djurenheter</label>
               <div class="input__wrapper input__wrapper--text">
                 <input autocomplete="given-name" id="antaldjurenheter" aria-describedby="description-6" type="text"
@@ -243,22 +239,22 @@
             <button class="c-btn c-btn--tiny">Redigera</button>
           </div>
           <div id="panel3" class="c-tabs__panel" role="tabpanel" aria-labelledby="panel3__label">
-            <span class="inlineWrapper2 vanligt">
+            <span class="inlineWrapper2">
               <span>
                 <p class="header"> Beslutstyp </p>
-                <p class="content">{{beslut.beslutsTyp}} </p>
+                <p class="content">{{beslut.beslutsTyp}} &nbsp;</p>
               </span>
               <span>
                 <p class="header"> Beslutsnummer </p>
-                <p class="content">{{beslut.beslutsId}} </p>
+                <p class="content">{{beslut.beslutsId}} &nbsp;</p>
               </span>
               <span>
                 <p class="header"> Beräkningsdatum </p>
-                <p class="content">{{beslut.berakningsDatum}}</p>
+                <p class="content">{{beslut.berakningsDatum}} &nbsp;</p>
               </span>
               <span>
                 <p class="header"> Beslutsdatum </p>
-                <p class="content">{{beslut.beslutsDatum}}</p>
+                <p class="content">{{beslut.beslutsDatum}} &nbsp;</p>
               </span>
             </span>
             <span class="beslutsumma">
@@ -270,12 +266,12 @@
                 <div class="beslutRad">
                   <ul aria-label="accordion Control Group links" class="c-accordion-group">
                     <li aria-controls="content-1" aria-expanded="true" class="c-accordion--tiny" rel="c-accordion-js">
-                      <button href="#item-three" name="item-three" id="accordion-control-3"
+                      <button href="#item-three" name="item-three" id="arendedetalj"
                         class="c-accordion-item__title">
                         <span class="accordion__icon toggle-down"></span>
                         <span class="accordion__title-text"> Ärende</span>
                       </button>
-                      <div role="region" aria-labelledby="accordion-control-3" aria-hidden="true" id="content-3"
+                      <div role="region" aria-labelledby="arendedetalj" aria-hidden="true" id="content-3"
                         class="c-accordion-item__content">
                         <div class="beslutContent">
                           <div class="beslutContentText" *ngFor="let berArende_item of beslut.berakningarArende">
@@ -290,12 +286,12 @@
                 <div class="beslutRad">
                   <ul aria-label="accordion Control Group links" class="c-accordion-group">
                     <li aria-controls="content-1" aria-expanded="true" class="c-accordion--tiny" rel="c-accordion-js">
-                      <button href="#item-three" name="item-three" id="accordion-control-3"
+                      <button href="#item-three" name="item-three" id="djurvälfärd"
                         class="c-accordion-item__title">
                         <span class="accordion__icon toggle-down"></span>
                         <span class="accordion__title-text"> Djurvälfärd FARERS</span>
                       </button>
-                      <div role="region" aria-labelledby="accordion-control-3" aria-hidden="true" id="content-3"
+                      <div role="region" aria-labelledby="djurvälfärd" aria-hidden="true" id="content-3"
                         class="c-accordion-item__content">
                         <div class="beslutContent">
                           <div class="beslutContentText" *ngFor="let berDjurvalfard_item of beslut.berakningarDjurvalfard">
