@@ -246,24 +246,24 @@
             <span class="inlineWrapper2 vanligt">
               <span>
                 <p class="header"> Beslutstyp </p>
-                <p class="content"> Bifall </p>
+                <p class="content">{{beslut.beslutsTyp}} </p>
               </span>
               <span>
                 <p class="header"> Beslutsnummer </p>
-                <p class="content"> 9478676 </p>
+                <p class="content">{{beslut.beslutsId}} </p>
               </span>
               <span>
                 <p class="header"> Beräkningsdatum </p>
-                <p class="content"> 2017-07-11 </p>
+                <p class="content">{{beslut.berakningsDatum}}</p>
               </span>
               <span>
                 <p class="header"> Beslutsdatum </p>
-                <p class="content"> 2017-07-12 </p>
+                <p class="content">{{beslut.beslutsDatum}}</p>
               </span>
             </span>
             <span class="beslutsumma">
-              <span class="beslutsumma__label">Utbetalning/Återkrav:</span>
-              <span class="beslutsumma__nummer">11 050 SEK</span>
+              <span class="beslutsumma__label">{{beslut.berakningUtbAterkrav.berakningsTyp}}</span>
+              <span class="beslutsumma__nummer">{{beslut.berakningUtbAterkrav.varde}} {{beslut.berakningUtbAterkrav.enhet}}</span>
             </span>
             <form>
               <div class="beslutWrapper">
@@ -278,28 +278,11 @@
                       <div role="region" aria-labelledby="accordion-control-3" aria-hidden="true" id="content-3"
                         class="c-accordion-item__content">
                         <div class="beslutContent">
-                          <div class="beslutContentText">
-                            <span>Stödbelopp innan avdrag:</span>
-                            <span>300SEK</span>
-                          </div>
-                          <div class="beslutContentText">
-                            <span>Analys, bristfällig dokumentation:</span>
-                            <span>15000SEK</span>
+                          <div class="beslutContentText" *ngFor="let berArende_item of beslut.berakningarArende">
+                            <span>{{berArende_item.berakningsTyp}}</span>
+                            <span>{{berArende_item.varde}} {{berArende_item.enhet}}</span>
                           </div>
                         </div>
-                      </div>
-                    </li>
-                  </ul>
-                  <ul aria-label="accordion Control Group links" class="c-accordion-group">
-                    <li aria-controls="content-1" aria-expanded="true" class="c-accordion--tiny" rel="c-accordion-js">
-                      <button href="#item-three" name="item-three" id="accordion-control-3"
-                        class="c-accordion-item__title">
-                        <span class="accordion__icon toggle-down"></span>
-                        <span class="accordion__title-text"> Ytterligare nivå till vänster</span>
-                      </button>
-                      <div role="region" aria-labelledby="accordion-control-3" aria-hidden="true" id="content-3"
-                        class="c-accordion-item__content">
-
                       </div>
                     </li>
                   </ul>
@@ -315,28 +298,11 @@
                       <div role="region" aria-labelledby="accordion-control-3" aria-hidden="true" id="content-3"
                         class="c-accordion-item__content">
                         <div class="beslutContent">
-                          <div class="beslutContentText">
-                            <span>Ansökt antal djur:</span>
-                            <span>15 st</span>
-                          </div>
-                          <div class="beslutContentText">
-                            <span>Ansökta stödberättigade djur:</span>
-                            <span>7,50 Djurenheter</span>
+                          <div class="beslutContentText" *ngFor="let berDjurvalfard_item of beslut.berakningarDjurvalfard">
+                            <span>{{berDjurvalfard_item.berakningsTyp}}</span>
+                            <span>{{berDjurvalfard_item.varde}} {{berDjurvalfard_item.enhet}}</span>
                           </div>
                         </div>
-                      </div>
-                    </li>
-                  </ul>
-                  <ul aria-label="accordion Control Group links" class="c-accordion-group">
-                    <li aria-controls="content-1" aria-expanded="true" class="c-accordion--tiny" rel="c-accordion-js">
-                      <button href="#item-three" name="item-three" id="accordion-control-3"
-                        class="c-accordion-item__title">
-                        <span class="accordion__icon toggle-down"></span>
-                        <span class="accordion__title-text"> Ytterligare nivå till vänster</span>
-                      </button>
-                      <div role="region" aria-labelledby="accordion-control-3" aria-hidden="true" id="content-3"
-                        class="c-accordion-item__content">
-
                       </div>
                     </li>
                   </ul>

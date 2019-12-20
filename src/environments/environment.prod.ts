@@ -10,6 +10,7 @@ export const environment = {
   atgarderUrl: '/farmen/atg/atgarder',
   atgardskoderUrl: '/farmen/atg/manuellaatgarder',
   attributUrl: '/farmen/arende/attribut',
+  beslutInfoUrl: '/farmen/arende/beslutsinformation',
   masshanteringUrl: '/farmen/arende/masshantering',
   myndigheterUrl: '/farmen/intr/myndigheter',
   paverkadeArendenUrl: '/farmen/arende/antalpaverkade',

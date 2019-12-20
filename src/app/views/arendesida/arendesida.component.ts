@@ -5,9 +5,11 @@ import { Atgard } from 'src/app/model/atgard';
 import { ManuellAtgard } from 'src/app/model/manuellAtgard';
 import { AnsokanDjurvalfard } from 'src/app/model/ansokanDjurvalfard';
 import { Attribut } from 'src/app/model/attribut';
+import { Beslut } from 'src/app/model/beslut';
 import { ApiService } from 'src/app/services/api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { Berakning } from 'src/app/model/berakning';
 
 @Component({
   selector: 'app-arendesida',
@@ -19,7 +21,6 @@ export class ArendesidaComponent implements AfterViewInit {
   arende: Arende;
   arendeId: any;
   kundNummer: any;
-  stodAr: any;
   atgardLista: Atgard[] = [];
   atgardskodLista: ManuellAtgard[] = [];
   valdAtgardskod: string;
@@ -27,6 +28,7 @@ export class ArendesidaComponent implements AfterViewInit {
   ansokanDjurvalfard: AnsokanDjurvalfard;
   attributLista: Attribut[] = [];
   valdArendeversion: ArendeVersion;
+  beslut: Beslut;
 
   PPNnummer = '43,42';
 
@@ -41,6 +43,8 @@ export class ArendesidaComponent implements AfterViewInit {
     this.windowRef = window;
     this.arende = new Arende('', '', '', '', '', '', '', '', '', '');
     this.ansokanDjurvalfard = new AnsokanDjurvalfard([], '');
+    let berakning = new Berakning('','','');
+    this.beslut = new Beslut('', '', '', '', '', '', berakning, [], []);
   }
 
   ngAfterViewInit() {
@@ -48,20 +52,23 @@ export class ArendesidaComponent implements AfterViewInit {
     this.windowRef.komponentbibliotek.init();
     this.arendeId = this.route.snapshot.paramMap.get('arendeId');
     this.kundNummer = this.route.snapshot.paramMap.get('kundNummer');
-    this.stodAr = this.route.snapshot.paramMap.get('stodAr');
 
-    this.apiService.getChainedDataArendeInformation(this.arendeId, this.kundNummer, this.stodAr).subscribe(
+    const arendeParam = {
+      arendeid: this.arendeId,
+      kundnummer: this.kundNummer
+    };
+
+    this.apiService.getChainedDataArendeInformation(arendeParam).subscribe(
       (data: any) => {
         this.atgardLista = [];
-        this.atgardskodLista = [];
         this.arendeVersionLista = [];
-        this.ansokanDjurvalfard = data.data[0];
-        this.arende = data.data[1];
-        this.atgardLista = data.data[2];
-        this.atgardskodLista = data.data[3];
-        this.arendeVersionLista = data.data[4];
+        this.arende = data[0];
+        this.arendeVersionLista = data[1];
+        this.atgardLista = data[2];
         this.valdArendeversion = this.arendeVersionLista.find(entity => entity.gallande === 'J');
-        this.toggleAktivFlik(this.arende.status);
+        if (this.arende.ansokansTyp === 'UTBET') {
+          this.toggleAktivFlik(this.arende.status);
+        }
         setTimeout(() => {
           this.windowRef.komponentbibliotek.init();
         }, 100);
@@ -71,8 +78,9 @@ export class ArendesidaComponent implements AfterViewInit {
 
   toggleAktivFlik(arendeStatus: string) {
     if (arendeStatus === 'BESL' || arendeStatus === 'BER') {
-      let beslutFlik = document.getElementById('beslut');
-      beslutFlik.click();
+      document.getElementById('beslut').click();
+    } else {
+      document.getElementById('ansokanDjurvalfard').click();
     }
   }
 
@@ -160,6 +168,8 @@ export class ArendesidaComponent implements AfterViewInit {
       this.hamtaAnsokanDjurvalfard();
     } else if (this.valdFlik === 'attribut') {
       this.hamtaAttribut();
+    } else if (this.valdFlik === 'beslut') {
+      this.hamtaBeslut();
     }
   }
 
@@ -184,11 +194,27 @@ export class ArendesidaComponent implements AfterViewInit {
     this.apiService.getDataMedParametrar(environment.attributUrl, arendeParam).subscribe(
       (data: any) => {
         this.attributLista = data;
-
         setTimeout(() => {
           this.windowRef.komponentbibliotek.init();
         }, 100);
       });
+  }
+
+  hamtaBeslut() {
+
+    const arendeParam = {
+      arendeid: this.valdArendeversion.arendeId,
+      arendeversionid: this.valdArendeversion.arendeversionId
+    }
+
+    this.apiService.getDataMedParametrar(environment.beslutInfoUrl, arendeParam).subscribe(
+      (data: any) => {
+        this.beslut = data;
+        setTimeout(() => {
+          this.windowRef.komponentbibliotek.init();
+        }, 100);
+      });
+
   }
 
   visaTidigareVersion(select: HTMLSelectElement) {
