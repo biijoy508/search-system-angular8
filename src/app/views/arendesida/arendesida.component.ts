@@ -28,6 +28,8 @@ export class ArendesidaComponent implements AfterViewInit {
   attributLista: Attribut[] = [];
   valdArendeversion: ArendeVersion;
 
+  PPNnummer = '43,42';
+
   filtreringsAlternativ = 'alla';
 
   toasterMessage = '';
