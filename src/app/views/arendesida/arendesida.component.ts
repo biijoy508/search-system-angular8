@@ -40,7 +40,7 @@ export class ArendesidaComponent implements AfterViewInit {
     this.windowRef = window;
     this.arende = new Arende('', '', '', '', '', '', '', '', '', '');
     this.ansokanDjurvalfard = new AnsokanDjurvalfard([], '');
-    this.beslut = new Beslut('', '', '', '', '', '');
+    this.beslut = new Beslut('', '', '', '', '', '', [], []);
   }
 
   ngAfterViewInit() {
