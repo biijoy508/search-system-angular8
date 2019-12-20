@@ -66,7 +66,12 @@ export class ArendesidaComponent implements AfterViewInit {
         this.arendeVersionLista = data[1];
         this.atgardLista = data[2];
         this.valdArendeversion = this.arendeVersionLista.find(entity => entity.gallande === 'J');
-        if (this.arende.ansokansTyp === 'UTBET') {
+        if (this.arende.ansokansTyp !== 'UTBET') {
+          const utbetFlikar = document.querySelector('#utbetFlikar') as HTMLElement;
+          if (utbetFlikar) {
+            utbetFlikar.style.display = 'none';
+          }
+        } else {
           this.toggleAktivFlik(this.arende.status);
         }
         setTimeout(() => {
@@ -111,7 +116,8 @@ export class ArendesidaComponent implements AfterViewInit {
 
   filtreraAtgarder(filtreringsAlternativ) {
     this.filtreringsAlternativ = filtreringsAlternativ;
-    const atgarderUILista = document.querySelectorAll('.c-accordion-group');
+    const atgardListaForm = document.querySelector('#atgardLista');
+    const atgarderUILista = atgardListaForm.querySelectorAll('.c-accordion-group');
     if (filtreringsAlternativ === 'öppna') {
       for (let i = 0; i < atgarderUILista.length; i++) {
         let atgard = atgarderUILista[i] as HTMLElement;
@@ -202,6 +208,8 @@ export class ArendesidaComponent implements AfterViewInit {
 
   hamtaBeslut() {
 
+
+    if(this.arende.status === 'BER' || this.arende.status === 'BESL') {
     const arendeParam = {
       arendeid: this.valdArendeversion.arendeId,
       arendeversionid: this.valdArendeversion.arendeversionId
@@ -214,6 +222,8 @@ export class ArendesidaComponent implements AfterViewInit {
           this.windowRef.komponentbibliotek.init();
         }, 100);
       });
+
+    }
 
   }
 
