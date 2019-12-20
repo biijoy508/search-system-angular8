@@ -39,7 +39,7 @@
           <p class="content"> {{arende.status}} </p>
         </span>
         <span>
-          <p class="header"> Ärendenummer </p>
+          <p class="header"> Ärendenr. </p>
           <p class="content"> {{arende.arendeId}} </p>
         </span>
         <span>
@@ -47,16 +47,12 @@
           <p class="content"> {{arende.myndighet}} </p>
         </span>
         <span>
-          <p class="header"> Organisationsnummer </p>
-          <p class="content"> {{arende.kundOrgNummer}} </p>
+          <p class="header"> Pers.nr./Org.nr. </p>
+          <p class="content"> {{arende.kundOrgNummer | slice:0:arende.kundOrgNummer.length - 4}}-{{arende.kundOrgNummer | slice:arende.kundOrgNummer.length -4:arende.kundOrgNummer.length}}</p>
         </span>
         <span>
           <p class="header"> Ankomstdatum </p>
           <p class="content"> {{arende.ankomstDatum}} </p>
-        </span>
-        <span>
-          <p class="header"> Adress </p>
-          <p class="content"> {{adress}} </p>
         </span>
       </div>
     </div>
@@ -290,28 +286,6 @@
                     </div>
                   </li>
                 </ul>
-                <ul aria-label="accordion Control Group links" class="c-accordion-group">
-                  <li aria-controls="content-1" aria-expanded="true" class="c-accordion--tiny" rel="c-accordion-js">
-                    <button href="#item-three" name="item-three" id="accordion-control-3"
-                      class="c-accordion-item__title">
-                      <span class="accordion__icon toggle-down"></span>
-                      <span class="accordion__title-text"> Ytterligare nivå till vänster</span>
-                    </button>
-                    <div role="region" aria-labelledby="accordion-control-3" aria-hidden="true" id="content-3"
-                      class="c-accordion-item__content">
-                      <div class="beslutContent">
-                      <div class="beslutContentText">
-                        <span>Stödbelopp innan avdrag:</span>
-                        <span>300SEK</span>
-                      </div>
-                      <div class="beslutContentText">
-                        <span>Analys, bristfällig dokumentation:</span>
-                        <span>15000SEK</span>
-                      </div>
-                    </div>
-                    </div>
-                  </li>
-                </ul>
               </div>
               <div class="beslutRad">
                 <ul aria-label="accordion Control Group links" class="c-accordion-group">
@@ -323,20 +297,6 @@
                     </button>
                     <div role="region" aria-labelledby="accordion-control-3" aria-hidden="true" id="content-3"
                       class="c-accordion-item__content">
-
-                    </div>
-                  </li>
-                </ul>
-                <ul aria-label="accordion Control Group links" class="c-accordion-group">
-                  <li aria-controls="content-1" aria-expanded="true" class="c-accordion--tiny" rel="c-accordion-js">
-                    <button href="#item-three" name="item-three" id="accordion-control-3"
-                      class="c-accordion-item__title">
-                      <span class="accordion__icon toggle-down"></span>
-                      <span class="accordion__title-text"> Ytterligare nivå till vänster</span>
-                    </button>
-                    <div role="region" aria-labelledby="accordion-control-3" aria-hidden="true" id="content-3"
-                      class="c-accordion-item__content">
-
                     </div>
                   </li>
                 </ul>

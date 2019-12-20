@@ -20,7 +20,6 @@ export class ArendesidaComponent implements AfterViewInit {
   arende: Arende;
   arendeId: any;
   kundNummer: any;
-  adress: string;
   atgardLista: Atgard[] = [];
   atgardskodLista: ManuellAtgard[] = [];
   valdAtgardskod: string;
@@ -60,7 +59,6 @@ export class ArendesidaComponent implements AfterViewInit {
         this.atgardLista = [];
         this.arendeVersionLista = [];
         this.arende = data[0];
-        this.adress = 'Volymgatan 12, 555 55 Volymstad';
         this.arendeVersionLista = data[1];
         this.atgardLista = data[2];
         this.valdArendeversion = this.arendeVersionLista.find(entity => entity.gallande === 'J');
