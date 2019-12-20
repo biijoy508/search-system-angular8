@@ -9,6 +9,7 @@ import { Beslut } from 'src/app/model/beslut';
 import { ApiService } from 'src/app/services/api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { Berakning } from 'src/app/model/berakning';
 
 @Component({
   selector: 'app-arendesida',
@@ -40,7 +41,8 @@ export class ArendesidaComponent implements AfterViewInit {
     this.windowRef = window;
     this.arende = new Arende('', '', '', '', '', '', '', '', '', '');
     this.ansokanDjurvalfard = new AnsokanDjurvalfard([], '');
-    this.beslut = new Beslut('', '', '', '', '', '', [], []);
+    let berakning = new Berakning('','','');
+    this.beslut = new Beslut('', '', '', '', '', '', berakning, [], []);
   }
 
   ngAfterViewInit() {
@@ -190,7 +192,6 @@ export class ArendesidaComponent implements AfterViewInit {
     this.apiService.getDataMedParametrar(environment.attributUrl, arendeParam).subscribe(
       (data: any) => {
         this.attributLista = data;
-
         setTimeout(() => {
           this.windowRef.komponentbibliotek.init();
         }, 100);
@@ -207,7 +208,6 @@ export class ArendesidaComponent implements AfterViewInit {
     this.apiService.getDataMedParametrar(environment.beslutInfoUrl, arendeParam).subscribe(
       (data: any) => {
         this.beslut = data;
-        console.log(this.beslut);
         setTimeout(() => {
           this.windowRef.komponentbibliotek.init();
         }, 100);

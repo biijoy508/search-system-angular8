@@ -7,6 +7,7 @@ export class Beslut {
     berakningsDatum: string;
     beslutsDatum: string;
     gallande: string;
+    berakningUtbAterkrav: Berakning;
     berakningarArende: Berakning[];
     berakningarDjurvalfard: Berakning[];
     constructor(
@@ -16,6 +17,7 @@ export class Beslut {
         berakningsDatum: string,
         beslutsDatum: string,
         gallande: string,
+        berakningUtbAterkrav: Berakning,
         berakningarArende: Berakning[],
         berakningarDjurvalfard: Berakning[]
     ) {
@@ -25,6 +27,7 @@ export class Beslut {
         this.berakningsDatum = berakningsDatum;
         this.beslutsDatum = beslutsDatum;
         this.gallande = gallande;
+        this.berakningUtbAterkrav = berakningUtbAterkrav;
         this.berakningarArende = berakningarArende;
         this.berakningarDjurvalfard = berakningarDjurvalfard;
     }
