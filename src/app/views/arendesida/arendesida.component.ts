@@ -44,7 +44,7 @@ export class ArendesidaComponent implements AfterViewInit {
   constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) {
     this.windowRef = window;
     this.arende = new Arende('', '', '', '', '', '', '', '', '', '');
-    this.ansokanDjurvalfard = new AnsokanDjurvalfard([], '');
+    this.ansokanDjurvalfard = new AnsokanDjurvalfard([], '', '');
     let berakning = new Berakning('', '', '');
     this.beslut = new Beslut('', '', '', '', '', '', berakning, [], []);
   }
