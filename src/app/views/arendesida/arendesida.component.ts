@@ -29,6 +29,7 @@ export class ArendesidaComponent implements AfterViewInit {
   attributLista: Attribut[] = [];
   valdArendeversion: ArendeVersion;
   beslut: Beslut;
+  beslutSummaFinns: boolean;
 
   PPNnummer = '43,42';
 
@@ -37,13 +38,14 @@ export class ArendesidaComponent implements AfterViewInit {
   toasterMessage = '';
   tidigareVersion = false;
   valdFlik = 'ansokanDjurvalfard';
+  errorMessage = '';
 
 
   constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) {
     this.windowRef = window;
     this.arende = new Arende('', '', '', '', '', '', '', '', '', '');
     this.ansokanDjurvalfard = new AnsokanDjurvalfard([], '');
-    let berakning = new Berakning('','','');
+    let berakning = new Berakning('', '', '');
     this.beslut = new Beslut('', '', '', '', '', '', berakning, [], []);
   }
 
@@ -65,18 +67,24 @@ export class ArendesidaComponent implements AfterViewInit {
         this.arende = data[0];
         this.arendeVersionLista = data[1];
         this.atgardLista = data[2];
+        this.errorMessage = '';
         this.valdArendeversion = this.arendeVersionLista.find(entity => entity.gallande === 'J');
-        if (this.arende.ansokansTyp !== 'UTBET') {
+        if (this.arende.ansokansTyp === 'UTBET') {
+          this.toggleAktivFlik(this.arende.status);
+          this.kontrolleraAnsokanDjurvalfard(this.arende.arendeTyp);
+        } else {
           const utbetFlikar = document.querySelector('#utbetFlikar') as HTMLElement;
           if (utbetFlikar) {
             utbetFlikar.style.display = 'none';
           }
-        } else {
-          this.toggleAktivFlik(this.arende.status);
         }
         setTimeout(() => {
           this.windowRef.komponentbibliotek.init();
         }, 100);
+      },
+      (err: any) => {
+        console.log(err.message);
+        this.errorMessage = err.message;
       });
 
   }
@@ -86,6 +94,15 @@ export class ArendesidaComponent implements AfterViewInit {
       document.getElementById('beslut').click();
     } else {
       document.getElementById('ansokanDjurvalfard').click();
+    }
+  }
+
+  kontrolleraAnsokanDjurvalfard(arendeTyp: string) {
+    if (arendeTyp !== 'FARERS' && arendeTyp !== 'KLOVERS ' && arendeTyp !== 'SUGGERS') {
+      const ansokanDjurvalfardElement = document.getElementById('ansokanDjurvalfard') as HTMLElement;
+      ansokanDjurvalfardElement.style.display = 'none';
+      ansokanDjurvalfardElement.setAttribute('aria-selected', 'false');
+      document.getElementById('attribut').click();
     }
   }
 
@@ -183,67 +200,80 @@ export class ArendesidaComponent implements AfterViewInit {
     this.apiService.getData(`${environment.ansokanDjurvalfardUrl}/${this.valdArendeversion.arendeversionId}`).subscribe(
       (data: any) => {
         this.ansokanDjurvalfard = data;
+        this.errorMessage = '';
         setTimeout(() => {
           this.windowRef.komponentbibliotek.init();
         }, 100);
+      },
+      (err: any) => {
+        console.log(err.message);
+        this.errorMessage = err.message;
       });
   }
 
   hamtaAttribut() {
-
     const arendeParam = {
       arendeid: this.valdArendeversion.arendeId,
       arendeversionid: this.valdArendeversion.arendeversionId,
       arendetyp: this.arende.arendeTyp
-    }
+    };
 
     this.apiService.getDataMedParametrar(environment.attributUrl, arendeParam).subscribe(
       (data: any) => {
         this.attributLista = data;
+        this.errorMessage = '';
         setTimeout(() => {
           this.windowRef.komponentbibliotek.init();
         }, 100);
+      },
+      (err: any) => {
+        console.log(err.message);
+        this.errorMessage = err.message;
       });
   }
 
   hamtaBeslut() {
-
-
-    if(this.arende.status === 'BER' || this.arende.status === 'BESL') {
     const arendeParam = {
       arendeid: this.valdArendeversion.arendeId,
       arendeversionid: this.valdArendeversion.arendeversionId
-    }
+    };
 
     this.apiService.getDataMedParametrar(environment.beslutInfoUrl, arendeParam).subscribe(
       (data: any) => {
         this.beslut = data;
+        this.errorMessage = '';
         setTimeout(() => {
+          if (this.beslut) {
+            if (this.beslut.berakningUtbAterkrav !== null && this.beslut.berakningUtbAterkrav !== undefined) {
+              this.beslutSummaFinns = true;
+            }
+          }
           this.windowRef.komponentbibliotek.init();
         }, 100);
+      },
+      (err: any) => {
+        console.log(err.message);
+        this.errorMessage = err.message;
       });
-
-    }
-
   }
 
-  visaTidigareVersion(select: HTMLSelectElement) {
+visaTidigareVersion(select: HTMLSelectElement) {
 
-    this.valdArendeversion = this.arendeVersionLista.find(entity => entity.arendeversionId === select.value);
+  this.valdArendeversion = this.arendeVersionLista.find(entity => entity.arendeversionId === select.value);
 
-    if (this.valdArendeversion.gallande === 'J') {
-      this.tidigareVersion = false;
-    } else {
-      this.tidigareVersion = true;
-    }
-
-    this.hamtaDataForValdFlik();
-
+  if (this.valdArendeversion.gallande === 'J') {
+    this.tidigareVersion = false;
+  } else {
+    this.tidigareVersion = true;
   }
 
-  sattValdFlik(valdFlik) {
-    this.valdFlik = valdFlik;
-    this.hamtaDataForValdFlik();
-  }
+  this.hamtaDataForValdFlik();
+
+}
+
+sattValdFlik(valdFlik) {
+  this.valdFlik = valdFlik;
+  this.hamtaDataForValdFlik();
+}
 
 }

@@ -5,6 +5,16 @@
       <a [routerLink]="'/hemsida'" class="c-link__light">
         <span class="sjv-i-pil-vanster tillbakaIkon">
         </span>Tillbaka till sökresultat</a>
+        <br/>
+      <div class="c-error-summary" *ngIf="errorMessage !== ''">
+        <span class="c-error-summary__icon sjv-i-fel" tabindex="-1"></span>
+        <div class="c-error-summary__content">
+          <div class="c-error-summary__title"> Något har gått fel </div>
+          <ul>
+            <li> {{errorMessage}} </li>
+          </ul>
+        </div>
+      </div>
       <div class="btnFieldWrapper">
         <div>
           <b> Ärende | {{arende.kundNummerAlfaNumerisk}} - {{arende.stodAr}} | {{arende.kundNamn}}</b>
@@ -60,7 +70,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-4 border-right">
+    <div class="col-md-4">
       <h5 class="e-h5">Åtgärder</h5>
       <button class="c-btn c-btn--compact" (click)="laggTillAtgard()"><span class="sjv-i-plus"></span>Lägg till
         åtgärd</button>
@@ -156,8 +166,8 @@
       </div>
     </div>
 
-    <div class="col-md-8">
-      <div id='utbetFlikar' class="c-tabs" rel="c-tabs-js">
+    <div id='utbetFlikar' class="col-md-8 border-left">
+      <div class="c-tabs" rel="c-tabs-js">
         <ul id="myTabs_1" class="c-tabs__labels" role="tablist" aria-label="Code Examples">
           <li class="c-tabs__title" role="presentation">
             <button id="ansokanDjurvalfard" href="#panel1" aria-selected="true" role="tab" aria-controls="panel1"
@@ -257,7 +267,7 @@
                 <p class="content">{{beslut.beslutsDatum}} &nbsp;</p>
               </span>
             </span>
-            <span class="beslutsumma">
+            <span class="beslutsumma" *ngIf="beslutSummaFinns">
               <span class="beslutsumma__label">{{beslut.berakningUtbAterkrav.berakningsTyp}}</span>
               <span class="beslutsumma__nummer">{{beslut.berakningUtbAterkrav.varde}} {{beslut.berakningUtbAterkrav.enhet}}</span>
             </span>
