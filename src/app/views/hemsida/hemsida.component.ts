@@ -112,7 +112,8 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
 
   hideSpinner() {
     if (this.hamtaSokResultAnrop) {
-      this.hamtaSokResultAnrop.unsubscribe();
+      //this.hamtaSokResultAnrop.unsubscribe();
+      this.ngOnInit();
     }
     this.showSpinner = false;
   }
