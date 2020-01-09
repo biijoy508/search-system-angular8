@@ -210,6 +210,10 @@ p {
   border-right: solid 1px darkgrey;
 }
 
+.border-left {
+  border-left: solid 1px darkgrey;
+}
+
 .laggtillatgard {
   margin-bottom: 1.5rem;
 }
@@ -218,11 +222,19 @@ p {
   font-weight: bold;
 }
 
+.hidden {
+  display: none;
+}
+
 .c-toaster {
   position: absolute;
   bottom: 5rem;
   left: 40%;
   display: none;
+}
+
+.c-error-summary {
+  margin-bottom: 1.5rem;
 }
 
 .inline {
