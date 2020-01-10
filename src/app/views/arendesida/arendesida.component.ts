@@ -98,7 +98,7 @@ export class ArendesidaComponent implements AfterViewInit {
   }
 
   kontrolleraAnsokanDjurvalfard(arendeTyp: string) {
-    if (arendeTyp !== 'FARERS' && arendeTyp !== 'KLOVERS ' && arendeTyp !== 'SUGGERS') {
+    if (arendeTyp !== 'FARERS' && arendeTyp !== 'KLOVERS' && arendeTyp !== 'SUGGERS') {
       const ansokanDjurvalfardElement = document.getElementById('ansokanDjurvalfard') as HTMLElement;
       ansokanDjurvalfardElement.style.display = 'none';
       ansokanDjurvalfardElement.setAttribute('aria-selected', 'false');
