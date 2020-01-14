@@ -20,9 +20,6 @@
   button {
     max-width: 12rem;
   }
-.warningborder {
-  border: 1px solid #ccc;
-}
 
   :first-child {
     margin-right: 1rem;
@@ -36,5 +33,14 @@
   .c-btn--tiny {
     width: auto;
     margin-right: 1rem;
+  }
+}
+
+.c-spinner .c-spinner__container {
+  top: 50%;
+
+  .c-banner .c-banner__content {
+    padding: 0.5em;
+    border: 1px solid grey;
   }
 }
