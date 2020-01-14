@@ -105,11 +105,10 @@
               <li aria-controls="content-1" aria-expanded="true" class="c-accordion--tiny" rel="c-accordion-js">
                 <button tabindex="0" name="item-one" [id]="'atgard'+i" class="c-accordion-item__title">
                   <span class="accordion__icon toggle-down"></span>
-                  <span class="accordion__title-text">{{atgard.kod}} - {{atgard.beskrivning.split('.')[0]}}</span>
+                  <span class="accordion__title-text no-space-break">{{atgard.kod}} - {{atgard.beskrivning}}</span>
                   <div class="ikon-float-right">
                     <span *ngIf="atgard.kommentar" class="sjv-i-kommentar"></span>
                     <span *ngIf="atgard.statusKod !== 'ÖPP'" class="sjv-i-framgang"></span>
-                    <span *ngIf="atgard.statusKod === 'ÖPP'" class="sjv-i-oppen-mapp"></span>
                   </div>
                 </button>
                 <div role="region" [aria-labelledby]="'atgard'+i" aria-hidden="false" id="content-1"
@@ -230,7 +229,7 @@
                   tabindex="0" name="text6" [(ngModel)]="ansokanDjurvalfard.antalDjurenheter">
               </div>
             </div>
- 
+
             <button *ngIf="!tidigareVersion" class="c-btn c-btn--tiny mt-2"
               (click)="redigeraView($event.target)">Redigera</button>
           </div>
