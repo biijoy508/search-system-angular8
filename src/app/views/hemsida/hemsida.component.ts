@@ -4,6 +4,7 @@ import { SokFilter } from 'src/app/model/sokFilter';
 import { Arende } from 'src/app/model/arende';
 import { environment } from 'src/environments/environment';
 import { Subscription } from 'rxjs';
+import { takeWhile } from 'rxjs/operators';
 
 interface SokFaltValues {
   stodAr: string[];
@@ -25,6 +26,8 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
   showSpinner = true;
   resultatStatusText = 'Välj sökfilter och klicka på sök för att visa resultat';
   spinnerText = 'Sidan laddas';
+
+  alive = true;
   sokFilter: SokFilter;
   hamtaSokResultAnrop: Subscription;
 
@@ -56,7 +59,8 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
   }
 
   ngOnDestroy() {
-    this.hideSpinner();
+    console.log('[takeWhile] ngOnDestory');
+    this.alive = false;
   }
 
   hamtaSokFaltValues() {
@@ -96,9 +100,10 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
   hamtaSokResultat() {
     this.showSpinner = true;
     this.spinnerText = 'Ärenden hämtas';
+    this.alive = true;
     sessionStorage.clear();
     sessionStorage.setItem('sokFilter', JSON.stringify(this.sokFilter));
-    this.hamtaSokResultAnrop = this.apiService.postData(environment.arendenUrl, this.sokFilter).subscribe(
+    this.hamtaSokResultAnrop = this.apiService.postData(environment.arendenUrl, this.sokFilter).pipe(takeWhile(() => this.alive)).subscribe(
       res => {
         this.arendeLista = [];
         if (res.length === 0) {
@@ -119,6 +124,11 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
   }
 
   hideSpinner() {
+    this.alive = false;
+    // if (this.hamtaSokResultAnrop) {
+
+    //   //this.hamtaSokResultAnrop.unsubscribe();
+    // }
     this.showSpinner = false;
   }
 
