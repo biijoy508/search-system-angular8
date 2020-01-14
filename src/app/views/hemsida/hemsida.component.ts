@@ -59,8 +59,7 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
   }
 
   ngOnDestroy() {
-    console.log('[takeWhile] ngOnDestory');
-    this.alive = false;
+    this.hideSpinner();
   }
 
   hamtaSokFaltValues() {
@@ -125,10 +124,6 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
 
   hideSpinner() {
     this.alive = false;
-    // if (this.hamtaSokResultAnrop) {
-
-    //   //this.hamtaSokResultAnrop.unsubscribe();
-    // }
     this.showSpinner = false;
   }
 
