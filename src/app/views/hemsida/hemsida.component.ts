@@ -50,8 +50,32 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
       this.antalArenden = this.arendeLista.length.toString();
       this.noResults = false;
     }
-    if (sessionStorage.getItem('sokFilter') !== null) {
-      this.sokFilter = JSON.parse(sessionStorage.getItem('sokFilter'));
+    if (sessionStorage.getItem('stodAr') !== null) {
+      this.sokFilter.stodAr = JSON.parse(sessionStorage.getItem('stodAr'));
+      console.log(this.sokFilter.stodAr);
+    }
+
+    if (sessionStorage.getItem('kundNummer') !== null) {
+      this.sokFilter.kundNummerAlfaNumerisk = JSON.parse(sessionStorage.getItem('kundNummer'));
+    }
+
+    if (sessionStorage.getItem('arendeTyp') !== null) {
+       let arendeTypList = JSON.parse(sessionStorage.getItem('arendeTyp'));
+       console.log(arendeTypList);
+      for (let i = 0; i < arendeTypList.length; i++) {
+        
+        let newOption = document.createElement("option");
+        newOption.value = arendeTypList[i];
+        newOption.selected = true;
+        newOption.innerHTML = arendeTypList[i];
+        console.log(newOption);
+        this.sokFilter.arendeTypList.push((newOption as HTMLOptionElement).text);
+
+      }
+    }
+
+    if (sessionStorage.getItem('ansokansTyp') !== null) {
+      this.sokFilter.ansokansTypList = JSON.parse(sessionStorage.getItem('ansokansTyp'));
     }
   }
 
@@ -88,6 +112,7 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
       this.sokFilter.arendeTypList.length = 0;
       for (let i = 0; i < value.length; i++) {
         this.sokFilter.arendeTypList.push((value[i] as HTMLOptionElement).text);
+        console.log(value[i]);
       }
     } else if (sokFilterparameter === "ansokansTypList") {
       this.sokFilter.ansokansTypList.length = 0;
@@ -105,7 +130,6 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
       this.spinnerText = 'Ärenden hämtas';
       this.alive = true;
       sessionStorage.clear();
-      sessionStorage.setItem('sokFilter', JSON.stringify(this.sokFilter));
       this.hamtaSokResultAnrop = this.apiService.postData(environment.arendenUrl, this.sokFilter).pipe(takeWhile(() => this.alive)).subscribe(
         res => {
           this.arendeLista = [];
@@ -118,6 +142,10 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
             this.antalArenden = this.arendeLista.length.toString();
             sessionStorage.setItem('arenden', JSON.stringify(this.arendeLista));
           }
+          sessionStorage.setItem('stodAr', JSON.stringify(this.sokFilter.stodAr));
+          sessionStorage.setItem('kundNummer', JSON.stringify(this.sokFilter.kundNummerAlfaNumerisk));
+          sessionStorage.setItem('arendeTyp', JSON.stringify(this.sokFilter.arendeTypList));
+          sessionStorage.setItem('ansokansTyp', JSON.stringify(this.sokFilter.ansokansTypList));
           this.showSpinner = false;
         });
     }
