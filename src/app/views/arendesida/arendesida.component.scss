@@ -4,7 +4,7 @@
   display: inline-flex;
   font-size: 1rem;
   width: 100%;
-  border-bottom: darkgrey 1px solid;
+  border-bottom: #b3b3b3 1px solid;
 
   b {
     padding-left: 0.4rem;
@@ -23,7 +23,7 @@
   margin-top: 0.5rem;
 
   .tidigareVersion {
-    border: dashed #B3B3B3;
+    border: dashed #b3b3b3;
     margin: -0.5rem 0 0.5rem 0;
     padding: 0.25rem;
   }
@@ -101,6 +101,12 @@ p {
   margin-bottom: 0.25rem;
 }
 
+.no-space-break {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
 .inlineWrapper {
 
   span,
@@ -129,7 +135,7 @@ p {
   }
 
   span {
-    margin-right: 3rem;
+    margin-right: 1.5rem;
     display: inline-block;
   }
 }
@@ -143,7 +149,7 @@ p {
 .beslutsumma {
   vertical-align: super;
   padding: 0.7rem;
-  border: 1px solid black;
+  border: 1px solid #b3b3b3;
 
   .beslutsumma__label {
     margin-right: 0.5rem;
@@ -174,7 +180,7 @@ p {
     display: inline-block;
   }
 
-  border-bottom: solid 1px darkgrey;
+  border-bottom: solid 1px #b3b3b3;
 }
 
 .e-h5 {
@@ -207,11 +213,11 @@ p {
 }
 
 .border-right {
-  border-right: solid 1px darkgrey;
+  border-right: solid 1px #b3b3b3;
 }
 
 .border-left {
-  border-left: solid 1px darkgrey;
+  border-left: solid 1px #b3b3b3;
 }
 
 .laggtillatgard {
