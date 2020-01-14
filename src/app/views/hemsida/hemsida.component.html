@@ -47,8 +47,15 @@
         </div>
       </div>
 
+
+
       <div class="confirm-btn">
-        <button class="c-btn--primary c-btn--compact" (click)="confirmbtnClick()">Sök</button>
+        <button *ngIf="sokFilter.stodAr == '' && sokFilter.kundNummerAlfaNumerisk == '' && (sokFilter.arendeTypList.length == 0  || sokFilter.arendeTypList[0] == '')
+      && (sokFilter.ansokansTypList.length == 0 || sokFilter.ansokansTypList[0] == '') ;else activeButton"
+          class="c-btn--primary c-btn--compact" disabled>Sök</button>
+        <ng-template #activeButton>
+          <button class="c-btn--primary c-btn--compact" (click)="confirmbtnClick()">Sök</button>
+        </ng-template>
         <button class="c-btn c-btn--compact" (click)="rensaSokFilter()">Rensa sökfilter</button>
       </div>
     </div>
@@ -75,7 +82,9 @@
           </thead>
           <tbody *ngFor="let arende of arendeLista">
             <tr>
-              <td><a class="c-link__light" [routerLink] = "['/arendesida', arende.arendeId, arende.kundNummerAlfaNumerisk]">{{arende.kundNummerAlfaNumerisk}}</a></td>
+              <td><a class="c-link__light"
+                  [routerLink]="['/arendesida', arende.arendeId, arende.kundNummerAlfaNumerisk]">{{arende.kundNummerAlfaNumerisk}}</a>
+              </td>
               <td>{{arende.kundNamn}}</td>
               <td>{{arende.stodAr}}</td>
               <td>{{arende.arendeTyp}}</td>
@@ -87,6 +96,25 @@
         </table>
       </div>
     </div>
+
+    <div *ngIf="showWarning" class="c-spinner">
+      <div class="c-spinner__container">
+        <div class="c-banner" role="banner">
+          <div class="c-banner__content">
+            <span class="c-banner-icon sjv-i-varning" tabindex="-1"></span>
+            <div class="c-banner__text">
+              <p> Fyll i minst ett till sökfält</p>
+              <div class="c-banner__actionlink-container">
+                <button class="c-btn--compact" (click)="togglewarning()">Stäng</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
     <div *ngIf="showSpinner" class="c-spinner">
       <div class="c-spinner__container">
         <div class="c-spinner__animation">

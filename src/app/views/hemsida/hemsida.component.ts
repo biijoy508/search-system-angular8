@@ -26,6 +26,7 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
   showSpinner = true;
   resultatStatusText = 'Välj sökfilter och klicka på sök för att visa resultat';
   spinnerText = 'Sidan laddas';
+  showWarning = false;
 
   alive = true;
   sokFilter: SokFilter;
@@ -49,7 +50,7 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
       this.antalArenden = this.arendeLista.length.toString();
       this.noResults = false;
     }
-    if(sessionStorage.getItem('sokFilter') !== null) {
+    if (sessionStorage.getItem('sokFilter') !== null) {
       this.sokFilter = JSON.parse(sessionStorage.getItem('sokFilter'));
     }
   }
@@ -97,25 +98,29 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
   }
 
   hamtaSokResultat() {
-    this.showSpinner = true;
-    this.spinnerText = 'Ärenden hämtas';
-    this.alive = true;
-    sessionStorage.clear();
-    sessionStorage.setItem('sokFilter', JSON.stringify(this.sokFilter));
-    this.hamtaSokResultAnrop = this.apiService.postData(environment.arendenUrl, this.sokFilter).pipe(takeWhile(() => this.alive)).subscribe(
-      res => {
-        this.arendeLista = [];
-        if (res.length === 0) {
-          this.noResults = true;
-          this.resultatStatusText = 'Sökningen gav inga resultat';
-        } else {
-          this.noResults = false;
-          this.arendeLista = res;
-          this.antalArenden = this.arendeLista.length.toString();
-          sessionStorage.setItem('arenden', JSON.stringify(this.arendeLista));
-        }
-        this.showSpinner = false;
-      });
+    if (this.sokFilter.kundNummerAlfaNumerisk === '' && this.sokFilter.arendeTypList.length === 0 && this.sokFilter.ansokansTypList.length === 0) {
+      this.showWarning = true;
+    } else {
+      this.showSpinner = true;
+      this.spinnerText = 'Ärenden hämtas';
+      this.alive = true;
+      sessionStorage.clear();
+      sessionStorage.setItem('sokFilter', JSON.stringify(this.sokFilter));
+      this.hamtaSokResultAnrop = this.apiService.postData(environment.arendenUrl, this.sokFilter).pipe(takeWhile(() => this.alive)).subscribe(
+        res => {
+          this.arendeLista = [];
+          if (res.length === 0) {
+            this.noResults = true;
+            this.resultatStatusText = 'Sökningen gav inga resultat';
+          } else {
+            this.noResults = false;
+            this.arendeLista = res;
+            this.antalArenden = this.arendeLista.length.toString();
+            sessionStorage.setItem('arenden', JSON.stringify(this.arendeLista));
+          }
+          this.showSpinner = false;
+        });
+    }
   }
 
   confirmbtnClick() {
@@ -125,6 +130,10 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
   hideSpinner() {
     this.alive = false;
     this.showSpinner = false;
+  }
+
+  togglewarning() {
+    this.showWarning = false;
   }
 
   rensaSokFilter() {
