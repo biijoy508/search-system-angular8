@@ -5,7 +5,7 @@
       <a [routerLink]="'/hemsida'" class="c-link__light">
         <span class="sjv-i-pil-vanster tillbakaIkon">
         </span>Tillbaka till sökresultat</a>
-        <br/>
+      <br />
       <div class="c-error-summary" *ngIf="errorMessage !== ''">
         <span class="c-error-summary__icon sjv-i-fel" tabindex="-1"></span>
         <div class="c-error-summary__content">
@@ -92,7 +92,7 @@
           till</button>
         <button class="c-btn c-btn--tiny ml-1" (click)="avbrytLaggTillAtgard()">Avbryt</button>
       </div>
-      <div class="c-filterbar" rel="c-filterbar-js">
+      <div *ngIf="!ingaAtgarder" class="c-filterbar" rel="c-filterbar-js">
         <div class="c-filterbar__labels">
           <button class="filter-label is-active" id="alla" (click)="filtreraAtgarder($event.target.id)"> Visa
             alla</button>
@@ -129,7 +129,7 @@
                         -->
                   </fieldset>
                   <div class="c-textarea c-textarea--readonly c-textarea--tiny">
-                    <label [for]="'textarea'+i">Kommentar<i class="label--valfritt">(Valfritt)</i></label>
+                    <label [for]="'textarea'+i">Kommentar</label>
                     <textarea readonly="readonly" aria-describedby="textarea-description-4" class="textarea_exempel"
                       [id]="'textarea'+i" rows="4" wrap="soft" [(ngModel)]="atgard.kommentar"
                       name="kommentar"></textarea>
@@ -141,19 +141,19 @@
                   <div class="inlineWrapper2 inlineWrapper2__compact">
                     <span>
                       <p class="header"> Skapad </p>
-                      <p class="content">{{atgard.regDatum}} &nbsp;</p>
+                      <p class="content">{{atgard.regDatum? atgard.regDatum : '&ndash;'}}</p>
                     </span>
                     <span>
                       <p class="header"> Skapad av </p>
-                      <p class="content">{{atgard.registreradAv}} &nbsp;</p>
+                      <p class="content">{{atgard.registreradAv? atgard.registreradAv : '&ndash;'}}</p>
                     </span>
                     <span>
                       <p class="header"> Uppdaterad </p>
-                      <p class="content">{{atgard.uppdateradDatum}} &nbsp;</p>
+                      <p class="content">{{atgard.uppdateradDatum? atgard.uppdateradDatum : '&ndash;'}}</p>
                     </span>
                     <span>
                       <p class="header"> Uppdaterad av </p>
-                      <p class="content"> {{atgard.uppdateradAv}} &nbsp;</p>
+                      <p class="content"> {{atgard.uppdateradAv? atgard.uppdateradAv : '&ndash;'}}</p>
                     </span>
                   </div>
                   <button class="c-btn c-btn--tiny ml-1">Spara</button>
@@ -162,6 +162,10 @@
             </ul>
           </form>
         </div>
+      </div>
+      <div *ngIf="ingaAtgarder">
+
+        <p> <span class="sjv-i-info inline" tabindex="-1"></span>Ärendet har inga åtgärder.</p>
       </div>
     </div>
 
@@ -194,11 +198,11 @@
             <div class="inlineWrapper2 vanligt">
               <span>
                 <p class="header"> Antal djur </p>
-                <p class="content"> {{ansokanDjurvalfard.antalDjur}} </p>
+                <p class="content"> {{ansokanDjurvalfard.antalDjur | number:'':'sv'}} </p>
               </span>
               <span>
                 <p class="header"> Antal djurenheter </p>
-                <p class="content"> {{ansokanDjurvalfard.antalDjurenheter}} </p>
+                <p class="content"> {{ansokanDjurvalfard.antalDjurenheter | number:'':'sv'}} </p>
               </span>
             </div>
 
@@ -222,7 +226,7 @@
                   tabindex="0" name="text6" [(ngModel)]="ansokanDjurvalfard.antalDjur">
               </div>
             </div>
-           <div class="c-input c-input--tiny redigeraView">
+            <div class="c-input c-input--tiny redigeraView">
               <label for="antaldjurenheter" tabindex="-1" id="label-6">Antal djurenheter</label>
               <div class="input__wrapper input__wrapper--text">
                 <input autocomplete="given-name" id="antaldjurenheter" aria-describedby="description-6" type="text"
@@ -234,86 +238,94 @@
               (click)="redigeraView($event.target)">Redigera</button>
           </div>
           <div id="panel2" class="c-tabs__panel" role="tabpanel" aria-labelledby="panel2__label">
-            <div class="attributeHeader">
-              <span>Attribut</span>
-              <span>Värde</span>
-            </div>
-            <div *ngFor="let attribut of attributLista" class="attributeContectWrapper">
-              <div class="attributeContect">
-                <span>{{attribut.namn}}</span>
-                <span>{{attribut.varde}}</span>
+            <div *ngIf="attributFinns">
+              <div class="attributeHeader">
+                <span>Attribut</span>
+                <span>Värde</span>
               </div>
+              <div *ngFor="let attribut of attributLista" class="attributeContectWrapper">
+                <div class="attributeContect">
+                  <span>{{attribut.namn}}</span>
+                  <span>{{attribut.varde}}</span>
+                </div>
+              </div>
+              <div class="c-space--m"></div>
+              <button class="c-btn c-btn--tiny">Redigera</button>
             </div>
-            <div class="c-space--m"></div>
-            <button class="c-btn c-btn--tiny">Redigera</button>
+            <p *ngIf="!attributFinns">Ärendet har inga attribut i denna version.</p>
           </div>
           <div id="panel3" class="c-tabs__panel" role="tabpanel" aria-labelledby="panel3__label">
-            <span class="inlineWrapper2">
-              <span>
-                <p class="header"> Beslutstyp </p>
-                <p class="content">{{beslut.beslutsTyp}} &nbsp;</p>
+            <div *ngIf="beslutFinns">
+              <span class="inlineWrapper2">
+                <span>
+                  <p class="header"> Beslutstyp </p>
+                  <p class="content">{{beslut.beslutsTyp? beslut.beslutsTyp : '&ndash;'}}</p>
+                </span>
+                <span>
+                  <p class="header"> Beslutsnummer </p>
+                  <p class="content">{{beslut.beslutsId? beslut.beslutsId : '&ndash;'}}</p>
+                </span>
+                <span>
+                  <p class="header"> Beräkningsdatum </p>
+                  <p class="content">{{beslut.berakningsDatum? beslut.berakningsDatum: '&ndash;'}}</p>
+                </span>
+                <span>
+                  <p class="header"> Beslutsdatum </p>
+                  <p class="content">{{beslut.beslutsDatum? beslut.beslutsDatum: '&ndash;'}}</p>
+                </span>
               </span>
-              <span>
-                <p class="header"> Beslutsnummer </p>
-                <p class="content">{{beslut.beslutsId}} &nbsp;</p>
+              <span class="beslutsumma" *ngIf="beslutSummaFinns">
+                <span class="beslutsumma__label">{{beslut.berakningUtbAterkrav.berakningsTyp}}</span>
+                <span class="beslutsumma__nummer">{{beslut.berakningUtbAterkrav.varde | number:'':'sv'}}
+                  {{beslut.berakningUtbAterkrav.enhet}}</span>
               </span>
-              <span>
-                <p class="header"> Beräkningsdatum </p>
-                <p class="content">{{beslut.berakningsDatum}} &nbsp;</p>
-              </span>
-              <span>
-                <p class="header"> Beslutsdatum </p>
-                <p class="content">{{beslut.beslutsDatum}} &nbsp;</p>
-              </span>
-            </span>
-            <span class="beslutsumma" *ngIf="beslutSummaFinns">
-              <span class="beslutsumma__label">{{beslut.berakningUtbAterkrav.berakningsTyp}}</span>
-              <span class="beslutsumma__nummer">{{beslut.berakningUtbAterkrav.varde}} {{beslut.berakningUtbAterkrav.enhet}}</span>
-            </span>
-            <form>
-              <div class="beslutWrapper">
-                <div class="beslutRad">
-                  <ul aria-label="accordion Control Group links" class="c-accordion-group">
-                    <li aria-controls="content-1" aria-expanded="true" class="c-accordion--tiny open" rel="c-accordion-js">
-                      <button href="#item-three" name="item-three" id="arendedetalj"
-                        class="c-accordion-item__title">
-                        <span class="accordion__icon toggle-down"></span>
-                        <span class="accordion__title-text"> Ärende</span>
-                      </button>
-                      <div role="region" aria-labelledby="arendedetalj" aria-hidden="true" id="content-3"
-                        class="c-accordion-item__content">
-                        <div class="beslutContent">
-                          <div class="beslutContentText" *ngFor="let berArende_item of beslut.berakningarArende">
-                            <span>{{berArende_item.berakningsTyp}}</span>
-                            <span>{{berArende_item.varde}} {{berArende_item.enhet}}</span>
+              <form>
+                <div class="beslutWrapper">
+                  <div class="beslutRad">
+                    <ul aria-label="accordion Control Group links" class="c-accordion-group">
+                      <li aria-controls="content-1" aria-expanded="true" class="c-accordion--tiny open"
+                        rel="c-accordion-js">
+                        <button href="#item-three" name="item-three" id="arendedetalj" class="c-accordion-item__title">
+                          <span class="accordion__icon toggle-down"></span>
+                          <span class="accordion__title-text"> Ärende</span>
+                        </button>
+                        <div role="region" aria-labelledby="arendedetalj" aria-hidden="true" id="content-3"
+                          class="c-accordion-item__content">
+                          <div class="beslutContent">
+                            <div class="beslutContentText" *ngFor="let berArende_item of beslut.berakningarArende">
+                              <span>{{berArende_item.berakningsTyp}}</span>
+                              <span>{{berArende_item.varde | number:'':'sv'}} {{berArende_item.enhet}}</span>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-                <div class="beslutRad">
-                  <ul aria-label="accordion Control Group links" class="c-accordion-group">
-                    <li aria-controls="content-1" aria-expanded="true" class="c-accordion--tiny open" rel="c-accordion-js">
-                      <button href="#item-three" name="item-three" id="djurvälfärd"
-                        class="c-accordion-item__title">
-                        <span class="accordion__icon toggle-down"></span>
-                        <span class="accordion__title-text"> Djurvälfärd FARERS</span>
-                      </button>
-                      <div role="region" aria-labelledby="djurvälfärd" aria-hidden="true" id="content-3"
-                        class="c-accordion-item__content">
-                        <div class="beslutContent">
-                          <div class="beslutContentText" *ngFor="let berDjurvalfard_item of beslut.berakningarDjurvalfard">
-                            <span>{{berDjurvalfard_item.berakningsTyp}}</span>
-                            <span>{{berDjurvalfard_item.varde}} {{berDjurvalfard_item.enhet}}</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="beslutRad">
+                    <ul aria-label="accordion Control Group links" class="c-accordion-group">
+                      <li aria-controls="content-1" aria-expanded="true" class="c-accordion--tiny open"
+                        rel="c-accordion-js">
+                        <button href="#item-three" name="item-three" id="djurvälfärd" class="c-accordion-item__title">
+                          <span class="accordion__icon toggle-down"></span>
+                          <span class="accordion__title-text"> Djurvälfärd FARERS</span>
+                        </button>
+                        <div role="region" aria-labelledby="djurvälfärd" aria-hidden="true" id="content-3"
+                          class="c-accordion-item__content">
+                          <div class="beslutContent">
+                            <div class="beslutContentText"
+                              *ngFor="let berDjurvalfard_item of beslut.berakningarDjurvalfard">
+                              <span>{{berDjurvalfard_item.berakningsTyp}}</span>
+                              <span>{{berDjurvalfard_item.varde | number:'':'sv'}} {{berDjurvalfard_item.enhet}}</span>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </li>
-                  </ul>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
-              </div>
-            </form>
+              </form>
+            </div>
+            <p *ngIf="!beslutFinns">Ärendet har inget beslut i denna version.</p>
           </div>
         </div>
       </div>
