@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgModule, LOCALE_ID, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ViewsModule } from './views/views.module';
@@ -7,6 +7,9 @@ import { HttpClientModule  } from '@angular/common/http';
 import { ViewComponentsModule } from './view-components/view-components.module';
 import { RouterModule } from '@angular/router';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { registerLocaleData } from '@angular/common';
+import localeSv from '@angular/common/locales/sv';
+registerLocaleData(localeSv);
 
 @NgModule({
   declarations: [
@@ -20,7 +23,8 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     ViewComponentsModule,
     AppRoutingModule
   ],
-  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
+  providers: [{ provide:  LocationStrategy, useClass: HashLocationStrategy }, 
+  { provide: LOCALE_ID, useValue: 'sv-SE'}],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   bootstrap: [AppComponent]
 })

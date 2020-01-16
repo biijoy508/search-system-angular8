@@ -30,6 +30,9 @@ export class ArendesidaComponent implements AfterViewInit {
   valdArendeversion: ArendeVersion;
   beslut: Beslut;
   beslutSummaFinns: boolean;
+  beslutFinns: boolean;
+  attributFinns: boolean;
+  ingaAtgarder: boolean;
 
   PPNnummer = '43,42';
 
@@ -67,6 +70,11 @@ export class ArendesidaComponent implements AfterViewInit {
         this.arende = data[0];
         this.arendeVersionLista = data[1];
         this.atgardLista = data[2];
+        if(this.atgardLista.length === 0) {
+          this.ingaAtgarder = true;
+        } else {
+          this.ingaAtgarder = false;
+        }
         this.errorMessage = '';
         this.valdArendeversion = this.arendeVersionLista.find(entity => entity.gallande === 'J');
         if (this.arende.ansokansTyp === 'UTBET') {
@@ -221,6 +229,11 @@ export class ArendesidaComponent implements AfterViewInit {
     this.apiService.getDataMedParametrar(environment.attributUrl, arendeParam).subscribe(
       (data: any) => {
         this.attributLista = data;
+        if(this.attributLista.length === 0) {
+          this.attributFinns = false;
+        } else {
+          this.attributFinns = true;
+        }
         this.errorMessage = '';
         setTimeout(() => {
           this.windowRef.komponentbibliotek.init();
@@ -244,9 +257,14 @@ export class ArendesidaComponent implements AfterViewInit {
         this.errorMessage = '';
         setTimeout(() => {
           if (this.beslut) {
+            this.beslutFinns = true;
             if (this.beslut.berakningUtbAterkrav !== null && this.beslut.berakningUtbAterkrav !== undefined) {
               this.beslutSummaFinns = true;
+            } else {
+              this.beslutSummaFinns = false;
             }
+          } else {
+            this.beslutFinns = false;
           }
           this.windowRef.komponentbibliotek.init();
         }, 100);
