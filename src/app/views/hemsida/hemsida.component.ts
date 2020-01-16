@@ -50,9 +50,6 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
       this.antalArenden = this.arendeLista.length.toString();
       this.noResults = false;
     }
-    if (sessionStorage.getItem('sokFilter') !== null) {
-      this.sokFilter = JSON.parse(sessionStorage.getItem('sokFilter'));
-    }
   }
 
   ngAfterViewInit() {
@@ -105,7 +102,6 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
       this.spinnerText = 'Ärenden hämtas';
       this.alive = true;
       sessionStorage.clear();
-      sessionStorage.setItem('sokFilter', JSON.stringify(this.sokFilter));
       this.hamtaSokResultAnrop = this.apiService.postData(environment.arendenUrl, this.sokFilter).pipe(takeWhile(() => this.alive)).subscribe(
         res => {
           this.arendeLista = [];
