@@ -44,11 +44,18 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit() {
-    this.windowRef.komponentbibliotek.initMultiselect();
     if (sessionStorage.getItem('arenden') !== null) {
       this.arendeLista = JSON.parse(sessionStorage.getItem('arenden'));
       this.antalArenden = this.arendeLista.length.toString();
       this.noResults = false;
+    }
+
+    if (sessionStorage.getItem('stodAr') !== null) {
+      this.sokFilter.stodAr = JSON.parse(sessionStorage.getItem('stodAr'));
+    }
+
+    if (sessionStorage.getItem('kundNummer') !== null) {
+      this.sokFilter.kundNummerAlfaNumerisk = JSON.parse(sessionStorage.getItem('kundNummer'));
     }
   }
 
@@ -63,30 +70,62 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
   hamtaSokFaltValues() {
     this.apiService.getChainedData()
       .subscribe(res => {
-        this.sokFaltValuesHolder.stodAr = [''];
-        for (let i = 0; i < res[0].length; i++) {
-          this.sokFaltValuesHolder.stodAr.push(res[0][i]);
-        }
-        this.sokFaltValuesHolder.arendeTypList = [];
-        for (let i = 0; i < res[1].length; i++) {
-          this.sokFaltValuesHolder.arendeTypList.push(res[1][i].kod);
-        }
-        this.sokFaltValuesHolder.ansokansTypList = [];
-        for (let i = 0; i < res[2].length; i++) {
-          this.sokFaltValuesHolder.ansokansTypList.push(res[2][i]);
-        }
-        console.log('Sök fält initierat');
-        this.showSpinner = false;
-      });
-  }
+      this.sokFaltValuesHolder.stodAr = [''];
+      for (let i = 0; i < res[0].length; i++) {
+        this.sokFaltValuesHolder.stodAr.push(res[0][i]);
+      }
+      this.sokFaltValuesHolder.arendeTypList = [];
+      for (let i = 0; i < res[1].length; i++) {
+        this.sokFaltValuesHolder.arendeTypList.push(res[1][i].kod);
+      }
 
+      this.sokFaltValuesHolder.ansokansTypList = [];
+      for (let i = 0; i < res[2].length; i++) {
+        this.sokFaltValuesHolder.ansokansTypList.push(res[2][i]);
+      }
+      console.log('Sök fält initierat');
+      this.showSpinner = false;
+    },
+      error => console.log('error' + error),
+      () => {
+        const arendeTypSelect = document.querySelector('#arendeTyp') as HTMLElement;
+        const arendeTypOptions = arendeTypSelect.getElementsByTagName('option');
+        const ansokansTypSelect = document.querySelector('#ansokansTyp') as HTMLElement;
+        const ansokansTypOptions = ansokansTypSelect.getElementsByTagName('option');
+
+        setTimeout(() => {
+          if (sessionStorage.getItem('ansokansTyp') !== null) {
+            const sessionAnsokansTypList = JSON.parse(sessionStorage.getItem('ansokansTyp'));
+            for (let index = 0; index < sessionAnsokansTypList.length; index++) {
+              const selectedOption = ansokansTypOptions[index] as HTMLOptionElement;
+              selectedOption.selected = true;
+              selectedOption.setAttribute('selected', 'selected');
+              this.sokFilter.ansokansTypList.push(selectedOption.text);
+            }
+          }
+
+          if (sessionStorage.getItem('arendeTyp') !== null) {
+            const sessionArendeTypList = JSON.parse(sessionStorage.getItem('ansokansTyp'));
+            for (let index = 0; index < sessionArendeTypList.length; index++) {
+              const selectedOption = arendeTypOptions[index] as HTMLOptionElement;
+              selectedOption.selected = true;
+              selectedOption.setAttribute('selected', 'selected');
+              this.sokFilter.arendeTypList.push(selectedOption.text);
+            }
+          }
+
+          this.windowRef.komponentbibliotek.initMultiselect();
+        }, 50);
+      }
+    );
+  }
   onOptionsSelected(sokFilterparameter: string, value: any[]) {
-    if (sokFilterparameter === "arendeTypList") {
+    if (sokFilterparameter === 'arendeTypList') {
       this.sokFilter.arendeTypList.length = 0;
       for (let i = 0; i < value.length; i++) {
         this.sokFilter.arendeTypList.push((value[i] as HTMLOptionElement).text);
       }
-    } else if (sokFilterparameter === "ansokansTypList") {
+    } else if (sokFilterparameter === 'ansokansTypList') {
       this.sokFilter.ansokansTypList.length = 0;
       for (let i = 0; i < value.length; i++) {
         this.sokFilter.ansokansTypList.push((value[i] as HTMLOptionElement).text);
@@ -95,14 +134,20 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
   }
 
   hamtaSokResultat() {
-    if (this.sokFilter.kundNummerAlfaNumerisk === '' && this.sokFilter.arendeTypList.length === 0 && this.sokFilter.ansokansTypList.length === 0) {
+    if (this.sokFilter.kundNummerAlfaNumerisk === '' && this.sokFilter.arendeTypList.length === 0
+      && this.sokFilter.ansokansTypList.length === 0) {
       this.showWarning = true;
     } else {
       this.showSpinner = true;
       this.spinnerText = 'Ärenden hämtas';
       this.alive = true;
       sessionStorage.clear();
-      this.hamtaSokResultAnrop = this.apiService.postData(environment.arendenUrl, this.sokFilter).pipe(takeWhile(() => this.alive)).subscribe(
+      sessionStorage.setItem('stodAr', JSON.stringify(this.sokFilter.stodAr));
+      sessionStorage.setItem('kundNummer', JSON.stringify(this.sokFilter.kundNummerAlfaNumerisk));
+      sessionStorage.setItem('arendeTyp', JSON.stringify(this.sokFilter.arendeTypList));
+      sessionStorage.setItem('ansokansTyp', JSON.stringify(this.sokFilter.ansokansTypList));
+      this.hamtaSokResultAnrop = this.apiService.postData(environment.arendenUrl, this.sokFilter).pipe(takeWhile(() => this.alive))
+        .subscribe(
         res => {
           this.arendeLista = [];
           if (res.length === 0) {
@@ -133,24 +178,14 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
   }
 
   rensaSokFilter() {
-
     this.sokFilter.stodAr = '';
     this.sokFilter.kundNummerAlfaNumerisk = '';
     this.sokFilter.arendeTypList = [];
     this.sokFilter.ansokansTypList = [];
-
-    let multiSelects = this.element.nativeElement.querySelectorAll('.tagsContainer');
-    for (let i = 0; i < multiSelects.length; i++) {
-      while (multiSelects[i].firstChild) {
-        multiSelects[i].removeChild(multiSelects[i].firstChild);
-      }
-    }
-
-    let checkBoxes = this.element.nativeElement.querySelectorAll('.c-checkbox__input');
-    for (let i = 0; i < checkBoxes.length; i++) {
-      checkBoxes[i].checked = false;
-    }
-
+    const arendetypdeselectBtn = document.querySelector('#arendeTyp_deselectAll') as HTMLElement;
+    arendetypdeselectBtn.dispatchEvent(new Event('click'));
+    const ansokantypdeselectBtn = document.querySelector('#ansokansTyp_deselectAll') as HTMLElement;
+    ansokantypdeselectBtn.dispatchEvent(new Event('click'));
   }
 
 }
