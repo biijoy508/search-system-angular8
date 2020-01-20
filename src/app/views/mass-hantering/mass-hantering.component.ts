@@ -2,6 +2,7 @@ import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { SokFilter } from 'src/app/model/sokFilter';
 import { environment } from 'src/environments/environment';
+import { Title } from '@angular/platform-browser';
 
 interface UrvalValues {
   myndighet: string[];
@@ -36,7 +37,7 @@ export class MassHanteringComponent implements OnInit, AfterViewInit {
     tillStatus: ['']
   };
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService, private titleService: Title) {
     this.windowRef = window;
     this.sokFilter = new SokFilter('', '', [], [], '', '', '');
   }
@@ -46,6 +47,7 @@ export class MassHanteringComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    this.titleService.setTitle('Farmen - Masshantering');
     this.windowRef.komponentbibliotek.init();
   }
 

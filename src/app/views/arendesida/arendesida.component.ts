@@ -10,6 +10,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Berakning } from 'src/app/model/berakning';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-arendesida',
@@ -44,7 +45,7 @@ export class ArendesidaComponent implements AfterViewInit {
   errorMessage = '';
 
 
-  constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) {
+  constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router, private titleService: Title) {
     this.windowRef = window;
     this.arende = new Arende('', '', '', '', '', '', '', '', '', '');
     this.ansokanDjurvalfard = new AnsokanDjurvalfard([], '', '');
@@ -62,6 +63,8 @@ export class ArendesidaComponent implements AfterViewInit {
       arendeid: this.arendeId,
       kundnummer: this.kundNummer
     };
+
+    this.titleService.setTitle('Farmen - ' + this.kundNummer);
 
     this.apiService.getChainedDataArendeInformation(arendeParam).subscribe(
       (data: any) => {
