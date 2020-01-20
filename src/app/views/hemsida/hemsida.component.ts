@@ -5,6 +5,7 @@ import { Arende } from 'src/app/model/arende';
 import { environment } from 'src/environments/environment';
 import { Subscription } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
+import { Title } from '@angular/platform-browser';
 
 interface SokFaltValues {
   stodAr: string[];
@@ -38,7 +39,7 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
     ansokansTypList: []
   };
 
-  constructor(private apiService: ApiService, private element: ElementRef) {
+  constructor(private apiService: ApiService, private element: ElementRef, private titleService: Title) {
     this.windowRef = window;
     this.sokFilter = new SokFilter('', '', [], [], '', '', '');
   }
@@ -60,6 +61,7 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit() {
+    this.titleService.setTitle('Farmen - Sök ärende');
     this.hamtaSokFaltValues();
   }
 
