@@ -269,8 +269,11 @@ export class ArendesidaComponent implements AfterViewInit {
           } else {
             this.beslutFinns = false;
           }
-          this.windowRef.komponentbibliotek.init();
         }, 100);
+
+        setTimeout(() => {
+          this.windowRef.komponentbibliotek.init();
+        }, 150);
       },
       (err: any) => {
         console.log(err.message);
