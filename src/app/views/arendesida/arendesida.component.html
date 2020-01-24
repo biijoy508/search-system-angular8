@@ -72,24 +72,29 @@
   <div class="row">
     <div class="col-md-4">
       <h5 class="e-h5">Åtgärder</h5>
-      <button class="c-btn c-btn--compact" (click)="laggTillAtgard()"><span class="sjv-i-plus"></span>Lägg till
+      <button class="c-btn c-btn--compact" (click)="hamtaManuellaAtgardTyper()"><span class="sjv-i-plus"></span>Lägg till
         åtgärd</button>
       <div class="skapaManuellAtgard">
         <div class="c-select c-select--tiny">
           <label>Skapa manuell åtgärd</label>
           <div class="c-select__wrapper">
-            <select id="atgardskod" [(ngModel)]="valdAtgardskod">
-              <option *ngFor="let atgardskod_item of atgardskodLista" [value]="atgardskod_item">
-                {{atgardskod_item.kod}} - {{atgardskod_item.text}}
+            <select id="manuellAtgardTyp" [(ngModel)]="valdAtgardTyp">
+              <option *ngFor="let atgardtyp_item of manuellAtgardTypLista" [ngValue]="atgardtyp_item">
+                <ng-container *ngIf="atgardtyp_item.kod !== ''">
+                {{atgardtyp_item.kod}} - {{atgardtyp_item.text}}
+              </ng-container>
+              <ng-container *ngIf="atgardtyp_item.kod === ''">
+              </ng-container>
               </option>
             </select>
             <span class="sjv-i-caret-ner ikon">
             </span>
           </div>
         </div>
-        <!--   <button class="c-btn c-btn--tiny ml-1" (click)="skapaManuellAtgard()">Lägg till</button> -->
-        <button class="c-btn--primary c-btn--tiny ml-1" (click)='showToaster("Åtgärden har lagts till.")'>Lägg
-          till</button>
+        <button *ngIf="valdAtgardTyp.id !== '';else disabledButton" class="c-btn c-btn--tiny ml-1" (click)="skapaManuellAtgard()">Lägg till</button>
+        <ng-template #disabledButton>
+          <button class="c-btn c-btn--tiny ml-1" disabled>Lägg till</button>
+        </ng-template>
         <button class="c-btn c-btn--tiny ml-1" (click)="avbrytLaggTillAtgard()">Avbryt</button>
       </div>
       <div *ngIf="!ingaAtgarder" class="c-filterbar" rel="c-filterbar-js">

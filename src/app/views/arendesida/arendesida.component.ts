@@ -2,7 +2,7 @@ import { Component, AfterViewInit } from '@angular/core';
 import { Arende } from 'src/app/model/arende';
 import { ArendeVersion } from 'src/app/model/arendeVersion';
 import { Atgard } from 'src/app/model/atgard';
-import { ManuellAtgard } from 'src/app/model/manuellAtgard';
+import { AtgardTyp } from 'src/app/model/atgardTyp';
 import { AnsokanDjurvalfard } from 'src/app/model/ansokanDjurvalfard';
 import { Attribut } from 'src/app/model/attribut';
 import { Beslut } from 'src/app/model/beslut';
@@ -10,6 +10,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Berakning } from 'src/app/model/berakning';
+
 
 @Component({
   selector: 'app-arendesida',
@@ -22,8 +23,8 @@ export class ArendesidaComponent implements AfterViewInit {
   arendeId: any;
   kundNummer: any;
   atgardLista: Atgard[] = [];
-  atgardskodLista: ManuellAtgard[] = [];
-  valdAtgardskod: string;
+  manuellAtgardTypLista: AtgardTyp[] = [];
+  valdAtgardTyp: AtgardTyp;
   arendeVersionLista: ArendeVersion[] = [];
   ansokanDjurvalfard: AnsokanDjurvalfard;
   attributLista: Attribut[] = [];
@@ -50,6 +51,7 @@ export class ArendesidaComponent implements AfterViewInit {
     this.ansokanDjurvalfard = new AnsokanDjurvalfard([], '', '');
     let berakning = new Berakning('', '', '');
     this.beslut = new Beslut('', '', '', '', '', '', berakning, [], []);
+    this.valdAtgardTyp = new AtgardTyp('', '', '', '', '');
   }
 
   ngAfterViewInit() {
@@ -70,7 +72,7 @@ export class ArendesidaComponent implements AfterViewInit {
         this.arende = data[0];
         this.arendeVersionLista = data[1];
         this.atgardLista = data[2];
-        if(this.atgardLista.length === 0) {
+        if (this.atgardLista.length === 0) {
           this.ingaAtgarder = true;
         } else {
           this.ingaAtgarder = false;
@@ -184,9 +186,49 @@ export class ArendesidaComponent implements AfterViewInit {
     this.toasterMessage = '';
   }
 
-  laggTillAtgard() {
-    const skapaManuellAtgardBlock = document.querySelector('.skapaManuellAtgard') as HTMLDivElement;
-    skapaManuellAtgardBlock.style.display = 'block';
+  skapaManuellAtgard() {
+
+    this.valdAtgardTyp.arendeId = this.arende.arendeId;
+    this.valdAtgardTyp.stodAr = this.arende.stodAr;
+
+    this.apiService.postData(environment.skapaManuellAtgardUrl, this.valdAtgardTyp)
+      .subscribe(
+        (data: Atgard) => {
+          this.atgardLista.push(data);
+          setTimeout(() => {
+            this.windowRef.komponentbibliotek.init();
+          }, 100);
+          this.showToaster("Åtgärden har lagts till.");
+        },
+        (err: any) => {
+          this.errorMessage = err.error.svar;
+        }
+      );
+
+  }
+
+  hamtaManuellaAtgardTyper() {
+
+    const stodArParam = {
+      stodar: this.arende.stodAr
+    };
+
+    this.apiService.getDataMedParametrar(environment.atgardskoderUrl, stodArParam).subscribe(
+      (data: any) => {
+        this.manuellAtgardTypLista = data;
+        this.manuellAtgardTypLista.unshift(this.valdAtgardTyp);
+        this.errorMessage = '';
+        const skapaManuellAtgardBlock = document.querySelector('.skapaManuellAtgard') as HTMLDivElement;
+        skapaManuellAtgardBlock.style.display = 'block';
+        setTimeout(() => {
+          this.windowRef.komponentbibliotek.init();
+        }, 100);
+      },
+      (err: any) => {
+        console.log(err.message);
+        this.errorMessage = err.message;
+      });
+
   }
 
   avbrytLaggTillAtgard() {
@@ -229,7 +271,7 @@ export class ArendesidaComponent implements AfterViewInit {
     this.apiService.getDataMedParametrar(environment.attributUrl, arendeParam).subscribe(
       (data: any) => {
         this.attributLista = data;
-        if(this.attributLista.length === 0) {
+        if (this.attributLista.length === 0) {
           this.attributFinns = false;
         } else {
           this.attributFinns = true;
@@ -275,23 +317,23 @@ export class ArendesidaComponent implements AfterViewInit {
       });
   }
 
-visaTidigareVersion(select: HTMLSelectElement) {
+  visaTidigareVersion(select: HTMLSelectElement) {
 
-  this.valdArendeversion = this.arendeVersionLista.find(entity => entity.arendeversionId === select.value);
+    this.valdArendeversion = this.arendeVersionLista.find(entity => entity.arendeversionId === select.value);
 
-  if (this.valdArendeversion.gallande === 'J') {
-    this.tidigareVersion = false;
-  } else {
-    this.tidigareVersion = true;
+    if (this.valdArendeversion.gallande === 'J') {
+      this.tidigareVersion = false;
+    } else {
+      this.tidigareVersion = true;
+    }
+
+    this.hamtaDataForValdFlik();
+
   }
 
-  this.hamtaDataForValdFlik();
-
-}
-
-sattValdFlik(valdFlik) {
-  this.valdFlik = valdFlik;
-  this.hamtaDataForValdFlik();
-}
+  sattValdFlik(valdFlik) {
+    this.valdFlik = valdFlik;
+    this.hamtaDataForValdFlik();
+  }
 
 }

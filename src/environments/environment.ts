@@ -18,7 +18,7 @@ export const environment = {
   masshanteringUrl: '/farmen/arende/masshantering',
   myndigheterUrl: '/farmen/intr/myndigheter',
   paverkadeArendenUrl: '/farmen/arende/antalpaverkade',
-  skapaManuellAtgardUrl: '/farmen/atg/skapamanuellatgard',
+  skapaManuellAtgardUrl: '/farmen/atg/skapaatgard',
   stodArUrl: '/farmen/intr/stodar',
   statusUrl: '/farmen/grund/arendestatusar'
 };
