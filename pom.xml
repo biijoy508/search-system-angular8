@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>se.sjv.jordbrukarstod</groupId>
     <artifactId>farmen-gui</artifactId>
-    <version>1.0.11-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
     <packaging>war</packaging>
     <build>
         <finalName>farmen-gui</finalName>
