@@ -54,8 +54,6 @@ export class ArendesidaComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-
-    this.windowRef.komponentbibliotek.init();
     this.arendeId = this.route.snapshot.paramMap.get('arendeId');
     this.kundNummer = this.route.snapshot.paramMap.get('kundNummer');
 
@@ -80,6 +78,13 @@ export class ArendesidaComponent implements AfterViewInit {
         }
         this.errorMessage = '';
         this.valdArendeversion = this.arendeVersionLista.find(entity => entity.gallande === 'J');
+      },
+      (err: any) => {
+        console.log(err.message);
+        this.errorMessage = err.message;
+      },
+      () => {
+        this.windowRef.komponentbibliotek.init();
         if (this.arende.ansokansTyp === 'UTBET') {
           this.toggleAktivFlik(this.arende.status);
           this.kontrolleraAnsokanDjurvalfard(this.arende.arendeTyp);
@@ -89,14 +94,8 @@ export class ArendesidaComponent implements AfterViewInit {
             utbetFlikar.style.display = 'none';
           }
         }
-        setTimeout(() => {
-          this.windowRef.komponentbibliotek.init();
-        }, 100);
-      },
-      (err: any) => {
-        console.log(err.message);
-        this.errorMessage = err.message;
-      });
+      }
+     );
 
   }
 
