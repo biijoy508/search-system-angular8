@@ -17,7 +17,7 @@
       </div>
       <div class="btnFieldWrapper">
         <div>
-          <b> Ärende | {{arende.kundNummerAlfaNumerisk}} - {{arende.stodAr}} | {{arende.kundNamn}}</b>
+          <b class="arendeRubrik"> Ärende | {{arende.kundNummerAlfaNumerisk}} - {{arende.stodAr}} | {{arende.kundNamn}}</b>
         </div>
         <div class="tidigareVersion" *ngIf="tidigareVersion"> Du tittar på en tidigare version av ärendet. </div>
         <div class="versionPosition">
@@ -252,7 +252,7 @@
               <div class="c-space--m"></div>
               <button class="c-btn c-btn--tiny">Redigera</button>
             </div>
-            <p *ngIf="!attributFinns">Ärendet har inga attribut i denna version.</p>
+            <p class="defaultfontsize" *ngIf="!attributFinns">Ärendet har inga attribut i denna version.</p>
           </div>
           <div id="panel3" class="c-tabs__panel" role="tabpanel" aria-labelledby="panel3__label">
             <div *ngIf="beslutFinns">

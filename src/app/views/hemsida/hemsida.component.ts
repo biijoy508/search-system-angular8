@@ -96,31 +96,47 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
         const ansokansTypOptions = ansokansTypSelect.getElementsByTagName('option');
 
         setTimeout(() => {
-          if (sessionStorage.getItem('ansokansTyp') !== null) {
-            const sessionAnsokansTypList = JSON.parse(sessionStorage.getItem('ansokansTyp'));
-            for (let index = 0; index < sessionAnsokansTypList.length; index++) {
-              const selectedOption = ansokansTypOptions[index] as HTMLOptionElement;
-              selectedOption.selected = true;
-              selectedOption.setAttribute('selected', 'selected');
-              this.sokFilter.ansokansTypList.push(selectedOption.text);
-            }
-          }
-
-          if (sessionStorage.getItem('arendeTyp') !== null) {
-            const sessionArendeTypList = JSON.parse(sessionStorage.getItem('ansokansTyp'));
-            for (let index = 0; index < sessionArendeTypList.length; index++) {
-              const selectedOption = arendeTypOptions[index] as HTMLOptionElement;
-              selectedOption.selected = true;
-              selectedOption.setAttribute('selected', 'selected');
-              this.sokFilter.arendeTypList.push(selectedOption.text);
-            }
-          }
-
+          this.fyllaAnsokanstypFilterFranSession(ansokansTypOptions);
+          this.fyllaArendetypFilterFranSession(arendeTypOptions);
           this.windowRef.komponentbibliotek.initMultiselect();
-        }, 50);
+        }, 20);
       }
     );
   }
+  private fyllaArendetypFilterFranSession(arendeTypOptions: HTMLCollectionOf<HTMLOptionElement>) {
+    this.sokFilter.arendeTypList = [];
+    if (sessionStorage.getItem('arendeTyp') !== null) {
+      const sessionArendeTypList = JSON.parse(sessionStorage.getItem('arendeTyp'));
+      for (let index = 0; index < sessionArendeTypList.length; index++) {
+        for (let i = 0; i < arendeTypOptions.length; i++) {
+          if (arendeTypOptions[i].value === sessionArendeTypList[index]) {
+            const selectedOption = arendeTypOptions[i] as HTMLOptionElement;
+            selectedOption.selected = true;
+            selectedOption.setAttribute('selected', 'selected');
+            this.sokFilter.arendeTypList.push(selectedOption.text);
+          }
+        }
+      }
+    }
+  }
+
+  private fyllaAnsokanstypFilterFranSession(ansokansTypOptions: HTMLCollectionOf<HTMLOptionElement>) {
+    this.sokFilter.ansokansTypList = [];
+    if (sessionStorage.getItem('ansokansTyp') !== null) {
+      const sessionAnsokansTypList = JSON.parse(sessionStorage.getItem('ansokansTyp'));
+      for (let index = 0; index < sessionAnsokansTypList.length; index++) {
+        for (let i = 0; i < ansokansTypOptions.length; i++) {
+          if (ansokansTypOptions[i].value === sessionAnsokansTypList[index]) {
+            const selectedOption = ansokansTypOptions[i] as HTMLOptionElement;
+            selectedOption.selected = true;
+            selectedOption.setAttribute('selected', 'selected');
+            this.sokFilter.ansokansTypList.push(selectedOption.text);
+          }
+        }
+      }
+    }
+  }
+
   onOptionsSelected(sokFilterparameter: string, value: any[]) {
     if (sokFilterparameter === 'arendeTypList') {
       this.sokFilter.arendeTypList.length = 0;
@@ -184,6 +200,10 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
     this.sokFilter.kundNummerAlfaNumerisk = '';
     this.sokFilter.arendeTypList = [];
     this.sokFilter.ansokansTypList = [];
+    sessionStorage.removeItem('stodAr');
+    sessionStorage.removeItem('kundNummer');
+    sessionStorage.removeItem('arendeTyp');
+    sessionStorage.removeItem('ansokansTyp');
     const arendetypdeselectBtn = document.querySelector('#arendeTyp_deselectAll') as HTMLElement;
     arendetypdeselectBtn.dispatchEvent(new Event('click'));
     const ansokantypdeselectBtn = document.querySelector('#ansokansTyp_deselectAll') as HTMLElement;

@@ -24,7 +24,8 @@
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
               "src/assets",
-              "src/site.webmanifest"
+              "src/site.webmanifest",
+              "src/scripts"
             ],
             "styles": [
               "src/styles.scss"
@@ -88,8 +89,9 @@
             ],
             "scripts": [],
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/site.webmanifest",
+              "src/scripts"
             ]
           }
         },
