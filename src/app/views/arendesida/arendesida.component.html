@@ -294,7 +294,7 @@
                           <div class="beslutContent">
                             <div class="beslutContentText" *ngFor="let berArende_item of beslut.berakningarArende">
                               <span>{{berArende_item.berakningsTyp}}</span>
-                              <span>{{berArende_item.varde | number:'':'sv'}} {{berArende_item.enhet}}</span>
+                              <span class="beslutContentText__varde">{{berArende_item.varde | number:'':'sv'}} {{berArende_item.enhet}}</span>
                             </div>
                           </div>
                         </div>
@@ -315,7 +315,7 @@
                             <div class="beslutContentText"
                               *ngFor="let berDjurvalfard_item of beslut.berakningarDjurvalfard">
                               <span>{{berDjurvalfard_item.berakningsTyp}}</span>
-                              <span>{{berDjurvalfard_item.varde | number:'':'sv'}} {{berDjurvalfard_item.enhet}}</span>
+                              <span class="beslutContentText__varde">{{berDjurvalfard_item.varde | number:'':'sv'}} {{berDjurvalfard_item.enhet}}</span>
                             </div>
                           </div>
                         </div>
