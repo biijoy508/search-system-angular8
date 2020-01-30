@@ -45,18 +45,18 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit() {
-    if (sessionStorage.getItem('arenden') !== null) {
-      this.arendeLista = JSON.parse(sessionStorage.getItem('arenden'));
+    if (localStorage.getItem('arenden') !== null) {
+      this.arendeLista = JSON.parse(localStorage.getItem('arenden'));
       this.antalArenden = this.arendeLista.length.toString();
       this.noResults = false;
     }
 
-    if (sessionStorage.getItem('stodAr') !== null) {
-      this.sokFilter.stodAr = JSON.parse(sessionStorage.getItem('stodAr'));
+    if (localStorage.getItem('stodAr') !== null) {
+      this.sokFilter.stodAr = JSON.parse(localStorage.getItem('stodAr'));
     }
 
-    if (sessionStorage.getItem('kundNummer') !== null) {
-      this.sokFilter.kundNummerAlfaNumerisk = JSON.parse(sessionStorage.getItem('kundNummer'));
+    if (localStorage.getItem('kundNummer') !== null) {
+      this.sokFilter.kundNummerAlfaNumerisk = JSON.parse(localStorage.getItem('kundNummer'));
     }
   }
 
@@ -105,8 +105,8 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
   }
   private fyllaArendetypFilterFranSession(arendeTypOptions: HTMLCollectionOf<HTMLOptionElement>) {
     this.sokFilter.arendeTypList = [];
-    if (sessionStorage.getItem('arendeTyp') !== null) {
-      const sessionArendeTypList = JSON.parse(sessionStorage.getItem('arendeTyp'));
+    if (localStorage.getItem('arendeTyp') !== null) {
+      const sessionArendeTypList = JSON.parse(localStorage.getItem('arendeTyp'));
       for (let index = 0; index < sessionArendeTypList.length; index++) {
         for (let i = 0; i < arendeTypOptions.length; i++) {
           if (arendeTypOptions[i].value === sessionArendeTypList[index]) {
@@ -122,8 +122,8 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
 
   private fyllaAnsokanstypFilterFranSession(ansokansTypOptions: HTMLCollectionOf<HTMLOptionElement>) {
     this.sokFilter.ansokansTypList = [];
-    if (sessionStorage.getItem('ansokansTyp') !== null) {
-      const sessionAnsokansTypList = JSON.parse(sessionStorage.getItem('ansokansTyp'));
+    if (localStorage.getItem('ansokansTyp') !== null) {
+      const sessionAnsokansTypList = JSON.parse(localStorage.getItem('ansokansTyp'));
       for (let index = 0; index < sessionAnsokansTypList.length; index++) {
         for (let i = 0; i < ansokansTypOptions.length; i++) {
           if (ansokansTypOptions[i].value === sessionAnsokansTypList[index]) {
@@ -159,11 +159,11 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
       this.showSpinner = true;
       this.spinnerText = 'Ärenden hämtas';
       this.alive = true;
-      sessionStorage.clear();
-      sessionStorage.setItem('stodAr', JSON.stringify(this.sokFilter.stodAr));
-      sessionStorage.setItem('kundNummer', JSON.stringify(this.sokFilter.kundNummerAlfaNumerisk));
-      sessionStorage.setItem('arendeTyp', JSON.stringify(this.sokFilter.arendeTypList));
-      sessionStorage.setItem('ansokansTyp', JSON.stringify(this.sokFilter.ansokansTypList));
+      localStorage.clear();
+      localStorage.setItem('stodAr', JSON.stringify(this.sokFilter.stodAr));
+      localStorage.setItem('kundNummer', JSON.stringify(this.sokFilter.kundNummerAlfaNumerisk));
+      localStorage.setItem('arendeTyp', JSON.stringify(this.sokFilter.arendeTypList));
+      localStorage.setItem('ansokansTyp', JSON.stringify(this.sokFilter.ansokansTypList));
       this.hamtaSokResultAnrop = this.apiService.postData(environment.arendenUrl, this.sokFilter).pipe(takeWhile(() => this.alive))
         .subscribe(
         res => {
@@ -175,7 +175,7 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
             this.noResults = false;
             this.arendeLista = res;
             this.antalArenden = this.arendeLista.length.toString();
-            sessionStorage.setItem('arenden', JSON.stringify(this.arendeLista));
+            localStorage.setItem('arenden', JSON.stringify(this.arendeLista));
           }
           this.showSpinner = false;
         });
@@ -200,10 +200,10 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
     this.sokFilter.kundNummerAlfaNumerisk = '';
     this.sokFilter.arendeTypList = [];
     this.sokFilter.ansokansTypList = [];
-    sessionStorage.removeItem('stodAr');
-    sessionStorage.removeItem('kundNummer');
-    sessionStorage.removeItem('arendeTyp');
-    sessionStorage.removeItem('ansokansTyp');
+    localStorage.removeItem('stodAr');
+    localStorage.removeItem('kundNummer');
+    localStorage.removeItem('arendeTyp');
+    localStorage.removeItem('ansokansTyp');
     const arendetypdeselectBtn = document.querySelector('#arendeTyp_deselectAll') as HTMLElement;
     arendetypdeselectBtn.dispatchEvent(new Event('click'));
     const ansokantypdeselectBtn = document.querySelector('#ansokansTyp_deselectAll') as HTMLElement;
