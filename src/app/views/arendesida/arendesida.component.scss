@@ -320,10 +320,21 @@ form .c-accordion--tiny .c-accordion-item__title .accordion__title-text {
 
 .beslutContentText {
   display: flex;
+  flex-flow: row wrap;
   justify-content: space-between;
-  margin-right: 0.25rem;
+  align-items: flex-start;
+  align-content: flex-start;
   line-height: 1.5;
   font-size: 0.8125rem;
+}
+
+.beslutContentText:after {
+  content: "";
+  flex: 0 1 12.5rem;
+}
+
+.beslutContentText__varde {
+  flex: 0 1 7.5rem;
 }
 
 .c-btn {
