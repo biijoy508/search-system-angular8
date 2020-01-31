@@ -110,12 +110,13 @@ export class ArendesidaComponent implements AfterViewInit {
           this.showSpinner = false;
         }, 300);
       }
-     );
+    );
   }
 
   ngOnDestroy() {
     this.hideSpinner();
   }
+
   hideSpinner() {
     this.alive = false;
     this.showSpinner = false;
@@ -208,18 +209,15 @@ export class ArendesidaComponent implements AfterViewInit {
     this.toasterMessage = '';
   }
 
-  skapaManuellAtgard(e) {
+  skapaManuellAtgard(event) {
 
-    let laggTillKnapp = e.target;
+    let laggTillKnapp = event.target;
     laggTillKnapp.disabled = true;
 
     this.apiService.postData(environment.skapaManuellAtgardUrl, this.valdAtgardTyp)
       .subscribe(
         (data: Atgard) => {
           this.atgardLista.push(data);
-          setTimeout(() => {
-            this.windowRef.komponentbibliotek.init();
-          }, 100);
           this.errorMessage = '';
           this.showToaster("Åtgärden har lagts till.");
           laggTillKnapp.disabled = false;
@@ -227,6 +225,11 @@ export class ArendesidaComponent implements AfterViewInit {
         (err: any) => {
           this.errorMessage = err.error.svar;
           laggTillKnapp.disabled = false;
+        },
+        () => {
+          setTimeout(() => {
+            this.windowRef.komponentbibliotek.init();
+          }, 100);
         }
       );
 
@@ -259,28 +262,29 @@ export class ArendesidaComponent implements AfterViewInit {
 
   }
 
-  redigeraAtgard(atgard, e) {
+  redigeraAtgard(atgard, event) {
 
-    if(atgard.statusKod === 'ÖPP' || (atgard.kommentar != null && atgard.kommentar !== '')) {
-      
-      let sparaKnapp = e.target;
+    if (atgard.statusKod === 'ÖPP' || (atgard.kommentar != null && atgard.kommentar !== '')) {
+
+      let sparaKnapp = event.target;
       sparaKnapp.disabled = true;
-      
+
       this.apiService.postData(environment.redigeraAtgardUrl, atgard).subscribe(
         (data: Atgard) => {
-          
           let atgardIndex = this.atgardLista.findIndex(item => item.id == data.id);
           this.atgardLista[atgardIndex] = data;
           this.redigeraLageAtgarder = false;
-          setTimeout(() => {
-            this.windowRef.komponentbibliotek.init();
-          }, 5000);
           sparaKnapp.disabled = false;
           this.errorMessage = '';
         },
         (err: any) => {
           this.errorMessage = err.error.svar;
           sparaKnapp.disabled = false;
+        },
+        () => {
+          setTimeout(() => {
+            this.windowRef.komponentbibliotek.init();
+          }, 2000);
         }
       );
     } else {
@@ -289,12 +293,12 @@ export class ArendesidaComponent implements AfterViewInit {
 
   }
 
-  toggleRedigeraLageAtgard(e, index) {
+  toggleRedigeraLageAtgard(event, index) {
 
     this.valdAtgard = this.atgardLista[index];
-    if (e.target.innerText === 'Redigera') {
+    if (event.target.innerText === 'Redigera') {
       this.redigeraLageAtgarder = true;
-    } else if (e.target.innerText === 'Avbryt') {
+    } else if (event.target.innerText === 'Avbryt') {
       this.redigeraLageAtgarder = false;
     }
   }
