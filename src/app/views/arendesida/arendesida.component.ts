@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Berakning } from 'src/app/model/berakning';
 import { Title } from '@angular/platform-browser';
+import { takeWhile } from 'rxjs/operators';
 
 @Component({
   selector: 'app-arendesida',
@@ -43,6 +44,10 @@ export class ArendesidaComponent implements AfterViewInit {
   tidigareVersion = false;
   valdFlik = 'ansokanDjurvalfard';
   errorMessage = '';
+  showSpinner = true;
+  spinnerText = 'Sidan laddas';
+
+  alive = true;
 
 
   constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router, private titleService: Title) {
@@ -64,7 +69,7 @@ export class ArendesidaComponent implements AfterViewInit {
 
     this.titleService.setTitle('Farmen - ' + this.kundNummer);
 
-    this.apiService.getChainedDataArendeInformation(arendeParam).subscribe(
+    this.apiService.getChainedDataArendeInformation(arendeParam).pipe(takeWhile(() => this.alive)).subscribe(
       (data: any) => {
         this.atgardLista = [];
         this.arendeVersionLista = [];
@@ -82,6 +87,7 @@ export class ArendesidaComponent implements AfterViewInit {
       (err: any) => {
         console.log(err.message);
         this.errorMessage = err.message;
+        this.showSpinner = false;
       },
       () => {
         this.windowRef.komponentbibliotek.init();
@@ -94,9 +100,19 @@ export class ArendesidaComponent implements AfterViewInit {
             utbetFlikar.style.display = 'none';
           }
         }
+        setTimeout(() => {
+          this.showSpinner = false;
+        }, 300);
       }
      );
+  }
 
+  ngOnDestroy() {
+    this.hideSpinner();
+  }
+  hideSpinner() {
+    this.alive = false;
+    this.showSpinner = false;
   }
 
   toggleAktivFlik(arendeStatus: string) {
