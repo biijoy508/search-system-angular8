@@ -72,24 +72,31 @@
   <div class="row">
     <div class="col-md-4">
       <h5 class="e-h5">Åtgärder</h5>
-      <button class="c-btn c-btn--compact" (click)="laggTillAtgard()"><span class="sjv-i-plus"></span>Lägg till
+      <button class="c-btn c-btn--compact" (click)="hamtaManuellaAtgardTyper()"><span class="sjv-i-plus"></span>Lägg
+        till
         åtgärd</button>
       <div class="skapaManuellAtgard">
         <div class="c-select c-select--tiny">
           <label>Skapa manuell åtgärd</label>
           <div class="c-select__wrapper">
-            <select id="atgardskod" [(ngModel)]="valdAtgardskod">
-              <option *ngFor="let atgardskod_item of atgardskodLista" [value]="atgardskod_item">
-                {{atgardskod_item.kod}} - {{atgardskod_item.text}}
+            <select id="manuellAtgardTyp" [(ngModel)]="valdAtgardTyp">
+              <option *ngFor="let atgardtyp_item of manuellAtgardTypLista" [ngValue]="atgardtyp_item">
+                <ng-container *ngIf="atgardtyp_item.kod !== ''">
+                  {{atgardtyp_item.kod}} - {{atgardtyp_item.text}}
+                </ng-container>
+                <ng-container *ngIf="atgardtyp_item.kod === ''">
+                </ng-container>
               </option>
             </select>
             <span class="sjv-i-caret-ner ikon">
             </span>
           </div>
         </div>
-        <!--   <button class="c-btn c-btn--tiny ml-1" (click)="skapaManuellAtgard()">Lägg till</button> -->
-        <button class="c-btn--primary c-btn--tiny ml-1" (click)='showToaster("Åtgärden har lagts till.")'>Lägg
-          till</button>
+        <button *ngIf="valdAtgardTyp.id !== '';else disabledButton" class="c-btn c-btn--tiny ml-1"
+          (click)="skapaManuellAtgard($event)">Lägg till</button>
+        <ng-template #disabledButton>
+          <button class="c-btn c-btn--tiny ml-1" disabled>Lägg till</button>
+        </ng-template>
         <button class="c-btn c-btn--tiny ml-1" (click)="avbrytLaggTillAtgard()">Avbryt</button>
       </div>
       <div *ngIf="!ingaAtgarder" class="c-filterbar" rel="c-filterbar-js">
@@ -105,7 +112,8 @@
               <li aria-controls="content-1" aria-expanded="true" class="c-accordion--tiny" rel="c-accordion-js">
                 <button tabindex="0" name="item-one" [id]="'atgard'+i" class="c-accordion-item__title">
                   <span class="accordion__icon toggle-down"></span>
-                  <span class="accordion__title-text no-space-break">{{atgard.kod}} - {{atgard.beskrivning}}</span>
+                  <span class="accordion__title-text no-space-break">{{atgard.atgardTypModel.kod}} -
+                    {{atgard.atgardTypModel.text}}</span>
                   <div class="ikon-float-right">
                     <span *ngIf="atgard.kommentar" class="sjv-i-kommentar"></span>
                     <span *ngIf="atgard.statusKod !== 'ÖPP'" class="sjv-i-framgang"></span>
@@ -113,31 +121,64 @@
                 </button>
                 <div role="region" [aria-labelledby]="'atgard'+i" aria-hidden="false" id="content-1"
                   class="c-accordion-item__content">
-                  <fieldset class="c-radio-btn-group c-radio-btn-group--tiny" role="radiogroup"
-                    aria-labelledby="legend_4">
-                    <p class="atgardBeskrivning">{{atgard.beskrivning}}</p>
-                    <div class="text">
-                      <span><b>Status : </b></span>
-                      <span>{{atgard.statusKod}}</span>
-                    </div>
-                    <!--
-                        <div *ngFor="let mojligStatus_item of atgard.mojligaStatusar" class="c-radio-btn c-radio-btn--tiny">
-                           <input [id]="mojligStatus_item + i" name="radiogroup_tiny" type="radio" [value]="mojligStatus_item"
-                            [(ngModel)]="atgard.statusKod">
+                  <ng-container *ngIf="atgard.id===valdAtgard.id">
+                    <fieldset class="c-radio-btn-group c-radio-btn-group--tiny" role="radiogroup"
+                      aria-labelledby="legend_4">
+                      <p class="atgardBeskrivning">{{atgard.atgardTypModel.text}}</p>
+
+                      <div *ngIf="!redigeraLageAtgarder" class="text">
+                        <span><b>Status: </b></span>
+                        <span>{{atgard.statusKod}}</span>
+                      </div>
+
+                      <ng-container *ngIf="redigeraLageAtgarder">
+                        <div *ngFor="let mojligStatus_item of atgard.atgardTypModel.mojligaStatusar"
+                          class="c-radio-btn c-radio-btn--tiny">
+                          <input [id]="mojligStatus_item + i" name="radiogroup_tiny" type="radio"
+                            [value]="mojligStatus_item" [(ngModel)]="atgard.statusKod">
                           <label [for]="mojligStatus_item + i">{{mojligStatus_item}}</label>
                         </div>
-                        -->
-                  </fieldset>
-                  <div class="c-textarea c-textarea--readonly c-textarea--tiny">
-                    <label [for]="'textarea'+i">Kommentar</label>
-                    <textarea readonly="readonly" aria-describedby="textarea-description-4" class="textarea_exempel"
-                      [id]="'textarea'+i" rows="4" wrap="soft" [(ngModel)]="atgard.kommentar"
-                      name="kommentar"></textarea>
-                    <div class="c-textarea__wrapper">
-                      <p id="textarea-description-4" class="c-textarea__description"></p>
-                      <p class="c-text-counter__count_characters"></p>
+                      </ng-container>
+
+                    </fieldset>
+                    <div *ngIf="!redigeraLageAtgarder" class="c-textarea c-textarea--readonly c-textarea--tiny">
+                      <label [for]="'textarea'+i">Kommentar</label>
+                      <textarea aria-describedby="textarea-description-4" class="textarea_exempel" [id]="'textarea'+i"
+                        rows="4" wrap="soft" [(ngModel)]="atgard.kommentar" name="kommentar"></textarea>
+                      <div class="c-textarea__wrapper">
+                        <p id="textarea-description-4" class="c-textarea__description"></p>
+                        <p class="c-text-counter__count_characters"></p>
+                      </div>
                     </div>
-                  </div>
+                    <div *ngIf="redigeraLageAtgarder" class="c-textarea c-textarea--tiny">
+                      <label [for]="'textarea'+i">Kommentar<i class="label--valfritt">(Valfritt)</i></label>
+                      <textarea aria-describedby="textarea-description-4" class="textarea_exempel" [id]="'textarea'+i"
+                        rows="4" wrap="soft" [(ngModel)]="atgard.kommentar" name="kommentar"></textarea>
+                      <div class="c-textarea__wrapper">
+                        <p id="textarea-description-4" class="c-textarea__description"></p>
+                        <p class="c-text-counter__count_characters"></p>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="atgard.id!==valdAtgard.id">
+                    <fieldset class="c-radio-btn-group c-radio-btn-group--tiny" role="radiogroup"
+                      aria-labelledby="legend_4">
+                      <p class="atgardBeskrivning">{{atgard.atgardTypModel.text}}</p>
+                      <div class="text">
+                        <span><b>Status: </b></span>
+                        <span>{{atgard.statusKod}}</span>
+                      </div>
+                    </fieldset>
+                    <div class="c-textarea c-textarea--readonly c-textarea--tiny">
+                      <label [for]="'textarea'+i">Kommentar</label>
+                      <textarea aria-describedby="textarea-description-4" class="textarea_exempel" [id]="'textarea'+i"
+                        rows="4" wrap="soft" [(ngModel)]="atgard.kommentar" name="kommentar"></textarea>
+                      <div class="c-textarea__wrapper">
+                        <p id="textarea-description-4" class="c-textarea__description"></p>
+                        <p class="c-text-counter__count_characters"></p>
+                      </div>
+                    </div>
+                  </ng-container>
                   <div class="inlineWrapper2 inlineWrapper2__compact">
                     <span>
                       <p class="header"> Skapad </p>
@@ -156,7 +197,18 @@
                       <p class="content"> {{atgard.uppdateradAv? atgard.uppdateradAv : '&ndash;'}}</p>
                     </span>
                   </div>
-                  <button class="c-btn c-btn--tiny ml-1">Spara</button>
+                  <button *ngIf="redigeraLageAtgarder && atgard.id===valdAtgard.id"
+                    (click)="redigeraAtgard(atgard, $event)" class="c-btn c-btn--tiny ml-1">Spara</button>
+                  <ng-container *ngIf="atgard.id===valdAtgard.id">
+                    <button *ngIf="!redigeraLageAtgarder" (click)="toggleRedigeraLageAtgard($event, i)"
+                      class="c-btn c-btn--tiny ml-1">Redigera</button>
+                    <button *ngIf="redigeraLageAtgarder" (click)="toggleRedigeraLageAtgard($event, i)"
+                      class="c-btn c-btn--tiny ml-1">Avbryt</button>
+                  </ng-container>
+                  <ng-container *ngIf="atgard.id!==valdAtgard.id">
+                    <button (click)="toggleRedigeraLageAtgard($event, i)"
+                      class="c-btn c-btn--tiny ml-1">Redigera</button>
+                  </ng-container>
                 </div>
               </li>
             </ul>
@@ -164,7 +216,6 @@
         </div>
       </div>
       <div *ngIf="ingaAtgarder">
-
         <p> <span class="sjv-i-info inline" tabindex="-1"></span>Ärendet har inga åtgärder.</p>
       </div>
     </div>
@@ -326,6 +377,22 @@
               </form>
             </div>
             <p *ngIf="!beslutFinns">Ärendet har inget beslut i denna version.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="showWarning" class="c-spinner">
+    <div class="c-spinner__container">
+      <div class="c-banner" role="banner">
+        <div class="c-banner__content">
+          <span class="c-banner-icon sjv-i-varning" tabindex="-1"></span>
+          <div class="c-banner__text">
+            <p>Kommentar måste anges.</p>
+            <div class="c-banner__actionlink-container">
+              <button class="c-btn--compact float-right mt-5" (click)="togglewarning()">Stäng</button>
+            </div>
           </div>
         </div>
       </div>

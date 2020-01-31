@@ -2,7 +2,7 @@ import { Component, AfterViewInit } from '@angular/core';
 import { Arende } from 'src/app/model/arende';
 import { ArendeVersion } from 'src/app/model/arendeVersion';
 import { Atgard } from 'src/app/model/atgard';
-import { ManuellAtgard } from 'src/app/model/manuellAtgard';
+import { AtgardTypModel } from 'src/app/model/atgardTypModel';
 import { AnsokanDjurvalfard } from 'src/app/model/ansokanDjurvalfard';
 import { Attribut } from 'src/app/model/attribut';
 import { Beslut } from 'src/app/model/beslut';
@@ -12,6 +12,7 @@ import { environment } from 'src/environments/environment';
 import { Berakning } from 'src/app/model/berakning';
 import { Title } from '@angular/platform-browser';
 import { takeWhile } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-arendesida',
@@ -24,8 +25,8 @@ export class ArendesidaComponent implements AfterViewInit {
   arendeId: any;
   kundNummer: any;
   atgardLista: Atgard[] = [];
-  atgardskodLista: ManuellAtgard[] = [];
-  valdAtgardskod: string;
+  manuellAtgardTypLista: AtgardTypModel[] = [];
+  valdAtgardTyp: AtgardTypModel;
   arendeVersionLista: ArendeVersion[] = [];
   ansokanDjurvalfard: AnsokanDjurvalfard;
   attributLista: Attribut[] = [];
@@ -35,6 +36,7 @@ export class ArendesidaComponent implements AfterViewInit {
   beslutFinns: boolean;
   attributFinns: boolean;
   ingaAtgarder: boolean;
+  redigeraLageAtgarder: boolean;
 
   PPNnummer = '43,42';
 
@@ -47,6 +49,8 @@ export class ArendesidaComponent implements AfterViewInit {
   showSpinner = true;
   spinnerText = 'Sidan laddas';
 
+  valdAtgard: Atgard;
+  showWarning = false;
   alive = true;
 
 
@@ -56,6 +60,8 @@ export class ArendesidaComponent implements AfterViewInit {
     this.ansokanDjurvalfard = new AnsokanDjurvalfard([], '', '');
     let berakning = new Berakning('', '', '');
     this.beslut = new Beslut('', '', '', '', '', '', berakning, [], []);
+    this.valdAtgardTyp = new AtgardTypModel('', '', '', [], '', '');
+    this.valdAtgard = new Atgard(this.valdAtgardTyp, '', '', '', '', '', '', '', '', '', '', '');
   }
 
   ngAfterViewInit() {
@@ -76,7 +82,7 @@ export class ArendesidaComponent implements AfterViewInit {
         this.arende = data[0];
         this.arendeVersionLista = data[1];
         this.atgardLista = data[2];
-        if(this.atgardLista.length === 0) {
+        if (this.atgardLista.length === 0) {
           this.ingaAtgarder = true;
         } else {
           this.ingaAtgarder = false;
@@ -104,12 +110,13 @@ export class ArendesidaComponent implements AfterViewInit {
           this.showSpinner = false;
         }, 300);
       }
-     );
+    );
   }
 
   ngOnDestroy() {
     this.hideSpinner();
   }
+
   hideSpinner() {
     this.alive = false;
     this.showSpinner = false;
@@ -202,9 +209,98 @@ export class ArendesidaComponent implements AfterViewInit {
     this.toasterMessage = '';
   }
 
-  laggTillAtgard() {
-    const skapaManuellAtgardBlock = document.querySelector('.skapaManuellAtgard') as HTMLDivElement;
-    skapaManuellAtgardBlock.style.display = 'block';
+  skapaManuellAtgard(event) {
+
+    let laggTillKnapp = event.target;
+    laggTillKnapp.disabled = true;
+
+    this.apiService.postData(environment.skapaManuellAtgardUrl, this.valdAtgardTyp)
+      .subscribe(
+        (data: Atgard) => {
+          this.atgardLista.push(data);
+          this.errorMessage = '';
+          this.showToaster("Åtgärden har lagts till.");
+          laggTillKnapp.disabled = false;
+        },
+        (err: any) => {
+          this.errorMessage = err.error.svar;
+          laggTillKnapp.disabled = false;
+        },
+        () => {
+          setTimeout(() => {
+            this.windowRef.komponentbibliotek.init();
+          }, 100);
+        }
+      );
+
+  }
+
+  hamtaManuellaAtgardTyper() {
+
+    this.valdAtgardTyp = new AtgardTypModel('', '', '', [], '', '');
+
+    const arendeParam = {
+      stodar: this.arende.stodAr,
+      arendeid: this.arende.arendeId
+    };
+
+    this.apiService.getDataMedParametrar(environment.atgardTyperUrl, arendeParam).subscribe(
+      (data: any) => {
+        this.errorMessage = '';
+        this.manuellAtgardTypLista = data;
+        this.manuellAtgardTypLista.unshift(this.valdAtgardTyp);
+        const skapaManuellAtgardBlock = document.querySelector('.skapaManuellAtgard') as HTMLDivElement;
+        skapaManuellAtgardBlock.style.display = 'block';
+        setTimeout(() => {
+          this.windowRef.komponentbibliotek.init();
+        }, 100);
+      },
+      (err: any) => {
+        console.log(err.message);
+        this.errorMessage = err.message;
+      });
+
+  }
+
+  redigeraAtgard(atgard, event) {
+
+    if (atgard.statusKod === 'ÖPP' || (atgard.kommentar != null && atgard.kommentar !== '')) {
+
+      let sparaKnapp = event.target;
+      sparaKnapp.disabled = true;
+
+      this.apiService.postData(environment.redigeraAtgardUrl, atgard).subscribe(
+        (data: Atgard) => {
+          let atgardIndex = this.atgardLista.findIndex(item => item.id == data.id);
+          this.atgardLista[atgardIndex] = data;
+          this.redigeraLageAtgarder = false;
+          sparaKnapp.disabled = false;
+          this.errorMessage = '';
+        },
+        (err: any) => {
+          this.errorMessage = err.error.svar;
+          sparaKnapp.disabled = false;
+        },
+        () => {
+          setTimeout(() => {
+            this.windowRef.komponentbibliotek.init();
+          }, 2000);
+        }
+      );
+    } else {
+      this.showWarning = true;
+    }
+
+  }
+
+  toggleRedigeraLageAtgard(event, index) {
+
+    this.valdAtgard = this.atgardLista[index];
+    if (event.target.innerText === 'Redigera') {
+      this.redigeraLageAtgarder = true;
+    } else if (event.target.innerText === 'Avbryt') {
+      this.redigeraLageAtgarder = false;
+    }
   }
 
   avbrytLaggTillAtgard() {
@@ -247,7 +343,7 @@ export class ArendesidaComponent implements AfterViewInit {
     this.apiService.getDataMedParametrar(environment.attributUrl, arendeParam).subscribe(
       (data: any) => {
         this.attributLista = data;
-        if(this.attributLista.length === 0) {
+        if (this.attributLista.length === 0) {
           this.attributFinns = false;
         } else {
           this.attributFinns = true;
@@ -296,23 +392,27 @@ export class ArendesidaComponent implements AfterViewInit {
       });
   }
 
-visaTidigareVersion(select: HTMLSelectElement) {
+  visaTidigareVersion(select: HTMLSelectElement) {
 
-  this.valdArendeversion = this.arendeVersionLista.find(entity => entity.arendeversionId === select.value);
+    this.valdArendeversion = this.arendeVersionLista.find(entity => entity.arendeversionId === select.value);
 
-  if (this.valdArendeversion.gallande === 'J') {
-    this.tidigareVersion = false;
-  } else {
-    this.tidigareVersion = true;
+    if (this.valdArendeversion.gallande === 'J') {
+      this.tidigareVersion = false;
+    } else {
+      this.tidigareVersion = true;
+    }
+
+    this.hamtaDataForValdFlik();
+
   }
 
-  this.hamtaDataForValdFlik();
+  sattValdFlik(valdFlik) {
+    this.valdFlik = valdFlik;
+    this.hamtaDataForValdFlik();
+  }
 
-}
-
-sattValdFlik(valdFlik) {
-  this.valdFlik = valdFlik;
-  this.hamtaDataForValdFlik();
-}
+  togglewarning() {
+    this.showWarning = false;
+  }
 
 }

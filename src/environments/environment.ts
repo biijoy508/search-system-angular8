@@ -12,13 +12,14 @@ export const environment = {
   arendeVersionerUrl: '/farmen/arende/arendeversioner',
   arendeVersionIdUrl: '/farmen/arende/aktuellarendeversion',
   atgarderUrl: '/farmen/atg/atgarder',
-  atgardskoderUrl: '/farmen/atg/manuellaatgarder',
+  atgardTyperUrl: '/farmen/atg/manuellaatgardtyper',
   attributUrl: '/farmen/arende/attribut',
   beslutInfoUrl: '/farmen/arende/beslutsinformation',
   masshanteringUrl: '/farmen/arende/masshantering',
   myndigheterUrl: '/farmen/intr/myndigheter',
   paverkadeArendenUrl: '/farmen/arende/antalpaverkade',
-  skapaManuellAtgardUrl: '/farmen/atg/skapamanuellatgard',
+  skapaManuellAtgardUrl: '/farmen/atg/skapaatgard',
+  redigeraAtgardUrl: '/farmen/atg/redigeraatgard',
   stodArUrl: '/farmen/intr/stodar',
   statusUrl: '/farmen/grund/arendestatusar'
 };
