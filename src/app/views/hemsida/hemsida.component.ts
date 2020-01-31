@@ -5,6 +5,7 @@ import { Arende } from 'src/app/model/arende';
 import { environment } from 'src/environments/environment';
 import { Subscription } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
+import { Title } from '@angular/platform-browser';
 
 interface SokFaltValues {
   stodAr: string[];
@@ -38,21 +39,29 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
     ansokansTypList: []
   };
 
-  constructor(private apiService: ApiService, private element: ElementRef) {
+  constructor(private apiService: ApiService, private element: ElementRef, private titleService: Title) {
     this.windowRef = window;
     this.sokFilter = new SokFilter('', '', [], [], '', '', '');
   }
 
   ngOnInit() {
-    this.windowRef.komponentbibliotek.initMultiselect();
-    if (sessionStorage.getItem('arenden') !== null) {
-      this.arendeLista = JSON.parse(sessionStorage.getItem('arenden'));
+    if (localStorage.getItem('arenden') !== null) {
+      this.arendeLista = JSON.parse(localStorage.getItem('arenden'));
       this.antalArenden = this.arendeLista.length.toString();
       this.noResults = false;
+    }
+
+    if (localStorage.getItem('stodAr') !== null) {
+      this.sokFilter.stodAr = JSON.parse(localStorage.getItem('stodAr'));
+    }
+
+    if (localStorage.getItem('kundNummer') !== null) {
+      this.sokFilter.kundNummerAlfaNumerisk = JSON.parse(localStorage.getItem('kundNummer'));
     }
   }
 
   ngAfterViewInit() {
+    this.titleService.setTitle('Farmen - Sök ärende');
     this.hamtaSokFaltValues();
   }
 
@@ -63,30 +72,78 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
   hamtaSokFaltValues() {
     this.apiService.getChainedData()
       .subscribe(res => {
-        this.sokFaltValuesHolder.stodAr = [''];
-        for (let i = 0; i < res[0].length; i++) {
-          this.sokFaltValuesHolder.stodAr.push(res[0][i]);
+      this.sokFaltValuesHolder.stodAr = [''];
+      for (let i = 0; i < res[0].length; i++) {
+        this.sokFaltValuesHolder.stodAr.push(res[0][i]);
+      }
+      this.sokFaltValuesHolder.arendeTypList = [];
+      for (let i = 0; i < res[1].length; i++) {
+        this.sokFaltValuesHolder.arendeTypList.push(res[1][i].kod);
+      }
+
+      this.sokFaltValuesHolder.ansokansTypList = [];
+      for (let i = 0; i < res[2].length; i++) {
+        this.sokFaltValuesHolder.ansokansTypList.push(res[2][i]);
+      }
+      console.log('Sök fält initierat');
+      this.showSpinner = false;
+    },
+      error => console.log('error' + error),
+      () => {
+        const arendeTypSelect = document.querySelector('#arendeTyp') as HTMLElement;
+        const arendeTypOptions = arendeTypSelect.getElementsByTagName('option');
+        const ansokansTypSelect = document.querySelector('#ansokansTyp') as HTMLElement;
+        const ansokansTypOptions = ansokansTypSelect.getElementsByTagName('option');
+
+        setTimeout(() => {
+          this.fyllaAnsokanstypFilterFranSession(ansokansTypOptions);
+          this.fyllaArendetypFilterFranSession(arendeTypOptions);
+          this.windowRef.komponentbibliotek.initMultiselect();
+        }, 20);
+      }
+    );
+  }
+  private fyllaArendetypFilterFranSession(arendeTypOptions: HTMLCollectionOf<HTMLOptionElement>) {
+    this.sokFilter.arendeTypList = [];
+    if (localStorage.getItem('arendeTyp') !== null) {
+      const sessionArendeTypList = JSON.parse(localStorage.getItem('arendeTyp'));
+      for (let index = 0; index < sessionArendeTypList.length; index++) {
+        for (let i = 0; i < arendeTypOptions.length; i++) {
+          if (arendeTypOptions[i].value === sessionArendeTypList[index]) {
+            const selectedOption = arendeTypOptions[i] as HTMLOptionElement;
+            selectedOption.selected = true;
+            selectedOption.setAttribute('selected', 'selected');
+            this.sokFilter.arendeTypList.push(selectedOption.text);
+          }
         }
-        this.sokFaltValuesHolder.arendeTypList = [];
-        for (let i = 0; i < res[1].length; i++) {
-          this.sokFaltValuesHolder.arendeTypList.push(res[1][i].kod);
+      }
+    }
+  }
+
+  private fyllaAnsokanstypFilterFranSession(ansokansTypOptions: HTMLCollectionOf<HTMLOptionElement>) {
+    this.sokFilter.ansokansTypList = [];
+    if (localStorage.getItem('ansokansTyp') !== null) {
+      const sessionAnsokansTypList = JSON.parse(localStorage.getItem('ansokansTyp'));
+      for (let index = 0; index < sessionAnsokansTypList.length; index++) {
+        for (let i = 0; i < ansokansTypOptions.length; i++) {
+          if (ansokansTypOptions[i].value === sessionAnsokansTypList[index]) {
+            const selectedOption = ansokansTypOptions[i] as HTMLOptionElement;
+            selectedOption.selected = true;
+            selectedOption.setAttribute('selected', 'selected');
+            this.sokFilter.ansokansTypList.push(selectedOption.text);
+          }
         }
-        this.sokFaltValuesHolder.ansokansTypList = [];
-        for (let i = 0; i < res[2].length; i++) {
-          this.sokFaltValuesHolder.ansokansTypList.push(res[2][i]);
-        }
-        console.log('Sök fält initierat');
-        this.showSpinner = false;
-      });
+      }
+    }
   }
 
   onOptionsSelected(sokFilterparameter: string, value: any[]) {
-    if (sokFilterparameter === "arendeTypList") {
+    if (sokFilterparameter === 'arendeTypList') {
       this.sokFilter.arendeTypList.length = 0;
       for (let i = 0; i < value.length; i++) {
         this.sokFilter.arendeTypList.push((value[i] as HTMLOptionElement).text);
       }
-    } else if (sokFilterparameter === "ansokansTypList") {
+    } else if (sokFilterparameter === 'ansokansTypList') {
       this.sokFilter.ansokansTypList.length = 0;
       for (let i = 0; i < value.length; i++) {
         this.sokFilter.ansokansTypList.push((value[i] as HTMLOptionElement).text);
@@ -95,14 +152,20 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
   }
 
   hamtaSokResultat() {
-    if (this.sokFilter.kundNummerAlfaNumerisk === '' && this.sokFilter.arendeTypList.length === 0 && this.sokFilter.ansokansTypList.length === 0) {
+    if (this.sokFilter.kundNummerAlfaNumerisk === '' && this.sokFilter.arendeTypList.length === 0
+      && this.sokFilter.ansokansTypList.length === 0) {
       this.showWarning = true;
     } else {
       this.showSpinner = true;
       this.spinnerText = 'Ärenden hämtas';
       this.alive = true;
-      sessionStorage.clear();
-      this.hamtaSokResultAnrop = this.apiService.postData(environment.arendenUrl, this.sokFilter).pipe(takeWhile(() => this.alive)).subscribe(
+      localStorage.clear();
+      localStorage.setItem('stodAr', JSON.stringify(this.sokFilter.stodAr));
+      localStorage.setItem('kundNummer', JSON.stringify(this.sokFilter.kundNummerAlfaNumerisk));
+      localStorage.setItem('arendeTyp', JSON.stringify(this.sokFilter.arendeTypList));
+      localStorage.setItem('ansokansTyp', JSON.stringify(this.sokFilter.ansokansTypList));
+      this.hamtaSokResultAnrop = this.apiService.postData(environment.arendenUrl, this.sokFilter).pipe(takeWhile(() => this.alive))
+        .subscribe(
         res => {
           this.arendeLista = [];
           if (res.length === 0) {
@@ -112,7 +175,7 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
             this.noResults = false;
             this.arendeLista = res;
             this.antalArenden = this.arendeLista.length.toString();
-            sessionStorage.setItem('arenden', JSON.stringify(this.arendeLista));
+            localStorage.setItem('arenden', JSON.stringify(this.arendeLista));
           }
           this.showSpinner = false;
         });
@@ -133,24 +196,18 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
   }
 
   rensaSokFilter() {
-
     this.sokFilter.stodAr = '';
     this.sokFilter.kundNummerAlfaNumerisk = '';
     this.sokFilter.arendeTypList = [];
     this.sokFilter.ansokansTypList = [];
-
-    let multiSelects = this.element.nativeElement.querySelectorAll('.tagsContainer');
-    for (let i = 0; i < multiSelects.length; i++) {
-      while (multiSelects[i].firstChild) {
-        multiSelects[i].removeChild(multiSelects[i].firstChild);
-      }
-    }
-
-    let checkBoxes = this.element.nativeElement.querySelectorAll('.c-checkbox__input');
-    for (let i = 0; i < checkBoxes.length; i++) {
-      checkBoxes[i].checked = false;
-    }
-
+    localStorage.removeItem('stodAr');
+    localStorage.removeItem('kundNummer');
+    localStorage.removeItem('arendeTyp');
+    localStorage.removeItem('ansokansTyp');
+    const arendetypdeselectBtn = document.querySelector('#arendeTyp_deselectAll') as HTMLElement;
+    arendetypdeselectBtn.dispatchEvent(new Event('click'));
+    const ansokantypdeselectBtn = document.querySelector('#ansokansTyp_deselectAll') as HTMLElement;
+    ansokantypdeselectBtn.dispatchEvent(new Event('click'));
   }
 
 }

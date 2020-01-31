@@ -10,6 +10,8 @@ import { ApiService } from 'src/app/services/api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Berakning } from 'src/app/model/berakning';
+import { Title } from '@angular/platform-browser';
+import { takeWhile } from 'rxjs/operators';
 
 
 @Component({
@@ -44,11 +46,15 @@ export class ArendesidaComponent implements AfterViewInit {
   tidigareVersion = false;
   valdFlik = 'ansokanDjurvalfard';
   errorMessage = '';
+  showSpinner = true;
+  spinnerText = 'Sidan laddas';
 
   valdAtgard: Atgard;
   showWarning = false;
+  alive = true;
 
-  constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) {
+
+  constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router, private titleService: Title) {
     this.windowRef = window;
     this.arende = new Arende('', '', '', '', '', '', '', '', '', '');
     this.ansokanDjurvalfard = new AnsokanDjurvalfard([], '', '');
@@ -59,8 +65,6 @@ export class ArendesidaComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-
-    this.windowRef.komponentbibliotek.init();
     this.arendeId = this.route.snapshot.paramMap.get('arendeId');
     this.kundNummer = this.route.snapshot.paramMap.get('kundNummer');
 
@@ -69,7 +73,9 @@ export class ArendesidaComponent implements AfterViewInit {
       kundnummer: this.kundNummer
     };
 
-    this.apiService.getChainedDataArendeInformation(arendeParam).subscribe(
+    this.titleService.setTitle('Farmen - ' + this.kundNummer);
+
+    this.apiService.getChainedDataArendeInformation(arendeParam).pipe(takeWhile(() => this.alive)).subscribe(
       (data: any) => {
         this.atgardLista = [];
         this.arendeVersionLista = [];
@@ -83,6 +89,14 @@ export class ArendesidaComponent implements AfterViewInit {
         }
         this.errorMessage = '';
         this.valdArendeversion = this.arendeVersionLista.find(entity => entity.gallande === 'J');
+      },
+      (err: any) => {
+        console.log(err.message);
+        this.errorMessage = err.message;
+        this.showSpinner = false;
+      },
+      () => {
+        this.windowRef.komponentbibliotek.init();
         if (this.arende.ansokansTyp === 'UTBET') {
           this.toggleAktivFlik(this.arende.status);
           this.kontrolleraAnsokanDjurvalfard(this.arende.arendeTyp);
@@ -93,14 +107,18 @@ export class ArendesidaComponent implements AfterViewInit {
           }
         }
         setTimeout(() => {
-          this.windowRef.komponentbibliotek.init();
-        }, 100);
-      },
-      (err: any) => {
-        console.log(err.message);
-        this.errorMessage = err.message;
-      });
+          this.showSpinner = false;
+        }, 300);
+      }
+     );
+  }
 
+  ngOnDestroy() {
+    this.hideSpinner();
+  }
+  hideSpinner() {
+    this.alive = false;
+    this.showSpinner = false;
   }
 
   toggleAktivFlik(arendeStatus: string) {
@@ -358,8 +376,11 @@ export class ArendesidaComponent implements AfterViewInit {
           } else {
             this.beslutFinns = false;
           }
-          this.windowRef.komponentbibliotek.init();
         }, 100);
+
+        setTimeout(() => {
+          this.windowRef.komponentbibliotek.init();
+        }, 150);
       },
       (err: any) => {
         console.log(err.message);

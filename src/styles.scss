@@ -1,16 +1,14 @@
-/* You can add global styles to this file, and also import other style files */
-@import url('https://cdnutv.jordbruksverket.se/designsystem/9.0.6-SNAPSHOT/package/dist/release/sjv-komponentbibliotek.css');
 @import "_settings.colors.scss";
 
 @media (min-width: 1200px) {
   .container {
-    max-width: 1400px;
+    max-width: 1400px !important;
   }
 }
 
 @media (min-width: 1200px) {
   .c-header .container {
-    max-width: 1400px;
+    max-width: 1400px !important;
   }
 }
 
@@ -18,24 +16,17 @@
   background-color: #f2f2f2;
 }
 
-
-.c-select .c-select__wrapper .select__arrow {
-  bottom: 8px;
-  right: 8px;
-  border-width: 6px 4px 0;
-}
-
 .c-select {
-  margin-bottom: 1rem;
+  margin-bottom: 1rem !important;
 }
 
 
 .c-accordion-wrapper {
   max-width: 50rem;
-  margin-bottom: 3px;
+  margin-bottom: 0.1875rem;
 
   * {
-    margin-bottom: 3px;
+    margin-bottom: 0.1875rem;
   }
 }
 
@@ -47,10 +38,6 @@
   display: none;
 }
 
-.c-btn .c-btn--tiny {
-  font-size: 0.8125rem;
-}
-
 .c-filterbar .c-filterbar__labels {
-  border-bottom: 1px solid #4d4d4d;
+  border-bottom: 1px solid #4d4d4d !important;
 }

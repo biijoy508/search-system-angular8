@@ -17,7 +17,7 @@
       </div>
       <div class="btnFieldWrapper">
         <div>
-          <b> Ärende | {{arende.kundNummerAlfaNumerisk}} - {{arende.stodAr}} | {{arende.kundNamn}}</b>
+          <b class="arendeRubrik"> Ärende | {{arende.kundNummerAlfaNumerisk}} - {{arende.stodAr}} | {{arende.kundNamn}}</b>
         </div>
         <div class="tidigareVersion" *ngIf="tidigareVersion"> Du tittar på en tidigare version av ärendet. </div>
         <div class="versionPosition">
@@ -303,7 +303,7 @@
               <div class="c-space--m"></div>
               <button class="c-btn c-btn--tiny">Redigera</button>
             </div>
-            <p *ngIf="!attributFinns">Ärendet har inga attribut i denna version.</p>
+            <p class="defaultfontsize" *ngIf="!attributFinns">Ärendet har inga attribut i denna version.</p>
           </div>
           <div id="panel3" class="c-tabs__panel" role="tabpanel" aria-labelledby="panel3__label">
             <div *ngIf="beslutFinns">
@@ -326,7 +326,7 @@
                 </span>
               </span>
               <span class="beslutsumma" *ngIf="beslutSummaFinns">
-                <span class="beslutsumma__label">{{beslut.berakningUtbAterkrav.berakningsTyp}}</span>
+                <span class="beslutsumma__label">Utbetalning/Återkrav: </span>
                 <span class="beslutsumma__nummer">{{beslut.berakningUtbAterkrav.varde | number:'':'sv'}}
                   {{beslut.berakningUtbAterkrav.enhet}}</span>
               </span>
@@ -345,7 +345,7 @@
                           <div class="beslutContent">
                             <div class="beslutContentText" *ngFor="let berArende_item of beslut.berakningarArende">
                               <span>{{berArende_item.berakningsTyp}}</span>
-                              <span>{{berArende_item.varde | number:'':'sv'}} {{berArende_item.enhet}}</span>
+                              <span class="beslutContentText__varde">{{berArende_item.varde | number:'':'sv'}} {{berArende_item.enhet}}</span>
                             </div>
                           </div>
                         </div>
@@ -358,7 +358,7 @@
                         rel="c-accordion-js">
                         <button href="#item-three" name="item-three" id="djurvälfärd" class="c-accordion-item__title">
                           <span class="accordion__icon toggle-down"></span>
-                          <span class="accordion__title-text"> Djurvälfärd FARERS</span>
+                          <span class="accordion__title-text"> Djurvälfärd {{arende.arendeTyp}} </span>
                         </button>
                         <div role="region" aria-labelledby="djurvälfärd" aria-hidden="true" id="content-3"
                           class="c-accordion-item__content">
@@ -366,7 +366,7 @@
                             <div class="beslutContentText"
                               *ngFor="let berDjurvalfard_item of beslut.berakningarDjurvalfard">
                               <span>{{berDjurvalfard_item.berakningsTyp}}</span>
-                              <span>{{berDjurvalfard_item.varde | number:'':'sv'}} {{berDjurvalfard_item.enhet}}</span>
+                              <span class="beslutContentText__varde">{{berDjurvalfard_item.varde | number:'':'sv'}} {{berDjurvalfard_item.enhet}}</span>
                             </div>
                           </div>
                         </div>
@@ -405,6 +405,29 @@
         <!-- <div class="c-toaster__actionlink-container">
         <button class="c-toaster__actionlink" (click)="closeToaster($event.target)" tabindex="0">Stäng</button>
       </div> -->
+    </div>
+  </div>
+  <div *ngIf="showSpinner" class="c-spinner">
+    <div class="c-spinner__container">
+      <div class="c-spinner__animation">
+        <div class="c-spinner__animation__item">
+          <div class="c-spinner__circle circle--3"></div>
+        </div>
+        <div class="c-spinner__animation__item">
+          <div class="c-spinner__circle circle--2"></div>
+        </div>
+        <div class="c-spinner__animation__item">
+          <div class="c-spinner__circle circle--1"></div>
+        </div>
+      </div>
+      <div class="c-spinner__content">
+        <span>{{spinnerText}}</span>
+        <span class="cursor">
+          <span class="sjv-i-cursor">
+          </span>
+        </span> <br><br>
+        <button class="c-btn--compact" (click)="hideSpinner()">Avbryt</button>
+      </div>
     </div>
   </div>
 </div>

@@ -16,17 +16,17 @@
         </div>
       </div>
       <div class="c-input c-input--tiny">
-        <label for="input-text-1" id="label-1" tabindex="-1">Kundnummer</label>
+        <label for="kundnummer-2" id="label-1" tabindex="-1">Kundnummer</label>
         <div class="input__wrapper " tabindex="-1">
           <input autocomplete="given-name" id="kundnummer-2" type="text" tabindex="0" name="text2"
             [(ngModel)]="sokFilter.kundNummerAlfaNumerisk">
         </div>
       </div>
 
-      <div class="c-multiselect--tiny" rel="c-multiselect-js">
-        <label for="arendetyp" class="c-multiselect__label">Ärendetyp</label>
+      <div class="c-multiselect--tiny" id="arendeTyp" rel="c-multiselect-js">
+        <label for="arendeTypselect" class="c-multiselect__label">Ärendetyp</label>
         <div class="c-select__wrapper">
-          <select name="arendeTypList[]" id="arendeTyp" multiple="multiple" #arendeTypList
+          <select name="arendeTypList[]" id="arendeTypselect" multiple="multiple" #arendeTypList
             (change)='onOptionsSelected("arendeTypList",arendeTypList.selectedOptions)'>
             <option *ngFor="let arendetyp_item of sokFaltValuesHolder.arendeTypList" [value]="arendetyp_item">
               {{arendetyp_item}}
@@ -35,10 +35,10 @@
         </div>
       </div>
 
-      <div class="c-multiselect--tiny" rel="c-multiselect-js">
-        <label for="ansokansTyp" class="c-multiselect__label">Ansökanstyp</label>
+      <div class="c-multiselect--tiny" id="ansokansTyp" rel="c-multiselect-js">
+        <label for="ansokansTypselect" class="c-multiselect__label">Ansökanstyp</label>
         <div class="c-select__wrapper">
-          <select name="ansokansTypList[]" id="ansokansTyp" multiple="multiple" #ansokansTypList
+          <select name="ansokansTypList[]" id="ansokansTypselect" multiple="multiple" #ansokansTypList
             (change)='onOptionsSelected("ansokansTypList",ansokansTypList.selectedOptions)'>
             <option *ngFor="let ansokanstyp_item of sokFaltValuesHolder.ansokansTypList" [value]="ansokanstyp_item">
               {{ansokanstyp_item}}
@@ -46,8 +46,6 @@
           </select>
         </div>
       </div>
-
-
 
       <div class="confirm-btn">
         <button *ngIf="sokFilter.stodAr == '' && sokFilter.kundNummerAlfaNumerisk == '' && (sokFilter.arendeTypList.length == 0  || sokFilter.arendeTypList[0] == '')

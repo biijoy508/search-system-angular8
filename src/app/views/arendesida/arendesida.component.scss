@@ -1,5 +1,3 @@
-@import "../../../settings.colors";
-
 .arendeKortInfo {
   display: inline-flex;
   font-size: 1rem;
@@ -14,7 +12,7 @@
 .tillbakaIkon {
   vertical-align: text-top;
   padding-top: 1px;
-  margin-right: 2px;
+  margin-right: 0.125rem;
 }
 
 .btnFieldWrapper {
@@ -119,7 +117,7 @@ p {
   .deleteIcon {
     vertical-align: middle;
     line-height: 1.5;
-    padding-left: 4px;
+    padding-left: 0.25rem;
   }
 }
 
@@ -154,7 +152,7 @@ p {
   .beslutsumma__label {
     margin-right: 0.5rem;
     font-weight: bold;
-    font-size: 13px;
+    font-size: 0.8125rem;
     line-height: 1.5;
   }
 
@@ -248,6 +246,10 @@ p {
   margin-right: 0.5rem;
 }
 
+.defaultfontsize {
+  font-size: 0.8125rem;
+}
+
 form .c-accordion--tiny .c-accordion-item__title .accordion__title-text {
   margin-right: 2rem;
 }
@@ -266,7 +268,7 @@ form .c-accordion--tiny .c-accordion-item__title .accordion__title-text {
   width: 100%;
 
   span {
-    font-size: 13px;
+    font-size: 0.8125rem;
     width: 25%;
     min-width: 25%;
     text-align: left;
@@ -283,7 +285,7 @@ form .c-accordion--tiny .c-accordion-item__title .accordion__title-text {
       font-weight: bold;
       padding: 0.25rem 0;
       margin-bottom: 0.25rem;
-      font-size: 13px;
+      font-size: 0.8125rem;
       width: 25%;
       min-width: 25%;
       background-color: #e6e6e6;
@@ -309,19 +311,30 @@ form .c-accordion--tiny .c-accordion-item__title .accordion__title-text {
 }
 
 .text {
-  font-size: 13px;
+  font-size: 0.8125rem;
 
   * {
-    font-size: 13px;
+    font-size: 0.8125rem;
   }
 }
 
 .beslutContentText {
   display: flex;
+  flex-flow: row wrap;
   justify-content: space-between;
-  margin-right: 0.25rem;
+  align-items: flex-start;
+  align-content: flex-start;
   line-height: 1.5;
-  font-size: 13px;
+  font-size: 0.8125rem;
+}
+
+.beslutContentText:after {
+  content: "";
+  flex: 0 1 12.5rem;
+}
+
+.beslutContentText__varde {
+  flex: 0 1 7.5rem;
 }
 
 @media (max-width: 768px) {
@@ -339,6 +352,27 @@ form .c-accordion--tiny .c-accordion-item__title .accordion__title-text {
     width: unset;
   }
 
+  .btnFieldWrapper {
+    .arendeRubrik {
+      white-space: nowrap;
+      padding: 0;
+    }
+  }
+
+  .inlineContentWrapper,
+  .inlineWrapper2 {
+    display: block;
+
+    span {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  .beslutWrapper .beslutRad {
+    width: 100%;
+  }
+
   form .c-accordion--tiny .c-accordion-item__title .accordion__title-text {
     margin-right: 1rem;
   }
@@ -349,11 +383,11 @@ form .c-accordion--tiny .c-accordion-item__title .accordion__title-text {
     display: block;
   }
 
-  .inlineContentWrapper {
-    display: block;
+  .border-right {
+    border: none;
   }
 
-  .border-right {
+  .border-left {
     border: none;
   }
 
