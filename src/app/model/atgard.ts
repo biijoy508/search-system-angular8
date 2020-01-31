@@ -1,7 +1,8 @@
+import { AtgardTypModel } from './atgardTypModel';
+
 export class Atgard {
+    atgardTypModel: AtgardTypModel;
     id: string;
-    kod: string;
-    beskrivning: string;
     statusKod: string;
     statusText: string;
     statusDatum: string;
@@ -12,11 +13,9 @@ export class Atgard {
     uppdateradDatum: string;
     uppdateradAv: string;
     manuell: string;
-    mojligaStatusar: string[];
     constructor(
+        atgardTypModel: AtgardTypModel,
         id: string,
-        kod: string,
-        beskrivning: string,
         statusKod: string,
         statusText: string,
         statusDatum: string,
@@ -27,11 +26,9 @@ export class Atgard {
         uppdateradDatum: string,
         uppdateradAv: string,
         manuell: string,
-        mojligaStatusar: string[]
     ) {
+        this.atgardTypModel = atgardTypModel;
         this.id = id;
-        this.kod = kod;
-        this.beskrivning = beskrivning;
         this.statusKod = statusKod;
         this.statusText = statusText;
         this.statusDatum = statusDatum;
@@ -42,6 +39,5 @@ export class Atgard {
         this.uppdateradDatum = uppdateradDatum;
         this.uppdateradAv = uppdateradAv;
         this.manuell = manuell;
-        this.mojligaStatusar = mojligaStatusar;
     }
 }

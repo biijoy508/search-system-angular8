@@ -2,7 +2,7 @@ import { Component, AfterViewInit } from '@angular/core';
 import { Arende } from 'src/app/model/arende';
 import { ArendeVersion } from 'src/app/model/arendeVersion';
 import { Atgard } from 'src/app/model/atgard';
-import { AtgardTyp } from 'src/app/model/atgardTyp';
+import { AtgardTypModel } from 'src/app/model/atgardTypModel';
 import { AnsokanDjurvalfard } from 'src/app/model/ansokanDjurvalfard';
 import { Attribut } from 'src/app/model/attribut';
 import { Beslut } from 'src/app/model/beslut';
@@ -23,8 +23,8 @@ export class ArendesidaComponent implements AfterViewInit {
   arendeId: any;
   kundNummer: any;
   atgardLista: Atgard[] = [];
-  manuellAtgardTypLista: AtgardTyp[] = [];
-  valdAtgardTyp: AtgardTyp;
+  manuellAtgardTypLista: AtgardTypModel[] = [];
+  valdAtgardTyp: AtgardTypModel;
   arendeVersionLista: ArendeVersion[] = [];
   ansokanDjurvalfard: AnsokanDjurvalfard;
   attributLista: Attribut[] = [];
@@ -34,6 +34,7 @@ export class ArendesidaComponent implements AfterViewInit {
   beslutFinns: boolean;
   attributFinns: boolean;
   ingaAtgarder: boolean;
+  redigeraLageAtgarder: boolean;
 
   PPNnummer = '43,42';
 
@@ -44,6 +45,8 @@ export class ArendesidaComponent implements AfterViewInit {
   valdFlik = 'ansokanDjurvalfard';
   errorMessage = '';
 
+  valdAtgard: Atgard;
+  showWarning = false;
 
   constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) {
     this.windowRef = window;
@@ -51,7 +54,8 @@ export class ArendesidaComponent implements AfterViewInit {
     this.ansokanDjurvalfard = new AnsokanDjurvalfard([], '', '');
     let berakning = new Berakning('', '', '');
     this.beslut = new Beslut('', '', '', '', '', '', berakning, [], []);
-    this.valdAtgardTyp = new AtgardTyp('', '', '', '', '');
+    this.valdAtgardTyp = new AtgardTypModel('', '', '', [], '', '');
+    this.valdAtgard = new Atgard(this.valdAtgardTyp, '', '', '', '', '', '', '', '', '', '', '');
   }
 
   ngAfterViewInit() {
@@ -186,10 +190,10 @@ export class ArendesidaComponent implements AfterViewInit {
     this.toasterMessage = '';
   }
 
-  skapaManuellAtgard() {
+  skapaManuellAtgard(e) {
 
-    this.valdAtgardTyp.arendeId = this.arende.arendeId;
-    this.valdAtgardTyp.stodAr = this.arende.stodAr;
+    let laggTillKnapp = e.target;
+    laggTillKnapp.disabled = true;
 
     this.apiService.postData(environment.skapaManuellAtgardUrl, this.valdAtgardTyp)
       .subscribe(
@@ -198,10 +202,13 @@ export class ArendesidaComponent implements AfterViewInit {
           setTimeout(() => {
             this.windowRef.komponentbibliotek.init();
           }, 100);
+          this.errorMessage = '';
           this.showToaster("Åtgärden har lagts till.");
+          laggTillKnapp.disabled = false;
         },
         (err: any) => {
           this.errorMessage = err.error.svar;
+          laggTillKnapp.disabled = false;
         }
       );
 
@@ -209,15 +216,18 @@ export class ArendesidaComponent implements AfterViewInit {
 
   hamtaManuellaAtgardTyper() {
 
-    const stodArParam = {
-      stodar: this.arende.stodAr
+    this.valdAtgardTyp = new AtgardTypModel('', '', '', [], '', '');
+
+    const arendeParam = {
+      stodar: this.arende.stodAr,
+      arendeid: this.arende.arendeId
     };
 
-    this.apiService.getDataMedParametrar(environment.atgardskoderUrl, stodArParam).subscribe(
+    this.apiService.getDataMedParametrar(environment.atgardTyperUrl, arendeParam).subscribe(
       (data: any) => {
+        this.errorMessage = '';
         this.manuellAtgardTypLista = data;
         this.manuellAtgardTypLista.unshift(this.valdAtgardTyp);
-        this.errorMessage = '';
         const skapaManuellAtgardBlock = document.querySelector('.skapaManuellAtgard') as HTMLDivElement;
         skapaManuellAtgardBlock.style.display = 'block';
         setTimeout(() => {
@@ -229,6 +239,46 @@ export class ArendesidaComponent implements AfterViewInit {
         this.errorMessage = err.message;
       });
 
+  }
+
+  redigeraAtgard(atgard, e) {
+
+    if(atgard.statusKod === 'ÖPP' || (atgard.kommentar != null && atgard.kommentar !== '')) {
+      
+      let sparaKnapp = e.target;
+      sparaKnapp.disabled = true;
+      
+      this.apiService.postData(environment.redigeraAtgardUrl, atgard).subscribe(
+        (data: Atgard) => {
+          
+          let atgardIndex = this.atgardLista.findIndex(item => item.id == data.id);
+          this.atgardLista[atgardIndex] = data;
+          this.redigeraLageAtgarder = false;
+          setTimeout(() => {
+            this.windowRef.komponentbibliotek.init();
+          }, 5000);
+          sparaKnapp.disabled = false;
+          this.errorMessage = '';
+        },
+        (err: any) => {
+          this.errorMessage = err.error.svar;
+          sparaKnapp.disabled = false;
+        }
+      );
+    } else {
+      this.showWarning = true;
+    }
+
+  }
+
+  toggleRedigeraLageAtgard(e, index) {
+
+    this.valdAtgard = this.atgardLista[index];
+    if (e.target.innerText === 'Redigera') {
+      this.redigeraLageAtgarder = true;
+    } else if (e.target.innerText === 'Avbryt') {
+      this.redigeraLageAtgarder = false;
+    }
   }
 
   avbrytLaggTillAtgard() {
@@ -334,6 +384,10 @@ export class ArendesidaComponent implements AfterViewInit {
   sattValdFlik(valdFlik) {
     this.valdFlik = valdFlik;
     this.hamtaDataForValdFlik();
+  }
+
+  togglewarning() {
+    this.showWarning = false;
   }
 
 }
