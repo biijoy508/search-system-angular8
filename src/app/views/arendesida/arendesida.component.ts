@@ -13,7 +13,7 @@ import { Beslut } from 'src/app/model/beslut';
 import { ApiService } from 'src/app/services/api.service';
 import { environment } from 'src/environments/environment';
 import { avbrytLaggTillAtgard, deselectLaggtillAtgardSelectElement, hanteraLaggTillAtgardBekraftaKnappStatus } from './arendesidaFunktioner/arendesidaSkapaManuelAtgard';
-import { showToaster } from './arendesidaFunktioner/arendesidaUtility';
+import { showToaster, kontrolleraFlikar } from './arendesidaFunktioner/arendesidaUtility';
 import { redigeraAnsDjurValView } from './arendesidaFunktioner/arendesidaAnsokanDjurvalfard';
 
 
@@ -107,18 +107,10 @@ export class ArendesidaComponent implements AfterViewInit {
       this.showSpinner = false;
     }, () => {
       this.windowRef.komponentbibliotek.init();
-      if (this.arende.ansokansTyp === 'UTBET') {
-        this.toggleAktivFlik(this.arende.status);
-        this.kontrolleraAnsokanDjurvalfard(this.arende.arendeTyp);
-      } else {
-        const utbetFlikar = document.querySelector('#utbetFlikar') as HTMLElement;
-        if (utbetFlikar) {
-          utbetFlikar.style.display = 'none';
-        }
-      }
-      setTimeout(() => {
-        this.showSpinner = false;
-      }, 300);
+        kontrolleraFlikar(this.arende);
+        setTimeout(() => {
+          this.showSpinner = false;
+        }, 2000);
     });
   }
 
@@ -130,28 +122,9 @@ export class ArendesidaComponent implements AfterViewInit {
     this.alive = false;
     this.showSpinner = false;
   }
-
-  toggleAktivFlik(arendeStatus: string) {
-    if (arendeStatus === 'BESL' || arendeStatus === 'BER') {
-      document.getElementById('beslut').click();
-    } else {
-      document.getElementById('ansokanDjurvalfard').click();
-    }
-  }
-
-  kontrolleraAnsokanDjurvalfard(arendeTyp: string) {
-    if (arendeTyp !== 'FARERS' && arendeTyp !== 'KLOVERS' && arendeTyp !== 'SUGGERS') {
-      const ansokanDjurvalfardElement = document.getElementById('ansokanDjurvalfard') as HTMLElement;
-      ansokanDjurvalfardElement.style.display = 'none';
-      ansokanDjurvalfardElement.setAttribute('aria-selected', 'false');
-      document.getElementById('attribut').click();
-    }
-  }
-
   redigeraView(button: HTMLButtonElement) {
     redigeraAnsDjurValView(button);
   }
-
   filtreraAtgarder(filtreringsAlternativ) {
     this.filtreringsAlternativ = filtreringsAlternativ;
     const atgardListaForm = document.querySelector('#atgardLista');
@@ -184,11 +157,8 @@ export class ArendesidaComponent implements AfterViewInit {
 
   redigeraAtgard(atgard, event) {
     if (atgard.statusKod === 'ÖPP' || (atgard.kommentar != null && atgard.kommentar !== '')) {
-
       const sparaKnapp = event.target as HTMLButtonElement;
       sparaKnapp.disabled = true;
-
-
       this.apiService.postData(environment.redigeraAtgardUrl, atgard).subscribe(
         (data: Atgard) => {
           const atgardIndex = this.atgardLista.findIndex(item => item.id === data.id);
@@ -212,9 +182,7 @@ export class ArendesidaComponent implements AfterViewInit {
     }
   }
   hamtaManuellaAtgardTyper() {
-
     this.valdAtgardTyp = new AtgardTypModel('', '', '', [], '', '');
-
     const arendeParam = {
       stodar: this.arende.stodAr,
       arendeid: this.arende.arendeId
@@ -363,7 +331,6 @@ export class ArendesidaComponent implements AfterViewInit {
     }
 
     this.hamtaDataForValdFlik();
-
   }
 
   sattValdFlik(valdFlik) {
