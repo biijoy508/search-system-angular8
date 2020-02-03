@@ -378,6 +378,10 @@ form .c-accordion--tiny .c-accordion-item__title .accordion__title-text {
   }
 }
 
+.c-toaster p{
+   font-weight: bold;
+}
+
 @media (max-width: 576px) {
   .btnFieldWrapper {
     display: block;
