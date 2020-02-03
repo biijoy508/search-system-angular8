@@ -92,12 +92,9 @@
             </span>
           </div>
         </div>
-        <button *ngIf="valdAtgardTyp.id !== '';else disabledButton" class="c-btn c-btn--tiny ml-1"
+        <button class="c-btn c-btn--tiny ml-1" id="bekraftaLaggTillAtgard"
           (click)="skapaManuellAtgard($event)">Lägg till</button>
-        <ng-template #disabledButton>
-          <button class="c-btn c-btn--tiny ml-1" disabled>Lägg till</button>
-        </ng-template>
-        <button class="c-btn c-btn--tiny ml-1" (click)="avbrytLaggTillAtgard()">Avbryt</button>
+        <button class="c-btn c-btn--tiny ml-1"  id="avbrytLaggTillAtgard" (click)="avbrytLaggTillAtgard()">Avbryt</button>
       </div>
       <div *ngIf="!ingaAtgarder" class="c-filterbar" rel="c-filterbar-js">
         <div class="c-filterbar__labels">
@@ -238,7 +235,7 @@
         </ul>
         <div class="c-tabs__content" data-tabs="myTabs_1">
           <div id="panel1" class="c-tabs__panel is-active" role="tabpanel" aria-labelledby="panel1__label">
-            <div class="inlineWrapper2 vanligt">
+            <div class="inlineWrapper2 oredigerbarAnsDjurElement">
               <span>
                 <p class="header"> PPN </p>
                 <ul class="ulContent">
@@ -246,7 +243,7 @@
                 </ul>
               </span>
             </div>
-            <div class="inlineWrapper2 vanligt">
+            <div class="inlineWrapper2 oredigerbarAnsDjurElement">
               <span>
                 <p class="header"> Antal djur </p>
                 <p class="content"> {{ansokanDjurvalfard.antalDjur | number:'':'sv'}} </p>
@@ -257,7 +254,7 @@
               </span>
             </div>
 
-            <div class="c-tagsinput--tiny redigeraView">
+            <div class="c-tagsinput--tiny redigerbarAnsDjurElement">
               <label for="input-text-1" tabindex="-1">PPN</label>
               <div class="c-tagsinput-field" rel="c-tagsinput-js">
                 <div class="tagsContainer">
@@ -270,14 +267,14 @@
               </div>
               <p tabindex="-1" id="description-1"></p>
             </div>
-            <div class="c-input c-input--tiny redigeraView">
+            <div class="c-input c-input--tiny redigerbarAnsDjurElement">
               <label for="antaldjur" tabindex="-1" id="label-6">Antal djur</label>
               <div class="input__wrapper input__wrapper--text">
                 <input autocomplete="given-name" id="antaldjur" aria-describedby="description-6" type="text"
                   tabindex="0" name="text6" [(ngModel)]="ansokanDjurvalfard.antalDjur">
               </div>
             </div>
-            <div class="c-input c-input--tiny redigeraView">
+            <div class="c-input c-input--tiny redigerbarAnsDjurElement">
               <label for="antaldjurenheter" tabindex="-1" id="label-6">Antal djurenheter</label>
               <div class="input__wrapper input__wrapper--text">
                 <input autocomplete="given-name" id="antaldjurenheter" aria-describedby="description-6" type="text"
