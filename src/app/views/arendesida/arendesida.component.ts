@@ -1,17 +1,20 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
+import { takeWhile } from 'rxjs/operators';
+import { AnsokanDjurvalfard } from 'src/app/model/ansokanDjurvalfard';
 import { Arende } from 'src/app/model/arende';
 import { ArendeVersion } from 'src/app/model/arendeVersion';
 import { Atgard } from 'src/app/model/atgard';
 import { AtgardTypModel } from 'src/app/model/atgardTypModel';
-import { AnsokanDjurvalfard } from 'src/app/model/ansokanDjurvalfard';
 import { Attribut } from 'src/app/model/attribut';
+import { Berakning } from 'src/app/model/berakning';
 import { Beslut } from 'src/app/model/beslut';
 import { ApiService } from 'src/app/services/api.service';
-import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { Berakning } from 'src/app/model/berakning';
-import { Title } from '@angular/platform-browser';
-import { takeWhile } from 'rxjs/operators';
+import { avbrytLaggTillAtgard, deselectLaggtillAtgardSelectElement, hanteraLaggTillAtgardBekraftaKnappStatus } from './arendesidaFunktioner/arendesidaSkapaManuelAtgard';
+import { showToaster } from './arendesidaFunktioner/arendesidaUtility';
+import { redigeraAnsDjurValView } from './arendesidaFunktioner/arendesidaAnsokanDjurvalfard';
 
 
 @Component({
@@ -42,7 +45,6 @@ export class ArendesidaComponent implements AfterViewInit {
 
   filtreringsAlternativ = 'alla';
 
-  toasterMessage = '';
   tidigareVersion = false;
   valdFlik = 'ansokanDjurvalfard';
   errorMessage = '';
@@ -56,11 +58,6 @@ export class ArendesidaComponent implements AfterViewInit {
   atgardSelectElement: HTMLSelectElement;
   skapaManuellAtgardBlock: HTMLDivElement;
   laggTillAtgardBekraftaKnapp: HTMLButtonElement;
-
-  redigerbarAnsokanDjurvalfardElements: NodeListOf<Element>;
-  oredigerbarAnsokanDjurvalfardElements: NodeListOf<Element>;
-
-
   constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router, private titleService: Title) {
     this.windowRef = window;
     this.arende = new Arende('', '', '', '', '', '', '', '', '', '');
@@ -77,32 +74,17 @@ export class ArendesidaComponent implements AfterViewInit {
     this.atgardSelectElement = document.querySelector('#manuellAtgardTyp') as HTMLSelectElement;
     this.skapaManuellAtgardBlock = document.querySelector('.skapaManuellAtgard') as HTMLDivElement;
     this.laggTillAtgardBekraftaKnapp = document.querySelector('#bekraftaLaggTillAtgard') as HTMLButtonElement;
-    this.redigerbarAnsokanDjurvalfardElements = document.querySelectorAll('.redigerbarAnsDjurElement');
-    this.oredigerbarAnsokanDjurvalfardElements = document.querySelectorAll('.oredigerbarAnsDjurElement');
 
     const arendeParam = {
       arendeid: this.arendeId,
       kundnummer: this.kundNummer
     };
 
-    this.hanteraLaggTillAtgardBekraftaKnappStatus();
+    hanteraLaggTillAtgardBekraftaKnappStatus(this.atgardSelectElement, this.laggTillAtgardBekraftaKnapp);
 
     this.titleService.setTitle('Farmen - ' + this.kundNummer);
 
     this.hamtaArendeInformation(arendeParam);
-  }
-
-  private hanteraLaggTillAtgardBekraftaKnappStatus() {
-    if (this.atgardSelectElement.selectedIndex === 0 || this.atgardSelectElement.selectedIndex === -1) {
-      this.laggTillAtgardBekraftaKnapp.setAttribute('disabled', 'disabled');
-    }
-    this.atgardSelectElement.addEventListener('change', () => {
-      if (this.atgardSelectElement.selectedIndex === 0 || this.atgardSelectElement.selectedIndex === -1) {
-        this.laggTillAtgardBekraftaKnapp.setAttribute('disabled', 'disabled');
-      } else {
-        this.laggTillAtgardBekraftaKnapp.removeAttribute('disabled');
-      }
-    });
   }
 
     hamtaArendeInformation(arendeParam: { arendeid: any; kundnummer: any; }) {
@@ -167,23 +149,7 @@ export class ArendesidaComponent implements AfterViewInit {
   }
 
   redigeraView(button: HTMLButtonElement) {
-    if (button.innerText === 'Redigera') {
-      button.innerText = 'Spara';
-      for (let i = 0; i < this.redigerbarAnsokanDjurvalfardElements.length; i++) {
-        (this.redigerbarAnsokanDjurvalfardElements[i] as HTMLDivElement).style.display = 'block';
-      }
-      for (let j = 0; j < this.oredigerbarAnsokanDjurvalfardElements.length; j++) {
-        (this.oredigerbarAnsokanDjurvalfardElements[j] as HTMLDivElement).style.display = 'none';
-      }
-    } else if (button.innerText === 'Spara') {
-      button.innerText = 'Redigera';
-      for (let i = 0; i < this.redigerbarAnsokanDjurvalfardElements.length; i++) {
-        (this.redigerbarAnsokanDjurvalfardElements[i] as HTMLDivElement).style.display = 'none';
-      }
-      for (let j = 0; j < this.oredigerbarAnsokanDjurvalfardElements.length; j++) {
-        (this.oredigerbarAnsokanDjurvalfardElements[j] as HTMLDivElement).style.display = 'block';
-      }
-    }
+    redigeraAnsDjurValView(button);
   }
 
   filtreraAtgarder(filtreringsAlternativ) {
@@ -216,73 +182,6 @@ export class ArendesidaComponent implements AfterViewInit {
     }
   }
 
-  showToaster(message) {
-    const toaster = document.querySelector('.c-toaster') as HTMLDivElement;
-    toaster.style.display = 'block';
-    this.toasterMessage = message;
-    setTimeout(() => {
-      this.closeToaster();
-    }, 2000);
-  }
-
-  closeToaster() {
-    const toaster = document.querySelector('.c-toaster') as HTMLDivElement;
-    toaster.style.display = 'none';
-    this.toasterMessage = '';
-  }
-
-  skapaManuellAtgard(event) {
-    this.apiService.postData(environment.skapaManuellAtgardUrl, this.valdAtgardTyp)
-      .subscribe(
-        (data: Atgard) => {
-          this.ingaAtgarder = false;
-          this.atgardSelectElement.selectedIndex = -1;
-          this.atgardLista.push(data);
-          this.errorMessage = '';
-          this.showToaster('Åtgärden har lagts till.');
-        },
-        (err: any) => {
-          if (err.error.svar.includes('Åtgärden finns')) {
-            this.showToaster(err.error.svar);
-          } else {
-            this.errorMessage = err.error.svar;
-          }
-        },
-        () => {
-          this.deselectLaggtillAtgardSelectElement();
-          setTimeout(() => {
-            this.windowRef.komponentbibliotek.init();
-          }, 100);
-        }
-      );
-
-  }
-
-  hamtaManuellaAtgardTyper() {
-
-    this.valdAtgardTyp = new AtgardTypModel('', '', '', [], '', '');
-
-    const arendeParam = {
-      stodar: this.arende.stodAr,
-      arendeid: this.arende.arendeId
-    };
-
-    this.apiService.getDataMedParametrar(environment.atgardTyperUrl, arendeParam).subscribe(
-      (data: any) => {
-        this.errorMessage = '';
-        this.manuellAtgardTypLista = data;
-        this.manuellAtgardTypLista.unshift(this.valdAtgardTyp);
-        this.skapaManuellAtgardBlock.style.display = 'block';
-        setTimeout(() => {
-          this.windowRef.komponentbibliotek.init();
-        }, 100);
-      },
-      (err: any) => {
-        console.log(err.message);
-        this.errorMessage = err.message;
-      });
-  }
-
   redigeraAtgard(atgard, event) {
     if (atgard.statusKod === 'ÖPP' || (atgard.kommentar != null && atgard.kommentar !== '')) {
 
@@ -312,6 +211,57 @@ export class ArendesidaComponent implements AfterViewInit {
       this.showWarning = true;
     }
   }
+  hamtaManuellaAtgardTyper() {
+
+    this.valdAtgardTyp = new AtgardTypModel('', '', '', [], '', '');
+
+    const arendeParam = {
+      stodar: this.arende.stodAr,
+      arendeid: this.arende.arendeId
+    };
+
+    this.apiService.getDataMedParametrar(environment.atgardTyperUrl, arendeParam).subscribe(
+      (data: any) => {
+        this.errorMessage = '';
+        this.manuellAtgardTypLista = data;
+        this.manuellAtgardTypLista.unshift(this.valdAtgardTyp);
+        this.skapaManuellAtgardBlock.style.display = 'block';
+        setTimeout(() => {
+          this.windowRef.komponentbibliotek.init();
+        }, 100);
+      },
+      (err: any) => {
+        console.log(err.message);
+        this.errorMessage = err.message;
+      });
+  }
+
+  skapaManuellAtgard(event) {
+    this.apiService.postData(environment.skapaManuellAtgardUrl, this.valdAtgardTyp)
+      .subscribe(
+        (data: Atgard) => {
+          this.ingaAtgarder = false;
+          this.atgardSelectElement.selectedIndex = -1;
+          this.atgardLista.push(data);
+          this.errorMessage = '';
+          showToaster('Åtgärden har lagts till.');
+        },
+        (err: any) => {
+          if (err.error.svar.includes('Åtgärden finns')) {
+            showToaster(err.error.svar);
+          } else {
+            this.errorMessage = err.error.svar;
+          }
+        },
+        () => {
+          deselectLaggtillAtgardSelectElement(this.atgardSelectElement);
+          setTimeout(() => {
+            this.windowRef.komponentbibliotek.init();
+          }, 100);
+        }
+      );
+  }
+
   toggleRedigeraLageAtgard(event, index) {
     this.valdAtgard = this.atgardLista[index];
     if (event.target.innerText === 'Redigera') {
@@ -320,17 +270,6 @@ export class ArendesidaComponent implements AfterViewInit {
       this.redigeraLageAtgarder = false;
     }
   }
-
-  avbrytLaggTillAtgard() {
-    this.deselectLaggtillAtgardSelectElement();
-    this.skapaManuellAtgardBlock.style.display = 'none';
-  }
-
-  deselectLaggtillAtgardSelectElement() {
-    this.atgardSelectElement.selectedIndex = -1;
-    this.atgardSelectElement.dispatchEvent(new Event('change'));
-  }
-
   hamtaDataForValdFlik() {
     if (this.valdFlik === 'ansokanDjurvalfard') {
       this.hamtaAnsokanDjurvalfard();
@@ -435,5 +374,8 @@ export class ArendesidaComponent implements AfterViewInit {
   togglewarning() {
     this.showWarning = false;
   }
-
+  avbrytLaggTillAtgard() {
+    avbrytLaggTillAtgard(this.skapaManuellAtgardBlock, this.atgardSelectElement);
+  }
 }
+
