@@ -26,6 +26,7 @@
     "@angular/pwa": "0.803.8",
     "@angular/router": "8.2.10",
     "@angular/service-worker": "8.2.10",
+    "@types/lodash": "^4.14.149",
     "core-js": "3.2.1",
     "rxjs": "6.5.3",
     "rxjs-tslint": "0.1.7",

@@ -1,5 +1,6 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { cloneDeep } from 'lodash';
 import { ActivatedRoute, Router } from '@angular/router';
 import { takeWhile } from 'rxjs/operators';
 import { AnsokanDjurvalfard } from 'src/app/model/ansokanDjurvalfard';
@@ -16,7 +17,10 @@ import { avbrytLaggTillAtgard, deselectLaggtillAtgardSelectElement, hanteraLaggT
 import { showToaster, kontrolleraFlikar } from './arendesidaFunktioner/arendesidaUtility';
 import { redigeraAnsDjurValView } from './arendesidaFunktioner/arendesidaAnsokanDjurvalfard';
 
-
+interface OandradeAtgard {
+  atgardId: string;
+  atgard: Atgard;
+}
 @Component({
   selector: 'app-arendesida',
   templateUrl: './arendesida.component.html',
@@ -28,6 +32,8 @@ export class ArendesidaComponent implements AfterViewInit {
   arendeId: any;
   kundNummer: any;
   atgardLista: Atgard[] = [];
+
+  oandradeAtgardLista: OandradeAtgard[] = [];
   manuellAtgardTypLista: AtgardTypModel[] = [];
   valdAtgardTyp: AtgardTypModel;
   arendeVersionLista: ArendeVersion[] = [];
@@ -62,7 +68,7 @@ export class ArendesidaComponent implements AfterViewInit {
     this.windowRef = window;
     this.arende = new Arende('', '', '', '', '', '', '', '', '', '');
     this.ansokanDjurvalfard = new AnsokanDjurvalfard([], '', '');
-    let berakning = new Berakning('', '', '');
+    const berakning = new Berakning('', '', '');
     this.beslut = new Beslut('', '', '', '', '', '', berakning, [], []);
     this.valdAtgardTyp = new AtgardTypModel('', '', '', [], '', '');
     this.valdAtgard = new Atgard(this.valdAtgardTyp, '', '', '', '', '', '', '', '', '', '', '');
@@ -107,10 +113,10 @@ export class ArendesidaComponent implements AfterViewInit {
       this.showSpinner = false;
     }, () => {
       this.windowRef.komponentbibliotek.init();
-        kontrolleraFlikar(this.arende);
-        setTimeout(() => {
-          this.showSpinner = false;
-        }, 2000);
+      kontrolleraFlikar(this.arende);
+      setTimeout(() => {
+        this.showSpinner = false;
+      }, 2000);
     });
   }
 
@@ -131,7 +137,7 @@ export class ArendesidaComponent implements AfterViewInit {
     const atgarderUILista = atgardListaForm.querySelectorAll('.c-accordion-group');
     if (filtreringsAlternativ === 'öppna') {
       for (let i = 0; i < atgarderUILista.length; i++) {
-        let atgard = atgarderUILista[i] as HTMLElement;
+        const atgard = atgarderUILista[i] as HTMLElement;
         if (atgard.id === 'ÖPP') {
           atgard.style.display = 'block';
         } else {
@@ -140,7 +146,7 @@ export class ArendesidaComponent implements AfterViewInit {
       }
     } else if (filtreringsAlternativ === 'stängda') {
       for (let i = 0; i < atgarderUILista.length; i++) {
-        let atgard = atgarderUILista[i] as HTMLElement;
+        const atgard = atgarderUILista[i] as HTMLElement;
         if (atgard.id === 'ÖPP') {
           atgard.style.display = 'none';
         } else {
@@ -149,13 +155,33 @@ export class ArendesidaComponent implements AfterViewInit {
       }
     } else {
       for (let i = 0; i < atgarderUILista.length; i++) {
-        let atgard = atgarderUILista[i] as HTMLElement;
+        const atgard = atgarderUILista[i] as HTMLElement;
         atgard.style.display = 'block';
       }
     }
   }
 
-  redigeraAtgard(atgard, event) {
+  toggleRedigeraLageAtgard(event, oandradeAtgard: Atgard, index) {
+    this.valdAtgard = this.atgardLista[index];
+    if (event.target.innerText === 'Redigera') {
+      this.redigeraLageAtgarder = true;
+      this.oandradeAtgardLista.push(
+        {
+        atgardId: oandradeAtgard.id,
+          atgard: cloneDeep(oandradeAtgard)
+      });
+
+    } else if (event.target.innerText === 'Avbryt') {
+      this.redigeraLageAtgarder = false;
+      let gammalValueIndex = this.oandradeAtgardLista.findIndex(obj => obj.atgardId === oandradeAtgard.id);
+      this.atgardLista[index] = cloneDeep(this.oandradeAtgardLista[gammalValueIndex].atgard);
+      this.oandradeAtgardLista.splice(gammalValueIndex, 1);
+    }
+  }
+  sparaRedigeratAtgard(atgard, event) {
+    let gammalValueIndex = this.oandradeAtgardLista.findIndex(obj => obj.atgardId === atgard.id);
+    this.oandradeAtgardLista.splice(gammalValueIndex, 1);
+
     if (atgard.statusKod === 'ÖPP' || (atgard.kommentar != null && atgard.kommentar !== '')) {
       const sparaKnapp = event.target as HTMLButtonElement;
       sparaKnapp.disabled = true;
@@ -230,14 +256,7 @@ export class ArendesidaComponent implements AfterViewInit {
       );
   }
 
-  toggleRedigeraLageAtgard(event, index) {
-    this.valdAtgard = this.atgardLista[index];
-    if (event.target.innerText === 'Redigera') {
-      this.redigeraLageAtgarder = true;
-    } else if (event.target.innerText === 'Avbryt') {
-      this.redigeraLageAtgarder = false;
-    }
-  }
+
   hamtaDataForValdFlik() {
     if (this.valdFlik === 'ansokanDjurvalfard') {
       this.hamtaAnsokanDjurvalfard();

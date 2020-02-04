@@ -195,15 +195,15 @@
                     </span>
                   </div>
                   <button *ngIf="redigeraLageAtgarder && atgard.id===valdAtgard.id"
-                    (click)="redigeraAtgard(atgard, $event)" class="c-btn c-btn--tiny ml-1">Spara</button>
+                    (click)="sparaRedigeratAtgard(atgard, $event)" class="c-btn c-btn--tiny ml-1">Spara</button>
                   <ng-container *ngIf="atgard.id===valdAtgard.id">
-                    <button *ngIf="!redigeraLageAtgarder" (click)="toggleRedigeraLageAtgard($event, i)"
+                    <button *ngIf="!redigeraLageAtgarder" (click)="toggleRedigeraLageAtgard($event, atgard, i)"
                       class="c-btn c-btn--tiny ml-1">Redigera</button>
-                    <button *ngIf="redigeraLageAtgarder" (click)="toggleRedigeraLageAtgard($event, i)"
+                    <button *ngIf="redigeraLageAtgarder" (click)="toggleRedigeraLageAtgard($event, atgard, i)"
                       class="c-btn c-btn--tiny ml-1">Avbryt</button>
                   </ng-container>
                   <ng-container *ngIf="atgard.id!==valdAtgard.id">
-                    <button (click)="toggleRedigeraLageAtgard($event, i)"
+                    <button (click)="toggleRedigeraLageAtgard($event, atgard, i)"
                       class="c-btn c-btn--tiny ml-1">Redigera</button>
                   </ng-container>
                 </div>
