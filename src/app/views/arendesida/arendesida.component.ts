@@ -8,6 +8,7 @@ import { Arende } from 'src/app/model/arende';
 import { ArendeVersion } from 'src/app/model/arendeVersion';
 import { Atgard } from 'src/app/model/atgard';
 import { AtgardTypModel } from 'src/app/model/atgardTypModel';
+import { AnsokanDVFArendeversion } from 'src/app/model/ansokanDVFArendeversion';
 import { Attribut } from 'src/app/model/attribut';
 import { Berakning } from 'src/app/model/berakning';
 import { Beslut } from 'src/app/model/beslut';
@@ -32,12 +33,12 @@ export class ArendesidaComponent implements AfterViewInit {
   arendeId: any;
   kundNummer: any;
   atgardLista: Atgard[] = [];
-
   oandradeAtgardLista: OandradeAtgard[] = [];
   manuellAtgardTypLista: AtgardTypModel[] = [];
   valdAtgardTyp: AtgardTypModel;
   arendeVersionLista: ArendeVersion[] = [];
   ansokanDjurvalfard: AnsokanDjurvalfard;
+  ansokanDVFArendeversion: AnsokanDVFArendeversion;
   attributLista: Attribut[] = [];
   valdArendeversion: ArendeVersion;
   beslut: Beslut;
@@ -47,7 +48,7 @@ export class ArendesidaComponent implements AfterViewInit {
   ingaAtgarder: boolean;
   redigeraLageAtgarder = false;
 
-  PPNnummer = '43,42';
+  PPNnummer: string[];
 
   filtreringsAlternativ = 'alla';
 
@@ -70,6 +71,7 @@ export class ArendesidaComponent implements AfterViewInit {
     const berakning = new Berakning('', '', '');
     this.beslut = new Beslut('', '', '', '', '', '', berakning, [], []);
     this.valdAtgardTyp = new AtgardTypModel('', '', '', [], '', '');
+    this.ansokanDVFArendeversion = new AnsokanDVFArendeversion('', '', '');
   }
 
   ngAfterViewInit() {
@@ -274,6 +276,7 @@ export class ArendesidaComponent implements AfterViewInit {
     this.apiService.getData(`${environment.ansokanDjurvalfardUrl}/${this.valdArendeversion.arendeversionId}`).subscribe(
       (data: any) => {
         this.ansokanDjurvalfard = data;
+        this.PPNnummer = this.ansokanDjurvalfard.ppnLista;
         this.errorMessage = '';
         setTimeout(() => {
           this.windowRef.komponentbibliotek.init();
@@ -284,6 +287,19 @@ export class ArendesidaComponent implements AfterViewInit {
         this.errorMessage = err.message;
       });
   }
+
+  sparaAnokanDjurvalfard() {
+
+    this.ansokanDVFArendeversion.antalDjur = this.ansokanDjurvalfard.antalDjur;
+    this.ansokanDVFArendeversion.arendeTyp = this.arende.arendeTyp;
+    this.ansokanDVFArendeversion.arendeversionId = this.valdArendeversion.arendeversionId;
+
+    this.apiService.postData(environment.redigeraAntalDjurUrl, this.ansokanDVFArendeversion).subscribe(
+      (data: string) => {
+        this.hamtaAnsokanDjurvalfard();
+      });
+  }
+
 
   hamtaAttribut() {
     const arendeParam = {
