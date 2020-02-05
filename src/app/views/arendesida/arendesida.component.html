@@ -17,7 +17,8 @@
       </div>
       <div class="btnFieldWrapper">
         <div>
-          <b class="arendeRubrik"> Ärende | {{arende.kundNummerAlfaNumerisk}} - {{arende.stodAr}} | {{arende.kundNamn}}</b>
+          <b class="arendeRubrik"> Ärende | {{arende.kundNummerAlfaNumerisk}} - {{arende.stodAr}} |
+            {{arende.kundNamn}}</b>
         </div>
         <div class="tidigareVersion" *ngIf="tidigareVersion"> Du tittar på en tidigare version av ärendet. </div>
         <div class="versionPosition">
@@ -34,7 +35,6 @@
           </div>
         </div>
       </div>
-
       <div class="inlineContentWrapper p-2">
         <span>
           <p class="header"> Ärendetyp </p>
@@ -72,9 +72,8 @@
   <div class="row">
     <div class="col-md-4">
       <h5 class="e-h5">Åtgärder</h5>
-      <button class="c-btn c-btn--compact" (click)="hamtaManuellaAtgardTyper()"><span class="sjv-i-plus"></span>Lägg
-        till
-        åtgärd</button>
+      <button class="c-btn c-btn--compact" (click)="hamtaManuellaAtgardTyper()">
+        <span class="sjv-i-plus"></span>Lägg till åtgärd</button>
       <div class="skapaManuellAtgard">
         <div class="c-select c-select--tiny">
           <label>Skapa manuell åtgärd</label>
@@ -92,9 +91,10 @@
             </span>
           </div>
         </div>
-        <button class="c-btn c-btn--tiny ml-1" id="bekraftaLaggTillAtgard"
-          (click)="skapaManuellAtgard($event)">Lägg till</button>
-        <button class="c-btn c-btn--tiny ml-1"  id="avbrytLaggTillAtgard" (click)="avbrytLaggTillAtgard()">Avbryt</button>
+        <button class="c-btn c-btn--tiny ml-1" id="bekraftaLaggTillAtgard" (click)="skapaManuellAtgard($event)">Lägg
+          till</button>
+        <button class="c-btn c-btn--tiny ml-1" id="avbrytLaggTillAtgard"
+          (click)="avbrytLaggTillAtgard()">Avbryt</button>
       </div>
       <div *ngIf="!ingaAtgarder" class="c-filterbar" rel="c-filterbar-js">
         <div class="c-filterbar__labels">
@@ -104,9 +104,10 @@
           <button class="filter-label" id="stängda" (click)="filtreraAtgarder($event.target.id)"> Stängda</button>
         </div>
         <div id="atgardLista" class="c-filterbar__content">
-          <form *ngFor="let atgard of atgardLista; index as i">
+          <div *ngFor="let atgard of atgardLista; index as i">
             <ul aria-label="accordion Control Group links" class="c-accordion-group" [id]="this.atgard.statusKod">
-              <li aria-controls="content-1" aria-expanded="true" class="c-accordion--tiny" rel="c-accordion-js">
+              <li aria-controls="content-1" aria-expanded="true" [id]="this.atgard.id + '-accordion'"
+                class="c-accordion-form--tiny" rel="c-accordion-js">
                 <button tabindex="0" name="item-one" [id]="'atgard'+i" class="c-accordion-item__title">
                   <span class="accordion__icon toggle-down"></span>
                   <span class="accordion__title-text no-space-break">{{atgard.atgardTypModel.kod}} -
@@ -116,66 +117,49 @@
                     <span *ngIf="atgard.statusKod !== 'ÖPP'" class="sjv-i-framgang"></span>
                   </div>
                 </button>
+
                 <div role="region" [aria-labelledby]="'atgard'+i" aria-hidden="false" id="content-1"
                   class="c-accordion-item__content">
-                  <ng-container *ngIf="atgard.id===valdAtgard.id">
-                    <fieldset class="c-radio-btn-group c-radio-btn-group--tiny" role="radiogroup"
-                      aria-labelledby="legend_4">
-                      <p class="atgardBeskrivning">{{atgard.atgardTypModel.text}}</p>
+                  <fieldset class="c-radio-btn-group c-radio-btn-group--tiny" role="radiogroup"
+                    aria-labelledby="legend_4">
+                    <p class="atgardBeskrivning">{{atgard.atgardTypModel.text}}</p>
 
-                      <div *ngIf="!redigeraLageAtgarder" class="text">
-                        <span><b>Status: </b></span>
-                        <span>{{atgard.statusKod}}</span>
-                      </div>
+                    <div *ngIf="!(redigeraLageAtgarder && atgard.id === valdAtgardId)" class="text">
+                      <span><b>Status: </b></span>
+                      <span>{{atgard.statusKod}}</span>
+                    </div>
 
-                      <ng-container *ngIf="redigeraLageAtgarder">
-                        <div *ngFor="let mojligStatus_item of atgard.atgardTypModel.mojligaStatusar"
-                          class="c-radio-btn c-radio-btn--tiny">
-                          <input [id]="mojligStatus_item + i" name="radiogroup_tiny" type="radio"
-                            [value]="mojligStatus_item" [(ngModel)]="atgard.statusKod">
-                          <label [for]="mojligStatus_item + i">{{mojligStatus_item}}</label>
-                        </div>
-                      </ng-container>
-
-                    </fieldset>
-                    <div *ngIf="!redigeraLageAtgarder" class="c-textarea c-textarea--readonly c-textarea--tiny">
-                      <label [for]="'textarea'+i">Kommentar</label>
-                      <textarea aria-describedby="textarea-description-4" class="textarea_exempel" [id]="'textarea'+i"
-                        rows="4" wrap="soft" [(ngModel)]="atgard.kommentar" name="kommentar"></textarea>
-                      <div class="c-textarea__wrapper">
-                        <p id="textarea-description-4" class="c-textarea__description"></p>
-                        <p class="c-text-counter__count_characters"></p>
+                    <div *ngIf="redigeraLageAtgarder && atgard.id === valdAtgardId">
+                      <div *ngFor="let mojligStatus_item of atgard.atgardTypModel.mojligaStatusar"
+                        class="c-radio-btn c-radio-btn--tiny">
+                        <input [id]="mojligStatus_item + i" name="radiogroup_tiny" type="radio"
+                          [value]="mojligStatus_item" [(ngModel)]="atgard.statusKod">
+                        <label [for]="mojligStatus_item + i">{{mojligStatus_item}}</label>
                       </div>
                     </div>
-                    <div *ngIf="redigeraLageAtgarder" class="c-textarea c-textarea--tiny">
-                      <label [for]="'textarea'+i">Kommentar<i class="label--valfritt">(Valfritt)</i></label>
-                      <textarea aria-describedby="textarea-description-4" class="textarea_exempel" [id]="'textarea'+i"
-                        rows="4" wrap="soft" [(ngModel)]="atgard.kommentar" name="kommentar"></textarea>
-                      <div class="c-textarea__wrapper">
-                        <p id="textarea-description-4" class="c-textarea__description"></p>
-                        <p class="c-text-counter__count_characters"></p>
-                      </div>
+
+                  </fieldset>
+                  <div *ngIf="!(redigeraLageAtgarder && atgard.id === valdAtgardId)"
+                    class="c-textarea c-textarea--readonly c-textarea--tiny">
+                    <label [for]="'textarea'+i">Kommentari</label>
+                    <textarea aria-describedby="textarea-description-4" class="textarea_exempel" [id]="'textarea'+i"
+                      rows="4" wrap="soft" readonly="readonly" [(ngModel)]="atgard.kommentar"
+                      name="kommentar"></textarea>
+                    <div class="c-textarea__wrapper">
+                      <p id="textarea-description-4" class="c-textarea__description"></p>
+                      <p class="c-text-counter__count_characters"></p>
                     </div>
-                  </ng-container>
-                  <ng-container *ngIf="atgard.id!==valdAtgard.id">
-                    <fieldset class="c-radio-btn-group c-radio-btn-group--tiny" role="radiogroup"
-                      aria-labelledby="legend_4">
-                      <p class="atgardBeskrivning">{{atgard.atgardTypModel.text}}</p>
-                      <div class="text">
-                        <span><b>Status: </b></span>
-                        <span>{{atgard.statusKod}}</span>
-                      </div>
-                    </fieldset>
-                    <div class="c-textarea c-textarea--readonly c-textarea--tiny">
-                      <label [for]="'textarea'+i">Kommentar</label>
-                      <textarea aria-describedby="textarea-description-4" class="textarea_exempel" [id]="'textarea'+i"
-                        rows="4" wrap="soft" [(ngModel)]="atgard.kommentar" name="kommentar"></textarea>
-                      <div class="c-textarea__wrapper">
-                        <p id="textarea-description-4" class="c-textarea__description"></p>
-                        <p class="c-text-counter__count_characters"></p>
-                      </div>
+                  </div>
+                  <div *ngIf="redigeraLageAtgarder && atgard.id === valdAtgardId" class="c-textarea c-textarea--tiny">
+                    <label [for]="'textarea'+i">Kommentar<i class="label--valfritt">(Valfritt)</i></label>
+                    <textarea aria-describedby="textarea-description-4" class="textarea_exempel" [id]="'textarea'+i"
+                      rows="4" wrap="soft" [(ngModel)]="atgard.kommentar" name="kommentar"></textarea>
+                    <div class="c-textarea__wrapper">
+                      <p id="textarea-description-4" class="c-textarea__description"></p>
+                      <p class="c-text-counter__count_characters"></p>
                     </div>
-                  </ng-container>
+                  </div>
+
                   <div class="inlineWrapper2 inlineWrapper2__compact">
                     <span>
                       <p class="header"> Skapad </p>
@@ -194,22 +178,16 @@
                       <p class="content"> {{atgard.uppdateradAv? atgard.uppdateradAv : '&ndash;'}}</p>
                     </span>
                   </div>
-                  <button *ngIf="redigeraLageAtgarder && atgard.id===valdAtgard.id"
-                    (click)="sparaRedigeratAtgard(atgard, $event)" class="c-btn c-btn--tiny ml-1">Spara</button>
-                  <ng-container *ngIf="atgard.id===valdAtgard.id">
-                    <button *ngIf="!redigeraLageAtgarder" (click)="toggleRedigeraLageAtgard($event, atgard, i)"
-                      class="c-btn c-btn--tiny ml-1">Redigera</button>
-                    <button *ngIf="redigeraLageAtgarder" (click)="toggleRedigeraLageAtgard($event, atgard, i)"
-                      class="c-btn c-btn--tiny ml-1">Avbryt</button>
-                  </ng-container>
-                  <ng-container *ngIf="atgard.id!==valdAtgard.id">
-                    <button (click)="toggleRedigeraLageAtgard($event, atgard, i)"
-                      class="c-btn c-btn--tiny ml-1">Redigera</button>
-                  </ng-container>
+                  <button *ngIf="!redigeraLageAtgarder" (click)="hanteraRedigeraAtgard(atgard, i)"
+                    class="c-btn c-btn--tiny ml-1">Redigera</button>
+                  <button *ngIf="redigeraLageAtgarder && valdAtgardId === atgard.id"
+                    (click)="sparaRedigeratAtgard(atgard, $event)" class="c-btn c-btn--tiny ml-1">Spara </button>
+                  <button *ngIf="redigeraLageAtgarder && valdAtgardId === atgard.id"
+                    (click)="hanteraAvbrytAtgard(atgard, i)" class="c-btn c-btn--tiny ml-1">Avbryt</button>
                 </div>
               </li>
             </ul>
-          </form>
+          </div>
         </div>
       </div>
       <div *ngIf="ingaAtgarder">
@@ -331,7 +309,7 @@
                 <div class="beslutWrapper">
                   <div class="beslutRad">
                     <ul aria-label="accordion Control Group links" class="c-accordion-group">
-                      <li aria-controls="content-1" aria-expanded="true" class="c-accordion--tiny open"
+                      <li aria-controls="content-1" aria-expanded="true" class="c-accordion-form--tiny open"
                         rel="c-accordion-js">
                         <button href="#item-three" name="item-three" id="arendedetalj" class="c-accordion-item__title">
                           <span class="accordion__icon toggle-down"></span>
@@ -342,7 +320,8 @@
                           <div class="beslutContent">
                             <div class="beslutContentText" *ngFor="let berArende_item of beslut.berakningarArende">
                               <span>{{berArende_item.berakningsTyp}}</span>
-                              <span class="beslutContentText__varde">{{berArende_item.varde | number:'':'sv'}} {{berArende_item.enhet}}</span>
+                              <span class="beslutContentText__varde">{{berArende_item.varde | number:'':'sv'}}
+                                {{berArende_item.enhet}}</span>
                             </div>
                           </div>
                         </div>
@@ -351,7 +330,7 @@
                   </div>
                   <div class="beslutRad">
                     <ul aria-label="accordion Control Group links" class="c-accordion-group">
-                      <li aria-controls="content-1" aria-expanded="true" class="c-accordion--tiny open"
+                      <li aria-controls="content-1" aria-expanded="true" class="c-accordion-form--tiny open"
                         rel="c-accordion-js">
                         <button href="#item-three" name="item-three" id="djurvälfärd" class="c-accordion-item__title">
                           <span class="accordion__icon toggle-down"></span>
@@ -363,7 +342,8 @@
                             <div class="beslutContentText"
                               *ngFor="let berDjurvalfard_item of beslut.berakningarDjurvalfard">
                               <span>{{berDjurvalfard_item.berakningsTyp}}</span>
-                              <span class="beslutContentText__varde">{{berDjurvalfard_item.varde | number:'':'sv'}} {{berDjurvalfard_item.enhet}}</span>
+                              <span class="beslutContentText__varde">{{berDjurvalfard_item.varde | number:'':'sv'}}
+                                {{berDjurvalfard_item.enhet}}</span>
                             </div>
                           </div>
                         </div>
@@ -380,13 +360,13 @@
     </div>
   </div>
 
-  <div *ngIf="showWarning" class="c-spinner">
+  <div *ngIf="warningMessage !== ''" class="c-spinner">
     <div class="c-spinner__container">
       <div class="c-banner" role="banner">
         <div class="c-banner__content">
           <span class="c-banner-icon sjv-i-varning" tabindex="-1"></span>
           <div class="c-banner__text">
-            <p>Kommentar måste anges.</p>
+            <p>{{warningMessage}}</p>
             <div class="c-banner__actionlink-container">
               <button class="c-btn--compact float-right mt-5" (click)="togglewarning()">Stäng</button>
             </div>
@@ -399,7 +379,7 @@
   <div class="c-toaster" role="alert">
     <div class="c-toaster__content">
       <p class="toasterMessage"></p>
-        <!-- <div class="c-toaster__actionlink-container">
+      <!-- <div class="c-toaster__actionlink-container">
         <button class="c-toaster__actionlink" (click)="closeToaster($event.target)" tabindex="0">Stäng</button>
       </div> -->
     </div>
