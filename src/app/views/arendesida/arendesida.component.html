@@ -141,7 +141,7 @@
                   </fieldset>
                   <div *ngIf="!(redigeraLageAtgarder && atgard.id === valdAtgardId)"
                     class="c-textarea c-textarea--readonly c-textarea--tiny">
-                    <label [for]="'textarea'+i">Kommentari</label>
+                    <label [for]="'textarea'+i">Kommentar</label>
                     <textarea aria-describedby="textarea-description-4" class="textarea_exempel" [id]="'textarea'+i"
                       rows="4" wrap="soft" readonly="readonly" [(ngModel)]="atgard.kommentar"
                       name="kommentar"></textarea>
