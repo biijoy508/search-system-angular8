@@ -5,7 +5,6 @@ import { MassHanteringComponent } from './mass-hantering/mass-hantering.componen
 import { ViewComponentsModule } from '../view-components/view-components.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { filtreraAtgarderPipe } from './filtreraAtgarder.pipe';
 import { DomChangeDirective } from './dom-change.directive';
 import { ArendesidaComponent } from './arendesida/arendesida.component';
 
@@ -14,7 +13,7 @@ import { ArendesidaComponent } from './arendesida/arendesida.component';
 @NgModule({
   declarations: [
     HemsidaComponent, MassHanteringComponent,
-    filtreraAtgarderPipe, DomChangeDirective, ArendesidaComponent
+    DomChangeDirective, ArendesidaComponent
   ],
   imports: [
     CommonModule, ViewComponentsModule, FormsModule, ReactiveFormsModule, RouterModule

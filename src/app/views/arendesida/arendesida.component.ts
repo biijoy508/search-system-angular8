@@ -1,3 +1,4 @@
+// tslint:disable: prefer-for-of
 import { AfterViewInit, Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { cloneDeep } from 'lodash';
@@ -14,6 +15,7 @@ import { Berakning } from 'src/app/model/berakning';
 import { Beslut } from 'src/app/model/beslut';
 import { ApiService } from 'src/app/services/api.service';
 import { environment } from 'src/environments/environment';
+// tslint:disable-next-line: max-line-length
 import { avbrytLaggTillAtgard, deselectLaggtillAtgardSelectElement, hanteraLaggTillAtgardBekraftaKnappStatus } from './arendesidaFunktioner/arendesidaSkapaManuelAtgard';
 import { showToaster, kontrolleraFlikar } from './arendesidaFunktioner/arendesidaUtility';
 import { redigeraAnsDjurValView } from './arendesidaFunktioner/arendesidaAnsokanDjurvalfard';
@@ -22,6 +24,7 @@ interface OandradeAtgard {
   atgardId: string;
   atgard: Atgard;
 }
+
 @Component({
   selector: 'app-arendesida',
   templateUrl: './arendesida.component.html',
@@ -38,6 +41,7 @@ export class ArendesidaComponent implements AfterViewInit {
   valdAtgardTyp: AtgardTypModel;
   arendeVersionLista: ArendeVersion[] = [];
   ansokanDjurvalfard: AnsokanDjurvalfard;
+  oandradeAnsokanDjurvalfard: AnsokanDjurvalfard;
   ansokanDVFArendeversion: AnsokanDVFArendeversion;
   attributLista: Attribut[] = [];
   valdArendeversion: ArendeVersion;
@@ -47,7 +51,7 @@ export class ArendesidaComponent implements AfterViewInit {
   attributFinns: boolean;
   ingaAtgarder: boolean;
   redigeraLageAtgarder = false;
-
+  redigeraLageAnsDjur = false;
   PPNnummer: string[];
 
   filtreringsAlternativ = 'alla';
@@ -64,6 +68,9 @@ export class ArendesidaComponent implements AfterViewInit {
   atgardSelectElement: HTMLSelectElement;
   skapaManuellAtgardBlock: HTMLDivElement;
   laggTillAtgardBekraftaKnapp: HTMLButtonElement;
+  redigerbarAnsokanDjurvalfardElements: NodeListOf<HTMLElement>;
+  oredigerbarAnsokanDjurvalfardElements: NodeListOf<HTMLElement>;
+
   constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router, private titleService: Title) {
     this.windowRef = window;
     this.arende = new Arende('', '', '', '', '', '', '', '', '', '');
@@ -80,7 +87,8 @@ export class ArendesidaComponent implements AfterViewInit {
     this.atgardSelectElement = document.querySelector('#manuellAtgardTyp') as HTMLSelectElement;
     this.skapaManuellAtgardBlock = document.querySelector('.skapaManuellAtgard') as HTMLDivElement;
     this.laggTillAtgardBekraftaKnapp = document.querySelector('#bekraftaLaggTillAtgard') as HTMLButtonElement;
-
+    this.redigerbarAnsokanDjurvalfardElements = document.querySelectorAll('.redigerbarAnsDjurElement');
+    this.oredigerbarAnsokanDjurvalfardElements = document.querySelectorAll('.oredigerbarAnsDjurElement');
     const arendeParam = {
       arendeid: this.arendeId,
       kundnummer: this.kundNummer
@@ -120,6 +128,7 @@ export class ArendesidaComponent implements AfterViewInit {
     });
   }
 
+  // tslint:disable-next-line: use-lifecycle-interface
   ngOnDestroy() {
     this.hideSpinner();
   }
@@ -128,9 +137,69 @@ export class ArendesidaComponent implements AfterViewInit {
     this.alive = false;
     this.showSpinner = false;
   }
-  redigeraView(button: HTMLButtonElement) {
-    redigeraAnsDjurValView(button);
+
+  redigeraAnsDjurValView(button: HTMLButtonElement, ansokanDjurvalfard: AnsokanDjurvalfard) {
+
+      this.oandradeAnsokanDjurvalfard = cloneDeep(ansokanDjurvalfard);
+      this.redigeraLageAnsDjur = true;
+
+      for (let i = 0; i < this.redigerbarAnsokanDjurvalfardElements.length; i++) {
+      (this.redigerbarAnsokanDjurvalfardElements[i] as HTMLDivElement).style.display = 'block';
+    }
+      for (let j = 0; j < this.oredigerbarAnsokanDjurvalfardElements.length; j++) {
+      (this.oredigerbarAnsokanDjurvalfardElements[j] as HTMLDivElement).style.display = 'none';
+    }
   }
+
+  avbrytAnsDjurValView(button: HTMLButtonElement, ansokanDjurvalfard: AnsokanDjurvalfard) {
+    const ppnNumberRedigeringsUI = (document.querySelector('.tagValuesHolder') as HTMLInputElement);
+    ppnNumberRedigeringsUI.value = this.ansokanDjurvalfard.ppnLista.toString();
+    this.windowRef.komponentbibliotek.initTagsInput();
+    this.redigeraLageAnsDjur = false;
+    // console.log(this.PPNnummer);
+    this.ansokanDjurvalfard = cloneDeep(this.oandradeAnsokanDjurvalfard);
+    for (let i = 0; i < this.redigerbarAnsokanDjurvalfardElements.length; i++) {
+      (this.redigerbarAnsokanDjurvalfardElements[i] as HTMLDivElement).style.display = 'none';
+    }
+    for (let j = 0; j < this.oredigerbarAnsokanDjurvalfardElements.length; j++) {
+      (this.oredigerbarAnsokanDjurvalfardElements[j] as HTMLDivElement).style.display = 'block';
+    }
+  }
+
+  sparaAnsDjurValView(button: HTMLButtonElement, ansokanDjurvalfard: AnsokanDjurvalfard) {
+    const ppnNumberRedigeringsUI = (document.querySelector('.tagValuesHolder') as HTMLInputElement);
+    this.ansokanDjurvalfard.ppnLista = ppnNumberRedigeringsUI.value.split(',');
+    this.redigeraLageAnsDjur = false;
+    this.sparaAnokanDjurvalfard();
+
+    for (let i = 0; i < this.redigerbarAnsokanDjurvalfardElements.length; i++) {
+      (this.redigerbarAnsokanDjurvalfardElements[i] as HTMLDivElement).style.display = 'none';
+    }
+    for (let j = 0; j < this.oredigerbarAnsokanDjurvalfardElements.length; j++) {
+      (this.oredigerbarAnsokanDjurvalfardElements[j] as HTMLDivElement).style.display = 'block';
+    }
+  }
+
+  sparaAnokanDjurvalfard() {
+
+    this.ansokanDVFArendeversion.antalDjur = this.ansokanDjurvalfard.antalDjur;
+    this.ansokanDVFArendeversion.arendeTyp = this.arende.arendeTyp;
+    this.ansokanDVFArendeversion.arendeversionId = this.valdArendeversion.arendeversionId;
+
+    this.apiService.postData(environment.redigeraAntalDjurUrl, this.ansokanDVFArendeversion).subscribe(
+      (data: string) => {
+
+      },
+      (error: any) => {
+
+      },
+      () => {
+      //  this.hamtaAnsokanDjurvalfard();
+      }
+    );
+
+  }
+
   filtreraAtgarder(filtreringsAlternativ) {
     this.filtreringsAlternativ = filtreringsAlternativ;
     const atgardListaForm = document.querySelector('#atgardLista');
@@ -272,11 +341,13 @@ export class ArendesidaComponent implements AfterViewInit {
       this.hamtaBeslut();
     }
   }
+
   hamtaAnsokanDjurvalfard() {
     this.apiService.getData(`${environment.ansokanDjurvalfardUrl}/${this.valdArendeversion.arendeversionId}`).subscribe(
       (data: any) => {
         this.ansokanDjurvalfard = data;
         this.PPNnummer = this.ansokanDjurvalfard.ppnLista;
+        //console.log(this.PPNnummer);
         this.errorMessage = '';
         setTimeout(() => {
           this.windowRef.komponentbibliotek.init();
@@ -288,17 +359,6 @@ export class ArendesidaComponent implements AfterViewInit {
       });
   }
 
-  sparaAnokanDjurvalfard() {
-
-    this.ansokanDVFArendeversion.antalDjur = this.ansokanDjurvalfard.antalDjur;
-    this.ansokanDVFArendeversion.arendeTyp = this.arende.arendeTyp;
-    this.ansokanDVFArendeversion.arendeversionId = this.valdArendeversion.arendeversionId;
-
-    this.apiService.postData(environment.redigeraAntalDjurUrl, this.ansokanDVFArendeversion).subscribe(
-      (data: string) => {
-        this.hamtaAnsokanDjurvalfard();
-      });
-  }
 
 
   hamtaAttribut() {
