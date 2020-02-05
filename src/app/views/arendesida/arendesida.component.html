@@ -93,7 +93,8 @@
         </div>
         <button class="c-btn--small ml-1" id="bekraftaLaggTillAtgard" (click)="skapaManuellAtgard($event)">Lägg
           till</button>
-        <button class="c-btn--small ml-1" id="avbrytLaggTillAtgard" (click)="avbrytLaggTillAtgard()">Avbryt</button>
+        <button class="c-btn--small ml-2" id="avbrytLaggTillAtgard"
+          (click)="avbrytLaggTillAtgard()">Avbryt</button>
       </div>
       <div *ngIf="!ingaAtgarder" class="c-filterbar" rel="c-filterbar-js">
         <div class="c-filterbar__labels">
@@ -181,7 +182,7 @@
                   <button *ngIf="redigeraLageAtgarder && valdAtgardId === atgard.id"
                     (click)="sparaRedigeratAtgard(atgard, $event)" class="c-btn--small ml-1">Spara </button>
                   <button *ngIf="redigeraLageAtgarder && valdAtgardId === atgard.id"
-                    (click)="hanteraAvbrytAtgard(atgard, i)" class="c-btn--small ml-1">Avbryt</button>
+                    (click)="hanteraAvbrytAtgard(atgard, i)" class="c-btn--small ml-2">Avbryt</button>
                 </div>
               </li>
             </ul>
@@ -234,7 +235,8 @@
               <label for="input-text-1" tabindex="-1">PPN</label>
               <div class="c-tagsinput-field" rel="c-tagsinput-js">
                 <div class="tagsContainer">
-                  <input autocomplete="off" class="tagValuesHolder" type="hidden" [(ngModel)]="PPNnummer">
+                  <input autocomplete="off" class="tagValuesHolder" type="hidden" [value]="ansokanDjurvalfard.ppnLista">
+                  <!-- <input autocomplete="off" class="tagValuesHolder" type="text" style="display: none;" [(ngModel)]="PPNnummer">'' -->
                   <input autocomplete="off" type="text" id="1" placeholder="">
                 </div>
                 <div class="select__arrow">
@@ -257,9 +259,13 @@
                   tabindex="0" name="text6" [(ngModel)]="ansokanDjurvalfard.antalDjurenheter">
               </div>
             </div>
+            <button *ngIf="!tidigareVersion && redigeraLageAnsDjur === false" class="c-btn--small mt-2 mr-2"
+              (click)="redigeraAnsDjurValView($event.target, ansokanDjurvalfard)">Redigera</button>
+              <button *ngIf="!tidigareVersion && redigeraLageAnsDjur === true" class="c-btn--small mt-2 mr-2"
+              (click)="sparaAnsDjurValView($event.target, ansokanDjurvalfard)">Spara</button>
+              <button *ngIf="!tidigareVersion && redigeraLageAnsDjur === true" class="c-btn--small mt-2"
+              (click)="avbrytAnsDjurValView($event.target, ansokanDjurvalfard)">Avbryt</button>
 
-            <button *ngIf="!tidigareVersion" class="c-btn--small mt-2"
-              (click)="redigeraView($event.target)">Redigera</button>
           </div>
           <div id="panel2" class="c-tabs__panel" role="tabpanel" aria-labelledby="panel2__label">
             <div *ngIf="attributFinns">
