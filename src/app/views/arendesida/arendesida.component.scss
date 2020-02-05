@@ -250,7 +250,7 @@ p {
   font-size: 0.8125rem;
 }
 
-form .c-accordion--tiny .c-accordion-item__title .accordion__title-text {
+div .c-accordion-form--tiny .c-accordion-item__title .accordion__title-text {
   margin-right: 2rem;
 }
 
@@ -373,13 +373,13 @@ form .c-accordion--tiny .c-accordion-item__title .accordion__title-text {
     width: 100%;
   }
 
-  form .c-accordion--tiny .c-accordion-item__title .accordion__title-text {
+  div .c-accordion-form--tiny .c-accordion-item__title .accordion__title-text {
     margin-right: 1rem;
   }
 }
 
-.c-toaster p{
-   font-weight: bold;
+.c-toaster p {
+  font-weight: bold;
 }
 
 @media (max-width: 576px) {

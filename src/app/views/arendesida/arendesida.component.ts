@@ -45,7 +45,7 @@ export class ArendesidaComponent implements AfterViewInit {
   beslutFinns: boolean;
   attributFinns: boolean;
   ingaAtgarder: boolean;
-  redigeraLageAtgarder: boolean;
+  redigeraLageAtgarder = false;
 
   PPNnummer = '43,42';
 
@@ -56,9 +56,8 @@ export class ArendesidaComponent implements AfterViewInit {
   errorMessage = '';
   showSpinner = true;
   spinnerText = 'Sidan laddas';
-
-  valdAtgard: Atgard;
-  showWarning = false;
+  valdAtgardId = '';
+  warningMessage = '';
   alive = true;
 
   atgardSelectElement: HTMLSelectElement;
@@ -71,7 +70,6 @@ export class ArendesidaComponent implements AfterViewInit {
     const berakning = new Berakning('', '', '');
     this.beslut = new Beslut('', '', '', '', '', '', berakning, [], []);
     this.valdAtgardTyp = new AtgardTypModel('', '', '', [], '', '');
-    this.valdAtgard = new Atgard(this.valdAtgardTyp, '', '', '', '', '', '', '', '', '', '', '');
   }
 
   ngAfterViewInit() {
@@ -93,7 +91,7 @@ export class ArendesidaComponent implements AfterViewInit {
     this.hamtaArendeInformation(arendeParam);
   }
 
-    hamtaArendeInformation(arendeParam: { arendeid: any; kundnummer: any; }) {
+  hamtaArendeInformation(arendeParam: { arendeid: any; kundnummer: any; }) {
     this.apiService.getChainedDataArendeInformation(arendeParam).pipe(takeWhile(() => this.alive)).subscribe((data: any) => {
       this.atgardLista = [];
       this.arendeVersionLista = [];
@@ -160,36 +158,41 @@ export class ArendesidaComponent implements AfterViewInit {
       }
     }
   }
-
-  toggleRedigeraLageAtgard(event, oandradeAtgard: Atgard, index) {
-    this.valdAtgard = this.atgardLista[index];
-    if (event.target.innerText === 'Redigera') {
+  hanteraRedigeraAtgard(atgard: Atgard, index) {
+    this.valdAtgardId = atgard.id;
+    if (this.redigeraLageAtgarder === false) {
       this.redigeraLageAtgarder = true;
       this.oandradeAtgardLista.push(
         {
-        atgardId: oandradeAtgard.id,
-          atgard: cloneDeep(oandradeAtgard)
-      });
-
-    } else if (event.target.innerText === 'Avbryt') {
-      this.redigeraLageAtgarder = false;
-      let gammalValueIndex = this.oandradeAtgardLista.findIndex(obj => obj.atgardId === oandradeAtgard.id);
-      this.atgardLista[index] = cloneDeep(this.oandradeAtgardLista[gammalValueIndex].atgard);
-      this.oandradeAtgardLista.splice(gammalValueIndex, 1);
+          atgardId: atgard.id,
+          atgard: cloneDeep(atgard)
+        });
+    } else {
+      showToaster('Osparade åtgard finns!! ');
     }
   }
-  sparaRedigeratAtgard(atgard, event) {
-    let gammalValueIndex = this.oandradeAtgardLista.findIndex(obj => obj.atgardId === atgard.id);
+  hanteraAvbrytAtgard(atgard: Atgard, index) {
+    this.redigeraLageAtgarder = false;
+    const gammalValueIndex = this.oandradeAtgardLista.findIndex(obj => obj.atgardId === atgard.id);
+    this.atgardLista[index] = cloneDeep(this.oandradeAtgardLista[gammalValueIndex].atgard);
     this.oandradeAtgardLista.splice(gammalValueIndex, 1);
-
+    setTimeout(() => {
+      const accordion = document.getElementById(atgard.id + '-accordion') as HTMLElement;
+      accordion.classList.add('open');
+      this.windowRef.komponentbibliotek.initAccordion();
+    }, 100);
+  }
+  sparaRedigeratAtgard(atgard, event) {
     if (atgard.statusKod === 'ÖPP' || (atgard.kommentar != null && atgard.kommentar !== '')) {
+      this.redigeraLageAtgarder = false;
+      const gammalValueIndex = this.oandradeAtgardLista.findIndex(obj => obj.atgardId === atgard.id);
+      this.oandradeAtgardLista.splice(gammalValueIndex, 1);
       const sparaKnapp = event.target as HTMLButtonElement;
       sparaKnapp.disabled = true;
       this.apiService.postData(environment.redigeraAtgardUrl, atgard).subscribe(
         (data: Atgard) => {
           const atgardIndex = this.atgardLista.findIndex(item => item.id === data.id);
           this.atgardLista[atgardIndex] = data;
-          this.redigeraLageAtgarder = false;
           sparaKnapp.disabled = false;
           this.errorMessage = '';
         },
@@ -199,12 +202,14 @@ export class ArendesidaComponent implements AfterViewInit {
         },
         () => {
           setTimeout(() => {
-            this.windowRef.komponentbibliotek.init();
-          }, 2000);
+            const accordion = document.getElementById(atgard.id + '-accordion') as HTMLElement;
+            accordion.classList.add('open');
+            this.windowRef.komponentbibliotek.initAccordion();
+          }, 500);
         }
       );
     } else {
-      this.showWarning = true;
+      this.warningMessage = 'Kommentar måste anges.';
     }
   }
   hamtaManuellaAtgardTyper() {
@@ -256,7 +261,6 @@ export class ArendesidaComponent implements AfterViewInit {
       );
   }
 
-
   hamtaDataForValdFlik() {
     if (this.valdFlik === 'ansokanDjurvalfard') {
       this.hamtaAnsokanDjurvalfard();
@@ -266,7 +270,6 @@ export class ArendesidaComponent implements AfterViewInit {
       this.hamtaBeslut();
     }
   }
-
   hamtaAnsokanDjurvalfard() {
     this.apiService.getData(`${environment.ansokanDjurvalfardUrl}/${this.valdArendeversion.arendeversionId}`).subscribe(
       (data: any) => {
@@ -358,7 +361,7 @@ export class ArendesidaComponent implements AfterViewInit {
   }
 
   togglewarning() {
-    this.showWarning = false;
+    this.warningMessage = '';
   }
   avbrytLaggTillAtgard() {
     avbrytLaggTillAtgard(this.skapaManuellAtgardBlock, this.atgardSelectElement);
