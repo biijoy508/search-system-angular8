@@ -156,7 +156,6 @@ export class ArendesidaComponent implements AfterViewInit {
     ppnNumberRedigeringsUI.value = this.ansokanDjurvalfard.ppnLista.toString();
     this.windowRef.komponentbibliotek.initTagsInput();
     this.redigeraLageAnsDjur = false;
-    // console.log(this.PPNnummer);
     this.ansokanDjurvalfard = cloneDeep(this.oandradeAnsokanDjurvalfard);
     for (let i = 0; i < this.redigerbarAnsokanDjurvalfardElements.length; i++) {
       (this.redigerbarAnsokanDjurvalfardElements[i] as HTMLDivElement).style.display = 'none';

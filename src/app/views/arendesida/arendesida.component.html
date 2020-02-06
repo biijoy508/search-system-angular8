@@ -93,17 +93,27 @@
         </div>
         <button class="c-btn--small ml-1" id="bekraftaLaggTillAtgard" (click)="skapaManuellAtgard($event)">Lägg
           till</button>
-        <button class="c-btn--small ml-2" id="avbrytLaggTillAtgard"
-          (click)="avbrytLaggTillAtgard()">Avbryt</button>
+        <button class="c-btn--small ml-2" id="avbrytLaggTillAtgard" (click)="avbrytLaggTillAtgard()">Avbryt</button>
       </div>
-      <div *ngIf="!ingaAtgarder" class="c-filterbar" rel="c-filterbar-js">
-        <div class="c-filterbar__labels">
-          <button class="filter-label is-active" id="alla" (click)="filtreraAtgarder($event.target.id)"> Visa
-            alla</button>
-          <button class="filter-label" id="öppna" (click)="filtreraAtgarder($event.target.id)"> Öppna</button>
-          <button class="filter-label" id="stängda" (click)="filtreraAtgarder($event.target.id)"> Stängda</button>
-        </div>
-        <div id="atgardLista" class="c-filterbar__content">
+      <div *ngIf="!ingaAtgarder" class="c-tabs" rel="c-tabs-js">
+
+        <ul id="myTabs_1" class="c-tabs__labels" role="tablist" aria-label="Code Examples">
+          <li role="presentation">
+            <button class="tab-label is-active" id="panel1__label" aria-selected="true" role="tab"
+              aria-controls="panel1" tabindex="-1" (click)="filtreraAtgarder($event.target.id)"><span>Visa
+                alla</span></button>
+          </li>
+          <li role="presentation">
+            <button class="tab-label" id="panel2__label" aria-selected="false" aria-controls="panel2" tabindex="-1"
+              role="tab" (click)="filtreraAtgarder($event.target.id)"><span>Öppna</span></button>
+          </li>
+          <li role="presentation">
+            <button id="panel3__label" aria-selected="false" class="tab-label" aria-controls="panel3" role="tab"
+              (click)="filtreraAtgarder($event.target.id)"><span>Stängda</span></button>
+          </li>
+        </ul>
+
+        <div id="atgardLista">
           <div *ngFor="let atgard of atgardLista; index as i">
             <ul aria-label="accordion Control Group links" class="c-accordion-group" [id]="this.atgard.statusKod">
               <li aria-controls="content-1" aria-expanded="true" [id]="this.atgard.id + '-accordion'"
@@ -196,18 +206,19 @@
 
     <div id='utbetFlikar' class="col-md-8 border-left">
       <div class="c-tabs" rel="c-tabs-js">
-        <ul id="myTabs_1" class="c-tabs__labels" role="tablist" aria-label="Code Examples">
-          <li class="c-tabs__title" role="presentation">
+        <ul id="myTabs_1" class="c-tabs__labels" role="tablist" aria-label="Utbetalnings flikar">
+          <li role="presentation">
             <button id="ansokanDjurvalfard" href="#panel1" aria-selected="true" role="tab" aria-controls="panel1"
-              tabindex="-1" class="is-active" (click)="sattValdFlik('ansokanDjurvalfard')">Ansökan Djurvälfärd</button>
+              tabindex="-1" class="tab-label is-active">
+              <span>Ansökan Djurvälfärd</span></button>
           </li>
-          <li class="c-tabs__title" role="presentation">
+          <li role="presentation">
             <button id="attribut" href="#panel2" aria-selected="false" aria-controls="panel2" role="tab" tabindex="-1"
-              (click)="sattValdFlik('attribut')">Attribut</button>
+              class="tab-label"><span>Attribut</span></button>
           </li>
-          <li class="c-tabs__title" role="presentation">
+          <li role="presentation">
             <button id="beslut" href="#panel3" aria-selected="false" aria-controls="panel3" role="tab"
-              (click)="sattValdFlik('beslut')">Beslut</button>
+              class="tab-label"><span>Beslut</span></button>
           </li>
         </ul>
         <div class="c-tabs__content" data-tabs="myTabs_1">
@@ -235,9 +246,8 @@
               <label for="input-text-1" tabindex="-1">PPN</label>
               <div class="c-tagsinput-field" rel="c-tagsinput-js">
                 <div class="tagsContainer">
-                  <input autocomplete="off" class="tagValuesHolder" type="hidden" [value]="ansokanDjurvalfard.ppnLista">
-                  <!-- <input autocomplete="off" class="tagValuesHolder" type="text" style="display: none;" [(ngModel)]="PPNnummer">'' -->
-                  <input autocomplete="off" type="text" id="1" placeholder="">
+                  <input autocomplete="off" tabindex="-1" aria-hidden="true" class="c-tagsinput__valueholder" type="text" [value]="ansokanDjurvalfard.ppnLista">
+                  <input autocomplete="off" class="c-tagsinput__textEditor" type="text" id="tagsinput-1" placeholder="">
                 </div>
                 <div class="select__arrow">
                   <span class="sjv-i-multiselect-ikon"></span>
@@ -261,9 +271,9 @@
             </div>
             <button *ngIf="!tidigareVersion && redigeraLageAnsDjur === false" class="c-btn--small mt-2 mr-2"
               (click)="redigeraAnsDjurValView($event.target, ansokanDjurvalfard)">Redigera</button>
-              <button *ngIf="!tidigareVersion && redigeraLageAnsDjur === true" class="c-btn--small mt-2 mr-2"
+            <button *ngIf="!tidigareVersion && redigeraLageAnsDjur === true" class="c-btn--small mt-2 mr-2"
               (click)="sparaAnsDjurValView($event.target, ansokanDjurvalfard)">Spara</button>
-              <button *ngIf="!tidigareVersion && redigeraLageAnsDjur === true" class="c-btn--small mt-2"
+            <button *ngIf="!tidigareVersion && redigeraLageAnsDjur === true" class="c-btn--small mt-2"
               (click)="avbrytAnsDjurValView($event.target, ansokanDjurvalfard)">Avbryt</button>
 
           </div>
@@ -361,52 +371,51 @@
         </div>
       </div>
     </div>
-  </div>
 
-  <div *ngIf="warningMessage !== ''" class="c-spinner">
-    <div class="c-spinner__container">
-      <div class="c-banner" role="banner">
-        <div class="c-banner__content">
-          <span class="c-banner-icon sjv-i-varning" tabindex="-1"></span>
-          <div class="c-banner__text">
-            <p>{{warningMessage}}</p>
-            <div class="c-banner__actionlink-container">
-              <button class="c-btn--medium float-right mt-5" (click)="togglewarning()">Stäng</button>
+    <div *ngIf="warningMessage !== ''" class="c-spinner">
+      <div class="c-spinner__container">
+        <div class="c-banner" role="banner">
+          <div class="c-banner__content">
+            <span class="c-banner-icon sjv-i-varning" tabindex="-1"></span>
+            <div class="c-banner__text">
+              <p>{{warningMessage}}</p>
+              <div class="c-banner__actionlink-container">
+                <button class="c-btn--medium float-right mt-5" (click)="togglewarning()">Stäng</button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="c-toaster" role="alert">
-    <div class="c-toaster__content">
-      <p class="toasterMessage"></p>
-      <!-- <div class="c-toaster__actionlink-container">
+    <div class="c-toaster" role="alert">
+      <div class="c-toaster__content">
+        <p class="toasterMessage"></p>
+        <!-- <div class="c-toaster__actionlink-container">
         <button class="c-toaster__actionlink" (click)="closeToaster($event.target)" tabindex="0">Stäng</button>
       </div> -->
-    </div>
-  </div>
-  <div *ngIf="showSpinner" class="c-spinner">
-    <div class="c-spinner__container">
-      <div class="c-spinner__animation">
-        <div class="c-spinner__animation__item">
-          <div class="c-spinner__circle circle--3"></div>
-        </div>
-        <div class="c-spinner__animation__item">
-          <div class="c-spinner__circle circle--2"></div>
-        </div>
-        <div class="c-spinner__animation__item">
-          <div class="c-spinner__circle circle--1"></div>
-        </div>
       </div>
-      <div class="c-spinner__content">
-        <span>{{spinnerText}}</span>
-        <span class="cursor">
-          <span class="sjv-i-cursor">
-          </span>
-        </span> <br><br>
-        <button class="c-btn--medium" (click)="hideSpinner()">Avbryt</button>
+    </div>
+    <div *ngIf="showSpinner" class="c-spinner">
+      <div class="c-spinner__container">
+        <div class="c-spinner__animation">
+          <div class="c-spinner__animation__item">
+            <div class="c-spinner__circle circle--3"></div>
+          </div>
+          <div class="c-spinner__animation__item">
+            <div class="c-spinner__circle circle--2"></div>
+          </div>
+          <div class="c-spinner__animation__item">
+            <div class="c-spinner__circle circle--1"></div>
+          </div>
+        </div>
+        <div class="c-spinner__content">
+          <span>{{spinnerText}}</span>
+          <span class="cursor">
+            <span class="sjv-i-cursor">
+            </span>
+          </span> <br><br>
+          <button class="c-btn--medium" (click)="hideSpinner()">Avbryt</button>
+        </div>
       </div>
     </div>
   </div>
