@@ -27,10 +27,10 @@
 }
 
 @media (max-width: 768px) {
-  .c-btn,
-  .c-btn--compact,
+  .c-btn--large,
+  .c-btn--medium,
   .c-btn--primary,
-  .c-btn--tiny {
+  .c-btn--small {
     width: auto;
     margin-right: 1rem;
   }

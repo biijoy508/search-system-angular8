@@ -7,7 +7,7 @@
   </div>
   <div class="row">
     <div class="col-sm-4">
-      <div class="c-select c-select--tiny">
+      <div class="c-select--medium">
         <label for="myndighet">Myndighet</label>
         <div class="c-select__wrapper">
           <select id="myndighet" [(ngModel)]="sokFilter.myndighet">
@@ -19,7 +19,7 @@
           </span>
         </div>
       </div>
-      <div class="c-select c-select--tiny">
+      <div class="c-select--medium">
         <label for="stodar">Stödår</label>
         <div class="c-select__wrapper">
           <select id="stodar" [(ngModel)]="sokFilter.stodAr">
@@ -31,7 +31,7 @@
           </span>
         </div>
       </div>
-      <div class="c-multiselect--tiny" rel="c-multiselect-js">
+      <div class="c-multiselect--medium" rel="c-multiselect-js">
         <label for="arendetyp" class="c-multiselect__label">Ärendetyp</label>
         <div class="c-select__wrapper">
           <select name="arendeTypList[]" id="arendeTyp" multiple="multiple" #arendeTypList
@@ -42,7 +42,7 @@
           </select>
         </div>
       </div>
-      <div class="c-select c-select--tiny">
+      <div class="c-select--medium">
         <label for="ansokansTypList">Ansökanstyp</label>
         <div class="c-select__wrapper">
           <select name="ansokansTypListn" id="ansokansTyp" [(ngModel)]="sokFilter.ansokansTypList[0]">
@@ -54,7 +54,7 @@
           </span>
         </div>
       </div>
-      <div class="c-select c-select--tiny">
+      <div class="c-select--medium">
         <label for="franstatus">Från status</label>
         <div class="c-select__wrapper">
           <select id="franstatus" [(ngModel)]="sokFilter.franStatus">
@@ -66,7 +66,7 @@
           </span>
         </div>
       </div>
-      <div class="c-select c-select--tiny">
+      <div class="c-select--medium">
         <label for="tillstatus">Till status</label>
         <div class="c-select__wrapper">
           <select id="tillstatus" [(ngModel)]="sokFilter.tillStatus">
@@ -81,9 +81,9 @@
       <button
         *ngIf="sokFilter.myndighet !== '' && sokFilter.stodAr !== '' && sokFilter.arendeTypList.length !== 0
       && sokFilter.ansokansTypList.length !== 0 && sokFilter.ansokansTypList[0] !== '' && sokFilter.franStatus !== '' && sokFilter.tillStatus !== '';else disabledButton"
-        class="c-btn--primary c-btn--compact" (click)="visaBekraftelse()">Ändra status</button>
+        class="c-btn--primary c-btn--medium" (click)="visaBekraftelse()">Ändra status</button>
       <ng-template #disabledButton>
-        <button class="c-btn--primary c-btn--compact" disabled>Ändra status</button>
+        <button class="c-btn--primary c-btn--medium" disabled>Ändra status</button>
       </ng-template>
     </div>
     <div class="col-sm-8 mt-2">
@@ -115,8 +115,8 @@
               <p> Vill du verkligen massändra status på ditt urval?</p>
               <p> Statusändringen berör {{antalPaverkadeArenden}} ärenden. </p>
               <div class="c-banner__actionlink-container">
-                <button class="c-btn--compact" (click)="andraStatus()">Ändra status</button>
-                <button class="c-btn--compact" (click)="togglewarning()">Avbryt</button>
+                <button class="c-btn--medium" (click)="andraStatus()">Ändra status</button>
+                <button class="c-btn--medium" (click)="togglewarning()">Avbryt</button>
               </div>
             </div>
           </div>
