@@ -23,7 +23,7 @@
         <div class="tidigareVersion" *ngIf="tidigareVersion"> Du tittar på en tidigare version av ärendet. </div>
         <div class="versionPosition">
           <p> Version :</p>
-          <div class="c-select c-select--tiny version">
+          <div class="c-select--medium version">
             <div class="c-select__wrapper">
               <select (change)='visaTidigareVersion($event.target)' id="version">
                 <option *ngFor="let arendeversion_item of arendeVersionLista"
@@ -72,10 +72,10 @@
   <div class="row">
     <div class="col-md-4">
       <h5 class="e-h5">Åtgärder</h5>
-      <button class="c-btn c-btn--compact" (click)="hamtaManuellaAtgardTyper()">
+      <button class="c-btn--medium" (click)="hamtaManuellaAtgardTyper()">
         <span class="sjv-i-plus"></span>Lägg till åtgärd</button>
       <div class="skapaManuellAtgard">
-        <div class="c-select c-select--tiny">
+        <div class="c-select--medium">
           <label>Skapa manuell åtgärd</label>
           <div class="c-select__wrapper">
             <select id="manuellAtgardTyp" [(ngModel)]="valdAtgardTyp">
@@ -91,9 +91,9 @@
             </span>
           </div>
         </div>
-        <button class="c-btn c-btn--tiny ml-1" id="bekraftaLaggTillAtgard" (click)="skapaManuellAtgard($event)">Lägg
+        <button class="c-btn--small ml-1" id="bekraftaLaggTillAtgard" (click)="skapaManuellAtgard($event)">Lägg
           till</button>
-        <button class="c-btn c-btn--tiny ml-1" id="avbrytLaggTillAtgard"
+        <button class="c-btn--small ml-1" id="avbrytLaggTillAtgard"
           (click)="avbrytLaggTillAtgard()">Avbryt</button>
       </div>
       <div *ngIf="!ingaAtgarder" class="c-filterbar" rel="c-filterbar-js">
@@ -107,7 +107,7 @@
           <div *ngFor="let atgard of atgardLista; index as i">
             <ul aria-label="accordion Control Group links" class="c-accordion-group" [id]="this.atgard.statusKod">
               <li aria-controls="content-1" aria-expanded="true" [id]="this.atgard.id + '-accordion'"
-                class="c-accordion-form--tiny" rel="c-accordion-js">
+                class="c-accordion-form--medium" rel="c-accordion-js">
                 <button tabindex="0" name="item-one" [id]="'atgard'+i" class="c-accordion-item__title">
                   <span class="accordion__icon toggle-down"></span>
                   <span class="accordion__title-text no-space-break">{{atgard.atgardTypModel.kod}} -
@@ -120,7 +120,7 @@
 
                 <div role="region" [aria-labelledby]="'atgard'+i" aria-hidden="false" id="content-1"
                   class="c-accordion-item__content">
-                  <fieldset class="c-radio-btn-group c-radio-btn-group--tiny" role="radiogroup"
+                  <fieldset class="c-radio-btn-group--medium" role="radiogroup"
                     aria-labelledby="legend_4">
                     <p class="atgardBeskrivning">{{atgard.atgardTypModel.text}}</p>
 
@@ -131,7 +131,7 @@
 
                     <div *ngIf="redigeraLageAtgarder && atgard.id === valdAtgardId">
                       <div *ngFor="let mojligStatus_item of atgard.atgardTypModel.mojligaStatusar"
-                        class="c-radio-btn c-radio-btn--tiny">
+                        class="c-radio-btn--medium">
                         <input [id]="mojligStatus_item + i" name="radiogroup_tiny" type="radio"
                           [value]="mojligStatus_item" [(ngModel)]="atgard.statusKod">
                         <label [for]="mojligStatus_item + i">{{mojligStatus_item}}</label>
@@ -140,7 +140,7 @@
 
                   </fieldset>
                   <div *ngIf="!(redigeraLageAtgarder && atgard.id === valdAtgardId)"
-                    class="c-textarea c-textarea--readonly c-textarea--tiny">
+                    class="c-textarea--medium c-textarea--readonly">
                     <label [for]="'textarea'+i">Kommentar</label>
                     <textarea aria-describedby="textarea-description-4" class="textarea_exempel" [id]="'textarea'+i"
                       rows="4" wrap="soft" readonly="readonly" [(ngModel)]="atgard.kommentar"
@@ -150,7 +150,7 @@
                       <p class="c-text-counter__count_characters"></p>
                     </div>
                   </div>
-                  <div *ngIf="redigeraLageAtgarder && atgard.id === valdAtgardId" class="c-textarea c-textarea--tiny">
+                  <div *ngIf="redigeraLageAtgarder && atgard.id === valdAtgardId" class="c-textarea--medium">
                     <label [for]="'textarea'+i">Kommentar<i class="label--valfritt">(Valfritt)</i></label>
                     <textarea aria-describedby="textarea-description-4" class="textarea_exempel" [id]="'textarea'+i"
                       rows="4" wrap="soft" [(ngModel)]="atgard.kommentar" name="kommentar"></textarea>
@@ -179,11 +179,11 @@
                     </span>
                   </div>
                   <button *ngIf="!redigeraLageAtgarder" (click)="hanteraRedigeraAtgard(atgard, i)"
-                    class="c-btn c-btn--tiny ml-1">Redigera</button>
+                    class="c-btn--small ml-1">Redigera</button>
                   <button *ngIf="redigeraLageAtgarder && valdAtgardId === atgard.id"
-                    (click)="sparaRedigeratAtgard(atgard, $event)" class="c-btn c-btn--tiny ml-1">Spara </button>
+                    (click)="sparaRedigeratAtgard(atgard, $event)" class="c-btn--small ml-1">Spara </button>
                   <button *ngIf="redigeraLageAtgarder && valdAtgardId === atgard.id"
-                    (click)="hanteraAvbrytAtgard(atgard, i)" class="c-btn c-btn--tiny ml-1">Avbryt</button>
+                    (click)="hanteraAvbrytAtgard(atgard, i)" class="c-btn--small ml-1">Avbryt</button>
                 </div>
               </li>
             </ul>
@@ -232,7 +232,7 @@
               </span>
             </div>
 
-            <div class="c-tagsinput--tiny redigerbarAnsDjurElement">
+            <div class="c-tagsinput--medium redigerbarAnsDjurElement">
               <label for="input-text-1" tabindex="-1">PPN</label>
               <div class="c-tagsinput-field" rel="c-tagsinput-js">
                 <div class="tagsContainer">
@@ -245,14 +245,14 @@
               </div>
               <p tabindex="-1" id="description-1"></p>
             </div>
-            <div class="c-input c-input--tiny redigerbarAnsDjurElement">
+            <div class="c-input--medium redigerbarAnsDjurElement">
               <label for="antaldjur" tabindex="-1" id="label-6">Antal djur</label>
               <div class="input__wrapper input__wrapper--text">
                 <input autocomplete="given-name" id="antaldjur" aria-describedby="description-6" type="text"
                   tabindex="0" name="text6" [(ngModel)]="ansokanDjurvalfard.antalDjur">
               </div>
             </div>
-            <div class="c-input c-input--tiny redigerbarAnsDjurElement">
+            <div class="c-input--medium redigerbarAnsDjurElement">
               <label for="antaldjurenheter" tabindex="-1" id="label-6">Antal djurenheter</label>
               <div class="input__wrapper input__wrapper--text">
                 <input autocomplete="given-name" id="antaldjurenheter" aria-describedby="description-6" type="text"
@@ -260,7 +260,7 @@
               </div>
             </div>
 
-            <button *ngIf="!tidigareVersion" class="c-btn c-btn--tiny mt-2"
+            <button *ngIf="!tidigareVersion" class="c-btn--small mt-2"
               (click)="redigeraView($event.target)">Redigera</button>
           </div>
           <div id="panel2" class="c-tabs__panel" role="tabpanel" aria-labelledby="panel2__label">
@@ -276,7 +276,7 @@
                 </div>
               </div>
               <div class="c-space--m"></div>
-              <button class="c-btn c-btn--tiny">Redigera</button>
+              <button class="c-btn--small">Redigera</button>
             </div>
             <p class="defaultfontsize" *ngIf="!attributFinns">Ärendet har inga attribut i denna version.</p>
           </div>
@@ -309,7 +309,7 @@
                 <div class="beslutWrapper">
                   <div class="beslutRad">
                     <ul aria-label="accordion Control Group links" class="c-accordion-group">
-                      <li aria-controls="content-1" aria-expanded="true" class="c-accordion-form--tiny open"
+                      <li aria-controls="content-1" aria-expanded="true" class="c-accordion-form--medium open"
                         rel="c-accordion-js">
                         <button href="#item-three" name="item-three" id="arendedetalj" class="c-accordion-item__title">
                           <span class="accordion__icon toggle-down"></span>
@@ -330,7 +330,7 @@
                   </div>
                   <div class="beslutRad">
                     <ul aria-label="accordion Control Group links" class="c-accordion-group">
-                      <li aria-controls="content-1" aria-expanded="true" class="c-accordion-form--tiny open"
+                      <li aria-controls="content-1" aria-expanded="true" class="c-accordion-form--medium open"
                         rel="c-accordion-js">
                         <button href="#item-three" name="item-three" id="djurvälfärd" class="c-accordion-item__title">
                           <span class="accordion__icon toggle-down"></span>
@@ -368,7 +368,7 @@
           <div class="c-banner__text">
             <p>{{warningMessage}}</p>
             <div class="c-banner__actionlink-container">
-              <button class="c-btn--compact float-right mt-5" (click)="togglewarning()">Stäng</button>
+              <button class="c-btn--medium float-right mt-5" (click)="togglewarning()">Stäng</button>
             </div>
           </div>
         </div>
@@ -403,7 +403,7 @@
           <span class="sjv-i-cursor">
           </span>
         </span> <br><br>
-        <button class="c-btn--compact" (click)="hideSpinner()">Avbryt</button>
+        <button class="c-btn--medium" (click)="hideSpinner()">Avbryt</button>
       </div>
     </div>
   </div>

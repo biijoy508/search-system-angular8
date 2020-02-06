@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-sm-3">
       <h3 class="farmen-h3">Sökfilter</h3>
-      <div class="c-select c-select--tiny">
+      <div class="c-select--medium">
         <label for="stodar">Stödår</label>
         <div class="c-select__wrapper">
           <select id="stodar" [(ngModel)]="sokFilter.stodAr">
@@ -15,7 +15,7 @@
           </span>
         </div>
       </div>
-      <div class="c-input c-input--tiny">
+      <div class="c-input--medium">
         <label for="kundnummer-2" id="label-1" tabindex="-1">Kundnummer</label>
         <div class="input__wrapper " tabindex="-1">
           <input autocomplete="given-name" id="kundnummer-2" type="text" tabindex="0" name="text2"
@@ -23,7 +23,7 @@
         </div>
       </div>
 
-      <div class="c-multiselect--tiny" id="arendeTyp" rel="c-multiselect-js">
+      <div class="c-multiselect--medium" id="arendeTyp" rel="c-multiselect-js">
         <label for="arendeTypselect" class="c-multiselect__label">Ärendetyp</label>
         <div class="c-select__wrapper">
           <select name="arendeTypList[]" id="arendeTypselect" multiple="multiple" #arendeTypList
@@ -35,7 +35,7 @@
         </div>
       </div>
 
-      <div class="c-multiselect--tiny" id="ansokansTyp" rel="c-multiselect-js">
+      <div class="c-multiselect--medium" id="ansokansTyp" rel="c-multiselect-js">
         <label for="ansokansTypselect" class="c-multiselect__label">Ansökanstyp</label>
         <div class="c-select__wrapper">
           <select name="ansokansTypList[]" id="ansokansTypselect" multiple="multiple" #ansokansTypList
@@ -50,11 +50,11 @@
       <div class="confirm-btn">
         <button *ngIf="sokFilter.stodAr == '' && sokFilter.kundNummerAlfaNumerisk == '' && (sokFilter.arendeTypList.length == 0  || sokFilter.arendeTypList[0] == '')
       && (sokFilter.ansokansTypList.length == 0 || sokFilter.ansokansTypList[0] == '') ;else activeButton"
-          class="c-btn--primary c-btn--compact" disabled>Sök</button>
+          class="c-btn--primary c-btn--medium" disabled>Sök</button>
         <ng-template #activeButton>
-          <button class="c-btn--primary c-btn--compact" (click)="confirmbtnClick()">Sök</button>
+          <button class="c-btn--primary c-btn--medium" (click)="confirmbtnClick()">Sök</button>
         </ng-template>
-        <button class="c-btn c-btn--compact" (click)="rensaSokFilter()">Rensa sökfilter</button>
+        <button class="c-btn--medium" (click)="rensaSokFilter()">Rensa sökfilter</button>
       </div>
     </div>
     <div class="col-sm-9">
@@ -103,7 +103,7 @@
             <div class="c-banner__text">
               <p> Fyll i minst ett till sökfält</p>
               <div class="c-banner__actionlink-container">
-                <button class="c-btn--compact float-right mt-5" (click)="togglewarning()">Stäng</button>
+                <button class="c-btn--medium float-right mt-5" (click)="togglewarning()">Stäng</button>
               </div>
             </div>
           </div>
@@ -132,7 +132,7 @@
             <span class="sjv-i-cursor">
             </span>
           </span> <br><br>
-          <button class="c-btn--compact" (click)="hideSpinner()">Avbryt</button>
+          <button class="c-btn--medium" (click)="hideSpinner()">Avbryt</button>
         </div>
       </div>
     </div>

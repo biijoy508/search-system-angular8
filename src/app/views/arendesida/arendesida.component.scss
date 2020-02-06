@@ -36,7 +36,7 @@
     }
   }
 
-  .c-btn--compact {
+  .c-btn--medium {
     max-width: 12rem;
     margin-right: 3rem;
   }
@@ -195,8 +195,8 @@ p {
   margin-top: 1.25rem;
 }
 
-.c-tagsinput--tiny,
-.c-input--tiny {
+.c-tagsinput--medium,
+.c-input--medium {
   max-width: 20rem;
   margin-bottom: 0.5rem;
 }
@@ -250,7 +250,7 @@ p {
   font-size: 0.8125rem;
 }
 
-div .c-accordion-form--tiny .c-accordion-item__title .accordion__title-text {
+div .c-accordion-form--medium .c-accordion-item__title .accordion__title-text {
   margin-right: 2rem;
 }
 
@@ -339,10 +339,10 @@ div .c-accordion-form--tiny .c-accordion-item__title .accordion__title-text {
 
 @media (max-width: 768px) {
 
-  .c-btn,
-  .c-btn--compact,
+  .c-btn--large,
+  .c-btn--medium,
   .c-btn--primary,
-  .c-btn--tiny {
+  .c-btn--small {
     width: auto;
     margin-right: 1rem;
   }
@@ -373,7 +373,7 @@ div .c-accordion-form--tiny .c-accordion-item__title .accordion__title-text {
     width: 100%;
   }
 
-  div .c-accordion-form--tiny .c-accordion-item__title .accordion__title-text {
+  div .c-accordion-form--medium .c-accordion-item__title .accordion__title-text {
     margin-right: 1rem;
   }
 }
