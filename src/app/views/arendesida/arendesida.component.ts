@@ -191,13 +191,13 @@ export class ArendesidaComponent implements AfterViewInit {
 
       },
       (error: any) => {
-
+        console.log(error.message);
       },
       () => {
-      //  this.hamtaAnsokanDjurvalfard();
+
       }
     );
-
+    this.hamtaAnsokanDjurvalfard();
   }
 
   filtreraAtgarder(filtreringsAlternativ) {
