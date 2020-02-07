@@ -18,7 +18,7 @@ import { environment } from 'src/environments/environment';
 // tslint:disable-next-line: max-line-length
 import { avbrytLaggTillAtgard, deselectLaggtillAtgardSelectElement, hanteraLaggTillAtgardBekraftaKnappStatus } from './arendesidaFunktioner/arendesidaSkapaManuelAtgard';
 import { showToaster, kontrolleraFlikar } from './arendesidaFunktioner/arendesidaUtility';
-import { redigeraAnsDjurValView } from './arendesidaFunktioner/arendesidaAnsokanDjurvalfard';
+import { AnsokanPPN } from 'src/app/model/ansokanPPN';
 
 interface OandradeAtgard {
   atgardId: string;
@@ -43,6 +43,8 @@ export class ArendesidaComponent implements AfterViewInit {
   ansokanDjurvalfard: AnsokanDjurvalfard;
   oandradeAnsokanDjurvalfard: AnsokanDjurvalfard;
   ansokanDVFArendeversion: AnsokanDVFArendeversion;
+  ansokanPPN: AnsokanPPN;
+
   attributLista: Attribut[] = [];
   valdArendeversion: ArendeVersion;
   beslut: Beslut;
@@ -79,6 +81,7 @@ export class ArendesidaComponent implements AfterViewInit {
     this.beslut = new Beslut('', '', '', '', '', '', berakning, [], []);
     this.valdAtgardTyp = new AtgardTypModel('', '', '', [], '', '');
     this.ansokanDVFArendeversion = new AnsokanDVFArendeversion('', '', '');
+    this.ansokanPPN = new AnsokanPPN('',[]);
   }
 
   ngAfterViewInit() {
@@ -184,19 +187,39 @@ export class ArendesidaComponent implements AfterViewInit {
     this.ansokanDVFArendeversion.antalDjur = this.ansokanDjurvalfard.antalDjur;
     this.ansokanDVFArendeversion.arendeTyp = this.arende.arendeTyp;
     this.ansokanDVFArendeversion.arendeversionId = this.valdArendeversion.arendeversionId;
+    this.ansokanPPN.arendeversionId = this.valdArendeversion.arendeversionId;
+    this.ansokanPPN.ppnLista = this.ansokanDjurvalfard.ppnLista;
 
     this.apiService.postData(environment.redigeraAntalDjurUrl, this.ansokanDVFArendeversion).subscribe(
       (data: string) => {
 
       },
       (error: any) => {
-        console.log(error.message);
+        console.log(error.message.svar);
       },
       () => {
 
       }
     );
+
+
+    this.apiService.postData(environment.redigeraPPNUrl, this.ansokanPPN).subscribe(
+      (data: string) => {
+
+      },
+      (error: any) => {
+        console.log(error.message.svar);
+      },
+      () => {
+
+        console.log(this.ansokanDjurvalfard.ppnLista);
+
+      }
+
+    );
+
     this.hamtaAnsokanDjurvalfard();
+
   }
 
   filtreraAtgarder(filtreringsAlternativ) {

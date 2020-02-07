@@ -19,6 +19,5 @@ export const environment = {
   stodArUrl: '/farmen/intr/stodar',
   statusUrl: '/farmen/grund/arendestatusar',
   redigeraAntalDjurUrl: '/farmen/aredat/redigeraantaldjur',
-  skapaPPN: '/farmen/aredat/skapappn',
-  tabortPPN: 'farmen/aredat/tabortppn'
+  redigeraPPNUrl: '/farmen/aredat/redigerappn'
 };
