@@ -10,8 +10,8 @@ function laddaNerStyleguide() {
 
     if (utvmiljo === true || localhost === true || mobilityguard_utvmiljo === true) {
       console.log('Styleguide laddas från utv');
-      const jsUrl = 'https://cdnutv.jordbruksverket.se/designsystem/10.0.1-SNAPSHOT/package/dist/release/sjv-komponentbibliotek.js';
-      const cssUrl = 'https://cdnutv.jordbruksverket.se/designsystem/10.0.1-SNAPSHOT/package/dist/release/sjv-komponentbibliotek.css';
+      const jsUrl = 'https://cdnutv.jordbruksverket.se/designsystem/10.0.7-SNAPSHOT/package/dist/release/sjv-komponentbibliotek.js';
+      const cssUrl = 'https://cdnutv.jordbruksverket.se/designsystem/10.0.7-SNAPSHOT/package/dist/release/sjv-komponentbibliotek.css';
       addCSSAndJSToHeadElement(jsUrl, cssUrl, null, null);
     } else if (testmiljo === true || mobilityguard_testmiljo === true) {
       console.log('Styleguide laddas från test');

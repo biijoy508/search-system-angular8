@@ -23,7 +23,7 @@ registerLocaleData(localeSv);
     ViewComponentsModule,
     AppRoutingModule
   ],
-  providers: [{ provide:  LocationStrategy, useClass: HashLocationStrategy }, 
+  providers: [{ provide:  LocationStrategy, useClass: HashLocationStrategy },
   { provide: LOCALE_ID, useValue: 'sv-SE'}],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   bootstrap: [AppComponent]

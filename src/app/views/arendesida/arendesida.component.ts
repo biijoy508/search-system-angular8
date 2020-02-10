@@ -81,7 +81,7 @@ export class ArendesidaComponent implements AfterViewInit {
     this.beslut = new Beslut('', '', '', '', '', '', berakning, [], []);
     this.valdAtgardTyp = new AtgardTypModel('', '', '', [], '', '');
     this.ansokanDVFArendeversion = new AnsokanDVFArendeversion('', '', '');
-    this.ansokanPPN = new AnsokanPPN('',[]);
+    this.ansokanPPN = new AnsokanPPN('', []);
   }
 
   ngAfterViewInit() {
@@ -123,9 +123,9 @@ export class ArendesidaComponent implements AfterViewInit {
       this.errorMessage = err.message;
       this.showSpinner = false;
     }, () => {
-      this.windowRef.komponentbibliotek.init();
       kontrolleraFlikar(this.arende);
       setTimeout(() => {
+        this.windowRef.komponentbibliotek.init();
         this.showSpinner = false;
       }, 2000);
     });
@@ -143,21 +143,21 @@ export class ArendesidaComponent implements AfterViewInit {
 
   redigeraAnsDjurValView(button: HTMLButtonElement, ansokanDjurvalfard: AnsokanDjurvalfard) {
 
-      this.oandradeAnsokanDjurvalfard = cloneDeep(ansokanDjurvalfard);
-      this.redigeraLageAnsDjur = true;
+    this.oandradeAnsokanDjurvalfard = cloneDeep(ansokanDjurvalfard);
+    this.redigeraLageAnsDjur = true;
 
-      for (let i = 0; i < this.redigerbarAnsokanDjurvalfardElements.length; i++) {
+    for (let i = 0; i < this.redigerbarAnsokanDjurvalfardElements.length; i++) {
       (this.redigerbarAnsokanDjurvalfardElements[i] as HTMLDivElement).style.display = 'block';
     }
-      for (let j = 0; j < this.oredigerbarAnsokanDjurvalfardElements.length; j++) {
+    for (let j = 0; j < this.oredigerbarAnsokanDjurvalfardElements.length; j++) {
       (this.oredigerbarAnsokanDjurvalfardElements[j] as HTMLDivElement).style.display = 'none';
     }
   }
 
   avbrytAnsDjurValView(button: HTMLButtonElement, ansokanDjurvalfard: AnsokanDjurvalfard) {
-    const ppnNumberRedigeringsUI = (document.querySelector('.tagValuesHolder') as HTMLInputElement);
+    const ppnNumberRedigeringsUI = (document.querySelector('.c-tagsinput__valueholder') as HTMLInputElement);
     ppnNumberRedigeringsUI.value = this.ansokanDjurvalfard.ppnLista.toString();
-    this.windowRef.komponentbibliotek.initTagsInput();
+    this.windowRef.komponentbibliotek.initTagsinputs();
     this.redigeraLageAnsDjur = false;
     this.ansokanDjurvalfard = cloneDeep(this.oandradeAnsokanDjurvalfard);
     for (let i = 0; i < this.redigerbarAnsokanDjurvalfardElements.length; i++) {
@@ -169,7 +169,7 @@ export class ArendesidaComponent implements AfterViewInit {
   }
 
   sparaAnsDjurValView(button: HTMLButtonElement, ansokanDjurvalfard: AnsokanDjurvalfard) {
-    const ppnNumberRedigeringsUI = (document.querySelector('.tagValuesHolder') as HTMLInputElement);
+    const ppnNumberRedigeringsUI = (document.querySelector('.c-tagsinput__valueholder') as HTMLInputElement);
     this.ansokanDjurvalfard.ppnLista = ppnNumberRedigeringsUI.value.split(',');
     this.redigeraLageAnsDjur = false;
     this.sparaAnokanDjurvalfard();
@@ -211,17 +211,17 @@ export class ArendesidaComponent implements AfterViewInit {
         console.log(error.message.svar);
       },
       () => {
-
         console.log(this.ansokanDjurvalfard.ppnLista);
-
+        setTimeout(() => {
+          this.windowRef.komponentbibliotek.init();
+          this.showSpinner = false;
+        }, 2000);
       }
 
     );
 
     this.hamtaAnsokanDjurvalfard();
-
   }
-
   filtreraAtgarder(filtreringsAlternativ) {
     this.filtreringsAlternativ = filtreringsAlternativ;
     const atgardListaForm = document.querySelector('#atgardLista');
@@ -272,7 +272,7 @@ export class ArendesidaComponent implements AfterViewInit {
     setTimeout(() => {
       const accordion = document.getElementById(atgard.id + '-accordion') as HTMLElement;
       accordion.classList.add('open');
-      this.windowRef.komponentbibliotek.initAccordion();
+      this.windowRef.komponentbibliotek.initAccordions();
     }, 100);
   }
   sparaRedigeratAtgard(atgard, event) {
@@ -297,7 +297,7 @@ export class ArendesidaComponent implements AfterViewInit {
           setTimeout(() => {
             const accordion = document.getElementById(atgard.id + '-accordion') as HTMLElement;
             accordion.classList.add('open');
-            this.windowRef.komponentbibliotek.initAccordion();
+            this.windowRef.komponentbibliotek.initAccordions();
           }, 500);
         }
       );
@@ -363,13 +363,11 @@ export class ArendesidaComponent implements AfterViewInit {
       this.hamtaBeslut();
     }
   }
-
   hamtaAnsokanDjurvalfard() {
     this.apiService.getData(`${environment.ansokanDjurvalfardUrl}/${this.valdArendeversion.arendeversionId}`).subscribe(
       (data: any) => {
         this.ansokanDjurvalfard = data;
         this.PPNnummer = this.ansokanDjurvalfard.ppnLista;
-        //console.log(this.PPNnummer);
         this.errorMessage = '';
         setTimeout(() => {
           this.windowRef.komponentbibliotek.init();
@@ -380,8 +378,6 @@ export class ArendesidaComponent implements AfterViewInit {
         this.errorMessage = err.message;
       });
   }
-
-
 
   hamtaAttribut() {
     const arendeParam = {

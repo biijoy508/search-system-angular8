@@ -99,16 +99,16 @@
 
         <ul id="myTabs_1" class="c-tabs__labels" role="tablist" aria-label="Code Examples">
           <li role="presentation">
-            <button class="tab-label is-active" id="panel1__label" aria-selected="true" role="tab"
-              aria-controls="panel1" tabindex="-1" (click)="filtreraAtgarder($event.target.id)"><span>Visa
+            <button class="tab-label is-active" id="alla" aria-selected="true" role="tab"
+              aria-controls="panel11" tabindex="-1" (click)="filtreraAtgarder($event.target.id)"><span>Visa
                 alla</span></button>
           </li>
           <li role="presentation">
-            <button class="tab-label" id="panel2__label" aria-selected="false" aria-controls="panel2" tabindex="-1"
+            <button class="tab-label" id="öppna" aria-selected="false" aria-controls="panel12" tabindex="-1"
               role="tab" (click)="filtreraAtgarder($event.target.id)"><span>Öppna</span></button>
           </li>
           <li role="presentation">
-            <button id="panel3__label" aria-selected="false" class="tab-label" aria-controls="panel3" role="tab"
+            <button id="stängda" aria-selected="false" class="tab-label" aria-controls="panel13" role="tab"
               (click)="filtreraAtgarder($event.target.id)"><span>Stängda</span></button>
           </li>
         </ul>
@@ -209,16 +209,16 @@
         <ul id="myTabs_1" class="c-tabs__labels" role="tablist" aria-label="Utbetalnings flikar">
           <li role="presentation">
             <button id="ansokanDjurvalfard" href="#panel1" aria-selected="true" role="tab" aria-controls="panel1"
-              tabindex="-1" class="tab-label is-active">
+              tabindex="-1" class="tab-label is-active" (click)="sattValdFlik($event.target.id)">
               <span>Ansökan Djurvälfärd</span></button>
           </li>
           <li role="presentation">
             <button id="attribut" href="#panel2" aria-selected="false" aria-controls="panel2" role="tab" tabindex="-1"
-              class="tab-label"><span>Attribut</span></button>
+              class="tab-label" (click)="sattValdFlik($event.target.id)"><span>Attribut</span></button>
           </li>
           <li role="presentation">
             <button id="beslut" href="#panel3" aria-selected="false" aria-controls="panel3" role="tab"
-              class="tab-label"><span>Beslut</span></button>
+              class="tab-label" (click)="sattValdFlik($event.target.id)"><span>Beslut</span></button>
           </li>
         </ul>
         <div class="c-tabs__content" data-tabs="myTabs_1">
@@ -246,7 +246,7 @@
               <label for="input-text-1" tabindex="-1">PPN</label>
               <div class="c-tagsinput-field" rel="c-tagsinput-js">
                 <div class="tagsContainer">
-                  <input autocomplete="off" tabindex="-1" aria-hidden="true" class="c-tagsinput__valueholder" type="text" [value]="ansokanDjurvalfard.ppnLista">
+                  <input autocomplete="off" tabindex="-1" aria-hidden="true" class="c-tagsinput__valueholder" type="text" [ngModel]="PPNnummer">
                   <input autocomplete="off" class="c-tagsinput__textEditor" type="text" id="tagsinput-1" placeholder="">
                 </div>
                 <div class="select__arrow">
