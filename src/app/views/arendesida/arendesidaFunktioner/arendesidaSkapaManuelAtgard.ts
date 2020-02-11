@@ -10,7 +10,7 @@ export function hanteraLaggTillAtgardBekraftaKnappStatus(atgardSelectElement, la
     }
   });
 }
- export function avbrytLaggTillAtgard(skapaManuellAtgardBlock, atgardSelectElement) {
+export function avbrytLaggTillAtgard(skapaManuellAtgardBlock, atgardSelectElement) {
   deselectLaggtillAtgardSelectElement(atgardSelectElement);
   skapaManuellAtgardBlock.style.display = 'none';
 }

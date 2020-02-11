@@ -193,7 +193,7 @@
                   <button *ngIf="redigeraLageAtgarder && valdAtgardId === atgard.id"
                     (click)="sparaRedigeratAtgard(atgard, $event)" class="c-btn--small ml-1">Spara </button>
                   <button *ngIf="redigeraLageAtgarder && valdAtgardId === atgard.id"
-                    (click)="hanteraAvbrytAtgard(atgard, i)" class="c-btn--small ml-1">Avbryt</button>
+                    (click)="hanteraAvbrytAtgard(atgard, i)" class="c-btn--small ml-2">Avbryt</button>
                 </div>
               </li>
             </ul>
@@ -271,9 +271,13 @@
                   tabindex="0" name="text6" [(ngModel)]="ansokanDjurvalfard.antalDjurenheter">
               </div>
             </div>
+            <button *ngIf="!tidigareVersion && redigeraLageAnsDjur === false" class="c-btn--small mt-2 mr-2"
+              (click)="redigeraAnsDjurValView($event.target, ansokanDjurvalfard)">Redigera</button>
+            <button *ngIf="!tidigareVersion && redigeraLageAnsDjur === true" class="c-btn--small mt-2 mr-2"
+              (click)="sparaAnsDjurValView($event.target, ansokanDjurvalfard)">Spara</button>
+            <button *ngIf="!tidigareVersion && redigeraLageAnsDjur === true" class="c-btn--small mt-2"
+              (click)="avbrytAnsDjurValView($event.target, ansokanDjurvalfard)">Avbryt</button>
 
-            <button *ngIf="!tidigareVersion" class="c-btn--small mt-2"
-              (click)="redigeraView($event.target)">Redigera</button>
           </div>
           <div id="panel12" class="c-tabs__panel" role="tabpanel" aria-labelledby="panel12__label">
             <div *ngIf="attributFinns">
@@ -317,105 +321,103 @@
                 <span class="beslutsumma__nummer">{{beslut.berakningUtbAterkrav.varde | number:'':'sv'}}
                   {{beslut.berakningUtbAterkrav.enhet}}</span>
               </span>
-              <form>
-                <div class="beslutWrapper">
-                  <div class="beslutRad">
-                    <ul aria-label="accordion Control Group links" class="c-accordion-group">
-                      <li aria-controls="content-1" aria-expanded="true" class="c-accordion-form--medium open"
-                        rel="c-accordion-js">
-                        <button href="#item-three" name="item-three" id="arendedetalj" class="c-accordion-item__title">
-                          <span class="accordion__icon toggle-down"></span>
-                          <span class="accordion__title-text"> Ärende</span>
-                        </button>
-                        <div role="region" aria-labelledby="arendedetalj" aria-hidden="true" id="content-3"
-                          class="c-accordion-item__content">
-                          <div class="beslutContent">
-                            <div class="beslutContentText" *ngFor="let berArende_item of beslut.berakningarArende">
-                              <span>{{berArende_item.berakningsTyp}}</span>
-                              <span class="beslutContentText__varde">{{berArende_item.varde | number:'':'sv'}}
-                                {{berArende_item.enhet}}</span>
-                            </div>
+
+              <div class="beslutWrapper">
+                <div class="beslutRad">
+                  <ul aria-label="accordion Control Group links" class="c-accordion-group">
+                    <li aria-controls="content-1" aria-expanded="true" class="c-accordion-form--medium open"
+                      rel="c-accordion-js">
+                      <button href="#item-three" name="item-three" id="arendedetalj" class="c-accordion-item__title">
+                        <span class="accordion__icon toggle-down"></span>
+                        <span class="accordion__title-text"> Ärende</span>
+                      </button>
+                      <div role="region" aria-labelledby="arendedetalj" aria-hidden="true" id="content-3"
+                        class="c-accordion-item__content">
+                        <div class="beslutContent">
+                          <div class="beslutContentText" *ngFor="let berArende_item of beslut.berakningarArende">
+                            <span>{{berArende_item.berakningsTyp}}</span>
+                            <span class="beslutContentText__varde">{{berArende_item.varde | number:'':'sv'}}
+                              {{berArende_item.enhet}}</span>
                           </div>
                         </div>
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="beslutRad">
-                    <ul aria-label="accordion Control Group links" class="c-accordion-group">
-                      <li aria-controls="content-1" aria-expanded="true" class="c-accordion-form--medium open"
-                        rel="c-accordion-js">
-                        <button href="#item-three" name="item-three" id="djurvälfärd" class="c-accordion-item__title">
-                          <span class="accordion__icon toggle-down"></span>
-                          <span class="accordion__title-text"> Djurvälfärd {{arende.arendeTyp}} </span>
-                        </button>
-                        <div role="region" aria-labelledby="djurvälfärd" aria-hidden="true" id="content-3"
-                          class="c-accordion-item__content">
-                          <div class="beslutContent">
-                            <div class="beslutContentText"
-                              *ngFor="let berDjurvalfard_item of beslut.berakningarDjurvalfard">
-                              <span>{{berDjurvalfard_item.berakningsTyp}}</span>
-                              <span class="beslutContentText__varde">{{berDjurvalfard_item.varde | number:'':'sv'}}
-                                {{berDjurvalfard_item.enhet}}</span>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
+                      </div>
+                    </li>
+                  </ul>
                 </div>
-              </form>
+                <div class="beslutRad">
+                  <ul aria-label="accordion Control Group links" class="c-accordion-group">
+                    <li aria-controls="content-1" aria-expanded="true" class="c-accordion-form--medium open"
+                      rel="c-accordion-js">
+                      <button href="#item-three" name="item-three" id="djurvälfärd" class="c-accordion-item__title">
+                        <span class="accordion__icon toggle-down"></span>
+                        <span class="accordion__title-text"> Djurvälfärd {{arende.arendeTyp}} </span>
+                      </button>
+                      <div role="region" aria-labelledby="djurvälfärd" aria-hidden="true" id="content-3"
+                        class="c-accordion-item__content">
+                        <div class="beslutContent">
+                          <div class="beslutContentText"
+                            *ngFor="let berDjurvalfard_item of beslut.berakningarDjurvalfard">
+                            <span>{{berDjurvalfard_item.berakningsTyp}}</span>
+                            <span class="beslutContentText__varde">{{berDjurvalfard_item.varde | number:'':'sv'}}
+                              {{berDjurvalfard_item.enhet}}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <p *ngIf="!beslutFinns">Ärendet har inget beslut i denna version.</p>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div *ngIf="warningMessage !== ''" class="c-spinner">
-    <div class="c-spinner__container">
-      <div class="c-banner" role="banner">
-        <div class="c-banner__content">
-          <span class="c-banner-icon sjv-i-varning" tabindex="-1"></span>
-          <div class="c-banner__text">
-            <p>{{warningMessage}}</p>
-            <div class="c-banner__actionlink-container">
-              <button class="c-btn--medium float-right mt-5" (click)="togglewarning()">Stäng</button>
+    <div *ngIf="warningMessage !== ''" class="c-spinner">
+      <div class="c-spinner__container">
+        <div class="c-banner" role="banner">
+          <div class="c-banner__content">
+            <span class="c-banner-icon sjv-i-varning" tabindex="-1"></span>
+            <div class="c-banner__text">
+              <p>{{warningMessage}}</p>
+              <div class="c-banner__actionlink-container">
+                <button class="c-btn--medium float-right mt-5" (click)="togglewarning()">Stäng</button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="c-toaster" role="alert">
-    <div class="c-toaster__content">
-      <p class="toasterMessage"></p>
-      <!-- <div class="c-toaster__actionlink-container">
+    <div class="c-toaster" role="alert">
+      <div class="c-toaster__content">
+        <p class="toasterMessage"></p>
+        <!-- <div class="c-toaster__actionlink-container">
         <button class="c-toaster__actionlink" (click)="closeToaster($event.target)" tabindex="0">Stäng</button>
       </div> -->
-    </div>
-  </div>
-  <div *ngIf="showSpinner" class="c-spinner">
-    <div class="c-spinner__container">
-      <div class="c-spinner__animation">
-        <div class="c-spinner__animation__item">
-          <div class="c-spinner__circle circle--3"></div>
-        </div>
-        <div class="c-spinner__animation__item">
-          <div class="c-spinner__circle circle--2"></div>
-        </div>
-        <div class="c-spinner__animation__item">
-          <div class="c-spinner__circle circle--1"></div>
-        </div>
       </div>
-      <div class="c-spinner__content">
-        <span>{{spinnerText}}</span>
-        <span class="cursor">
-          <span class="sjv-i-cursor">
-          </span>
-        </span> <br><br>
-        <button class="c-btn--medium" (click)="hideSpinner()">Avbryt</button>
+    </div>
+    <div *ngIf="showSpinner" class="c-spinner">
+      <div class="c-spinner__container">
+        <div class="c-spinner__animation">
+          <div class="c-spinner__animation__item">
+            <div class="c-spinner__circle circle--3"></div>
+          </div>
+          <div class="c-spinner__animation__item">
+            <div class="c-spinner__circle circle--2"></div>
+          </div>
+          <div class="c-spinner__animation__item">
+            <div class="c-spinner__circle circle--1"></div>
+          </div>
+        </div>
+        <div class="c-spinner__content">
+          <span>{{spinnerText}}</span>
+          <span class="cursor">
+            <span class="sjv-i-cursor">
+            </span>
+          </span> <br><br>
+          <button class="c-btn--medium" (click)="hideSpinner()">Avbryt</button>
+        </div>
       </div>
     </div>
   </div>

@@ -1,3 +1,4 @@
+// tslint:disable: prefer-for-of
 import { AfterViewInit, Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { cloneDeep } from 'lodash';
@@ -8,19 +9,22 @@ import { Arende } from 'src/app/model/arende';
 import { ArendeVersion } from 'src/app/model/arendeVersion';
 import { Atgard } from 'src/app/model/atgard';
 import { AtgardTypModel } from 'src/app/model/atgardTypModel';
+import { AnsokanDVFArendeversion } from 'src/app/model/ansokanDVFArendeversion';
 import { Attribut } from 'src/app/model/attribut';
 import { Berakning } from 'src/app/model/berakning';
 import { Beslut } from 'src/app/model/beslut';
 import { ApiService } from 'src/app/services/api.service';
 import { environment } from 'src/environments/environment';
+// tslint:disable-next-line: max-line-length
 import { avbrytLaggTillAtgard, deselectLaggtillAtgardSelectElement, hanteraLaggTillAtgardBekraftaKnappStatus } from './arendesidaFunktioner/arendesidaSkapaManuelAtgard';
 import { showToaster, kontrolleraFlikar } from './arendesidaFunktioner/arendesidaUtility';
-import { redigeraAnsDjurValView } from './arendesidaFunktioner/arendesidaAnsokanDjurvalfard';
+import { AnsokanPPN } from 'src/app/model/ansokanPPN';
 
 interface OandradeAtgard {
   atgardId: string;
   atgard: Atgard;
 }
+
 @Component({
   selector: 'app-arendesida',
   templateUrl: './arendesida.component.html',
@@ -32,12 +36,15 @@ export class ArendesidaComponent implements AfterViewInit {
   arendeId: any;
   kundNummer: any;
   atgardLista: Atgard[] = [];
-
   oandradeAtgardLista: OandradeAtgard[] = [];
   manuellAtgardTypLista: AtgardTypModel[] = [];
   valdAtgardTyp: AtgardTypModel;
   arendeVersionLista: ArendeVersion[] = [];
   ansokanDjurvalfard: AnsokanDjurvalfard;
+  oandradeAnsokanDjurvalfard: AnsokanDjurvalfard;
+  ansokanDVFArendeversion: AnsokanDVFArendeversion;
+  ansokanPPN: AnsokanPPN;
+
   attributLista: Attribut[] = [];
   valdArendeversion: ArendeVersion;
   beslut: Beslut;
@@ -46,8 +53,8 @@ export class ArendesidaComponent implements AfterViewInit {
   attributFinns: boolean;
   ingaAtgarder: boolean;
   redigeraLageAtgarder = false;
-
-  PPNnummer = '43,42';
+  redigeraLageAnsDjur = false;
+  PPNnummer: string[];
 
   filtreringsAlternativ = 'alla';
 
@@ -62,6 +69,9 @@ export class ArendesidaComponent implements AfterViewInit {
   atgardSelectElement: HTMLSelectElement;
   skapaManuellAtgardBlock: HTMLDivElement;
   laggTillAtgardBekraftaKnapp: HTMLButtonElement;
+  redigerbarAnsokanDjurvalfardElements: NodeListOf<HTMLElement>;
+  oredigerbarAnsokanDjurvalfardElements: NodeListOf<HTMLElement>;
+
   constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router, private titleService: Title) {
     this.windowRef = window;
     this.arende = new Arende('', '', '', '', '', '', '', '', '', '');
@@ -69,6 +79,8 @@ export class ArendesidaComponent implements AfterViewInit {
     const berakning = new Berakning('', '', '');
     this.beslut = new Beslut('', '', '', '', '', '', berakning, [], []);
     this.valdAtgardTyp = new AtgardTypModel('', '', '', [], '', '');
+    this.ansokanDVFArendeversion = new AnsokanDVFArendeversion('', '', '');
+    this.ansokanPPN = new AnsokanPPN('', []);
   }
 
   ngAfterViewInit() {
@@ -77,7 +89,8 @@ export class ArendesidaComponent implements AfterViewInit {
     this.atgardSelectElement = document.querySelector('#manuellAtgardTyp') as HTMLSelectElement;
     this.skapaManuellAtgardBlock = document.querySelector('.skapaManuellAtgard') as HTMLDivElement;
     this.laggTillAtgardBekraftaKnapp = document.querySelector('#bekraftaLaggTillAtgard') as HTMLButtonElement;
-
+    this.redigerbarAnsokanDjurvalfardElements = document.querySelectorAll('.redigerbarAnsDjurElement');
+    this.oredigerbarAnsokanDjurvalfardElements = document.querySelectorAll('.oredigerbarAnsDjurElement');
     const arendeParam = {
       arendeid: this.arendeId,
       kundnummer: this.kundNummer
@@ -119,6 +132,7 @@ export class ArendesidaComponent implements AfterViewInit {
     });
   }
 
+  // tslint:disable-next-line: use-lifecycle-interface
   ngOnDestroy() {
     this.hideSpinner();
   }
@@ -127,8 +141,87 @@ export class ArendesidaComponent implements AfterViewInit {
     this.alive = false;
     this.showSpinner = false;
   }
-  redigeraView(button: HTMLButtonElement) {
-    redigeraAnsDjurValView(button);
+
+  redigeraAnsDjurValView(button: HTMLButtonElement, ansokanDjurvalfard: AnsokanDjurvalfard) {
+
+    this.oandradeAnsokanDjurvalfard = cloneDeep(ansokanDjurvalfard);
+    this.redigeraLageAnsDjur = true;
+
+    for (let i = 0; i < this.redigerbarAnsokanDjurvalfardElements.length; i++) {
+      (this.redigerbarAnsokanDjurvalfardElements[i] as HTMLDivElement).style.display = 'block';
+    }
+    for (let j = 0; j < this.oredigerbarAnsokanDjurvalfardElements.length; j++) {
+      (this.oredigerbarAnsokanDjurvalfardElements[j] as HTMLDivElement).style.display = 'none';
+    }
+  }
+
+  avbrytAnsDjurValView(button: HTMLButtonElement, ansokanDjurvalfard: AnsokanDjurvalfard) {
+    const ppnNumberRedigeringsUI = (document.querySelector('.c-tagsinput__valueholder') as HTMLInputElement);
+    ppnNumberRedigeringsUI.value = this.ansokanDjurvalfard.ppnLista.toString();
+    this.windowRef.komponentbibliotek.initTagsinputs();
+    this.redigeraLageAnsDjur = false;
+    this.ansokanDjurvalfard = cloneDeep(this.oandradeAnsokanDjurvalfard);
+    for (let i = 0; i < this.redigerbarAnsokanDjurvalfardElements.length; i++) {
+      (this.redigerbarAnsokanDjurvalfardElements[i] as HTMLDivElement).style.display = 'none';
+    }
+    for (let j = 0; j < this.oredigerbarAnsokanDjurvalfardElements.length; j++) {
+      (this.oredigerbarAnsokanDjurvalfardElements[j] as HTMLDivElement).style.display = 'block';
+    }
+  }
+
+  sparaAnsDjurValView(button: HTMLButtonElement, ansokanDjurvalfard: AnsokanDjurvalfard) {
+    const ppnNumberRedigeringsUI = (document.querySelector('.c-tagsinput__valueholder') as HTMLInputElement);
+    this.ansokanDjurvalfard.ppnLista = ppnNumberRedigeringsUI.value.split(',');
+    this.redigeraLageAnsDjur = false;
+    this.sparaAnokanDjurvalfard();
+
+    for (let i = 0; i < this.redigerbarAnsokanDjurvalfardElements.length; i++) {
+      (this.redigerbarAnsokanDjurvalfardElements[i] as HTMLDivElement).style.display = 'none';
+    }
+    for (let j = 0; j < this.oredigerbarAnsokanDjurvalfardElements.length; j++) {
+      (this.oredigerbarAnsokanDjurvalfardElements[j] as HTMLDivElement).style.display = 'block';
+    }
+  }
+
+  sparaAnokanDjurvalfard() {
+
+    this.ansokanDVFArendeversion.antalDjur = this.ansokanDjurvalfard.antalDjur;
+    this.ansokanDVFArendeversion.arendeTyp = this.arende.arendeTyp;
+    this.ansokanDVFArendeversion.arendeversionId = this.valdArendeversion.arendeversionId;
+    this.ansokanPPN.arendeversionId = this.valdArendeversion.arendeversionId;
+    this.ansokanPPN.ppnLista = this.ansokanDjurvalfard.ppnLista;
+
+    this.apiService.postData(environment.redigeraAntalDjurUrl, this.ansokanDVFArendeversion).subscribe(
+      (data: string) => {
+
+      },
+      (error: any) => {
+        console.log(error.message.svar);
+      },
+      () => {
+
+      }
+    );
+
+
+    this.apiService.postData(environment.redigeraPPNUrl, this.ansokanPPN).subscribe(
+      (data: string) => {
+
+      },
+      (error: any) => {
+        console.log(error.message.svar);
+      },
+      () => {
+        console.log(this.ansokanDjurvalfard.ppnLista);
+        setTimeout(() => {
+          this.windowRef.komponentbibliotek.init();
+          this.showSpinner = false;
+        }, 2000);
+      }
+
+    );
+
+    this.hamtaAnsokanDjurvalfard();
   }
   filtreraAtgarder(filtreringsAlternativ) {
     this.filtreringsAlternativ = filtreringsAlternativ;
@@ -275,6 +368,7 @@ export class ArendesidaComponent implements AfterViewInit {
     this.apiService.getData(`${environment.ansokanDjurvalfardUrl}/${this.valdArendeversion.arendeversionId}`).subscribe(
       (data: any) => {
         this.ansokanDjurvalfard = data;
+        this.PPNnummer = this.ansokanDjurvalfard.ppnLista;
         this.errorMessage = '';
         setTimeout(() => {
           this.windowRef.komponentbibliotek.init();
