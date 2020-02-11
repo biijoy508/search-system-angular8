@@ -93,17 +93,28 @@
         </div>
         <button class="c-btn--small ml-1" id="bekraftaLaggTillAtgard" (click)="skapaManuellAtgard($event)">Lägg
           till</button>
-        <button class="c-btn--small ml-1" id="avbrytLaggTillAtgard"
-          (click)="avbrytLaggTillAtgard()">Avbryt</button>
+        <button class="c-btn--small ml-1" id="avbrytLaggTillAtgard" (click)="avbrytLaggTillAtgard()">Avbryt</button>
       </div>
-      <div *ngIf="!ingaAtgarder" class="c-filterbar" rel="c-filterbar-js">
-        <div class="c-filterbar__labels">
-          <button class="filter-label is-active" id="alla" (click)="filtreraAtgarder($event.target.id)"> Visa
-            alla</button>
-          <button class="filter-label" id="öppna" (click)="filtreraAtgarder($event.target.id)"> Öppna</button>
-          <button class="filter-label" id="stängda" (click)="filtreraAtgarder($event.target.id)"> Stängda</button>
+      <div *ngIf="!ingaAtgarder">
+        <div class="c-tabs" rel="c-tabs-js">
+          <ul class="c-tabs__labels" role="tablist" aria-label="Code Examples">
+            <li role="presentation">
+              <button class="tab-label is-active" id="alla" aria-selected="true" role="tab" tabindex="-1"
+                (click)="filtreraAtgarder($event.target.id)"><span class="tab-label__text">Visa
+                  alla</span></button>
+            </li>
+            <li role="presentation">
+              <button class="tab-label" id="öppna" aria-selected="false" tabindex="-1" role="tab"
+                (click)="filtreraAtgarder($event.target.id)"><span class="tab-label__text">Öppna</span></button>
+            </li>
+            <li role="presentation">
+              <button id="stängda" aria-selected="false" class="tab-label" role="tab"
+                (click)="filtreraAtgarder($event.target.id)"><span class="tab-label__text">Stängda</span></button>
+            </li>
+          </ul>
         </div>
-        <div id="atgardLista" class="c-filterbar__content">
+
+        <div id="atgardLista">
           <div *ngFor="let atgard of atgardLista; index as i">
             <ul aria-label="accordion Control Group links" class="c-accordion-group" [id]="this.atgard.statusKod">
               <li aria-controls="content-1" aria-expanded="true" [id]="this.atgard.id + '-accordion'"
@@ -120,8 +131,7 @@
 
                 <div role="region" [aria-labelledby]="'atgard'+i" aria-hidden="false" id="content-1"
                   class="c-accordion-item__content">
-                  <fieldset class="c-radio-btn-group--medium" role="radiogroup"
-                    aria-labelledby="legend_4">
+                  <fieldset class="c-radio-btn-group--medium" role="radiogroup" aria-labelledby="legend_4">
                     <p class="atgardBeskrivning">{{atgard.atgardTypModel.text}}</p>
 
                     <div *ngIf="!(redigeraLageAtgarder && atgard.id === valdAtgardId)" class="text">
@@ -197,22 +207,23 @@
 
     <div id='utbetFlikar' class="col-md-8 border-left">
       <div class="c-tabs" rel="c-tabs-js">
-        <ul id="myTabs_1" class="c-tabs__labels" role="tablist" aria-label="Code Examples">
-          <li class="c-tabs__title" role="presentation">
-            <button id="ansokanDjurvalfard" href="#panel1" aria-selected="true" role="tab" aria-controls="panel1"
-              tabindex="-1" class="is-active" (click)="sattValdFlik('ansokanDjurvalfard')">Ansökan Djurvälfärd</button>
+        <ul id="myTabs_11" class="c-tabs__labels" role="tablist" aria-label="Code Examples">
+          <li role="presentation">
+            <button id="ansokanDjurvalfard" href="#panel11" aria-selected="true" role="tab" aria-controls="panel11"
+              tabindex="-1" class="tab-label is-active" (click)="sattValdFlik('ansokanDjurvalfard')"><span class="tab-label__text">Ansökan
+                Djurvälfärd</span></button>
           </li>
-          <li class="c-tabs__title" role="presentation">
-            <button id="attribut" href="#panel2" aria-selected="false" aria-controls="panel2" role="tab" tabindex="-1"
-              (click)="sattValdFlik('attribut')">Attribut</button>
+          <li role="presentation">
+            <button class="tab-label" id="attribut" href="#panel12" aria-selected="false" aria-controls="panel12"
+              role="tab" tabindex="-1" (click)="sattValdFlik('attribut')"><span class="tab-label__text">Attribut</span></button>
           </li>
-          <li class="c-tabs__title" role="presentation">
-            <button id="beslut" href="#panel3" aria-selected="false" aria-controls="panel3" role="tab"
-              (click)="sattValdFlik('beslut')">Beslut</button>
+          <li role="presentation">
+            <button id="beslut" href="#panel13" class="tab-label" aria-selected="false" aria-controls="panel13"
+              role="tab" (click)="sattValdFlik('beslut')"><span class="tab-label__text">Beslut</span></button>
           </li>
         </ul>
-        <div class="c-tabs__content" data-tabs="myTabs_1">
-          <div id="panel1" class="c-tabs__panel is-active" role="tabpanel" aria-labelledby="panel1__label">
+        <div class="c-tabs__content" data-tabs="myTabs_11">
+          <div id="panel11" class="c-tabs__panel is-active" role="tabpanel" aria-labelledby="panel11__label">
             <div class="inlineWrapper2 oredigerbarAnsDjurElement">
               <span>
                 <p class="header"> PPN </p>
@@ -236,8 +247,9 @@
               <label for="input-text-1" tabindex="-1">PPN</label>
               <div class="c-tagsinput-field" rel="c-tagsinput-js">
                 <div class="tagsContainer">
-                  <input autocomplete="off" class="tagValuesHolder" type="hidden" [(ngModel)]="PPNnummer">
-                  <input autocomplete="off" type="text" id="1" placeholder="">
+                  <input autocomplete="off" tabindex="-1" aria-hidden="true" class="c-tagsinput__valueholder"
+                    type="text" [(ngModel)]="PPNnummer">
+                  <input autocomplete="off" class="c-tagsinput__textEditor" type="text" id="tagsinput-1" placeholder="">
                 </div>
                 <div class="select__arrow">
                   <span class="sjv-i-multiselect-ikon"></span>
@@ -263,7 +275,7 @@
             <button *ngIf="!tidigareVersion" class="c-btn--small mt-2"
               (click)="redigeraView($event.target)">Redigera</button>
           </div>
-          <div id="panel2" class="c-tabs__panel" role="tabpanel" aria-labelledby="panel2__label">
+          <div id="panel12" class="c-tabs__panel" role="tabpanel" aria-labelledby="panel12__label">
             <div *ngIf="attributFinns">
               <div class="attributeHeader">
                 <span>Attribut</span>
@@ -280,7 +292,7 @@
             </div>
             <p class="defaultfontsize" *ngIf="!attributFinns">Ärendet har inga attribut i denna version.</p>
           </div>
-          <div id="panel3" class="c-tabs__panel" role="tabpanel" aria-labelledby="panel3__label">
+          <div id="panel13" class="c-tabs__panel" role="tabpanel" aria-labelledby="panel13__label">
             <div *ngIf="beslutFinns">
               <span class="inlineWrapper2">
                 <span>
