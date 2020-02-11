@@ -248,7 +248,7 @@
               <div class="c-tagsinput-field" rel="c-tagsinput-js">
                 <div class="tagsContainer">
                   <input autocomplete="off" tabindex="-1" aria-hidden="true" class="c-tagsinput__valueholder"
-                    type="text" [(ngModel)]="PPNnummer">
+                    type="text" [(ngModel)]="ansokanDjurvalfard.ppnLista">
                   <input autocomplete="off" class="c-tagsinput__textEditor" type="text" id="tagsinput-1" placeholder="">
                 </div>
                 <div class="select__arrow">
@@ -265,11 +265,15 @@
               </div>
             </div>
             <div class="c-input--medium redigerbarAnsDjurElement">
-              <label for="antaldjurenheter" tabindex="-1" id="label-6">Antal djurenheter</label>
-              <div class="input__wrapper input__wrapper--text">
+              <!-- <label for="antaldjurenheter" tabindex="-1" id="label-6">Antal djurenheter</label> -->
+              <span>
+                <p class="header"> Antal djurenheter </p>
+                <p class=""> {{ansokanDjurvalfard.antalDjurenheter | number:'':'sv'}} </p>
+              </span>
+              <!-- <div class="input__wrapper input__wrapper--text">
                 <input autocomplete="given-name" id="antaldjurenheter" aria-describedby="description-6" type="text"
                   tabindex="0" name="text6" [(ngModel)]="ansokanDjurvalfard.antalDjurenheter">
-              </div>
+              </div> -->
             </div>
             <button *ngIf="!tidigareVersion && redigeraLageAnsDjur === false" class="c-btn--small mt-2 mr-2"
               (click)="redigeraAnsDjurValView($event.target, ansokanDjurvalfard)">Redigera</button>

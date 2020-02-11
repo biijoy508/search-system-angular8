@@ -9,7 +9,6 @@ import { Arende } from 'src/app/model/arende';
 import { ArendeVersion } from 'src/app/model/arendeVersion';
 import { Atgard } from 'src/app/model/atgard';
 import { AtgardTypModel } from 'src/app/model/atgardTypModel';
-import { AnsokanDVFArendeversion } from 'src/app/model/ansokanDVFArendeversion';
 import { Attribut } from 'src/app/model/attribut';
 import { Berakning } from 'src/app/model/berakning';
 import { Beslut } from 'src/app/model/beslut';
@@ -18,7 +17,6 @@ import { environment } from 'src/environments/environment';
 // tslint:disable-next-line: max-line-length
 import { avbrytLaggTillAtgard, deselectLaggtillAtgardSelectElement, hanteraLaggTillAtgardBekraftaKnappStatus } from './arendesidaFunktioner/arendesidaSkapaManuelAtgard';
 import { showToaster, kontrolleraFlikar } from './arendesidaFunktioner/arendesidaUtility';
-import { AnsokanPPN } from 'src/app/model/ansokanPPN';
 
 interface OandradeAtgard {
   atgardId: string;
@@ -42,8 +40,6 @@ export class ArendesidaComponent implements AfterViewInit {
   arendeVersionLista: ArendeVersion[] = [];
   ansokanDjurvalfard: AnsokanDjurvalfard;
   oandradeAnsokanDjurvalfard: AnsokanDjurvalfard;
-  ansokanDVFArendeversion: AnsokanDVFArendeversion;
-  ansokanPPN: AnsokanPPN;
 
   attributLista: Attribut[] = [];
   valdArendeversion: ArendeVersion;
@@ -75,12 +71,10 @@ export class ArendesidaComponent implements AfterViewInit {
   constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router, private titleService: Title) {
     this.windowRef = window;
     this.arende = new Arende('', '', '', '', '', '', '', '', '', '');
-    this.ansokanDjurvalfard = new AnsokanDjurvalfard([], '', '');
+    this.ansokanDjurvalfard = new AnsokanDjurvalfard([], '', '','','');
     const berakning = new Berakning('', '', '');
     this.beslut = new Beslut('', '', '', '', '', '', berakning, [], []);
     this.valdAtgardTyp = new AtgardTypModel('', '', '', [], '', '');
-    this.ansokanDVFArendeversion = new AnsokanDVFArendeversion('', '', '');
-    this.ansokanPPN = new AnsokanPPN('', []);
   }
 
   ngAfterViewInit() {
@@ -132,7 +126,7 @@ export class ArendesidaComponent implements AfterViewInit {
     });
   }
 
-  // tslint:disable-next-line: use-lifecycle-interface
+
   ngOnDestroy() {
     this.hideSpinner();
   }
@@ -173,7 +167,7 @@ export class ArendesidaComponent implements AfterViewInit {
     const ppnNumberRedigeringsUI = (document.querySelector('.c-tagsinput__valueholder') as HTMLInputElement);
     this.ansokanDjurvalfard.ppnLista = ppnNumberRedigeringsUI.value.split(',');
     this.redigeraLageAnsDjur = false;
-    this.sparaAnokanDjurvalfard();
+    this.sparaAnsokanDjurvalfard();
 
     for (let i = 0; i < this.redigerbarAnsokanDjurvalfardElements.length; i++) {
       (this.redigerbarAnsokanDjurvalfardElements[i] as HTMLDivElement).style.display = 'none';
@@ -183,42 +177,19 @@ export class ArendesidaComponent implements AfterViewInit {
     }
   }
 
-  sparaAnokanDjurvalfard() {
+  sparaAnsokanDjurvalfard() {
 
-    this.ansokanDVFArendeversion.antalDjur = this.ansokanDjurvalfard.antalDjur;
-    this.ansokanDVFArendeversion.arendeTyp = this.arende.arendeTyp;
-    this.ansokanDVFArendeversion.arendeversionId = this.valdArendeversion.arendeversionId;
-    this.ansokanPPN.arendeversionId = this.valdArendeversion.arendeversionId;
-    this.ansokanPPN.ppnLista = this.ansokanDjurvalfard.ppnLista;
-
-    this.apiService.postData(environment.redigeraAntalDjurUrl, this.ansokanDVFArendeversion).subscribe(
+    this.apiService.postData(environment.redigeraAnsokanUrl, this.ansokanDjurvalfard).subscribe(
       (data: string) => {
 
+        this.errorMessage = '';
       },
       (error: any) => {
-        console.log(error.message.svar);
+        this.errorMessage = error.error.svar;
       },
       () => {
 
       }
-    );
-
-
-    this.apiService.postData(environment.redigeraPPNUrl, this.ansokanPPN).subscribe(
-      (data: string) => {
-
-      },
-      (error: any) => {
-        console.log(error.message.svar);
-      },
-      () => {
-        console.log(this.ansokanDjurvalfard.ppnLista);
-        setTimeout(() => {
-          this.windowRef.komponentbibliotek.init();
-          this.showSpinner = false;
-        }, 2000);
-      }
-
     );
 
     this.hamtaAnsokanDjurvalfard();
@@ -365,7 +336,7 @@ export class ArendesidaComponent implements AfterViewInit {
     }
   }
   hamtaAnsokanDjurvalfard() {
-    this.apiService.getData(`${environment.ansokanDjurvalfardUrl}/${this.valdArendeversion.arendeversionId}`).subscribe(
+    this.apiService.getData(`${environment.ansokanDjurvalfardUrl}/${this.valdArendeversion.arendeversionId}/${this.arende.arendeTyp}`).subscribe(
       (data: any) => {
         this.ansokanDjurvalfard = data;
         this.PPNnummer = this.ansokanDjurvalfard.ppnLista;
