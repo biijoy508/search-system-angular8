@@ -14,8 +14,8 @@ export function closeToaster(toaster, toasterMessage) {
 
 export function kontrolleraFlikar(arende) {
   if (arende.ansokansTyp === 'UTBET') {
-    toggleAktivFlik(arende.status);
     kontrolleraAnsokanDjurvalfard(arende.arendeTyp);
+    toggleAktivFlik(arende.status);
   } else {
     const utbetFlikar = document.querySelector('#utbetFlikar') as HTMLElement;
     if (utbetFlikar) {

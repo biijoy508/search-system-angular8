@@ -93,25 +93,26 @@
         </div>
         <button class="c-btn--small ml-1" id="bekraftaLaggTillAtgard" (click)="skapaManuellAtgard($event)">Lägg
           till</button>
-        <button class="c-btn--small ml-2" id="avbrytLaggTillAtgard" (click)="avbrytLaggTillAtgard()">Avbryt</button>
+        <button class="c-btn--small ml-1" id="avbrytLaggTillAtgard" (click)="avbrytLaggTillAtgard()">Avbryt</button>
       </div>
-      <div *ngIf="!ingaAtgarder" class="c-tabs" rel="c-tabs-js">
-
-        <ul id="myTabs_1" class="c-tabs__labels" role="tablist" aria-label="Code Examples">
-          <li role="presentation">
-            <button class="tab-label is-active" id="alla" aria-selected="true" role="tab"
-              aria-controls="panel11" tabindex="-1" (click)="filtreraAtgarder($event.target.id)"><span>Visa
-                alla</span></button>
-          </li>
-          <li role="presentation">
-            <button class="tab-label" id="öppna" aria-selected="false" aria-controls="panel12" tabindex="-1"
-              role="tab" (click)="filtreraAtgarder($event.target.id)"><span>Öppna</span></button>
-          </li>
-          <li role="presentation">
-            <button id="stängda" aria-selected="false" class="tab-label" aria-controls="panel13" role="tab"
-              (click)="filtreraAtgarder($event.target.id)"><span>Stängda</span></button>
-          </li>
-        </ul>
+      <div *ngIf="!ingaAtgarder">
+        <div class="c-tabs" rel="c-tabs-js">
+          <ul class="c-tabs__labels" role="tablist" aria-label="Code Examples">
+            <li role="presentation">
+              <button class="tab-label is-active" id="alla" aria-selected="true" role="tab" tabindex="-1"
+                (click)="filtreraAtgarder($event.target.id)"><span class="tab-label__text">Visa
+                  alla</span></button>
+            </li>
+            <li role="presentation">
+              <button class="tab-label" id="öppna" aria-selected="false" tabindex="-1" role="tab"
+                (click)="filtreraAtgarder($event.target.id)"><span class="tab-label__text">Öppna</span></button>
+            </li>
+            <li role="presentation">
+              <button id="stängda" aria-selected="false" class="tab-label" role="tab"
+                (click)="filtreraAtgarder($event.target.id)"><span class="tab-label__text">Stängda</span></button>
+            </li>
+          </ul>
+        </div>
 
         <div id="atgardLista">
           <div *ngFor="let atgard of atgardLista; index as i">
@@ -206,23 +207,23 @@
 
     <div id='utbetFlikar' class="col-md-8 border-left">
       <div class="c-tabs" rel="c-tabs-js">
-        <ul id="myTabs_1" class="c-tabs__labels" role="tablist" aria-label="Utbetalnings flikar">
+        <ul id="myTabs_11" class="c-tabs__labels" role="tablist" aria-label="Code Examples">
           <li role="presentation">
-            <button id="ansokanDjurvalfard" href="#panel1" aria-selected="true" role="tab" aria-controls="panel1"
-              tabindex="-1" class="tab-label is-active" (click)="sattValdFlik($event.target.id)">
-              <span>Ansökan Djurvälfärd</span></button>
+            <button id="ansokanDjurvalfard" href="#panel11" aria-selected="true" role="tab" aria-controls="panel11"
+              tabindex="-1" class="tab-label is-active" (click)="sattValdFlik('ansokanDjurvalfard')"><span class="tab-label__text">Ansökan
+                Djurvälfärd</span></button>
           </li>
           <li role="presentation">
-            <button id="attribut" href="#panel2" aria-selected="false" aria-controls="panel2" role="tab" tabindex="-1"
-              class="tab-label" (click)="sattValdFlik($event.target.id)"><span>Attribut</span></button>
+            <button class="tab-label" id="attribut" href="#panel12" aria-selected="false" aria-controls="panel12"
+              role="tab" tabindex="-1" (click)="sattValdFlik('attribut')"><span class="tab-label__text">Attribut</span></button>
           </li>
           <li role="presentation">
-            <button id="beslut" href="#panel3" aria-selected="false" aria-controls="panel3" role="tab"
-              class="tab-label" (click)="sattValdFlik($event.target.id)"><span>Beslut</span></button>
+            <button id="beslut" href="#panel13" class="tab-label" aria-selected="false" aria-controls="panel13"
+              role="tab" (click)="sattValdFlik('beslut')"><span class="tab-label__text">Beslut</span></button>
           </li>
         </ul>
-        <div class="c-tabs__content" data-tabs="myTabs_1">
-          <div id="panel1" class="c-tabs__panel is-active" role="tabpanel" aria-labelledby="panel1__label">
+        <div class="c-tabs__content" data-tabs="myTabs_11">
+          <div id="panel11" class="c-tabs__panel is-active" role="tabpanel" aria-labelledby="panel11__label">
             <div class="inlineWrapper2 oredigerbarAnsDjurElement">
               <span>
                 <p class="header"> PPN </p>
@@ -246,7 +247,8 @@
               <label for="input-text-1" tabindex="-1">PPN</label>
               <div class="c-tagsinput-field" rel="c-tagsinput-js">
                 <div class="tagsContainer">
-                  <input autocomplete="off" tabindex="-1" aria-hidden="true" class="c-tagsinput__valueholder" type="text" [ngModel]="PPNnummer">
+                  <input autocomplete="off" tabindex="-1" aria-hidden="true" class="c-tagsinput__valueholder"
+                    type="text" [(ngModel)]="PPNnummer">
                   <input autocomplete="off" class="c-tagsinput__textEditor" type="text" id="tagsinput-1" placeholder="">
                 </div>
                 <div class="select__arrow">
@@ -277,7 +279,7 @@
               (click)="avbrytAnsDjurValView($event.target, ansokanDjurvalfard)">Avbryt</button>
 
           </div>
-          <div id="panel2" class="c-tabs__panel" role="tabpanel" aria-labelledby="panel2__label">
+          <div id="panel12" class="c-tabs__panel" role="tabpanel" aria-labelledby="panel12__label">
             <div *ngIf="attributFinns">
               <div class="attributeHeader">
                 <span>Attribut</span>
@@ -294,7 +296,7 @@
             </div>
             <p class="defaultfontsize" *ngIf="!attributFinns">Ärendet har inga attribut i denna version.</p>
           </div>
-          <div id="panel3" class="c-tabs__panel" role="tabpanel" aria-labelledby="panel3__label">
+          <div id="panel13" class="c-tabs__panel" role="tabpanel" aria-labelledby="panel13__label">
             <div *ngIf="beslutFinns">
               <span class="inlineWrapper2">
                 <span>
