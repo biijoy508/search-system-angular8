@@ -52,7 +52,6 @@ export class ArendesidaComponent implements AfterViewInit {
   filtreringsAlternativ = 'alla';
 
   tidigareVersion = false;
-  valdFlik = 'ansokanDjurvalfard';
   errorMessage = '';
   showSpinner = true;
   spinnerText = 'Sidan laddas';
@@ -110,9 +109,11 @@ export class ArendesidaComponent implements AfterViewInit {
       this.errorMessage = err.message;
       this.showSpinner = false;
     }, () => {
-      this.windowRef.komponentbibliotek.init();
-      kontrolleraFlikar(this.arende);
-      setTimeout(() => {
+        setTimeout(() => {
+          this.windowRef.komponentbibliotek.init();
+          kontrolleraFlikar(this.arende);
+        }, 500);
+        setTimeout(() => {
         this.showSpinner = false;
       }, 2000);
     });
@@ -179,7 +180,7 @@ export class ArendesidaComponent implements AfterViewInit {
     setTimeout(() => {
       const accordion = document.getElementById(atgard.id + '-accordion') as HTMLElement;
       accordion.classList.add('open');
-      this.windowRef.komponentbibliotek.initAccordion();
+      this.windowRef.komponentbibliotek.initAccordions();
     }, 100);
   }
   sparaRedigeratAtgard(atgard, event) {
@@ -204,7 +205,7 @@ export class ArendesidaComponent implements AfterViewInit {
           setTimeout(() => {
             const accordion = document.getElementById(atgard.id + '-accordion') as HTMLElement;
             accordion.classList.add('open');
-            this.windowRef.komponentbibliotek.initAccordion();
+            this.windowRef.komponentbibliotek.initAccordions();
           }, 500);
         }
       );
@@ -261,12 +262,12 @@ export class ArendesidaComponent implements AfterViewInit {
       );
   }
 
-  hamtaDataForValdFlik() {
-    if (this.valdFlik === 'ansokanDjurvalfard') {
+  hamtaDataForValdFlik(flikNamn) {
+    if (flikNamn === 'ansokanDjurvalfard') {
       this.hamtaAnsokanDjurvalfard();
-    } else if (this.valdFlik === 'attribut') {
+    } else if (flikNamn === 'attribut') {
       this.hamtaAttribut();
-    } else if (this.valdFlik === 'beslut') {
+    } else if (flikNamn === 'beslut') {
       this.hamtaBeslut();
     }
   }
@@ -343,7 +344,6 @@ export class ArendesidaComponent implements AfterViewInit {
       });
   }
   visaTidigareVersion(select: HTMLSelectElement) {
-
     this.valdArendeversion = this.arendeVersionLista.find(entity => entity.arendeversionId === select.value);
 
     if (this.valdArendeversion.gallande === 'J') {
@@ -351,13 +351,11 @@ export class ArendesidaComponent implements AfterViewInit {
     } else {
       this.tidigareVersion = true;
     }
-
-    this.hamtaDataForValdFlik();
+    kontrolleraFlikar(this.arende);
   }
 
   sattValdFlik(valdFlik) {
-    this.valdFlik = valdFlik;
-    this.hamtaDataForValdFlik();
+    this.hamtaDataForValdFlik(valdFlik);
   }
 
   togglewarning() {
