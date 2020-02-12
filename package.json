@@ -28,14 +28,16 @@
     "@angular/service-worker": "8.2.10",
     "@types/lodash": "^4.14.149",
     "core-js": "3.2.1",
+    "file-saver": "^2.0.2",
     "rxjs": "6.5.3",
     "rxjs-tslint": "0.1.7",
     "sockjs": "^0.3.19",
+    "xlsx": "^0.15.5",
     "zone.js": "0.10.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.803.8",
-    "@angular/cli": "8.3.8",
+    "@angular/cli": "^8.3.25",
     "@angular/compiler-cli": "8.2.10",
     "@angular/language-service": "8.2.10",
     "@angular/platform-server": "8.2.10",
