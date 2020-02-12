@@ -7,13 +7,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { DomChangeDirective } from './dom-change.directive';
 import { ArendesidaComponent } from './arendesida/arendesida.component';
+import { RapporterComponent } from './rapporter/rapporter.component';
 
 
 
 @NgModule({
   declarations: [
     HemsidaComponent, MassHanteringComponent,
-    DomChangeDirective, ArendesidaComponent
+    DomChangeDirective, ArendesidaComponent, RapporterComponent
   ],
   imports: [
     CommonModule, ViewComponentsModule, FormsModule, ReactiveFormsModule, RouterModule
