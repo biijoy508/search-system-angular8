@@ -7,6 +7,7 @@ export function showToaster(message: any) {
     closeToaster(toaster, toasterMessage);
   }, 2000);
 }
+
 export function closeToaster(toaster, toasterMessage) {
   toaster.style.display = 'none';
   toasterMessage.innerHTML = '';
