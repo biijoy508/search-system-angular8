@@ -1,0 +1,154 @@
+<app-header activeView="rapporter"></app-header>
+<div role="main" class="container">
+  <div class="row">
+    <div class="col">
+      <div class="e-h3 underline">Skapa rapport</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="c-select--medium">
+        <label for="valjRapport">Välj rapport</label>
+        <div class="c-select__wrapper">
+          <select id="valjRapport" [(ngModel)]="rapportVal" (change)="chagedValue()">
+            <option class="u1018_input_option" value="AREDAT03 - Manuella avdrag">AREDAT03 - Manuella avdrag</option>
+            <option class="u1018_input_option" value="AREDAT06 - Brukare med sanktion">AREDAT06 - Brukare med sanktion
+            </option>
+            <option class="u1018_input_option" value="ATG001 - Åtgärdslista (ATG001)">ATG001 - Åtgärdslista (ATG001)
+            </option>
+            <option class="u1018_input_option" value="BESLUT003 - Granskningslista utbetalning - bifall">BESLUT003 -
+              Granskningslista utbetalning - bifall</option>
+            <option class="u1018_input_option" value="BESLUT004 - Granskningslista utbetalning - avslag">BESLUT004 -
+              Granskningslista utbetalning - avslag</option>
+            <option class="u1018_input_option" value="BESLUT006 - Beslutslista utbetalning - bifall">BESLUT006 -
+              Beslutslista
+              utbetalning - bifall</option>
+            <option class="u1018_input_option" value="BESLUT008 - Beslutslista utbetalning - avslag">BESLUT008 -
+              Beslutslista
+              utbetalning - avslag</option>
+            <option class="u1018_input_option" value="BESLUT013 - Granskningslista åtagande Ej blockbundna - bifall">
+              BESLUT013 -
+              Granskningslista åtagande Ej blockbundna - bifall</option>
+            <option class="u1018_input_option" value="BESLUT016 - Formellt beslut">BESLUT016 - Formellt beslut</option>
+            <option class="u1018_input_option" value="BESLUT018 - Granskningslista åtagande - avslag/hävning">
+              BESLUT018 -
+              Granskningslista åtagande - avslag/hävning</option>
+            <option class="u1018_input_option" value="BESLUT022 - Senare åtagandebeslutsberäkning">BESLUT022 - Senare
+              åtagandebeslutsberäkning</option>
+            <option class="u1018_input_option"
+              value="BESLUT054 - Underrättelse om beslut om åtagande och utbetalning Djurvälfärd">
+              BESLUT054 - Underrättelse om beslut om åtagande och utbetalning Djurvälfärd</option>
+            <option class="u1018_input_option" value="BESLUT060 - Kommuniceringsbrev för återkrav">BESLUT060 -
+              Kommuniceringsbrev
+              för återkrav</option>
+            <option class="u1018_input_option" value="BESLUT061 - Beslut om återkrav">BESLUT061 - Beslut om återkrav
+            </option>
+            <option class="u1018_input_option"
+              value="BESLUT062 - Återkrav - SKV-fil som visar alla ärenden med minusbelopp">
+              BESLUT062 - Återkrav - SKV-fil som visar alla ärenden med minusbelopp</option>
+            <option class="u1018_input_option" value="INTR001 - Söka intressent">INTR001 - Söka intressent</option>
+            <option class="u1018_input_option" value="INTR002 - Adressetiketter">INTR002 - Adressetiketter</option>
+            <option class="u1018_input_option" value="MILJO_MILJO003 - Lista underlag för kontroll">MILJO_MILJO003 -
+              Lista underlag
+              för kontroll</option>
+            <option class="u1018_input_option" value="MILJO_MILJO004 - JK-lista">MILJO_MILJO004 - JK-lista</option>
+            <option class="u1018_input_option" value="PROC001 - Ärendelista">PROC001 - Ärendelista</option>
+            <option class="u1018_input_option" value="PROC002 - Ärendelista_2">PROC002 - Ärendelista_2</option>
+            <option class="u1018_input_option" value="PROC003 - Beställningsjobb för statusändring, resultat">PROC003 -
+              Beställningsjobb för statusändring, resultat</option>
+          </select>
+          <span class="sjv-i-caret-ner ikon">
+          </span>
+        </div>
+      </div>
+      <div class="rapporter_beskrivning">
+        <p class="header"> {{rapportVal}} </p>
+        <p class="content"> {{rapportVal}} </p>
+      </div>
+    </div>
+    <div class="col-sm-5 offset-sm-1">
+      <div class="rapportparametrar">Rapportparametrar</div>
+      <div class="c-input--medium">
+        <label for="filnamn">Filnamn</label>
+        <div class="input__wrapper input__wrapper--text">
+          <input autocomplete="off" id="filnamn" type="text" name="filnamn" [(ngModel)]="filnamn">
+        </div>
+      </div>
+      <div class="c-select--medium">
+        <label for="filFormat">Filformat</label>
+        <div class="c-select__wrapper">
+          <select id="filFormat" [(ngModel)]="filformat">
+            <option class="u1043_input_option" value="SKV">SKV</option>
+            <option class="u1043_input_option" value="PDF">PDF</option>
+          </select>
+          <span class="sjv-i-caret-ner ikon">
+          </span>
+        </div>
+      </div>
+      <div class="c-select--medium">
+        <label for="myndighet">Myndighet</label>
+        <div class="c-select__wrapper">
+          <select id="myndighet">
+            <option class="u1033_input_option" value=" ">&nbsp;</option>
+            <option class="u1033_input_option" value="Gävle">Gävle</option>
+            <option class="u1033_input_option" value="Göteborg">Göteborg</option>
+            <option class="u1033_input_option" selected value="Jönköping">Jönköping</option>
+          </select>
+          <span class="sjv-i-caret-ner ikon">
+          </span>
+        </div>
+      </div>
+      <div class="c-select--medium">
+        <label for="stodar">Stödår</label>
+        <div class="c-select__wrapper">
+          <select id="stodar">
+            <option class="u1029_input_option" selected="" value=" ">&nbsp;</option>
+            <option class="u1029_input_option" value="2016">2016</option>
+            <option class="u1029_input_option" value="2017">2017</option>
+            <option class="u1029_input_option" value="2018">2018</option>
+            <option class="u1029_input_option" selected value="2019">2019</option>
+          </select>
+          <span class="sjv-i-caret-ner ikon">
+          </span>
+        </div>
+      </div>
+      <div class="c-multiselect--medium" rel="c-multiselect-js">
+        <label for="arendetyp" class="c-multiselect__label">Ärendetyp</label>
+        <select id="arendetyp" name="arendetyp[]" multiple="multiple">
+          <option class="u1031_input_option" value="FARERS">FARERS</option>
+          <option class="u1031_input_option" value="KLOVERS">KLOVERS</option>
+          <option class="u1031_input_option" selected value="SUGGERS">SUGGERS</option>
+        </select>
+      </div>
+      <div class="c-input--medium">
+        <label for="kundnrFran">Kundnr från</label>
+        <div class="input__wrapper input__wrapper--text">
+          <input autocomplete="off" id="kundnrFran" type="text" name="kundnrFran">
+        </div>
+      </div>
+      <div class="c-input--medium">
+        <label for="kundnrTill">Kundnr till</label>
+        <div class="input__wrapper input__wrapper--text">
+          <input autocomplete="off" id="kundnrTill" type="text" name="kundnrTill">
+        </div>
+      </div>
+        <div *ngIf="successStatus">
+          <div class="c-banner" role="banner">
+            <div class="c-banner__content">
+              <span class="c-banner-icon sjv-i-info" tabindex="-1"></span>
+              <div class="c-banner__text">
+                <p> <b>Masshanteringen har startats. </b> Du kan se i JBR om körningen är färdig. Du kan lämna denna
+                  sida utan att körningen avbryts </p>
+                <div class="c-banner__actionlink-container">
+                  <a href="http://appl.intern.jordbruksverket.se" class="c-banner__actionlink c-link__light--icon-right">Interna
+                    IT-system<span class="sjv-i-extern-lank"></span></a>
+                  <a class="c-banner__actionlink" (click)="togglesuccessBanner()">Stäng</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="c-btn--primary c-btn--medium mt-3" (click)="togglesuccessBanner()">Skapa rapport</button>
+    </div>
+  </div>
+</div>
