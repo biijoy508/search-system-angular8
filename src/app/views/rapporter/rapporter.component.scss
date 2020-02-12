@@ -1,0 +1,31 @@
+.underline {
+  width: 100%;
+  border-bottom: 1px darkgrey solid;
+  margin: 1rem 0;
+}
+
+.rapportparametrar {
+  display: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+.rapporter_beskrivning {
+  font-size: 13px;
+  margin-bottom: 1.5rem;
+
+  p {
+    line-height: 1.5;
+    margin-bottom: 0.25rem;
+  }
+
+  .header {
+    font-weight: bold;
+  }
+
+  .content {
+    margin-bottom: 1rem;
+  }
+}
