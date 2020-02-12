@@ -515,6 +515,24 @@ export class ArendesidaComponent implements AfterViewInit {
     }
   }
 
+  taBortAttribut(attribut, event) {
+    if (this.valdArendeversion.gallande === 'J' && this.arende.status === 'REG') {
+      const taBortKnapp = event.target as HTMLButtonElement;
+      taBortKnapp.disabled = true;
+      this.apiService.postData(environment.taBortAttributUrl, attribut).subscribe(
+        (data: any) => {
+          this.attributLista = this.attributLista.filter(item => item.id !== attribut.id);
+          taBortKnapp.disabled = false;
+          this.errorMessage = '';
+        },
+        (err: any) => {
+          this.errorMessage = err.error.svar;
+          taBortKnapp.disabled = false;
+        }
+      );
+    }
+  }
+
   hamtaBeslut() {
     const arendeParam = {
       arendeid: this.valdArendeversion.arendeId,

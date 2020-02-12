@@ -21,5 +21,6 @@ export const environment = {
   redigeraAttributUrl: '/farmen/arende/redigeraattribut',
   stodArUrl: '/farmen/intr/stodar',
   statusUrl: '/farmen/grund/arendestatusar',
+  taBortAttributUrl: '/farmen/arende/tabortattribut',
   redigeraAnsokanUrl: '/farmen/aredat/redigeraansokan'
 };
