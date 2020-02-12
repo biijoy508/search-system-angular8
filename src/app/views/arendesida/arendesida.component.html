@@ -188,8 +188,8 @@
                       <p class="content"> {{atgard.uppdateradAv? atgard.uppdateradAv : '&ndash;'}}</p>
                     </span>
                   </div>
-                  <button *ngIf="!redigeraLageAtgarder" (click)="hanteraRedigeraAtgard(atgard, i)"
-                    class="c-btn--small ml-1">Redigera</button>
+                  <button *ngIf="!(redigeraLageAtgarder && atgard.id === valdAtgardId)"
+                    (click)="hanteraRedigeraAtgard(atgard, i)" class="c-btn--small ml-1">Redigera</button>
                   <button *ngIf="redigeraLageAtgarder && valdAtgardId === atgard.id"
                     (click)="sparaRedigeratAtgard(atgard, $event)" class="c-btn--small ml-1">Spara </button>
                   <button *ngIf="redigeraLageAtgarder && valdAtgardId === atgard.id"
@@ -210,12 +210,14 @@
         <ul id="myTabs_11" class="c-tabs__labels" role="tablist" aria-label="Code Examples">
           <li role="presentation">
             <button id="ansokanDjurvalfard" href="#panel11" aria-selected="true" role="tab" aria-controls="panel11"
-              tabindex="-1" class="tab-label is-active" (click)="sattValdFlik('ansokanDjurvalfard')"><span class="tab-label__text">Ansökan
+              tabindex="-1" class="tab-label is-active" (click)="sattValdFlik('ansokanDjurvalfard')"><span
+                class="tab-label__text">Ansökan
                 Djurvälfärd</span></button>
           </li>
           <li role="presentation">
             <button class="tab-label" id="attribut" href="#panel12" aria-selected="false" aria-controls="panel12"
-              role="tab" tabindex="-1" (click)="sattValdFlik('attribut')"><span class="tab-label__text">Attribut</span></button>
+              role="tab" tabindex="-1" (click)="sattValdFlik('attribut')"><span
+                class="tab-label__text">Attribut</span></button>
           </li>
           <li role="presentation">
             <button id="beslut" href="#panel13" class="tab-label" aria-selected="false" aria-controls="panel13"
@@ -289,18 +291,40 @@
                 <span>Attribut</span>
                 <span>Värde</span>
               </div>
-              <div *ngFor="let attribut of attributLista" class="attributeContectWrapper">
-                <div class="attributeContect">
+              <div *ngFor="let attribut of attributLista; index as i" class="attributeContectWrapper">
+                <div class="attributeContect" [id]="attribut.id">
                   <span>{{attribut.namn}}</span>
-                  <span>{{attribut.varde}}</span>
+                  <span *ngIf="!(redigeraLageAttribut && attribut.id === valtAttributId)">{{attribut.varde}}</span>
+                  <span *ngIf="redigeraLageAttribut && attribut.id === valtAttributId && attribut.datatyp === 'DATE'">
+                    <div class="c-input">
+                      <div class="input__wrapper ">
+                        <input id="datepicker_2" type="date" max="2500-01-01" tabindex="0" placeholder="åååå-mm-dd"
+                          name="text1">
+                        <div class="icon"></div>
+                      </div>
+                    </div>
+                  </span>
+                  <span *ngIf="redigeraLageAttribut && attribut.id === valtAttributId &&attribut.datatyp !== 'DATE'">
+                    <select id="attributVarde" [(ngModel)]="attribut.varde">
+                      <option value="KLAR">KLAR</option>
+                      <option value="J">J</option>
+                    </select>
+                  </span>
+                  <button *ngIf="!(redigeraLageAttribut && valtAttributId === attribut.id)"
+                    (click)="hanteraRedigeraAttribut(attribut, i)" class="c-btn--small ml-1">Redigera</button>
+                  <button *ngIf="redigeraLageAttribut && valtAttributId === attribut.id"
+                    (click)="sparaRedigeratAttribut(attribut, $event)" class="c-btn--small ml-1">Spara </button>
+                  <button *ngIf="redigeraLageAttribut && valtAttributId === attribut.id"
+                    (click)="hanteraAvbrytAttribut(attribut, i)" class="c-btn--small ml-2">Avbryt</button>
                 </div>
               </div>
               <div class="c-space--m"></div>
-             
             </div>
+
             <p class="defaultfontsize" *ngIf="!attributFinns">Ärendet har inga attribut i denna version.</p>
 
-            <button *ngIf="!tidigareVersion && arende.status==='REG'" class="c-btn--medium"  (click)="hamtaGiltigaAttribut()"><span class="sjv-i-plus"></span>Lägg till attribut</button>
+            <button *ngIf="!tidigareVersion && arende.status==='REG'" class="c-btn--medium"
+              (click)="hamtaGiltigaAttribut()"><span class="sjv-i-plus"></span>Lägg till attribut</button>
             <div class="skapaAttribut">
               <div class="c-select--medium">
                 <label>Skapa attribut</label>
@@ -318,7 +342,7 @@
                   </span>
                 </div>
               </div>
-          
+
               <button class="c-btn--small ml-1" id="bekraftaLaggTillAttribut" (click)="skapaAttribut()">Lägg
                 till</button>
               <button class="c-btn--small ml-1" id="avbrytLaggTillAttribut"
