@@ -266,7 +266,6 @@
               </div>
             </div>
             <div class="c-input--medium redigerbarAnsDjurElement">
-              <!-- <label for="antaldjurenheter" tabindex="-1" id="label-6">Antal djurenheter</label> -->
               <span>
                 <p class="content-text-bold"> Antal djurenheter </p>
                 <p class="content-text"> {{ansokanDjurvalfard.antalDjurenheter | number:'':'sv'}} </p>
@@ -320,8 +319,7 @@
 
             <p class="defaultfontsize" *ngIf="!attributFinns">Ärendet har inga attribut i denna version.</p>
 
-            <button *ngIf="!tidigareVersion && arende.status==='REG'" class="c-btn--medium"
-              (click)="hamtaGiltigaAttribut()"><span class="sjv-i-plus"></span>Lägg till attribut</button>
+            <button *ngIf="!tidigareVersion && arende.status==='REG'" class="c-btn--medium"  (click)="hamtaGiltigaAttribut()"><span class="sjv-i-plus"></span>Lägg till attribut</button>
             <div class="skapaAttribut">
               <div class="c-select--medium">
                 <label>Skapa attribut</label>
@@ -443,9 +441,6 @@
     <div class="c-toaster" role="alert">
       <div class="c-toaster__content">
         <p class="toasterMessage"></p>
-        <!-- <div class="c-toaster__actionlink-container">
-        <button class="c-toaster__actionlink" (click)="closeToaster($event.target)" tabindex="0">Stäng</button>
-      </div> -->
       </div>
     </div>
     <div *ngIf="showSpinner" class="c-spinner">
