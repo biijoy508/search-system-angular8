@@ -263,7 +263,6 @@
               </div>
             </div>
             <div class="c-input--medium redigerbarAnsDjurElement">
-              <!-- <label for="antaldjurenheter" tabindex="-1" id="label-6">Antal djurenheter</label> -->
               <span>
                 <p class="content-text-bold"> Antal djurenheter </p>
                 <p class="content-text"> {{ansokanDjurvalfard.antalDjurenheter | number:'':'sv'}} </p>
@@ -290,9 +289,35 @@
                 </div>
               </div>
               <div class="c-space--m"></div>
-              <button class="c-btn--small">Redigera</button>
+
             </div>
             <p class="defaultfontsize" *ngIf="!attributFinns">Ärendet har inga attribut i denna version.</p>
+
+            <button *ngIf="!tidigareVersion && arende.status==='REG'" class="c-btn--medium"  (click)="hamtaGiltigaAttribut()"><span class="sjv-i-plus"></span>Lägg till attribut</button>
+            <div class="skapaAttribut">
+              <div class="c-select--medium">
+                <label>Skapa attribut</label>
+                <div class="c-select__wrapper">
+                  <select id="giltigtAttribut" [(ngModel)]="valtAttribut">
+                    <option *ngFor="let attribut_item of giltigtAttributLista" [ngValue]="attribut_item">
+                      <ng-container *ngIf="attribut_item.kod !== ''">
+                        {{attribut_item.kod}} - {{attribut_item.namn}}
+                      </ng-container>
+                      <ng-container *ngIf="attribut_item.kod === ''">
+                      </ng-container>
+                    </option>
+                  </select>
+                  <span class="sjv-i-caret-ner ikon">
+                  </span>
+                </div>
+              </div>
+
+              <button class="c-btn--small ml-1" id="bekraftaLaggTillAttribut" (click)="skapaAttribut()">Lägg
+                till</button>
+              <button class="c-btn--small ml-1" id="avbrytLaggTillAttribut"
+                (click)="avbrytLaggTillAttribut()">Avbryt</button>
+            </div>
+
           </div>
           <div id="panel13" class="c-tabs__panel" role="tabpanel" aria-labelledby="panel13__label">
             <div *ngIf="beslutFinns">
@@ -390,9 +415,6 @@
     <div class="c-toaster" role="alert">
       <div class="c-toaster__content">
         <p class="toasterMessage"></p>
-        <!-- <div class="c-toaster__actionlink-container">
-        <button class="c-toaster__actionlink" (click)="closeToaster($event.target)" tabindex="0">Stäng</button>
-      </div> -->
       </div>
     </div>
     <div *ngIf="showSpinner" class="c-spinner">
