@@ -188,7 +188,7 @@
                       <p class="content"> {{atgard.uppdateradAv? atgard.uppdateradAv : '&ndash;'}}</p>
                     </span>
                   </div>
-                  <button *ngIf="!(redigeraLageAtgarder && atgard.id === valdAtgardId)"
+                    <button *ngIf="!redigeraLageAtgarder"
                     (click)="hanteraRedigeraAtgard(atgard, i)" class="c-btn--small ml-1">Redigera</button>
                   <button *ngIf="redigeraLageAtgarder && valdAtgardId === atgard.id"
                     (click)="sparaRedigeratAtgard(atgard, $event)" class="c-btn--small ml-1">Spara </button>
@@ -304,9 +304,9 @@
                       <option value="J">J</option>
                     </select>
                   </span>
-                  <button *ngIf="!(redigeraLageAttribut && valtAttributId === attribut.id)"
+                  <button *ngIf="!redigeraLageAttribut"
                     (click)="hanteraRedigeraAttribut(attribut, i)" class="c-btn--small ml-1">Redigera</button>
-                  <button *ngIf="!(redigeraLageAttribut && valtAttributId === attribut.id)"
+                  <button *ngIf="!redigeraLageAttribut"
                     (click)="taBortAttribut(attribut, $event)" class="c-btn--small ml-1">Ta bort</button>
                   <button *ngIf="redigeraLageAttribut && valtAttributId === attribut.id"
                     (click)="sparaRedigeratAttribut(attribut, $event)" class="c-btn--small ml-1">Spara </button>
@@ -347,7 +347,7 @@
              </div>
 
              <div *ngIf="valtAttribut.kod && valtAttribut.datatyp !=='DATE'" class="c-select--medium">
-              <label for="field-1">Värde {{valtAttribut.kod}}</label>
+              <label for="field-1">Värde</label>
               <div class="c-select__wrapper">
                   <select [(ngModel)]="valtAttribut.varde">
                       <option value="KLAR">KLAR</option>
