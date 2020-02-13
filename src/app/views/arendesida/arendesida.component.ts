@@ -487,7 +487,6 @@ export class ArendesidaComponent implements AfterViewInit {
 
   skapaAttribut() {
     if (this.valdArendeversion.gallande === 'J' && this.arende.status === 'REG') {
-      console.log(this.valtAttribut);
       this.apiService.postData(environment.skapaAttributUrl, this.valtAttribut)
         .subscribe(
           (data: Attribut) => {
