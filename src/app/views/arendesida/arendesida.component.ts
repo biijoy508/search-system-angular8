@@ -134,7 +134,6 @@ export class ArendesidaComponent implements AfterViewInit {
       this.errorMessage = '';
       this.valdArendeversion = this.arendeVersionLista.find(entity => entity.gallande === 'J');
     }, (err: any) => {
-      console.log(err.message);
       this.errorMessage = err.message;
       this.showSpinner = false;
     }, () => {
@@ -212,7 +211,6 @@ export class ArendesidaComponent implements AfterViewInit {
   sparaAnsokanDjurvalfard() {
     this.apiService.postData(environment.redigeraAnsokanUrl, this.ansokanDjurvalfard).subscribe(
       (data: string) => {
-
         this.errorMessage = '';
       },
       (error: any) => {
@@ -222,8 +220,6 @@ export class ArendesidaComponent implements AfterViewInit {
         this.hamtaAnsokanDjurvalfard();
       }
     );
-
-
   }
 
   filtreraAtgarder(filtreringsAlternativ) {
@@ -331,7 +327,6 @@ export class ArendesidaComponent implements AfterViewInit {
         }, 100);
       },
       (err: any) => {
-        console.log(err.message);
         this.errorMessage = err.message;
       });
   }
@@ -377,14 +372,12 @@ export class ArendesidaComponent implements AfterViewInit {
       (data: any) => {
         this.ansokanDjurvalfard = data;
         this.errorMessage = '';
-
         setTimeout(() => {
           this.windowRef.komponentbibliotek.initTagsinputs();
           this.showSpinner = false;
         }, 500);
       },
       (err: any) => {
-        console.log(err.message);
         this.errorMessage = err.message;
       });
   }
@@ -411,7 +404,6 @@ export class ArendesidaComponent implements AfterViewInit {
         }, 100);
       },
       (err: any) => {
-        console.log(err.message);
         this.errorMessage = err.message;
       });
   }
@@ -439,7 +431,6 @@ export class ArendesidaComponent implements AfterViewInit {
           }, 100);
         },
         (err: any) => {
-          console.log(err.message);
           this.errorMessage = err.message;
         });
     }
@@ -562,7 +553,6 @@ export class ArendesidaComponent implements AfterViewInit {
         }, 150);
       },
       (err: any) => {
-        console.log(err.message);
         this.errorMessage = err.message;
       });
   }
@@ -576,10 +566,6 @@ export class ArendesidaComponent implements AfterViewInit {
       this.tidigareVersion = true;
     }
     kontrolleraFlikar(this.arende);
-  }
-
-  sattValdFlik(valdFlik) {
-    this.hamtaDataForValdFlik(valdFlik);
   }
 
   togglewarning() {

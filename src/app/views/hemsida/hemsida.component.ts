@@ -25,8 +25,8 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
   noResults = true;
   windowRef: any;
   showSpinner = true;
-  resultatStatusText = 'Välj sökfilter och klicka på sök för att visa resultat';
   spinnerText = 'Sidan laddas';
+  resultatStatusText = 'Välj sökfilter och klicka på sök för att visa resultat';
   showWarning = false;
 
   alive = true;
@@ -69,6 +69,10 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
     this.hideSpinner();
   }
 
+  onAvbrytSok() {
+    this.hideSpinner();
+  }
+
   hamtaSokFaltValues() {
     this.apiService.getChainedData()
       .subscribe(res => {
@@ -85,7 +89,6 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
       for (let i = 0; i < res[2].length; i++) {
         this.sokFaltValuesHolder.ansokansTypList.push(res[2][i]);
       }
-      console.log('Sök fält initierat');
       this.showSpinner = false;
     },
       error => console.log('error' + error),

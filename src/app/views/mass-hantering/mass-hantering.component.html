@@ -124,23 +124,6 @@
         </div>
       </div>
     </div>
-    <div *ngIf="showSpinner" class="c-spinner">
-      <div class="c-spinner__container">
-        <div class="c-spinner__animation">
-          <div class="c-spinner__animation__item">
-            <div class="c-spinner__circle circle--3"></div>
-          </div>
-          <div class="c-spinner__animation__item">
-            <div class="c-spinner__circle circle--2"></div>
-          </div>
-          <div class="c-spinner__animation__item">
-            <div class="c-spinner__circle circle--1"></div>
-          </div>
-        </div>
-        <div class="c-spinner__content"> {{spinnerText}} <span class="cursor">
-            <span class="sjv-i-cursor"></span></span>
-        </div>
-      </div>
-    </div>
+    <app-spinner [showSpinner]="showSpinner" spinnerText="Sidan laddas" [sokSida]="false"></app-spinner>
   </div>
 </div>
