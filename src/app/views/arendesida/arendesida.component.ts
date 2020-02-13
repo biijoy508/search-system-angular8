@@ -160,7 +160,7 @@ export class ArendesidaComponent implements AfterViewInit {
 
   uppdateraPPNNumber(ppnvaluesHolder: HTMLInputElement) {
     this.ansokanDjurvalfard.ppnLista = [];
-      this.ansokanDjurvalfard.ppnLista = ppnvaluesHolder.value.split(',');
+    this.ansokanDjurvalfard.ppnLista = ppnvaluesHolder.value.split(',');
   }
 
   redigeraAnsDjurValView(button: HTMLButtonElement, ansokanDjurvalfard: AnsokanDjurvalfard) {
@@ -192,18 +192,21 @@ export class ArendesidaComponent implements AfterViewInit {
   }
 
   sparaAnsDjurValView(button: HTMLButtonElement, ansokanDjurvalfard: AnsokanDjurvalfard) {
-    this.redigeraLageAnsDjur = false;
-    this.showSpinner = true;
-    this.spinnerText = 'Uppdatering pågår';
-    this.sparaAnsokanDjurvalfard();
+    if (this.valdArendeversion.gallande === 'J' && this.arende.status === 'REG') {
 
-    for (let i = 0; i < this.redigerbarAnsokanDjurvalfardElements.length; i++) {
-      (this.redigerbarAnsokanDjurvalfardElements[i] as HTMLDivElement).style.display = 'none';
-    }
-    for (let j = 0; j < this.oredigerbarAnsokanDjurvalfardElements.length; j++) {
-      (this.oredigerbarAnsokanDjurvalfardElements[j] as HTMLDivElement).style.display = 'block';
-    }
+      this.redigeraLageAnsDjur = false;
+      this.showSpinner = true;
+      this.spinnerText = 'Uppdatering pågår';
+      this.sparaAnsokanDjurvalfard();
 
+      for (let i = 0; i < this.redigerbarAnsokanDjurvalfardElements.length; i++) {
+        (this.redigerbarAnsokanDjurvalfardElements[i] as HTMLDivElement).style.display = 'none';
+      }
+      for (let j = 0; j < this.oredigerbarAnsokanDjurvalfardElements.length; j++) {
+        (this.oredigerbarAnsokanDjurvalfardElements[j] as HTMLDivElement).style.display = 'block';
+      }
+
+    }
   }
 
   sparaAnsokanDjurvalfard() {
@@ -216,7 +219,7 @@ export class ArendesidaComponent implements AfterViewInit {
         this.errorMessage = error.error.svar;
       },
       () => {
-          this.hamtaAnsokanDjurvalfard();
+        this.hamtaAnsokanDjurvalfard();
       }
     );
 

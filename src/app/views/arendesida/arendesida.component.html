@@ -271,7 +271,7 @@
                 <p class="content-text"> {{ansokanDjurvalfard.antalDjurenheter | number:'':'sv'}} </p>
               </span>
             </div>
-            <button *ngIf="!tidigareVersion && redigeraLageAnsDjur === false" class="c-btn--small mt-2 mr-2"
+            <button *ngIf="!tidigareVersion && redigeraLageAnsDjur === false && arende.status === 'REG'" class="c-btn--small mt-2 mr-2"
               (click)="redigeraAnsDjurValView($event.target, ansokanDjurvalfard)">Redigera</button>
             <button *ngIf="!tidigareVersion && redigeraLageAnsDjur === true" class="c-btn--small mt-2 mr-2"
               (click)="sparaAnsDjurValView($event.target, ansokanDjurvalfard)">Spara</button>
