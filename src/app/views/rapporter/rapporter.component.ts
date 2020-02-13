@@ -1,30 +1,53 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { ExcelExporterService } from '../../services/excel-exporter.service';
+
+export interface Rapport {
+  title: any;
+  varde: any;
+}
 
 @Component({
   selector: 'app-rapporter',
   templateUrl: './rapporter.component.html',
   styleUrls: ['./rapporter.component.scss']
 })
-export class RapporterComponent implements OnInit, AfterViewInit {
+export class RapporterComponent implements AfterViewInit {
   windowRef: any;
   rapportVal = 'BESLUT003 - Granskningslista utbetalning - bifall';
-  filnamn = this.rapportVal + '-2020-02-12-1112';
+  filnamn = this.rapportVal;
   filformat = 'PDF';
   successStatus = false;
-  constructor() {
+
+  rapportLista = [
+    {
+      MOD_ID: "31878",
+      MOD_NAMN: "MILJO_MILJO003",
+      BESKRIVNING: "Lista underlag för kontroll ...",
+      REFERENS: "ITFF-6782",
+      TITEL: "Lista underlag for kontroll"
+    },
+    {
+      MOD_ID: "31879",
+      MOD_NAMN: "MILJO_MILJO103",
+      BESKRIVNING: "Lista underlag för kontroll ...",
+      REFERENS: "ITFF-6782",
+      TITEL: "Lista underlag for mer kontroll"
+    }
+  ];
+
+
+  constructor(private excelExporterService: ExcelExporterService) {
     this.windowRef = window;
-  }
-  ngOnInit() {
   }
 
   ngAfterViewInit(): void {
     this.windowRef.komponentbibliotek.init();
   }
   chagedValue() {
-    this.filnamn = this.rapportVal + '-2020-02-12-1112';
-  }
-  togglesuccessBanner() {
-    this.successStatus = !this.successStatus;
+    this.filnamn = this.rapportVal;
   }
 
+  skapaRapport() {
+    this.excelExporterService.exportAsExcelFile('', this.rapportLista, this.filnamn);
+  }
 }

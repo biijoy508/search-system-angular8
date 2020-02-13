@@ -132,23 +132,7 @@
           <input autocomplete="off" id="kundnrTill" type="text" name="kundnrTill">
         </div>
       </div>
-        <div *ngIf="successStatus">
-          <div class="c-banner" role="banner">
-            <div class="c-banner__content">
-              <span class="c-banner-icon sjv-i-info" tabindex="-1"></span>
-              <div class="c-banner__text">
-                <p> <b>Masshanteringen har startats. </b> Du kan se i JBR om körningen är färdig. Du kan lämna denna
-                  sida utan att körningen avbryts </p>
-                <div class="c-banner__actionlink-container">
-                  <a href="http://appl.intern.jordbruksverket.se" class="c-banner__actionlink c-link__light--icon-right">Interna
-                    IT-system<span class="sjv-i-extern-lank"></span></a>
-                  <a class="c-banner__actionlink" (click)="togglesuccessBanner()">Stäng</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <button class="c-btn--primary c-btn--medium mt-3" (click)="togglesuccessBanner()">Skapa rapport</button>
+        <button class="c-btn--primary c-btn--medium mt-3" (click)="skapaRapport()">Skapa rapport</button>
     </div>
   </div>
 </div>
