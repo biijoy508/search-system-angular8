@@ -139,7 +139,6 @@ export class ArendesidaComponent implements AfterViewInit {
   uppdateraPPNNumber(ppnvaluesHolder: HTMLInputElement) {
     this.ansokanDjurvalfard.ppnLista = [];
       this.ansokanDjurvalfard.ppnLista = ppnvaluesHolder.value.split(',');
-    console.log(this.ansokanDjurvalfard.ppnLista + "chaka");
   }
 
   redigeraAnsDjurValView(button: HTMLButtonElement, ansokanDjurvalfard: AnsokanDjurvalfard) {
@@ -172,6 +171,8 @@ export class ArendesidaComponent implements AfterViewInit {
 
   sparaAnsDjurValView(button: HTMLButtonElement, ansokanDjurvalfard: AnsokanDjurvalfard) {
     this.redigeraLageAnsDjur = false;
+    this.showSpinner = true;
+    this.spinnerText = 'Uppdatering pågår';
     this.sparaAnsokanDjurvalfard();
 
     for (let i = 0; i < this.redigerbarAnsokanDjurvalfardElements.length; i++) {
@@ -184,7 +185,6 @@ export class ArendesidaComponent implements AfterViewInit {
   }
 
   sparaAnsokanDjurvalfard() {
-    console.log(this.ansokanDjurvalfard.ppnLista + 'zaka');
     this.apiService.postData(environment.redigeraAnsokanUrl, this.ansokanDjurvalfard).subscribe(
       (data: string) => {
 
@@ -194,13 +194,11 @@ export class ArendesidaComponent implements AfterViewInit {
         this.errorMessage = error.error.svar;
       },
       () => {
-        setTimeout(() => {
-          this.windowRef.komponentbibliotek.initTagsinputs();
-        }, 500);
+          this.hamtaAnsokanDjurvalfard();
       }
     );
 
-   // this.hamtaAnsokanDjurvalfard();
+
   }
   filtreraAtgarder(filtreringsAlternativ) {
     this.filtreringsAlternativ = filtreringsAlternativ;
@@ -350,7 +348,8 @@ export class ArendesidaComponent implements AfterViewInit {
         this.errorMessage = '';
 
         setTimeout(() => {
-          this.windowRef.komponentbibliotek.init();
+          this.windowRef.komponentbibliotek.initTagsinputs();
+          this.showSpinner = false;
         }, 500);
       },
       (err: any) => {
