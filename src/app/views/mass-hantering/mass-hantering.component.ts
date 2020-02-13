@@ -22,9 +22,9 @@ interface UrvalValues {
 export class MassHanteringComponent implements OnInit, AfterViewInit {
   antalPaverkadeArenden = '0';
   showSpinner = true;
+  spinnerText = 'Sidan laddas';
   showWarning = false;
   successStatus = false;
-  spinnerText = 'Sidan laddas';
   windowRef: any;
   sokFilter: SokFilter;
 
@@ -78,7 +78,8 @@ export class MassHanteringComponent implements OnInit, AfterViewInit {
         for (let i = 0; i < res[4].length; i++) {
           this.urvalValuesHolder.tillStatus.push(res[4][i]);
         }
-        this.showSpinner = false;
+          this.showSpinner = false;
+       
       });
   }
 

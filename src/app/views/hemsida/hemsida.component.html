@@ -110,31 +110,6 @@
         </div>
       </div>
     </div>
-
-
-
-    <div *ngIf="showSpinner" class="c-spinner">
-      <div class="c-spinner__container">
-        <div class="c-spinner__animation">
-          <div class="c-spinner__animation__item">
-            <div class="c-spinner__circle circle--3"></div>
-          </div>
-          <div class="c-spinner__animation__item">
-            <div class="c-spinner__circle circle--2"></div>
-          </div>
-          <div class="c-spinner__animation__item">
-            <div class="c-spinner__circle circle--1"></div>
-          </div>
-        </div>
-        <div class="c-spinner__content">
-          <span>{{spinnerText}}</span>
-          <span class="cursor">
-            <span class="sjv-i-cursor">
-            </span>
-          </span> <br><br>
-          <button class="c-btn--medium" (click)="hideSpinner()">Avbryt</button>
-        </div>
-      </div>
-    </div>
+    <app-spinner [showSpinner]="showSpinner" [spinnerText]="spinnerText" [sokSida]="true" (avbrytSok)="onAvbrytSok()"></app-spinner>
   </div>
 </div>
