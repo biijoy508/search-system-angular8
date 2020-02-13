@@ -18,6 +18,7 @@ export const environment = {
   skapaAttributUrl: '/farmen/arende/skapaattribut',
   skapaManuellAtgardUrl: '/farmen/atg/skapaatgard',
   redigeraAtgardUrl: '/farmen/atg/redigeraatgard',
+  redigeraAttributUrl: '/farmen/arende/redigeraattribut',
   stodArUrl: '/farmen/intr/stodar',
   statusUrl: '/farmen/grund/arendestatusar',
   redigeraAnsokanUrl: '/farmen/aredat/redigeraansokan'

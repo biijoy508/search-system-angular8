@@ -23,6 +23,11 @@ interface OandradeAtgard {
   atgard: Atgard;
 }
 
+interface OandratAttribut {
+  attributId: string;
+  attribut: Attribut;
+}
+
 @Component({
   selector: 'app-arendesida',
   templateUrl: './arendesida.component.html',
@@ -43,7 +48,9 @@ export class ArendesidaComponent implements AfterViewInit {
 
   attributLista: Attribut[] = [];
   giltigtAttributLista: Attribut[] = [];
+  oandratAttributLista: OandratAttribut[] = [];
   valtAttribut: Attribut;
+  valtAttributId = '';
   valdArendeversion: ArendeVersion;
   beslut: Beslut;
   beslutSummaFinns: boolean;
@@ -52,6 +59,7 @@ export class ArendesidaComponent implements AfterViewInit {
   ingaAtgarder: boolean;
   redigeraLageAtgarder = false;
   redigeraLageAnsDjur = false;
+  redigeraLageAttribut = false;
   PPNnummer: string[];
 
   filtreringsAlternativ = 'alla';
@@ -77,7 +85,7 @@ export class ArendesidaComponent implements AfterViewInit {
   constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router, private titleService: Title) {
     this.windowRef = window;
     this.arende = new Arende('', '', '', '', '', '', '', '', '', '');
-    this.ansokanDjurvalfard = new AnsokanDjurvalfard([], '', '','','');
+    this.ansokanDjurvalfard = new AnsokanDjurvalfard([], '', '', '', '');
     const berakning = new Berakning('', '', '');
     this.beslut = new Beslut('', '', '', '', '', '', berakning, [], []);
     this.valdAtgardTyp = new AtgardTypModel('', '', '', [], '', '');
@@ -382,7 +390,8 @@ export class ArendesidaComponent implements AfterViewInit {
     const arendeParam = {
       arendeid: this.valdArendeversion.arendeId,
       arendeversionid: this.valdArendeversion.arendeversionId,
-      arendetyp: this.arende.arendeTyp
+      arendetyp: this.arende.arendeTyp,
+      arendestatus: this.arende.status
     };
 
     this.apiService.getDataMedParametrar(environment.attributUrl, arendeParam).subscribe(
@@ -430,6 +439,49 @@ export class ArendesidaComponent implements AfterViewInit {
           console.log(err.message);
           this.errorMessage = err.message;
         });
+    }
+  }
+
+  hanteraRedigeraAttribut(attribut: Attribut) {
+    this.valtAttributId = attribut.id;
+    if (this.redigeraLageAttribut === false) {
+      this.redigeraLageAttribut = true;
+      this.oandratAttributLista.push(
+        {
+          attributId: attribut.id,
+          attribut: cloneDeep(attribut)
+        });
+    } else {
+      showToaster('Du har inte sparat dina ändringar.');
+    }
+  }
+
+  hanteraAvbrytAttribut(attribut: Attribut, index) {
+    this.redigeraLageAttribut = false;
+    const gammalValueIndex = this.oandratAttributLista.findIndex(obj => obj.attributId === attribut.id);
+    this.attributLista[index] = cloneDeep(this.oandratAttributLista[gammalValueIndex].attribut);
+    this.oandratAttributLista.splice(gammalValueIndex, 1);
+  }
+
+  sparaRedigeratAttribut(attribut, event) {
+    if (this.valdArendeversion.gallande === 'J' && this.arende.status === 'REG') {
+      this.redigeraLageAttribut = false;
+      const gammalValueIndex = this.oandratAttributLista.findIndex(obj => obj.attributId === attribut.id);
+      this.oandratAttributLista.splice(gammalValueIndex, 1);
+      const sparaKnapp = event.target as HTMLButtonElement;
+      sparaKnapp.disabled = true;
+      this.apiService.postData(environment.redigeraAttributUrl, attribut).subscribe(
+        (data: Attribut) => {
+          const attributIndex = this.attributLista.findIndex(item => item.id === data.id);
+          this.attributLista[attributIndex] = data;
+          sparaKnapp.disabled = false;
+          this.errorMessage = '';
+        },
+        (err: any) => {
+          this.errorMessage = err.error.svar;
+          sparaKnapp.disabled = false;
+        }
+      );
     }
   }
 
