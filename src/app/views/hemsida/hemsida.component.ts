@@ -28,6 +28,7 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
   spinnerText = 'Sidan laddas';
   resultatStatusText = 'Välj sökfilter och klicka på sök för att visa resultat';
   showWarning = false;
+  warningText = 'Fyll i minst ett till sökfält';
 
   alive = true;
   sokFilter: SokFilter;
@@ -67,6 +68,10 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
 
   ngOnDestroy() {
     this.hideSpinner();
+  }
+
+  onStangVarning() {
+    this.showWarning = false;
   }
 
   onAvbrytSok() {
@@ -192,10 +197,6 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
   hideSpinner() {
     this.alive = false;
     this.showSpinner = false;
-  }
-
-  togglewarning() {
-    this.showWarning = false;
   }
 
   rensaSokFilter() {

@@ -106,24 +106,9 @@
       </div>
     </div>
 
-    <div *ngIf="showWarning" class="c-spinner">
-      <div class="c-spinner__container">
-        <div class="c-banner" role="banner">
-          <div class="c-banner__content">
-            <span class="c-banner-icon sjv-i-varning" tabindex="-1"></span>
-            <div class="c-banner__text">
-              <p><b>Ändra status</b></p>
-              <p> Vill du verkligen massändra status på ditt urval?</p>
-              <p> Statusändringen berör {{antalPaverkadeArenden}} ärenden. </p>
-              <div class="c-banner__actionlink-container">
-                <button class="c-btn--medium" (click)="andraStatus()">Ändra status</button>
-                <button class="c-btn--medium" (click)="togglewarning()">Avbryt</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <app-warning [showWarning]="showWarning" [warningText]="warningText" [massHantering]="true"
+      [antalPaverkadeArenden]="antalPaverkadeArenden" (stangVarning)="onStangVarning()" (andraStatus)="onAndraStatus()">
+    </app-warning>
     <app-spinner [showSpinner]="showSpinner" spinnerText="Sidan laddas" [sokSida]="false"></app-spinner>
   </div>
 </div>

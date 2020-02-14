@@ -51,6 +51,19 @@ export class MassHanteringComponent implements OnInit, AfterViewInit {
     this.windowRef.komponentbibliotek.init();
   }
 
+  onStangVarning() {
+    this.showWarning = false;
+  }
+
+  onAndraStatus() {
+    this.showWarning = false;
+    this.apiService.postData(environment.masshanteringUrl, this.sokFilter).subscribe(
+      (data: string) => {
+        this.successStatus = true;
+      }
+    );
+  }
+
   hamtaUrvalValues() {
     this.apiService.getChainedDataMassHantering()
       .subscribe(res => {
@@ -87,15 +100,6 @@ export class MassHanteringComponent implements OnInit, AfterViewInit {
     this.hamtaAntalPaverkadeArenden();
   }
 
-  andraStatus() {
-    this.showWarning = false;
-    this.apiService.postData(environment.masshanteringUrl, this.sokFilter).subscribe(
-      (data: string) => {
-        this.successStatus = true;
-      }
-    );
-  }
-
   hamtaAntalPaverkadeArenden() {
     this.apiService.postData(environment.paverkadeArendenUrl, this.sokFilter).subscribe(
       (data: string) => {
@@ -108,10 +112,6 @@ export class MassHanteringComponent implements OnInit, AfterViewInit {
 
   togglesuccessBanner() {
     this.successStatus = !this.successStatus;
-  }
-
-  togglewarning() {
-    this.showWarning = false;
   }
 
   onOptionsSelected(sokFilterparameter: string, value: any[]) {

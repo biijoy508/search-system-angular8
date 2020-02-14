@@ -448,26 +448,12 @@
       </div>
     </div>
 
-    <div *ngIf="warningMessage !== ''" class="c-spinner">
-      <div class="c-spinner__container">
-        <div class="c-banner" role="banner">
-          <div class="c-banner__content">
-            <span class="c-banner-icon sjv-i-varning" tabindex="-1"></span>
-            <div class="c-banner__text">
-              <p>{{warningMessage}}</p>
-              <div class="c-banner__actionlink-container">
-                <button class="c-btn--medium float-right mt-5" (click)="togglewarning()">Stäng</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
     <div class="c-toaster" role="alert">
       <div class="c-toaster__content">
         <p class="toasterMessage"></p>
       </div>
     </div>
+    <app-warning [showWarning]="showWarning" [warningText]="warningText" [massHantering]="false" (stangVarning)="onStangVarning()"></app-warning>
     <app-spinner [showSpinner]="showSpinner" [spinnerText]="spinnerText" [sokSida]="false"></app-spinner>
   </div>
 </div>

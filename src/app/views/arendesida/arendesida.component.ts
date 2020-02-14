@@ -69,7 +69,8 @@ export class ArendesidaComponent implements AfterViewInit {
   showSpinner = true;
   spinnerText = 'Sidan laddas';
   valdAtgardId = '';
-  warningMessage = '';
+  showWarning = false;
+  warningText = 'Kommentar måste anges'
   alive = true;
 
   atgardSelectElement: HTMLSelectElement;
@@ -117,6 +118,10 @@ export class ArendesidaComponent implements AfterViewInit {
     };
 
     this.hamtaArendeInformation(arendeParam);
+  }
+
+  onStangVarning() {
+    this.showWarning = false;
   }
 
   hamtaArendeInformation(arendeParam: { arendeid: any; kundnummer: any; }) {
@@ -305,7 +310,7 @@ export class ArendesidaComponent implements AfterViewInit {
         }
       );
     } else {
-      this.warningMessage = 'Kommentar måste anges.';
+      this.showWarning = true;
     }
   }
 
@@ -567,10 +572,6 @@ export class ArendesidaComponent implements AfterViewInit {
       this.tidigareVersion = true;
     }
     kontrolleraFlikar(this.arende);
-  }
-
-  togglewarning() {
-    this.warningMessage = '';
   }
 
   avbrytLaggTillAtgard() {
