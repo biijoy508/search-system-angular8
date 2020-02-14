@@ -89,7 +89,7 @@ export class ArendesidaComponent implements AfterViewInit {
     const berakning = new Berakning('', '', '');
     this.beslut = new Beslut('', '', '', '', '', '', berakning, [], []);
     this.valdAtgardTyp = new AtgardTypModel('', '', '', [], '', '');
-    this.valtAttribut = new Attribut('', '', '', '', '', '', '', '', '');
+    this.valtAttribut = new Attribut('', '', '', '', '', [], '', '', '', '');
   }
 
   ngAfterViewInit() {
@@ -387,7 +387,8 @@ export class ArendesidaComponent implements AfterViewInit {
       arendeid: this.valdArendeversion.arendeId,
       arendeversionid: this.valdArendeversion.arendeversionId,
       arendetyp: this.arende.arendeTyp,
-      arendestatus: this.arende.status
+      arendestatus: this.arende.status,
+      ansokanstyp: this.arende.ansokansTyp
     };
 
     this.apiService.getDataMedParametrar(environment.attributUrl, arendeParam).subscribe(
@@ -410,7 +411,7 @@ export class ArendesidaComponent implements AfterViewInit {
 
   hamtaGiltigaAttribut() {
     if (this.valdArendeversion.gallande === 'J' && this.arende.status === 'REG') {
-      this.valtAttribut = new Attribut('', '', '', '', '', '', '', '', '');
+      this.valtAttribut = new Attribut('', '', '', '', '', [], '', '', '', '');
 
       const arendeParam = {
         arendetyp: this.arende.arendeTyp,

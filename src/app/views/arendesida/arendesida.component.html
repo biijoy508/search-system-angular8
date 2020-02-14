@@ -188,8 +188,8 @@
                       <p class="content"> {{atgard.uppdateradAv? atgard.uppdateradAv : '&ndash;'}}</p>
                     </span>
                   </div>
-                    <button *ngIf="!redigeraLageAtgarder"
-                    (click)="hanteraRedigeraAtgard(atgard, i)" class="c-btn--small ml-1">Redigera</button>
+                  <button *ngIf="!redigeraLageAtgarder" (click)="hanteraRedigeraAtgard(atgard, i)"
+                    class="c-btn--small ml-1">Redigera</button>
                   <button *ngIf="redigeraLageAtgarder && valdAtgardId === atgard.id"
                     (click)="sparaRedigeratAtgard(atgard, $event)" class="c-btn--small ml-1">Spara </button>
                   <button *ngIf="redigeraLageAtgarder && valdAtgardId === atgard.id"
@@ -271,7 +271,8 @@
                 <p class="content-text"> {{ansokanDjurvalfard.antalDjurenheter | number:'':'sv'}} </p>
               </span>
             </div>
-            <button *ngIf="!tidigareVersion && redigeraLageAnsDjur === false && arende.status === 'REG'" class="c-btn--small mt-2 mr-2"
+            <button *ngIf="!tidigareVersion && redigeraLageAnsDjur === false && arende.status === 'REG'"
+              class="c-btn--small mt-2 mr-2"
               (click)="redigeraAnsDjurValView($event.target, ansokanDjurvalfard)">Redigera</button>
             <button *ngIf="!tidigareVersion && redigeraLageAnsDjur === true" class="c-btn--small mt-2 mr-2"
               (click)="sparaAnsDjurValView($event.target, ansokanDjurvalfard)">Spara</button>
@@ -300,8 +301,9 @@
                   </span>
                   <span *ngIf="redigeraLageAttribut && attribut.id === valtAttributId &&attribut.datatyp !== 'DATE'">
                     <select id="attributVarde" [(ngModel)]="attribut.varde">
-                      <option value="KLAR">KLAR</option>
-                      <option value="J">J</option>
+                      <option *ngFor="let varde_item of attribut.giltigaVarden" [ngValue]="varde_item">
+                        {{varde_item}}
+                      </option>
                     </select>
                   </span>
                   <button *ngIf="!redigeraLageAttribut && !tidigareVersion && arende.status==='REG'"
@@ -319,7 +321,8 @@
 
             <p class="defaultfontsize" *ngIf="!attributFinns">Ärendet har inga attribut i denna version.</p>
 
-            <button *ngIf="!tidigareVersion && arende.status==='REG'" class="c-btn--medium"  (click)="hamtaGiltigaAttribut()"><span class="sjv-i-plus"></span>Lägg till attribut</button>
+            <button *ngIf="!tidigareVersion && arende.status==='REG'" class="c-btn--medium"
+              (click)="hamtaGiltigaAttribut()"><span class="sjv-i-plus"></span>Lägg till attribut</button>
             <div class="skapaAttribut">
               <div class="c-select--medium">
                 <label>Skapa attribut</label>
@@ -341,22 +344,24 @@
               <div *ngIf="valtAttribut.kod && valtAttribut.datatyp ==='DATE'" class="c-input--medium">
                 <label for="datepicker_2" id="label-1">Värde</label>
                 <div class="input__wrapper ">
-                   <input id="datepicker_2" type="date" max="2500-01-01" tabindex="0" placeholder="åååå-mm-dd" name="text1" [(ngModel)]="valtAttribut.varde">
-                   <div class="icon"></div>
+                  <input id="datepicker_2" type="date" max="2500-01-01" tabindex="0" placeholder="åååå-mm-dd"
+                    name="text1" [(ngModel)]="valtAttribut.varde">
+                  <div class="icon"></div>
                 </div>
-             </div>
-
-             <div *ngIf="valtAttribut.kod && valtAttribut.datatyp !=='DATE'" class="c-select--medium">
-              <label for="field-1">Värde</label>
-              <div class="c-select__wrapper">
-                  <select [(ngModel)]="valtAttribut.varde">
-                      <option value="KLAR">KLAR</option>
-                      <option value="J">J</option>
-                 </select>
-                 <span class="sjv-i-caret-ner ikon">
-                 </span>
               </div>
-          </div>
+
+              <div *ngIf="valtAttribut.kod && valtAttribut.datatyp !=='DATE'" class="c-select--medium">
+                <label for="field-1">Värde</label>
+                <div class="c-select__wrapper">
+                  <select [(ngModel)]="valtAttribut.varde">
+                    <option *ngFor="let varde_item of valtAttribut.giltigaVarden" [ngValue]="varde_item">
+                      {{varde_item}}
+                    </option>
+                  </select>
+                  <span class="sjv-i-caret-ner ikon">
+                  </span>
+                </div>
+              </div>
 
               <button class="c-btn--small ml-1" id="bekraftaLaggTillAttribut" (click)="skapaAttribut()">Lägg
                 till</button>
