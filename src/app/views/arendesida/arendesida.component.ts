@@ -19,6 +19,7 @@ import { avbrytLaggTill, deselectLaggtillSelectElement, hanteraLaggTillBekraftaK
 import { showToaster, kontrolleraFlikar } from './arendesidaFunktioner/arendesidaUtility';
 import { CanDeactivateComponentDeactivate } from 'src/app/services/varinig-ospadedata-data.guard';
 
+
 interface OandradeAtgard {
   atgardId: string;
   atgard: Atgard;
@@ -80,7 +81,7 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
   spinnerText = 'Sidan laddas';
   valdAtgardId = '';
   showWarning = false;
-  warningText = 'Kommentar måste anges'
+  warningText = 'Kommentar måste anges';
   alive = true;
 
   atgardSelectElement: HTMLSelectElement;
@@ -92,7 +93,7 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
   attributSelectElement: HTMLSelectElement;
   skapaAttributBlock: HTMLDivElement;
   laggTillAttributBekraftaKnapp: HTMLButtonElement;
-//Lyssnar på page refresh
+// Lyssnar på page refresh
   @HostListener('window:beforeunload', ['$event'])
   beforeUnloadHander(event) {
     if (this.osparadeAndringarFinns()) {
@@ -102,7 +103,7 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
     }
   }
 
-//Lyssnar på page navigation
+// Lyssnar på page navigation
   canDeactivate() {
     if (this.osparadeAndringarFinns()) {
       if (confirm('Sidan har osparade ändringar. Vill du förtsätta andå?')) {
@@ -124,6 +125,7 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
   }
 
   ngAfterViewInit() {
+    this.windowRef.komponentbibliotek.init();
     this.arendeId = this.route.snapshot.paramMap.get('arendeId');
     this.kundNummer = this.route.snapshot.paramMap.get('kundNummer');
 
@@ -172,13 +174,14 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
       this.errorMessage = err.message;
       this.showSpinner = false;
     }, () => {
-      setTimeout(() => {
-        this.windowRef.komponentbibliotek.init();
-        kontrolleraFlikar(this.arende);
-      }, 500);
-      setTimeout(() => {
+        setTimeout(() => {
+          kontrolleraFlikar(this.arende);
+          this.windowRef.komponentbibliotek.init();
+        }, 300);
+
+        setTimeout(() => {
         this.showSpinner = false;
-      }, 2000);
+      }, 500);
     });
   }
 
@@ -222,7 +225,7 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
     }
     setTimeout(() => {
       this.windowRef.komponentbibliotek.initTagsinputs();
-    }, 500);
+    }, 200);
   }
 
   sparaAnsDjurValView(button: HTMLButtonElement, ansokanDjurvalfard: AnsokanDjurvalfard) {
@@ -310,7 +313,7 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
       const accordion = document.getElementById(atgard.id + '-accordion') as HTMLElement;
       accordion.classList.add('open');
       this.windowRef.komponentbibliotek.initAccordions();
-    }, 100);
+    }, 200);
   }
 
   sparaRedigeratAtgard(atgard, event) {
@@ -336,7 +339,7 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
             const accordion = document.getElementById(atgard.id + '-accordion') as HTMLElement;
             accordion.classList.add('open');
             this.windowRef.komponentbibliotek.initAccordions();
-          }, 500);
+          }, 200);
         }
       );
     } else {
@@ -410,7 +413,7 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
         setTimeout(() => {
           this.windowRef.komponentbibliotek.initTagsinputs();
           this.showSpinner = false;
-        }, 500);
+        }, 100);
       },
       (err: any) => {
         this.errorMessage = err.message;

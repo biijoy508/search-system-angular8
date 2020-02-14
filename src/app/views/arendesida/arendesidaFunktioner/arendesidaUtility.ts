@@ -5,7 +5,7 @@ export function showToaster(message: any) {
   toasterMessage.innerHTML = message;
   setTimeout(() => {
     closeToaster(toaster, toasterMessage);
-  }, 2000);
+  }, 1000);
 }
 
 export function closeToaster(toaster, toasterMessage) {
