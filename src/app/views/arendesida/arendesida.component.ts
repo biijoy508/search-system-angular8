@@ -43,7 +43,7 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
     const berakning = new Berakning('', '', '');
     this.beslut = new Beslut('', '', '', '', '', '', berakning, [], []);
     this.valdAtgardTyp = new AtgardTypModel('', '', '', [], '', '');
-    this.valtAttribut = new Attribut('', '', '', '', '', '', '', '', '');
+    this.valtAttribut = new Attribut('', '', '', '', '', [], '', '', '', '');
   }
 
 
