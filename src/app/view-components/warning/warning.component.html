@@ -1,0 +1,24 @@
+<div *ngIf="showWarning" class="c-spinner">
+    <div class="c-spinner__container">
+        <div class="c-banner" role="banner">
+            <div class="c-banner__content">
+                <span class="c-banner-icon sjv-i-varning" tabindex="-1"></span>
+                <div *ngIf="!massHantering" class="c-banner__text">
+                    <p>{{warningText}}</p>
+                    <div class="c-banner__actionlink-container">
+                        <button class="c-btn--medium float-right mt-5" (click)="stang()">Stäng</button>
+                    </div>
+                </div>
+                <div *ngIf="massHantering" class="c-banner__text">
+                    <p><b>Ändra status</b></p>
+                    <p> Vill du verkligen massändra status på ditt urval?</p>
+                    <p> Statusändringen berör {{antalPaverkadeArenden}} ärenden. </p>
+                    <div class="c-banner__actionlink-container">
+                        <button class="c-btn--medium" (click)="andra()">Ändra status</button>
+                        <button class="c-btn--medium" (click)="stang()">Avbryt</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
