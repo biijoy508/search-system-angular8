@@ -9,6 +9,7 @@ export class Attribut {
     kod: string;
     arendeStatus: string;
     arendeTyp: string;
+    ansokansTyp: string;
     constructor(
         id: string,
         arendeId: string,
@@ -19,7 +20,8 @@ export class Attribut {
         datatyp: string,
         kod: string,
         arendeStatus: string,
-        arendeTyp: string
+        arendeTyp: string,
+        ansokansTyp: string
     ) {
         this.id = id;
         this.arendeId = arendeId;
@@ -31,5 +33,6 @@ export class Attribut {
         this.kod = kod;
         this.arendeStatus = arendeStatus;
         this.arendeTyp = arendeTyp;
+        this.ansokansTyp = ansokansTyp;
     }
 }
