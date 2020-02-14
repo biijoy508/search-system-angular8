@@ -4,6 +4,7 @@ export class Attribut {
     arendeversionId: string;
     namn: string;
     varde: string;
+    giltigaVarden: string[];
     datatyp: string;
     kod: string;
     arendeStatus: string;
@@ -14,6 +15,7 @@ export class Attribut {
         arendeversionId: string,
         namn: string,
         varde: string,
+        giltigaVarden: string[],
         datatyp: string,
         kod: string,
         arendeStatus: string,
@@ -24,6 +26,7 @@ export class Attribut {
         this.arendeversionId = arendeversionId;
         this.namn = namn;
         this.varde = varde;
+        this.giltigaVarden = giltigaVarden;
         this.datatyp = datatyp;
         this.kod = kod;
         this.arendeStatus = arendeStatus;
