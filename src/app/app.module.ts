@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { registerLocaleData } from '@angular/common';
 import localeSv from '@angular/common/locales/sv';
+import { VarinigOspadedataDataGuard } from './services/varinig-ospadedata-data.guard';
 registerLocaleData(localeSv);
 
 @NgModule({
@@ -24,7 +25,7 @@ registerLocaleData(localeSv);
     AppRoutingModule
   ],
   providers: [{ provide:  LocationStrategy, useClass: HashLocationStrategy },
-  { provide: LOCALE_ID, useValue: 'sv-SE'}],
+    { provide: LOCALE_ID, useValue: 'sv-SE' }, VarinigOspadedataDataGuard],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   bootstrap: [AppComponent]
 })

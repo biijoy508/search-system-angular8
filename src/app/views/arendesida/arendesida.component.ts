@@ -1,5 +1,5 @@
 // tslint:disable: prefer-for-of
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, HostListener } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { cloneDeep } from 'lodash';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,6 +17,7 @@ import { environment } from 'src/environments/environment';
 // tslint:disable-next-line: max-line-length
 import { avbrytLaggTill, deselectLaggtillSelectElement, hanteraLaggTillBekraftaKnappStatus } from './arendesidaFunktioner/arendesidaSkapa';
 import { showToaster, kontrolleraFlikar } from './arendesidaFunktioner/arendesidaUtility';
+import { CanDeactivateComponentDeactivate } from 'src/app/services/varinig-ospadedata-data.guard';
 
 interface OandradeAtgard {
   atgardId: string;
@@ -33,7 +34,19 @@ interface OandratAttribut {
   templateUrl: './arendesida.component.html',
   styleUrls: ['./arendesida.component.scss']
 })
-export class ArendesidaComponent implements AfterViewInit {
+export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactivateComponentDeactivate {
+
+  constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router, private titleService: Title) {
+    this.windowRef = window;
+    this.arende = new Arende('', '', '', '', '', '', '', '', '', '');
+    this.ansokanDjurvalfard = new AnsokanDjurvalfard([], '', '', '', '');
+    const berakning = new Berakning('', '', '');
+    this.beslut = new Beslut('', '', '', '', '', '', berakning, [], []);
+    this.valdAtgardTyp = new AtgardTypModel('', '', '', [], '', '');
+    this.valtAttribut = new Attribut('', '', '', '', '', '', '', '', '');
+  }
+
+
   windowRef: any;
   arende: Arende;
   arendeId: any;
@@ -60,10 +73,7 @@ export class ArendesidaComponent implements AfterViewInit {
   redigeraLageAtgarder = false;
   redigeraLageAnsDjur = false;
   redigeraLageAttribut = false;
-  PPNnummer: string[];
-
   filtreringsAlternativ = 'alla';
-
   tidigareVersion = false;
   errorMessage = '';
   showSpinner = true;
@@ -82,15 +92,35 @@ export class ArendesidaComponent implements AfterViewInit {
   attributSelectElement: HTMLSelectElement;
   skapaAttributBlock: HTMLDivElement;
   laggTillAttributBekraftaKnapp: HTMLButtonElement;
+//Lyssnar på page refresh
+  @HostListener('window:beforeunload', ['$event'])
+  beforeUnloadHander(event) {
+    if (this.osparadeAndringarFinns()) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
-  constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router, private titleService: Title) {
-    this.windowRef = window;
-    this.arende = new Arende('', '', '', '', '', '', '', '', '', '');
-    this.ansokanDjurvalfard = new AnsokanDjurvalfard([], '', '', '', '');
-    const berakning = new Berakning('', '', '');
-    this.beslut = new Beslut('', '', '', '', '', '', berakning, [], []);
-    this.valdAtgardTyp = new AtgardTypModel('', '', '', [], '', '');
-    this.valtAttribut = new Attribut('', '', '', '', '', [], '', '', '', '');
+//Lyssnar på page navigation
+  canDeactivate() {
+    if (this.osparadeAndringarFinns()) {
+      if (confirm('Sidan har osparade ändringar. Vill du förtsätta andå?')) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return true;
+    }
+  }
+
+  osparadeAndringarFinns() {
+    if (this.redigeraLageAtgarder === true || this.redigeraLageAnsDjur === true || this.redigeraLageAttribut === true) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   ngAfterViewInit() {
