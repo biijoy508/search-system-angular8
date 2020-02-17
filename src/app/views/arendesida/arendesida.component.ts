@@ -106,7 +106,7 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
 // Lyssnar på page navigation
   canDeactivate() {
     if (this.osparadeAndringarFinns()) {
-      if (confirm('Sidan har osparade ändringar. Vill du förtsätta andå?')) {
+      if (confirm('Det kan finnas osparade ändringar. Vill du fortsätta ändå?')) {
         return true;
       } else {
         return false;
@@ -157,6 +157,7 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
   }
 
   onVisaTidigareVersion(select: HTMLSelectElement) {
+    if (!this.osparadeAndringarFinns()) {
     this.valdArendeversion = this.arendeVersionLista.find(entity => entity.arendeversionId === select.value);
 
     if (this.valdArendeversion.gallande === 'J') {
@@ -164,7 +165,13 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
     } else {
       this.tidigareVersion = true;
     }
+
     kontrolleraFlikar(this.arende);
+    } else {
+      this.warningText = 'Redigeringsläge är aktiverat. Spara dina ändringar eller tryck på Avbryt-knappen';
+      this.showWarning = true;
+      select.selectedIndex = 0;
+    }
   }
 
   hamtaArendeInformation(arendeParam: { arendeid: any; kundnummer: any; }) {
@@ -216,6 +223,20 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
     this.oandradeAnsokanDjurvalfard = cloneDeep(ansokanDjurvalfard);
     this.redigeraLageAnsDjur = true;
 
+    this.visaAnsDjurValRedigeraView();
+  }
+
+  avbrytAnsDjurValView(button: HTMLButtonElement, ansokanDjurvalfard: AnsokanDjurvalfard) {
+    this.redigeraLageAnsDjur = false;
+    this.ansokanDjurvalfard = null;
+    this.ansokanDjurvalfard = cloneDeep(this.oandradeAnsokanDjurvalfard);
+    this.doljAnsDjurValRedigeraView();
+    setTimeout(() => {
+      this.windowRef.komponentbibliotek.multitext.init();
+    }, 200);
+  }
+
+  private visaAnsDjurValRedigeraView() {
     for (let i = 0; i < this.redigerbarAnsokanDjurvalfardElements.length; i++) {
       (this.redigerbarAnsokanDjurvalfardElements[i] as HTMLDivElement).style.display = 'block';
     }
@@ -223,20 +244,13 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
       (this.oredigerbarAnsokanDjurvalfardElements[j] as HTMLDivElement).style.display = 'none';
     }
   }
-
-  avbrytAnsDjurValView(button: HTMLButtonElement, ansokanDjurvalfard: AnsokanDjurvalfard) {
-    this.redigeraLageAnsDjur = false;
-    this.ansokanDjurvalfard = null;
-    this.ansokanDjurvalfard = cloneDeep(this.oandradeAnsokanDjurvalfard);
+  private doljAnsDjurValRedigeraView() {
     for (let i = 0; i < this.redigerbarAnsokanDjurvalfardElements.length; i++) {
       (this.redigerbarAnsokanDjurvalfardElements[i] as HTMLDivElement).style.display = 'none';
     }
     for (let j = 0; j < this.oredigerbarAnsokanDjurvalfardElements.length; j++) {
       (this.oredigerbarAnsokanDjurvalfardElements[j] as HTMLDivElement).style.display = 'block';
     }
-    setTimeout(() => {
-      this.windowRef.komponentbibliotek.multitext.init();
-    }, 200);
   }
 
   sparaAnsDjurValView(button: HTMLButtonElement, ansokanDjurvalfard: AnsokanDjurvalfard) {
