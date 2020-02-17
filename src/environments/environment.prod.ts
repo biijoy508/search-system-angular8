@@ -6,7 +6,6 @@ export const environment = {
   arendenUrl: '/farmen/arende/arenden',
   arendeTyperUrl: '/farmen/arende/arendetyper',
   arendeVersionerUrl: '/farmen/arende/arendeversioner',
-  arendeVersionIdUrl: '/farmen/arende/aktuellarendeversion',
   atgarderUrl: '/farmen/atg/atgarder',
   atgardTyperUrl: '/farmen/atg/manuellaatgardtyper',
   attributUrl: '/farmen/arende/attribut',
