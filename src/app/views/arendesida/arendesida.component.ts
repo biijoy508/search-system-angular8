@@ -235,7 +235,7 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
       (this.oredigerbarAnsokanDjurvalfardElements[j] as HTMLDivElement).style.display = 'block';
     }
     setTimeout(() => {
-      this.windowRef.komponentbibliotek.initTagsinputs();
+      this.windowRef.komponentbibliotek.multitext.init();
     }, 200);
   }
 
@@ -323,7 +323,7 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
     setTimeout(() => {
       const accordion = document.getElementById(atgard.id + '-accordion') as HTMLElement;
       accordion.classList.add('open');
-      this.windowRef.komponentbibliotek.initAccordions();
+      this.windowRef.komponentbibliotek.accordion.init();
     }, 200);
   }
 
@@ -349,7 +349,7 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
           setTimeout(() => {
             const accordion = document.getElementById(atgard.id + '-accordion') as HTMLElement;
             accordion.classList.add('open');
-            this.windowRef.komponentbibliotek.initAccordions();
+            this.windowRef.komponentbibliotek.accordion.init();
           }, 200);
         }
       );
@@ -422,7 +422,7 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
         this.ansokanDjurvalfard = data;
         this.errorMessage = '';
         setTimeout(() => {
-          this.windowRef.komponentbibliotek.initTagsinputs();
+          this.windowRef.komponentbibliotek.multitext.init();
           this.showSpinner = false;
         }, 100);
       },

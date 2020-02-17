@@ -106,7 +106,7 @@ export class HemsidaComponent implements AfterViewInit, OnInit {
         setTimeout(() => {
           this.fyllaAnsokanstypFilterFranSession(ansokansTypOptions);
           this.fyllaArendetypFilterFranSession(arendeTypOptions);
-          this.windowRef.komponentbibliotek.initMultiselects();
+          this.windowRef.komponentbibliotek.multiselect.init();
         }, 20);
       }
     );
