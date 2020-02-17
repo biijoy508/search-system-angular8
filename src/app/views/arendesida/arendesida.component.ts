@@ -156,6 +156,17 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
     this.showWarning = false;
   }
 
+  onVisaTidigareVersion(select: HTMLSelectElement) {
+    this.valdArendeversion = this.arendeVersionLista.find(entity => entity.arendeversionId === select.value);
+
+    if (this.valdArendeversion.gallande === 'J') {
+      this.tidigareVersion = false;
+    } else {
+      this.tidigareVersion = true;
+    }
+    kontrolleraFlikar(this.arende);
+  }
+
   hamtaArendeInformation(arendeParam: { arendeid: any; kundnummer: any; }) {
     this.apiService.getChainedDataArendeInformation(arendeParam).pipe(takeWhile(() => this.alive)).subscribe((data: any) => {
       this.atgardLista = [];
@@ -594,17 +605,6 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
       (err: any) => {
         this.errorMessage = err.message;
       });
-  }
-
-  visaTidigareVersion(select: HTMLSelectElement) {
-    this.valdArendeversion = this.arendeVersionLista.find(entity => entity.arendeversionId === select.value);
-
-    if (this.valdArendeversion.gallande === 'J') {
-      this.tidigareVersion = false;
-    } else {
-      this.tidigareVersion = true;
-    }
-    kontrolleraFlikar(this.arende);
   }
 
   avbrytLaggTillAtgard() {

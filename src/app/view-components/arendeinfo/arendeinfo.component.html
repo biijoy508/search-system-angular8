@@ -1,0 +1,52 @@
+<div class="btnFieldWrapper">
+    <div>
+        <b class="arendeRubrik"> Ärende | {{arende.kundNummerAlfaNumerisk}} - {{arende.stodAr}} |
+            {{arende.kundNamn}}</b>
+    </div>
+    <div class="tidigareVersion" *ngIf="tidigareVersion"> Du tittar på en tidigare version av ärendet. </div>
+    <div class="versionPosition">
+        <p> Version :</p>
+        <div class="c-select--medium version">
+            <div class="c-select__wrapper">
+                <select (change)='visaTidigare($event.target)' id="version">
+                    <option *ngFor="let arendeversion_item of arendeVersionLista"
+                        [value]="arendeversion_item.arendeversionId">{{ arendeversion_item.presentationsText}}</option>
+                </select>
+                <span class="sjv-i-caret-ner ikon">
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="inlineContentWrapper p-2">
+    <span>
+        <p class="header"> Ärendetyp </p>
+        <p class="content"> {{arende.arendeTyp}} </p>
+    </span>
+    <span>
+        <p class="header"> Ansökanstyp </p>
+        <p class="content"> {{arende.ansokansTyp}} </p>
+    </span>
+    <span>
+        <p class="header"> Nuvarande status </p>
+        <p class="content"> {{arende.status}} </p>
+    </span>
+    <span>
+        <p class="header"> Ärendenr. </p>
+        <p class="content"> {{arende.arendeId}} </p>
+    </span>
+    <span>
+        <p class="header"> Myndighet </p>
+        <p class="content"> {{arende.myndighet}} </p>
+    </span>
+    <span>
+        <p class="header"> Pers.nr./Org.nr. </p>
+        <p class="content">
+            {{arende.kundOrgNummer | slice:0:arende.kundOrgNummer.length - 4}}-{{arende.kundOrgNummer | slice:arende.kundOrgNummer.length -4:arende.kundOrgNummer.length}}
+        </p>
+    </span>
+    <span>
+        <p class="header"> Ankomstdatum </p>
+        <p class="content"> {{arende.ankomstDatum}} </p>
+    </span>
+</div>
