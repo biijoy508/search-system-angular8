@@ -202,7 +202,8 @@ p {
 
 .c-multitext--medium,
 .c-input--medium {
-  max-width: 20rem;
+  width: 100%;
+  max-width: 40rem;
   margin-bottom: 0.5rem;
 }
 
@@ -280,21 +281,41 @@ p {
   }
 }
 
-.attributeContectWrapper {
-  .attributeContect {
+.hjalptext {
+  font-size: 0.6875rem;
+  line-height: 1.2;
+}
+
+.attributeContentWrapper {
+  .c-btn-text--medium {
+    margin-top: 0.125rem;
+    height: fit-content;
+    text-align: center;
+  }
+
+  .attributeContent {
     display: flex;
     width: 100%;
+    font-weight: bold;
+    font-size: 0.8125rem;
+    margin-bottom: 0.25rem;
 
-    span {
-      text-align: left;
-      font-weight: bold;
-      padding: 0.25rem 0;
-      margin-bottom: 0.25rem;
-      font-size: 0.8125rem;
-      width: 25%;
-      min-width: 25%;
+    .attributeNamn {
       background-color: #e6e6e6;
       word-wrap: normal;
+      min-width: 25%;
+      padding: 0.25rem 0.25rem 0.25rem 0;
+    }
+
+    .attributeVardet {
+      background-color: #e6e6e6;
+      word-wrap: normal;
+      min-width: 25%;
+      padding: 0.25rem 0.25rem 0.25rem 0;
+
+      .attribute-select {
+        margin: 0;
+      }
     }
   }
 }

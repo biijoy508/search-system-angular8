@@ -195,6 +195,7 @@
 
             <div class="c-multitext--medium redigerbarAnsDjurElement">
               <label for="input-text-1" tabindex="-1">PPN</label>
+              <p class="hjalptext">Använd kommatecken för att lägga till fler PPN-nummer</p>
               <div class="c-multitext-field" rel="c-multitext-js">
                 <div class="tagsContainer">
                   <input autocomplete="off" tabindex="-1" aria-hidden="true" class="c-multitext__valueholder"
@@ -236,34 +237,39 @@
                 <span>Attribut</span>
                 <span>Värde</span>
               </div>
-              <div *ngFor="let attribut of attributLista; index as i" class="attributeContectWrapper">
-                <div class="attributeContect" [id]="attribut.id">
-                  <span>{{attribut.namn}}</span>
-                  <span *ngIf="!(redigeraLageAttribut && attribut.id === valtAttributId)">{{attribut.varde}}</span>
-                  <span *ngIf="redigeraLageAttribut && attribut.id === valtAttributId && attribut.datatyp === 'DATE'">
-                    <div class="c-input">
-                      <div class="input__wrapper ">
+              <div *ngFor="let attribut of attributLista; index as i" class="attributeContentWrapper">
+                <div class="attributeContent" [id]="attribut.id">
+                  <span class="attributeNamn">{{attribut.namn}}</span>
+                  <span *ngIf="!(redigeraLageAttribut && attribut.id === valtAttributId)" class="attributeVardet">{{attribut.varde}}</span>
+                  <span *ngIf="redigeraLageAttribut && attribut.id === valtAttributId && attribut.datatyp === 'DATE'" class="attributeVardet">
+                    <div class="c-input--medium">
+                      <div class="input__wrapper">
                         <input id="datepicker_2" type="date" max="2500-01-01" tabindex="0" placeholder="åååå-mm-dd"
                           name="text1" [(ngModel)]="attribut.varde">
-                        <div class="icon"></div>
                       </div>
                     </div>
                   </span>
-                  <span *ngIf="redigeraLageAttribut && attribut.id === valtAttributId &&attribut.datatyp !== 'DATE'">
+                  <span *ngIf="redigeraLageAttribut && attribut.id === valtAttributId &&attribut.datatyp !== 'DATE'" class="attributeVardet">
+                    <div class="c-select--medium attribute-select">
+                      <div class="c-select__wrapper">
                     <select id="attributVarde" [(ngModel)]="attribut.varde">
                       <option *ngFor="let varde_item of attribut.giltigaVarden" [ngValue]="varde_item">
                         {{varde_item}}
                       </option>
                     </select>
+                    <span class="sjv-i-caret-ner ikon">
+                    </span>
+                    </div>
+                    </div>
                   </span>
                   <button *ngIf="!redigeraLageAttribut && !tidigareVersion && arende.status==='REG'"
-                    (click)="hanteraRedigeraAttribut(attribut, i)" class="c-btn--small ml-1">Redigera</button>
+                    (click)="hanteraRedigeraAttribut(attribut, i)" class="c-btn-text--medium ml-1">Redigera</button>
                   <button *ngIf="!redigeraLageAttribut && !tidigareVersion && arende.status==='REG'"
-                    (click)="taBortAttribut(attribut, $event)" class="c-btn--small ml-1">Ta bort</button>
+                    (click)="taBortAttribut(attribut, $event)" class="c-btn-text--medium ml-1">Ta bort</button>
                   <button *ngIf="redigeraLageAttribut && valtAttributId === attribut.id"
-                    (click)="sparaRedigeratAttribut(attribut, $event)" class="c-btn--small ml-1">Spara </button>
+                    (click)="sparaRedigeratAttribut(attribut, $event)" class="c-btn-text--medium ml-1">Spara </button>
                   <button *ngIf="redigeraLageAttribut && valtAttributId === attribut.id"
-                    (click)="hanteraAvbrytAttribut(attribut, i)" class="c-btn--small ml-2">Avbryt</button>
+                    (click)="hanteraAvbrytAttribut(attribut, i)" class="c-btn-text--medium ml-2">Avbryt</button>
                 </div>
               </div>
               <div class="c-space--m"></div>
