@@ -179,7 +179,7 @@
             <div class="inlineWrapper2 oredigerbarAnsDjurElement">
               <span>
                 <p class="header"> PPN </p>
-                <p class="content"> {{ansokanDjurvalfard.ppnLista.join(',')}} </p>
+                <p class="content"> {{ansokanDjurvalfard.ppnLista.join(', ')}} </p>
               </span>
             </div>
             <div class="inlineWrapper2 oredigerbarAnsDjurElement">
@@ -365,7 +365,7 @@
                         class="c-accordion-item__content">
                         <div class="beslutContent">
                           <div class="beslutContentText" *ngFor="let berArende_item of beslut.berakningarArende">
-                            <span>{{berArende_item.berakningsTyp}}</span>
+                            <span class="beslutContentText__rubrik">{{berArende_item.berakningsTyp}}</span>
                             <span class="beslutContentText__varde">{{berArende_item.varde | number:'':'sv'}}
                               {{berArende_item.enhet}}</span>
                           </div>
@@ -387,7 +387,7 @@
                         <div class="beslutContent">
                           <div class="beslutContentText"
                             *ngFor="let berDjurvalfard_item of beslut.berakningarDjurvalfard">
-                            <span>{{berDjurvalfard_item.berakningsTyp}}</span>
+                            <span class="beslutContentText__rubrik">{{berDjurvalfard_item.berakningsTyp}}</span>
                             <span class="beslutContentText__varde">{{berDjurvalfard_item.varde | number:'':'sv'}}
                               {{berDjurvalfard_item.enhet}}</span>
                           </div>
