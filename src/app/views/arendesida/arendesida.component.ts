@@ -93,7 +93,7 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
   attributSelectElement: HTMLSelectElement;
   skapaAttributBlock: HTMLDivElement;
   laggTillAttributBekraftaKnapp: HTMLButtonElement;
-// Lyssnar på page refresh
+  // Lyssnar på page refresh
   @HostListener('window:beforeunload', ['$event'])
   beforeUnloadHander(event) {
     if (this.osparadeAndringarFinns()) {
@@ -103,7 +103,7 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
     }
   }
 
-// Lyssnar på page navigation
+  // Lyssnar på page navigation
   canDeactivate() {
     if (this.osparadeAndringarFinns()) {
       if (confirm('Det kan finnas osparade ändringar. Vill du fortsätta ändå?')) {
@@ -158,15 +158,15 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
 
   onVisaTidigareVersion(select: HTMLSelectElement) {
     if (!this.osparadeAndringarFinns()) {
-    this.valdArendeversion = this.arendeVersionLista.find(entity => entity.arendeversionId === select.value);
+      this.valdArendeversion = this.arendeVersionLista.find(entity => entity.arendeversionId === select.value);
 
-    if (this.valdArendeversion.gallande === 'J') {
-      this.tidigareVersion = false;
-    } else {
-      this.tidigareVersion = true;
-    }
+      if (this.valdArendeversion.gallande === 'J') {
+        this.tidigareVersion = false;
+      } else {
+        this.tidigareVersion = true;
+      }
 
-    kontrolleraFlikar(this.arende);
+      kontrolleraFlikar(this.arende);
     } else {
       this.warningText = 'Redigeringsläge är aktiverat. Spara dina ändringar eller tryck på Avbryt-knappen';
       this.showWarning = true;
@@ -192,12 +192,12 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
       this.errorMessage = err.message;
       this.showSpinner = false;
     }, () => {
-        setTimeout(() => {
-          kontrolleraFlikar(this.arende);
-          this.windowRef.komponentbibliotek.init();
-        }, 300);
+      setTimeout(() => {
+        kontrolleraFlikar(this.arende);
+        this.windowRef.komponentbibliotek.init();
+      }, 300);
 
-        setTimeout(() => {
+      setTimeout(() => {
         this.showSpinner = false;
       }, 500);
     });
@@ -325,7 +325,7 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
           atgard: cloneDeep(atgard)
         });
     } else {
-      showToaster('Osparade åtgard finns!! ');
+      showToaster('Du har inte sparat dina ändringar.');
     }
   }
 
@@ -473,7 +473,8 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
   }
 
   hamtaGiltigaAttribut() {
-    if (this.valdArendeversion.gallande === 'J' && this.arende.status === 'REG') {
+    if (this.valdArendeversion.gallande === 'J' &&
+      (this.arende.status === 'REG' || this.arende.status === 'UPPG' || this.arende.status === 'UTR' || this.arende.status === 'HANDL')) {
       this.valtAttribut = new Attribut('', '', '', '', '', [], '', '', '', '', '');
 
       const arendeParam = {
@@ -522,7 +523,8 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
   }
 
   sparaRedigeratAttribut(attribut, event) {
-    if (this.valdArendeversion.gallande === 'J' && this.arende.status === 'REG') {
+    if (this.valdArendeversion.gallande === 'J' &&
+      (this.arende.status === 'REG' || this.arende.status === 'UPPG' || this.arende.status === 'UTR' || this.arende.status === 'HANDL')) {
       this.redigeraLageAttribut = false;
       const gammalValueIndex = this.oandratAttributLista.findIndex(obj => obj.attributId === attribut.id);
       this.oandratAttributLista.splice(gammalValueIndex, 1);
@@ -544,7 +546,8 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
   }
 
   skapaAttribut() {
-    if (this.valdArendeversion.gallande === 'J' && this.arende.status === 'REG') {
+    if (this.valdArendeversion.gallande === 'J' &&
+      (this.arende.status === 'REG' || this.arende.status === 'UPPG' || this.arende.status === 'UTR' || this.arende.status === 'HANDL')) {
       this.apiService.postData(environment.skapaAttributUrl, this.valtAttribut)
         .subscribe(
           (data: Attribut) => {
@@ -572,7 +575,8 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
   }
 
   taBortAttribut(attribut, event) {
-    if (this.valdArendeversion.gallande === 'J' && this.arende.status === 'REG') {
+    if (this.valdArendeversion.gallande === 'J' &&
+      (this.arende.status === 'REG' || this.arende.status === 'UPPG' || this.arende.status === 'UTR' || this.arende.status === 'HANDL')) {
       const taBortKnapp = event.target as HTMLButtonElement;
       taBortKnapp.disabled = true;
       this.apiService.postData(environment.taBortAttributUrl, attribut).subscribe(
