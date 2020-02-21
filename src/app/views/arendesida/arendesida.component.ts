@@ -189,8 +189,8 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
       this.errorMessage = '';
       this.valdArendeversion = this.arendeVersionLista.find(entity => entity.gallande === 'J');
     }, (err: any) => {
-      this.errorMessage = err.message;
       this.showSpinner = false;
+      this.errorMessage = err.message;
     }, () => {
       setTimeout(() => {
         kontrolleraFlikar(this.arende);
@@ -277,6 +277,7 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
         this.errorMessage = '';
       },
       (error: any) => {
+        this.showSpinner = false;
         this.errorMessage = error.error.svar;
       },
       () => {
@@ -444,6 +445,7 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
         this.errorMessage = '';
       },
       (err: any) => {
+        this.showSpinner = false;
         this.errorMessage = err.message;
       },
       () => {
