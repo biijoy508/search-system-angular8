@@ -282,7 +282,7 @@
             <button *ngIf="!tidigareVersion && 
             (arende.status==='REG' || arende.status==='UPPG' || arende.status==='UTR' || arende.status ==='HANDL')" class="c-btn--medium"
               (click)="hamtaGiltigaAttribut()"><span class="sjv-i-plus"></span>Lägg till attribut</button>
-            <div class="skapaAttribut">
+            <div *ngIf="!tidigareVersion" class="skapaAttribut">
               <div class="c-select--medium">
                 <label>Skapa attribut</label>
                 <div class="c-select__wrapper">
