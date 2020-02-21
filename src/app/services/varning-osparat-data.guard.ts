@@ -8,7 +8,7 @@ canDeactivate: () => Observable<boolean> | Promise<boolean> | boolean;
 }
 
 @Injectable()
-export class VarinigOspadedataDataGuard implements CanDeactivate<CanDeactivateComponentDeactivate> {
+export class VarningOsparatDataGuard implements CanDeactivate<CanDeactivateComponentDeactivate> {
   canDeactivate(component: CanDeactivateComponentDeactivate) {
     return component.canDeactivate ? component.canDeactivate() : true;
   }

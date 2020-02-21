@@ -17,7 +17,7 @@ import { environment } from 'src/environments/environment';
 // tslint:disable-next-line: max-line-length
 import { avbrytLaggTill, deselectLaggtillSelectElement, hanteraLaggTillBekraftaKnappStatus } from './arendesidaFunktioner/arendesidaSkapa';
 import { showToaster, kontrolleraFlikar } from './arendesidaFunktioner/arendesidaUtility';
-import { CanDeactivateComponentDeactivate } from 'src/app/services/varinig-ospadedata-data.guard';
+import { CanDeactivateComponentDeactivate } from 'src/app/services/varning-osparat-data.guard';
 
 
 interface OandradeAtgard {
