@@ -422,12 +422,18 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
   }
 
   hamtaDataForValdFlik(flikNamn) {
-    if (flikNamn === 'ansokanDjurvalfard') {
-      this.hamtaAnsokanDjurvalfard();
-    } else if (flikNamn === 'attribut') {
-      this.hamtaAttribut();
-    } else if (flikNamn === 'beslut') {
-      this.hamtaBeslut();
+    if (this.redigeraLageAnsDjur === true || this.redigeraLageAttribut === true) {
+      this.warningText = 'Redigeringsläge är aktiverat. Spara dina ändringar eller tryck på Avbryt-knappen';
+      this.showWarning = true;
+    } else {
+      this.showWarning = false;
+      if (flikNamn === 'ansokanDjurvalfard') {
+        this.hamtaAnsokanDjurvalfard();
+      } else if (flikNamn === 'attribut') {
+        this.hamtaAttribut();
+      } else if (flikNamn === 'beslut') {
+        this.hamtaBeslut();
+      }
     }
   }
 
