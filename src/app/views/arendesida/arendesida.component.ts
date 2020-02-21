@@ -280,6 +280,7 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
         this.errorMessage = error.error.svar;
       },
       () => {
+        this.showSpinner = false;
         this.hamtaAnsokanDjurvalfard();
       }
     );
@@ -435,14 +436,17 @@ export class ArendesidaComponent implements AfterViewInit, OnDestroy, CanDeactiv
       (data: any) => {
         this.ansokanDjurvalfard = data;
         this.errorMessage = '';
+      },
+      (err: any) => {
+        this.errorMessage = err.message;
+      },
+      () => {
         setTimeout(() => {
           this.windowRef.komponentbibliotek.multitext.init();
           this.showSpinner = false;
         }, 100);
-      },
-      (err: any) => {
-        this.errorMessage = err.message;
-      });
+      }
+    );
   }
 
   hamtaAttribut() {
