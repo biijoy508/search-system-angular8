@@ -392,7 +392,12 @@ p {
 
     span {
       display: flex;
-      justify-content: space-between;
+      .header{
+       flex: 1;
+      }
+      .content{
+        flex: 0 0 30%;
+      }
     }
   }
 

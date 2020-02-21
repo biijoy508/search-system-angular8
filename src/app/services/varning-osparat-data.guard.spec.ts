@@ -1,15 +1,15 @@
 import { TestBed, async, inject } from '@angular/core/testing';
 
-import { VarinigOspadedataDataGuard } from './varinig-ospadedata-data.guard';
+import { VarningOsparatDataGuard } from './varning-osparat-data.guard';
 
 describe('VarinigOspadedataDataGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [VarinigOspadedataDataGuard]
+      providers: [VarningOsparatDataGuard]
     });
   });
 
-  it('should ...', inject([VarinigOspadedataDataGuard], (guard: VarinigOspadedataDataGuard) => {
+  it('should ...', inject([VarningOsparatDataGuard], (guard: VarningOsparatDataGuard) => {
     expect(guard).toBeTruthy();
   }));
 });

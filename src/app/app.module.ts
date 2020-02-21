@@ -9,8 +9,10 @@ import { RouterModule } from '@angular/router';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { registerLocaleData } from '@angular/common';
 import localeSv from '@angular/common/locales/sv';
-import { VarinigOspadedataDataGuard } from './services/varinig-ospadedata-data.guard';
+import { VarningOsparatDataGuard } from './services/varning-osparat-data.guard';
 registerLocaleData(localeSv);
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { CacheInterceptor } from './services/cache-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,12 @@ registerLocaleData(localeSv);
     AppRoutingModule
   ],
   providers: [{ provide:  LocationStrategy, useClass: HashLocationStrategy },
-    { provide: LOCALE_ID, useValue: 'sv-SE' }, VarinigOspadedataDataGuard],
+    { provide: LOCALE_ID, useValue: 'sv-SE' },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CacheInterceptor, multi: true
+    },
+    VarningOsparatDataGuard],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   bootstrap: [AppComponent]
 })
