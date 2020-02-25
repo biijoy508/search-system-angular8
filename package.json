@@ -1,7 +1,7 @@
 {
   "name": "farmen-gui",
   "version": "1.0.2-SNAPSHOT",
-  "description": "GUI för farmen projektet",
+  "description": "GUI för search-db project",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
