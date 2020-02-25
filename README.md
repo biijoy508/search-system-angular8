@@ -2,17 +2,6 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.9.
 
-Installera alla npm bibliotek innan du kan köra projektet 
-
-* npm config set registry http://vl-nexus01.intern.jordbruksverket.se:8080/repository/sjv-npm-all/
-* npm install
-
-
- Uppdatera till ny version av styleguide 
-
-*  npm uninstall --save @sjv/component-library 
-*  npm config set registry http://vl-nexus01.intern.jordbruksverket.se:8080/repository/sjv-npm-all/
-*  npm install --save-dev @sjv/component-library@latest
 
 
 ## Development server
