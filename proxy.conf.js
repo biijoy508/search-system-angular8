@@ -1,6 +1,6 @@
 const PROXY_CONFIG = {
   "/farmen": {
-    "target": "http://vl-farmenutv01:8080/",
+    "target": "http://search-java-backend:8080/",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true,
@@ -9,7 +9,7 @@ const PROXY_CONFIG = {
         console.log("Skipping proxy for browser request.");
         return "/hemsida.html";
       }
-      req.headers["X-USERID"] = "MNIL";
+      req.headers["X-USERID"] = "xxxx";
     }
   }
 }
